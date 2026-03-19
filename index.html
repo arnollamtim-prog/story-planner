@@ -635,8 +635,8 @@ async function geminiAI(prompt,retries=3){
       });
       if(res.status===429){
         // Rate limit — tunggu lalu retry
-        const wait=(attempt+1)*5000;
-        console.log(`Gemini rate limit, retry ${attempt+1}/${retries} dalam ${wait/1000}s...`);
+        const wait=(attempt+1)*25000;
+        //console.log(`Gemini rate limit, retry ${attempt+1}/${retries} dalam ${wait/1000}s...`);
         await new Promise(r=>setTimeout(r,wait));
         continue;
       }
