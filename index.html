@@ -30,7 +30,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 .page{display:none}
 .page.active{display:block}
 .page-title{font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:24px;letter-spacing:-.5px}
-/* CALENDAR */
 .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .cal-nav{display:flex;align-items:center;gap:12px}
 .cal-nav button{background:var(--surface);border:1px solid var(--border);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .15s}
@@ -57,7 +56,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 .cal-event{font-size:10.5px;padding:2px 6px;border-radius:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
 .cal-event.yt{background:#fde8e7;color:var(--yt)}
 .cal-event.short{background:#e7eeff;color:var(--sh)}
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border-radius:16px;width:520px;max-width:95vw;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15)}
@@ -68,7 +66,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 .modal-close{background:var(--hover);border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
 .modal-close:hover{background:var(--border)}
 .modal-body{padding:20px 24px 24px}
-/* FORMS */
 .form-group{margin-bottom:14px}
 label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase}
 input[type=text],input[type=date],textarea,select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:border-color .15s;outline:none}
@@ -85,14 +82,12 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .btn-sm.red{color:var(--yt);border-color:#fde8e7}
 .btn-sm.red:hover{background:#fde8e7}
 .divider{border:none;border-top:1px solid var(--border);margin:16px 0}
-/* BADGES */
 .badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;letter-spacing:.4px}
 .badge.yt{background:#fde8e7;color:var(--yt)}
 .badge.short{background:#e7eeff;color:var(--sh)}
 .badge.idea{background:#f0ede6;color:#7a7060}
 .badge.draft{background:#fff3cd;color:#b07c00}
 .badge.done{background:#e6f4ea;color:var(--green)}
-/* CARDS */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;transition:box-shadow .15s}
 .card:hover{box-shadow:0 4px 16px rgba(0,0,0,.06)}
@@ -100,22 +95,17 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .card-title{font-weight:600;font-size:14px;flex:1}
 .card-desc{font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:10px}
 .card-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-/* NARASI */
 .narasi-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .narasi-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px}
 .narasi-panel h3{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:14px}
-/* CAPTION */
 .caption-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .caption-list{display:flex;flex-direction:column;gap:10px}
 .caption-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .15s}
 .caption-card:hover,.caption-card.sel{border-color:var(--text)}
-/* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:white;padding:12px 18px;border-radius:10px;font-size:13px;z-index:999;opacity:0;transform:translateY(10px);transition:all .25s;pointer-events:none}
 .toast.show{opacity:1;transform:translateY(0)}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-
-/* ===== YT ANALYTICS ===== */
 .yt-login{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px;text-align:center}
 .yt-login p{color:var(--muted);font-size:13.5px;max-width:360px;line-height:1.6}
 .btn-google{display:inline-flex;align-items:center;gap:10px;background:white;border:1.5px solid var(--border);padding:11px 20px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;color:var(--text)}
@@ -131,7 +121,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .range-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
 .range-tab{padding:6px 14px;border:1.5px solid var(--border);border-radius:7px;cursor:pointer;font-size:12px;font-weight:500;background:var(--surface);font-family:'DM Sans',sans-serif;transition:all .15s}
 .range-tab.on{background:var(--text);color:white;border-color:var(--text)}
-/* MONET PROGRESS */
 .monet-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
 .monet-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:4px}
 .monet-sub{font-size:12px;color:var(--muted);margin-bottom:16px}
@@ -143,10 +132,10 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .monet-target{font-size:12px;color:var(--muted)}
 .progress-bar{height:8px;background:var(--border);border-radius:4px}
 .progress-fill{height:100%;border-radius:4px;background:var(--yt);transition:width .5s}
+.progress-fill.blue{background:var(--sh)}
 .progress-fill.done{background:var(--green)}
 .monet-pct{font-size:11px;color:var(--muted);margin-top:4px}
 .monet-eta{background:var(--bg);border-radius:10px;padding:12px 14px;font-size:13px;border-left:3px solid var(--sh)}
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px}
 .stat-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
@@ -154,19 +143,16 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .stat-change{font-size:11.5px;margin-top:4px}
 .stat-change.up{color:var(--green)}
 .stat-change.down{color:var(--yt)}
-/* CHARTS */
 .charts-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
 .chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px}
 .chart-title{font-weight:600;font-size:13.5px;margin-bottom:16px}
 .chart-wrap{position:relative;height:180px}
-/* HEATMAP */
 .heatmap-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
 .heatmap-grid{display:grid;grid-template-columns:40px repeat(24,1fr);gap:2px;margin-top:12px}
 .heatmap-hour-label{font-size:9px;color:var(--muted);text-align:center;padding:2px 0}
 .heatmap-day-label{font-size:10px;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
 .heatmap-cell{height:22px;border-radius:3px;background:var(--border);position:relative;cursor:default}
 .heatmap-cell:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:var(--text);color:white;font-size:10px;padding:3px 6px;border-radius:4px;white-space:nowrap;z-index:10;pointer-events:none}
-/* AI SECTION */
 .ai-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
 .ai-section-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px}
 .ai-section-sub{font-size:12px;color:var(--muted);margin-bottom:16px}
@@ -178,7 +164,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .advice-item.critical{border-left-color:var(--yt)}
 .advice-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .advice-text{font-size:13px;line-height:1.6}
-/* VIDEO TABLE */
 .videos-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
 .videos-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
 .videos-title{font-weight:600;font-size:13.5px}
@@ -215,7 +200,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .vdet-btn:hover{background:var(--hover)}
 .load-more{width:100%;padding:10px;border:1.5px dashed var(--border);border-radius:8px;background:transparent;font-size:13px;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:12px;transition:all .15s}
 .load-more:hover{border-color:var(--text);color:var(--text)}
-/* VIDEO DETAIL MODAL */
 .vd-modal{width:720px}
 .vd-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px}
 .vd-thumb{width:140px;height:78px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--border)}
@@ -234,7 +218,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .vd-advice.critical{border-left-color:var(--yt)}
 .vd-advice-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .vd-advice-text{font-size:13px;line-height:1.6}
-/* TRENDING */
 .trending-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
 .trending-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:12px}
 .trending-card{background:var(--bg);border-radius:10px;padding:14px;border:1px solid var(--border)}
@@ -242,13 +225,11 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .trending-title{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:6px}
 .trending-views{font-size:11.5px;color:var(--muted)}
 .trending-angle{font-size:12px;color:var(--sh);margin-top:6px;line-height:1.4;font-style:italic}
-/* NARASI PAGE */
 .narasi-list-section{margin-top:28px}
 .narasi-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px}
 .narasi-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
 .narasi-item-title{font-weight:600;font-size:15px}
 .narasi-item-date{font-size:11.5px;color:var(--muted)}
-/* ACCORDION */
 .acc-wrap{margin-bottom:10px}
 .acc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;cursor:pointer;border-radius:10px;transition:all .2s;user-select:none;background:var(--surface);border:1px solid var(--border)}
 .acc-header:hover{background:var(--hover)}
@@ -265,19 +246,16 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .acc-body.open{max-height:9999px}
 .acc-inner{padding:14px}
 .narasi-item-content{font-size:13px;color:var(--muted);line-height:1.6;white-space:pre-wrap;max-height:100px;overflow:hidden;margin-bottom:12px}
-.narasi-item-actions{display:flex;gap:8px;flex-wrap:wrap}
-/* AI GENERATE BOX */
 .ai-gen-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:12px}
 .ai-gen-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px}
 .ai-gen-loading{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
-.ai-gen-content{}
 .ai-gen-section{margin-bottom:14px}
 .ai-gen-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:6px}
 .ai-judul-super{background:linear-gradient(135deg,#1a1a18,#3a3a38);color:white;border-radius:8px;padding:12px 14px;font-size:14px;font-weight:600;line-height:1.4;margin-bottom:8px;position:relative}
 .ai-judul-super::before{content:"⚡ SUPER HOOK";font-size:9px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.6);display:block;margin-bottom:4px}
-.ai-judul-alt{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:13px;line-height:1.4;margin-bottom:6px;cursor:pointer;transition:border-color .15s}
+.ai-judul-alt{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:13px;line-height:1.4;margin-bottom:6px;cursor:pointer;transition:border-color .15s;display:flex;align-items:center;gap:8px}
 .ai-judul-alt:hover{border-color:var(--text)}
-.ai-judul-alt-num{font-size:10px;font-weight:700;color:var(--muted);margin-right:6px}
+.ai-judul-alt-num{font-size:10px;font-weight:700;color:var(--muted);margin-right:2px;flex-shrink:0}
 .ai-desc-box{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:12px;font-size:13px;line-height:1.7;color:var(--text)}
 .ai-hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px}
 .ai-hashtag{background:var(--sh);color:white;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:500;cursor:pointer}
@@ -285,7 +263,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .ai-prompt-box{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:12px;font-size:12.5px;line-height:1.7;color:var(--text);white-space:pre-wrap;max-height:200px;overflow-y:auto}
 .copy-all-btn{font-size:11.5px;padding:6px 12px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;margin-top:8px}
 .copy-all-btn:hover{background:var(--hover)}
-/* LOADING */
 .yt-loading{text-align:center;padding:40px;color:var(--muted);font-size:13.5px}
 .spinner{width:28px;height:28px;border:2.5px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
 .spinner-sm{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--muted);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle;margin-left:6px}
@@ -315,7 +292,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
   </div>
   <div class="status-dot"><div class="dot" id="statusDot"></div><span id="statusText">Menghubungkan...</span></div>
 </nav>
-
 <main class="main">
 <!-- CALENDAR -->
 <div class="page active" id="page-calendar">
@@ -340,7 +316,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
     <div class="cal-cells" id="calCells"></div>
   </div>
 </div>
-
 <!-- NARASI -->
 <div class="page" id="page-narasi">
   <div class="page-title">Narasi & Scene</div>
@@ -364,7 +339,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
     <div id="narasiList"></div>
   </div>
 </div>
-
 <!-- IDEAS -->
 <div class="page" id="page-ideas">
   <div class="page-title">Ideas Board</div>
@@ -377,7 +351,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
   </div>
   <div class="card-grid" id="ideasGrid"></div>
 </div>
-
 <!-- CAPTION -->
 <div class="page" id="page-caption">
   <div class="page-title">Caption Draft</div>
@@ -392,7 +365,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
     </div>
   </div>
 </div>
-
 <!-- VAULT -->
 <div class="page" id="page-vault">
   <div class="page-title">Prompt Vault</div>
@@ -400,7 +372,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
   <button class="btn-add" style="margin-bottom:20px" onclick="openVaultModal()">+ Prompt Baru</button>
   <div class="card-grid" id="vaultGrid"></div>
 </div>
-
 <!-- YT ANALYTICS -->
 <div class="page" id="page-ytanalytics">
   <div class="page-title">YouTube Analytics</div>
@@ -420,14 +391,15 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
         <div><div class="yt-ch-name" id="ytChName">—</div><div class="yt-ch-sub" id="ytChSub">—</div></div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
-        <div id="apiKeyStatus" style="font-size:11px;padding:4px 10px;border-radius:6px;background:var(--hover);color:var(--muted);cursor:pointer" onclick="toggleApiKeyInput()">🔑 API Key</div>
+        <div id="apiKeyStatus" style="font-size:11px;padding:4px 10px;border-radius:6px;background:var(--hover);color:var(--muted);cursor:pointer" onclick="toggleApiKeyInput()">🔑 Set Gemini Key</div>
         <button class="btn-sm" onclick="ytLogout()">Keluar</button>
       </div>
     </div>
     <div id="apiKeyInputWrap" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:16px">
-      <div style="font-size:12px;font-weight:600;margin-bottom:8px">🔑 Anthropic API Key <span style="font-weight:400;color:var(--muted)">(tersimpan di browser kamu, tidak dikirim ke mana-mana)</span></div>
+      <div style="font-size:12px;font-weight:600;margin-bottom:4px">🔑 Gemini API Key <span style="font-weight:400;color:var(--muted)">(tersimpan di browser, tidak dikirim ke mana-mana)</span></div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px">Dapatkan gratis di <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--sh)">aistudio.google.com/apikey</a></div>
       <div style="display:flex;gap:8px">
-        <input type="password" id="apiKeyInput" placeholder="sk-ant-..." style="flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--bg);outline:none">
+        <input type="password" id="apiKeyInput" placeholder="AIza..." style="flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--bg);outline:none">
         <button onclick="saveApiKey()" style="padding:8px 16px;background:var(--text);color:white;border:none;border-radius:7px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px">Simpan</button>
         <button onclick="clearApiKey()" style="padding:8px 12px;border:1px solid var(--border);background:var(--surface);border-radius:7px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px">Hapus</button>
       </div>
@@ -444,7 +416,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
       <div class="monet-sub" id="monetSub">—</div>
       <div class="monet-grid">
         <div class="monet-item">
-          <div class="monet-label">Subscriber</div>
+          <div class="monet-label">👥 Subscriber</div>
           <div class="monet-nums"><span class="monet-current" id="monetSubVal">—</span><span class="monet-target">/ 1.000</span></div>
           <div class="progress-bar"><div class="progress-fill" id="monetSubBar" style="width:0%"></div></div>
           <div class="monet-pct" id="monetSubPct">—</div>
@@ -456,9 +428,9 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
           <div class="monet-pct" id="monetYtPct">—</div>
         </div>
         <div class="monet-item" style="grid-column:1/-1">
-          <div class="monet-label">⚡ Shorts Views</div>
+          <div class="monet-label">⚡ Shorts Views (syarat terpisah: 10 juta views)</div>
           <div class="monet-nums"><span class="monet-current" id="monetShVal">—</span><span class="monet-target">/ 10.000.000 views</span></div>
-          <div class="progress-bar"><div class="progress-fill" id="monetShBar" style="width:0%;background:var(--sh)"></div></div>
+          <div class="progress-bar"><div class="progress-fill blue" id="monetShBar" style="width:0%"></div></div>
           <div class="monet-pct" id="monetShPct">—</div>
         </div>
       </div>
@@ -479,12 +451,12 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
     <!-- HEATMAP -->
     <div class="heatmap-section">
       <div class="chart-title">🕐 Jam & Hari Upload Terbaik</div>
-      <p style="font-size:12px;color:var(--muted);margin-top:4px">Berdasarkan rata-rata views dari semua video kamu</p>
+      <p style="font-size:12px;color:var(--muted);margin-top:4px">Berdasarkan rata-rata views semua video kamu · warna merah = views tertinggi</p>
       <div class="heatmap-grid" id="heatmapGrid"></div>
     </div>
     <!-- TRENDING -->
     <div class="trending-section">
-      <div class="chart-title">🔥 Trending YouTube Indonesia Sekarang</div>
+      <div class="chart-title">🔥 Trending YouTube — Indonesia & Global</div>
       <p style="font-size:12px;color:var(--muted);margin-top:4px" id="trendingSub">Memuat...</p>
       <div class="trending-grid" id="trendingGrid"></div>
     </div>
@@ -542,7 +514,6 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
   </div>
 </div>
 </main>
-
 <!-- MODALS -->
 <div class="modal-overlay" id="calModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal">
@@ -609,16 +580,13 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
     <div class="modal-body" id="vdetBody"></div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
-
 <script>
 const SB_URL='https://qlnjfqldkbpubhsjovrc.supabase.co';
 const SB_KEY='sb_publishable_YQ9DtOevkeJdyIefK8v_Kg_BWjY8fw6';
 const YT_CLIENT='149194749854-n4ro3pfusotri027gm7nvuqap94k9mc0.apps.googleusercontent.com';
 const YT_REDIRECT='https://story-planner-fawn.vercel.app';
 const YT_SCOPE='https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly';
-const CLAUDE_MODEL='claude-sonnet-4-20250514';
 
 const{createClient}=supabase;
 const db=createClient(SB_URL,SB_KEY);
@@ -630,6 +598,43 @@ let ytChannel=null,ytAllVideos=[],ytAnalytics=null;
 let curRange=7,vTypeFilter='all',vSortBy='views';
 let vDisplayCount=25,filteredVideos=[],ctrData={},subsData={},ctrStop=false;
 const narasiStore={};
+
+// ===== GEMINI AI =====
+function getApiKey(){return localStorage.getItem('gemini_api_key')||'';}
+function saveApiKey(){
+  const k=document.getElementById('apiKeyInput').value.trim();
+  if(!k){toast('Masukkan API key dulu!');return;}
+  localStorage.setItem('gemini_api_key',k);
+  updateApiKeyStatus();
+  document.getElementById('apiKeyInputWrap').style.display='none';
+  toast('Gemini API key disimpan! ✅');
+  generateAIAdvice();
+}
+function clearApiKey(){localStorage.removeItem('gemini_api_key');document.getElementById('apiKeyInput').value='';updateApiKeyStatus();toast('API key dihapus');}
+function toggleApiKeyInput(){
+  const wrap=document.getElementById('apiKeyInputWrap');
+  const isHidden=wrap.style.display==='none';
+  wrap.style.display=isHidden?'block':'none';
+  if(isHidden){const k=getApiKey();document.getElementById('apiKeyInput').value=k?'•'.repeat(20):'';}
+}
+function updateApiKeyStatus(){
+  const k=getApiKey();const el=document.getElementById('apiKeyStatus');
+  if(!el)return;
+  if(k){el.style.background='#e6f4ea';el.style.color='var(--green)';el.textContent='🔑 Gemini Key ✅';}
+  else{el.style.background='#fff3cd';el.style.color='#b07c00';el.textContent='🔑 Set Gemini Key';}
+}
+
+async function geminiAI(prompt){
+  const key=getApiKey();if(!key)throw new Error('no_key');
+  const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7,maxOutputTokens:2000}})
+  });
+  if(!res.ok){const err=await res.json();throw new Error(err.error?.message||'Gemini API error');}
+  const data=await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text||'';
+}
 
 // NAV
 document.querySelectorAll('.nav-item').forEach(item=>{
@@ -647,12 +652,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
 });
 
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-
-async function checkStatus(){
-  try{const{error}=await db.from('calendar').select('id').limit(1);const dot=document.getElementById('statusDot'),txt=document.getElementById('statusText');
-  if(!error){dot.classList.add('on');txt.textContent='Tersambung';}else txt.textContent='Gagal terhubung';}
-  catch{document.getElementById('statusText').textContent='Gagal terhubung';}
-}
+async function checkStatus(){try{const{error}=await db.from('calendar').select('id').limit(1);const dot=document.getElementById('statusDot'),txt=document.getElementById('statusText');if(!error){dot.classList.add('on');txt.textContent='Tersambung';}else txt.textContent='Gagal terhubung';}catch{document.getElementById('statusText').textContent='Gagal terhubung';}}
 
 // ===== CALENDAR =====
 async function loadCalendar(){const{data}=await db.from('calendar').select('*');calData=data||[];renderCalendar();}
@@ -726,20 +726,10 @@ async function saveAddContent(){
 async function deleteCalContent(id){await db.from('calendar').delete().eq('id',id);calData=calData.filter(e=>e.id!==id);renderCalendar();openDayModal(selCalDate);toast('Konten dihapus!');}
 
 // ===== NARASI =====
-function cleanNarasi(){
-  const content=document.getElementById('narasiContent').value.trim();if(!content){toast('Paste narasi dulu!');return;}
-  const secs=doClean(content);if(!secs.length){toast('Tidak ada teks narasi!');return;}
-  const gabungan=secs.join('\n\n');
-  document.getElementById('sceneCards').innerHTML=`<div style="border:1px solid var(--border);border-radius:10px;padding:14px"><div style="font-size:13px;line-height:1.8;white-space:pre-wrap">${gabungan}</div><button class="btn-sm" style="margin-top:8px" onclick="copyText(this.dataset.text)" data-text="${gabungan.replace(/"/g,'&quot;')}">📋 Copy Semua</button></div>`;
-  toast('Narasi berhasil dibersihkan!');
-}
-async function saveNarasi(){
-  const title=document.getElementById('narasiTitle').value.trim(),content=document.getElementById('narasiContent').value.trim();if(!title||!content){toast('Lengkapi judul dan narasi!');return;}
-  const secs=doClean(content);const bersih=secs.length>0?secs.join('\n\n'):content;
-  const{error}=await db.from('narasi').insert([{title,content:bersih}]);if(!error){toast('Narasi disimpan!');loadNarasi();}
-}
+function cleanNarasi(){const content=document.getElementById('narasiContent').value.trim();if(!content){toast('Paste narasi dulu!');return;}const secs=doClean(content);if(!secs.length){toast('Tidak ada teks narasi!');return;}const gabungan=secs.join('\n\n');document.getElementById('sceneCards').innerHTML=`<div style="border:1px solid var(--border);border-radius:10px;padding:14px"><div style="font-size:13px;line-height:1.8;white-space:pre-wrap">${gabungan}</div><button class="btn-sm" style="margin-top:8px" onclick="copyText(this.dataset.text)" data-text="${gabungan.replace(/"/g,'&quot;')}">📋 Copy Semua</button></div>`;toast('Narasi berhasil dibersihkan!');}
+async function saveNarasi(){const title=document.getElementById('narasiTitle').value.trim(),content=document.getElementById('narasiContent').value.trim();if(!title||!content){toast('Lengkapi judul dan narasi!');return;}const secs=doClean(content);const bersih=secs.length>0?secs.join('\n\n'):content;const{error}=await db.from('narasi').insert([{title,content:bersih}]);if(!error){toast('Narasi disimpan!');loadNarasi();}}
+
 async function loadNarasi(){
-  // Gabungkan dari calendar + narasi table
   const[calRes,narasiRes]=await Promise.all([db.from('calendar').select('*').order('date',{ascending:false}),db.from('narasi').select('*').order('created_at',{ascending:false})]);
   const calItems=(calRes.data||[]).filter(e=>e.narasi&&e.narasi.length>0);
   const narasiItems=narasiRes.data||[];
@@ -747,6 +737,7 @@ async function loadNarasi(){
   const stylePrompt=vaultRes.data?.[0]?.body||'';
   renderNarasiList(calItems,narasiItems,stylePrompt);
 }
+
 function renderNarasiList(calItems,narasiItems,stylePrompt){
   if(calItems.length===0&&narasiItems.length===0){document.getElementById('narasiList').innerHTML='<p style="color:var(--muted);font-size:13px">Belum ada narasi.</p>';return;}
   const grouped={};
@@ -760,23 +751,20 @@ function renderNarasiList(calItems,narasiItems,stylePrompt){
     const dateLabel=`${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
     const isFirst=idx===0;
     html+=`<div class="acc-wrap">
-      <div class="acc-header ${isFirst?'open':''}" onclick="toggleAcc('acc_${date}',this)">
+      <div class="acc-header ${isFirst?'open':''}" onclick="toggleAcc('acc_${date.replace(/-/g,'_')}',this)">
         <div class="acc-day">${dateLabel}</div>
-        <div class="acc-right">
-          <span class="acc-count">${grouped[date].length} konten</span>
-          <span class="acc-arrow ${isFirst?'open':''}">▼</span>
-        </div>
+        <div class="acc-right"><span class="acc-count">${grouped[date].length} konten</span><span class="acc-arrow ${isFirst?'open':''}">▼</span></div>
       </div>
-      <div class="acc-body ${isFirst?'open':''}" id="acc_${date}">
-        <div class="acc-inner">`;
+      <div class="acc-body ${isFirst?'open':''}" id="acc_${date.replace(/-/g,'_')}"><div class="acc-inner">`;
     grouped[date].forEach(e=>{
       const narasiTampil=e.narasi_asli||e.narasi||'';
+      const safeTitle=encodeURIComponent(e.title);const safeNarasi=encodeURIComponent(narasiTampil);const safeStyle=encodeURIComponent(stylePrompt);
       html+=`<div class="narasi-item">
         <div class="narasi-item-header">
           <div><div class="narasi-item-title">${e.title}</div><div class="narasi-item-date"><span class="badge ${e.type||'yt'}">${e.type==='short'?'⚡ Shorts':'▶ YouTube'}</span></div></div>
           <div style="display:flex;gap:8px">
             <button class="btn-sm" onclick="copyText(this.dataset.text)" data-text="${narasiTampil.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}">Copy</button>
-            <button class="btn-add" style="font-size:11px;padding:5px 10px" onclick="generateAI('cal_${e.id}','${encodeURIComponent(e.title)}','${encodeURIComponent(narasiTampil)}','${encodeURIComponent(stylePrompt)}')">✨ Generate AI</button>
+            <button class="btn-add" style="font-size:11px;padding:5px 10px" onclick="generateAI('cal_${e.id}','${safeTitle}','${safeNarasi}','${safeStyle}')">✨ Generate AI</button>
           </div>
         </div>
         <div class="narasi-item-content">${narasiTampil}</div>
@@ -793,12 +781,13 @@ function renderNarasiList(calItems,narasiItems,stylePrompt){
       </div>
       <div class="acc-body" id="acc_manual"><div class="acc-inner">`;
     narasiItems.forEach(n=>{
+      const safeTitle=encodeURIComponent(n.title);const safeContent=encodeURIComponent(n.content||'');const safeStyle=encodeURIComponent(stylePrompt);
       html+=`<div class="narasi-item">
         <div class="narasi-item-header">
           <div class="narasi-item-title">${n.title}</div>
           <div style="display:flex;gap:8px">
             <button class="btn-sm" onclick="copyText(this.dataset.text)" data-text="${(n.content||'').replace(/"/g,'&quot;')}">Copy</button>
-            <button class="btn-add" style="font-size:11px;padding:5px 10px" onclick="generateAI('man_${n.id}','${encodeURIComponent(n.title)}','${encodeURIComponent(n.content||'')}','${encodeURIComponent(stylePrompt)}')">✨ Generate AI</button>
+            <button class="btn-add" style="font-size:11px;padding:5px 10px" onclick="generateAI('man_${n.id}','${safeTitle}','${safeContent}','${safeStyle}')">✨ Generate AI</button>
             <button class="btn-sm red" onclick="deleteNarasi('${n.id}')">Hapus</button>
           </div>
         </div>
@@ -811,20 +800,14 @@ function renderNarasiList(calItems,narasiItems,stylePrompt){
   document.getElementById('narasiList').innerHTML=html;
 }
 
-function toggleAcc(id,header){
-  const body=document.getElementById(id);const arrow=header.querySelector('.acc-arrow');
-  const isOpen=body.classList.contains('open');
-  body.classList.toggle('open',!isOpen);
-  arrow.classList.toggle('open',!isOpen);
-  header.classList.toggle('open',!isOpen);
-}
+function toggleAcc(id,header){const body=document.getElementById(id);const arrow=header.querySelector('.acc-arrow');const isOpen=body.classList.contains('open');body.classList.toggle('open',!isOpen);arrow.classList.toggle('open',!isOpen);header.classList.toggle('open',!isOpen);}
 async function deleteNarasi(id){await db.from('narasi').delete().eq('id',id);toast('Narasi dihapus!');loadNarasi();}
 
 async function generateAI(id,titleEnc,narasiEnc,styleEnc){
   const title=decodeURIComponent(titleEnc);const narasi=decodeURIComponent(narasiEnc);const style=decodeURIComponent(styleEnc);
   const box=document.getElementById('ai_'+id);if(!box)return;
-  if(!getApiKey()){box.innerHTML=`<div class="ai-gen-box"><p style="color:var(--yt);font-size:13px">⚠️ API key belum diset. Klik tombol <strong>🔑 Set API Key</strong> di halaman YT Analytics untuk mengaktifkan fitur AI.</p></div>`;return;}
-  box.innerHTML=`<div class="ai-gen-box"><div class="ai-gen-loading"><div class="spinner" style="width:16px;height:16px;border-width:2px"></div>AI sedang menganalisis narasi...</div></div>`;
+  if(!getApiKey()){box.innerHTML=`<div class="ai-gen-box"><p style="color:var(--yt);font-size:13px">⚠️ Gemini API key belum diset. Klik tombol <strong>🔑 Set Gemini Key</strong> di halaman YT Analytics.</p></div>`;return;}
+  box.innerHTML=`<div class="ai-gen-box"><div class="ai-gen-loading"><div class="spinner" style="width:16px;height:16px;border-width:2px"></div>Gemini AI sedang menganalisis narasi...</div></div>`;
   try{
     const prompt=`Kamu adalah expert YouTube content strategist dan copywriter viral Indonesia.
 
@@ -832,75 +815,44 @@ Narasi:
 JUDUL: ${title}
 ISI: ${narasi}
 
-${style?`STYLE REFERENSI (ikuti gaya penulisan ini persis):
-${style}
+${style?`STYLE REFERENSI (ikuti gaya penulisan ini, terutama format scene/visual jika ada):
+${style.slice(0,800)}
 
 `:''}
 
-Generate dalam format JSON (HANYA JSON, tanpa markdown):
-{
-  "prompt": "system prompt lengkap sesuai style referensi, kontekstual dengan narasi ini",
-  "judul_super": "1 judul SUPER HOOK paling powerful — pakai formula viral global (curiosity gap, angka spesifik, emosi kuat, FOMO) — bukan dari history channel",
-  "judul_alternatif": ["judul hook 2","judul hook 3","judul hook 4","judul hook 5"],
-  "deskripsi": "deskripsi hook di paragraf pertama + SEO-friendly, 150-200 kata",
-  "hashtag": ["hashtag1","hashtag2","hashtag3","hashtag4","hashtag5","hashtag6","hashtag7","hashtag8","hashtag9","hashtag10"]
-}`;
-    const text=await claudeAI(prompt);
+Generate dalam format JSON (HANYA JSON tanpa markdown backticks):
+{"prompt":"scene prompt sinematik lengkap sesuai style referensi, kontekstual dengan narasi ini — gunakan format scene yang sama jika ada di style referensi","judul_super":"1 judul SUPER HOOK paling powerful — pakai formula viral global (curiosity gap, angka spesifik, emosi kuat, FOMO) — fresh dan tidak generik","judul_alternatif":["judul hook 2","judul hook 3","judul hook 4","judul hook 5"],"deskripsi":"paragraf pertama hook + SEO-friendly 150-200 kata","hashtag":["tag1","tag2","tag3","tag4","tag5","tag6","tag7","tag8","tag9","tag10"]}`;
+    const text=await geminiAI(prompt);
     const clean=text.replace(/```json|```/g,'').trim();
     renderAIResult(id,JSON.parse(clean));
   }catch(e){
-    if(e.message==='no_key')box.innerHTML=`<div class="ai-gen-box"><p style="color:var(--yt);font-size:13px">⚠️ Set API key dulu di halaman YT Analytics.</p></div>`;
-    else box.innerHTML=`<div class="ai-gen-box"><p style="color:var(--muted);font-size:13px">Gagal generate. Coba lagi.</p></div>`;
+    if(e.message==='no_key')box.innerHTML=`<div class="ai-gen-box"><p style="color:var(--yt);font-size:13px">⚠️ Set Gemini API key dulu.</p></div>`;
+    else box.innerHTML=`<div class="ai-gen-box"><p style="color:var(--muted);font-size:13px">Gagal generate: ${e.message}. Coba lagi.</p></div>`;
   }
 }
 
 function renderAIResult(id,data){
   const box=document.getElementById('ai_'+id);if(!box)return;
   const hashtagsHtml=(data.hashtag||[]).map(h=>`<span class="ai-hashtag" onclick="copyText('#${h.replace('#','')}')">#${h.replace('#','')}</span>`).join('');
-  const altJudulHtml=(data.judul_alternatif||[]).map((j,i)=>`<div class="ai-judul-alt"><span class="ai-judul-alt-num">${i+2}.</span>${j}<button class="btn-sm" style="margin-left:auto;flex-shrink:0;font-size:10px" onclick="copyText('${j.replace(/'/g,"\\'")}')">Copy</button></div>`).join('');
+  const altJudulHtml=(data.judul_alternatif||[]).map((j,i)=>`<div class="ai-judul-alt"><span class="ai-judul-alt-num">${i+2}.</span><span style="flex:1">${j}</span><button class="btn-sm" style="font-size:10px;flex-shrink:0" onclick="copyText('${j.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">Copy</button></div>`).join('');
   box.innerHTML=`<div class="ai-gen-box">
-    <div class="ai-gen-title">✨ Hasil Generate AI</div>
-    ${data.prompt?`<div class="ai-gen-section">
-      <div class="ai-gen-section-label">📋 Prompt</div>
-      <div class="ai-prompt-box">${data.prompt}</div>
-      <button class="copy-all-btn" onclick="copyText(this.dataset.t)" data-t="${(data.prompt||'').replace(/"/g,'&quot;')}">Copy Prompt</button>
-    </div>`:''}
-    <div class="ai-gen-section">
-      <div class="ai-gen-section-label">🎯 Judul</div>
-      <div class="ai-judul-super">${data.judul_super||'—'}<button class="btn-sm" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10px;background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:white" onclick="copyText('${(data.judul_super||'').replace(/'/g,"\\'")}')">Copy</button></div>
-      ${altJudulHtml}
-    </div>
-    <div class="ai-gen-section">
-      <div class="ai-gen-section-label">📝 Deskripsi</div>
-      <div class="ai-desc-box">${data.deskripsi||'—'}</div>
-      <button class="copy-all-btn" onclick="copyText(this.dataset.t)" data-t="${(data.deskripsi||'').replace(/"/g,'&quot;')}">Copy Deskripsi</button>
-    </div>
-    <div class="ai-gen-section">
-      <div class="ai-gen-section-label">#️⃣ Hashtag</div>
-      <div class="ai-hashtag-wrap">${hashtagsHtml}</div>
-      <button class="copy-all-btn" style="margin-top:8px" onclick="copyText('${(data.hashtag||[]).map(h=>'#'+h.replace('#','')).join(' ')}')">Copy Semua Hashtag</button>
-    </div>
+    <div class="ai-gen-title">✨ Hasil Generate AI (Gemini)</div>
+    ${data.prompt?`<div class="ai-gen-section"><div class="ai-gen-section-label">📋 Prompt / Scene</div><div class="ai-prompt-box">${data.prompt}</div><button class="copy-all-btn" onclick="copyText(this.dataset.t)" data-t="${(data.prompt||'').replace(/"/g,'&quot;')}">Copy Prompt</button></div>`:''}
+    <div class="ai-gen-section"><div class="ai-gen-section-label">🎯 Judul</div><div class="ai-judul-super">${data.judul_super||'—'}<button class="btn-sm" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10px;background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:white" onclick="copyText('${(data.judul_super||'').replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">Copy</button></div>${altJudulHtml}</div>
+    <div class="ai-gen-section"><div class="ai-gen-section-label">📝 Deskripsi</div><div class="ai-desc-box">${data.deskripsi||'—'}</div><button class="copy-all-btn" onclick="copyText(this.dataset.t)" data-t="${(data.deskripsi||'').replace(/"/g,'&quot;')}">Copy Deskripsi</button></div>
+    <div class="ai-gen-section"><div class="ai-gen-section-label">#️⃣ Hashtag</div><div class="ai-hashtag-wrap">${hashtagsHtml}</div><button class="copy-all-btn" style="margin-top:8px" onclick="copyText('${(data.hashtag||[]).map(h=>'#'+h.replace('#','')).join(' ')}')">Copy Semua Hashtag</button></div>
   </div>`;
 }
 
 // ===== IDEAS =====
 async function loadIdeas(){const{data}=await db.from('ideas').select('*').order('created_at',{ascending:false});ideasData=data||[];renderIdeas();}
 function filterIdeas(f,btn){ideaFilter=f;document.querySelectorAll('#page-ideas .btn-sm').forEach(b=>{b.style.background='';b.style.color='';b.style.borderColor='';});btn.style.background='var(--text)';btn.style.color='white';btn.style.borderColor='var(--text)';renderIdeas();}
-function renderIdeas(){
-  const search=(document.getElementById('ideaSearch')?.value||'').toLowerCase();
-  let f=ideasData;if(ideaFilter!=='all')f=f.filter(i=>i.type===ideaFilter);if(search)f=f.filter(i=>i.title.toLowerCase().includes(search)||(i.description||'').toLowerCase().includes(search));
-  document.getElementById('ideasGrid').innerHTML=f.length===0?'<p style="color:var(--muted);font-size:13px">Belum ada ide.</p>':
-    f.map(idea=>`<div class="card"><div class="card-header"><div class="card-title">${idea.title}</div><span class="badge ${idea.status||'idea'}" style="cursor:pointer" onclick="cycleStatus('${idea.id}','${idea.status||'idea'}')">${statusLabel(idea.status)}</span></div>${idea.description?`<div class="card-desc">${idea.description}</div>`:''}<div class="card-meta"><span class="badge ${idea.type||'yt'}">${idea.type==='short'?'⚡ Shorts':'▶ YouTube'}</span><button class="btn-sm red" onclick="deleteIdea('${idea.id}')">Hapus</button></div></div>`).join('');
-}
+function renderIdeas(){const search=(document.getElementById('ideaSearch')?.value||'').toLowerCase();let f=ideasData;if(ideaFilter!=='all')f=f.filter(i=>i.type===ideaFilter);if(search)f=f.filter(i=>i.title.toLowerCase().includes(search)||(i.description||'').toLowerCase().includes(search));document.getElementById('ideasGrid').innerHTML=f.length===0?'<p style="color:var(--muted);font-size:13px">Belum ada ide.</p>':f.map(idea=>`<div class="card"><div class="card-header"><div class="card-title">${idea.title}</div><span class="badge ${idea.status||'idea'}" style="cursor:pointer" onclick="cycleStatus('${idea.id}','${idea.status||'idea'}')">${statusLabel(idea.status)}</span></div>${idea.description?`<div class="card-desc">${idea.description}</div>`:''}<div class="card-meta"><span class="badge ${idea.type||'yt'}">${idea.type==='short'?'⚡ Shorts':'▶ YouTube'}</span><button class="btn-sm red" onclick="deleteIdea('${idea.id}')">Hapus</button></div></div>`).join('');}
 function statusLabel(s){return s==='draft'?'✏️ Draft':s==='done'?'✅ Selesai':'💡 Ide';}
 async function cycleStatus(id,cur){const next=cur==='idea'?'draft':cur==='draft'?'done':'idea';await db.from('ideas').update({status:next}).eq('id',id);const i=ideasData.findIndex(x=>x.id===id);if(i>-1)ideasData[i].status=next;renderIdeas();}
 async function deleteIdea(id){await db.from('ideas').delete().eq('id',id);ideasData=ideasData.filter(i=>i.id!==id);renderIdeas();toast('Ide dihapus!');}
 function openIdeaModal(){document.getElementById('ideaModal').classList.add('open');}
-async function saveIdea(){
-  const title=document.getElementById('ideaFormTitle').value.trim();if(!title){toast('Judul tidak boleh kosong!');return;}
-  const{data,error}=await db.from('ideas').insert([{title,description:document.getElementById('ideaFormDesc').value.trim(),type:document.getElementById('ideaFormType').value,status:'idea'}]).select();
-  if(!error&&data){ideasData.unshift(data[0]);renderIdeas();document.getElementById('ideaModal').classList.remove('open');document.getElementById('ideaFormTitle').value='';document.getElementById('ideaFormDesc').value='';toast('Ide disimpan!');}
-}
+async function saveIdea(){const title=document.getElementById('ideaFormTitle').value.trim();if(!title){toast('Judul tidak boleh kosong!');return;}const{data,error}=await db.from('ideas').insert([{title,description:document.getElementById('ideaFormDesc').value.trim(),type:document.getElementById('ideaFormType').value,status:'idea'}]).select();if(!error&&data){ideasData.unshift(data[0]);renderIdeas();document.getElementById('ideaModal').classList.remove('open');document.getElementById('ideaFormTitle').value='';document.getElementById('ideaFormDesc').value='';toast('Ide disimpan!');}}
 
 // ===== CAPTION =====
 async function loadCaptions(){const{data}=await db.from('captions').select('*').order('created_at',{ascending:false});captionsData=data||[];renderCaptionList();}
@@ -947,8 +899,7 @@ async function fetchYTData(){
     await fetchTrending();
     renderDashboard();
     updateApiKeyStatus();
-    // Auto fetch subscriber di background setelah dashboard render
-    setTimeout(()=>autoFetchSubscribers(),2000);
+    setTimeout(()=>autoFetchSubscribers(),3000);
   }catch(e){if(e.message!=='401'){document.getElementById('ytLoading').style.display='none';document.getElementById('ytLogin').style.display='flex';toast('Gagal mengambil data');}}
 }
 
@@ -960,16 +911,15 @@ async function fetchAnalytics(){
 
 async function fetchTrending(){
   try{
-    // Fetch trending dari beberapa kategori untuk insight global
     const[news,entertainment,tech]=await Promise.all([
       ytFetch('https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=ID&maxResults=3&videoCategoryId=25'),
       ytFetch('https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=ID&maxResults=2&videoCategoryId=24'),
       ytFetch('https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=US&maxResults=2&videoCategoryId=28')
     ]);
     const allItems=[
-      ...(news.items||[]).map(v=>({...v,_source:'🇮🇩 Trending Indonesia'})),
+      ...(news.items||[]).map(v=>({...v,_source:'🇮🇩 News Indonesia'})),
       ...(entertainment.items||[]).map(v=>({...v,_source:'🎭 Entertainment ID'})),
-      ...(tech.items||[]).map(v=>({...v,_source:'🌍 Global Tech Trend'}))
+      ...(tech.items||[]).map(v=>({...v,_source:'🌍 Global Tech'}))
     ];
     renderTrending(allItems);
   }catch{document.getElementById('trendingSub').textContent='Tidak dapat memuat trending saat ini.';}
@@ -977,52 +927,36 @@ async function fetchTrending(){
 
 function renderTrending(items){
   if(!items.length){document.getElementById('trendingSub').textContent='Tidak ada data trending.';return;}
-  const niche=detectNiche();
-  document.getElementById('trendingSub').textContent=`${items.length} video trending · Indonesia + Global · diperbarui realtime`;
+  document.getElementById('trendingSub').textContent=`${items.length} video trending · Indonesia + Global · diperbarui setiap kamu buka halaman ini`;
   document.getElementById('trendingGrid').innerHTML=items.map((v,i)=>{
     const snip=v.snippet||{},stats=v.statistics||{};
-    const angle=suggestAngle(snip.title||'',niche);
-    const source=v._source||'🇮🇩 Trending';
+    const angle=suggestAngle(snip.title||'');
     return`<div class="trending-card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
         <div class="trending-rank">#${i+1}</div>
-        <div style="font-size:10px;color:var(--muted)">${source}</div>
+        <div style="font-size:10px;color:var(--muted)">${v._source||''}</div>
       </div>
-      <div class="trending-title">${snip.title?.slice(0,75)||'—'}</div>
-      <div class="trending-views">👁 ${fmtNum(parseInt(stats.viewCount||0))} views · ${snip.channelTitle?.slice(0,25)||''}</div>
+      <div class="trending-title">${(snip.title||'—').slice(0,75)}</div>
+      <div class="trending-views">👁 ${fmtNum(parseInt(stats.viewCount||0))} views · ${(snip.channelTitle||'').slice(0,25)}</div>
       <div class="trending-angle">💡 ${angle}</div>
     </div>`;
   }).join('');
 }
 
-function detectNiche(){
-  const titles=ytAllVideos.slice(0,20).map(v=>v.snippet?.title||'').join(' ').toLowerCase();
-  if(titles.includes('iran')||titles.includes('perang')||titles.includes('militer'))return'geopolitik/militer';
-  if(titles.includes('teknologi')||titles.includes('ai')||titles.includes('gadget'))return'teknologi';
-  if(titles.includes('bisnis')||titles.includes('investasi'))return'bisnis';
-  return'berita/informasi';
+function suggestAngle(title){
+  const t=title.toLowerCase();
+  if(t.includes('iran')||t.includes('israel')||t.includes('perang'))return'Angle: dampak ke Indonesia — "Kita perlu khawatir?" — curiosity hook terbukti viral';
+  if(t.includes('trump')||t.includes('amerika')||t.includes('tarif'))return'Angle: "Kenapa kebijakan ini langsung ngaruh ke dompet kita?" — lokal angle selalu perform';
+  if(t.includes('china')||t.includes('xi')||t.includes('beijing'))return'Angle: hubungkan dengan investasi China di RI — audiens lokal lebih relate';
+  if(t.includes('ai')||t.includes('robot')||t.includes('teknologi')||t.includes('elon'))return'Angle: "Pekerjaan apa yang bakal hilang di Indonesia?" — fear hook, selalu viral';
+  if(t.includes('ekonomi')||t.includes('rupiah')||t.includes('harga')||t.includes('inflasi'))return'Angle: tips praktis bertahan — konten solusi selalu dapat engagement tinggi';
+  if(t.includes('lebaran')||t.includes('ramadan')||t.includes('idul'))return'Konten seasonal — upload SEKARANG sebelum momentum habis, views bisa 3-5x';
+  if(t.includes('korea')||t.includes('kpop')||t.includes('drakor'))return'Angle: perspektif unik dari Indonesia, bukan sekadar rangkuman — beda dari channel lain';
+  if(t.includes('palestin')||t.includes('gaza')||t.includes('timur tengah'))return'Angle: dampak global + lokal Indonesia — topik ini masih tinggi engagement';
+  return'Angle: cari angle lokal Indonesia yang belum banyak dibahas — diferensiasi adalah kunci';
 }
 
-function suggestAngle(trendingTitle,niche){
-  const t=trendingTitle.toLowerCase();
-  // Analisis topik trending dan kasih angle spesifik
-  if(t.includes('iran')||t.includes('israel')||t.includes('perang')||t.includes('militer')||t.includes('drone')||t.includes('rudal')){
-    const angles=['Buat Shorts: "Apa yang terjadi kalau Indonesia terseret konflik ini?" — 45 detik, hook langsung','Angle lokal: dampak konflik ini ke harga BBM/pangan di Indonesia','Series: Timeline konflik ini dari awal — views tinggi karena audiens butuh konteks'];}
-  if(t.includes('trump')||t.includes('amerika')||t.includes('biden')||t.includes('white house')){return'Angle: "Kenapa kebijakan Trump ini bisa langsung ngaruh ke ekonomi Indonesia?" — topik ini selalu viral di channel geopolitik';}
-  if(t.includes('china')||t.includes('xi')||t.includes('beijing')){return'Angle: hubungkan dengan investasi China di Indonesia — audiens lokal lebih relate kalau ada koneksi langsung';}
-  if(t.includes('teknologi')||t.includes('ai')||t.includes('robot')||t.includes('elon')){return'Angle: "Pekerjaan apa yang bakal hilang di Indonesia akibat ini?" — fear-based hook, sangat viral';}
-  if(t.includes('ekonomi')||t.includes('rupiah')||t.includes('inflasi')||t.includes('harga')){return'Angle: tips praktis bertahan di situasi ekonomi ini — konten solusi selalu dapat engagement tinggi';}
-  if(t.includes('lebaran')||t.includes('ramadan')||t.includes('idul')){return'Angle: konten seasonal — upload SEKARANG sebelum momentnya lewat, views bisa 3-5x lebih tinggi';}
-  // Default berdasarkan niche
-  if(niche==='geopolitik/militer')return'Angle: hubungkan dengan dampak langsung ke Indonesia — "Kita harus khawatir?" — hook pertanyaan selalu efektif';
-  if(niche==='teknologi')return'Angle: review atau tutorial terkait topik ini dari sudut pandang pengguna Indonesia';
-  return'Angle: buat Shorts 45 detik dengan hook "Ternyata..." atau "Siapa sangka..." — format ini viral di Indonesia';
-}
-
-async function switchRange(days,btn){
-  curRange=days;document.querySelectorAll('.range-tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
-  await fetchAnalytics();renderStats();renderCharts();generateAIAdvice();
-}
+async function switchRange(days,btn){curRange=days;document.querySelectorAll('.range-tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');await fetchAnalytics();renderStats();renderCharts();generateAIAdvice();}
 
 function fmtNum(n){n=parseInt(n)||0;if(n>=1000000)return(n/1000000).toFixed(1)+'jt';if(n>=1000)return(n/1000).toFixed(1)+'rb';return n.toString();}
 function fmtDur(iso){if(!iso)return'—';const m=iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);if(!m)return'—';const h=parseInt(m[1]||0),min=parseInt(m[2]||0),s=parseInt(m[3]||0);if(h>0)return`${h}:${String(min).padStart(2,'0')}:${String(s).padStart(2,'0')}`;return`${min}:${String(s).padStart(2,'0')}`;}
@@ -1045,38 +979,33 @@ function renderMonet(){
   const subPct=Math.min(100,Math.round(subs/subTarget*100));
   const ytPct=Math.min(100,Math.round(ytWatchHours/ytTarget*100));
   const shPct=Math.min(100,Math.round(shTotalViews/shTarget*100));
-  // Subscriber
   document.getElementById('monetSubVal').textContent=fmtNum(subs);
   document.getElementById('monetSubBar').style.width=subPct+'%';
   if(subPct>=100)document.getElementById('monetSubBar').classList.add('done');
-  document.getElementById('monetSubPct').textContent=subPct+'% · kurang '+Math.max(0,subTarget-subs)+' subscriber lagi';
-  // YouTube watch time
-  document.getElementById('monetYtVal').textContent=fmtNum(ytWatchHours)+' jam';
+  document.getElementById('monetSubPct').textContent=subPct+'% tercapai · kurang '+Math.max(0,subTarget-subs)+' subscriber lagi';
+  document.getElementById('monetYtVal').textContent=fmtNum(ytWatchHours)+'j';
   document.getElementById('monetYtBar').style.width=ytPct+'%';
   if(ytPct>=100)document.getElementById('monetYtBar').classList.add('done');
-  document.getElementById('monetYtPct').textContent=ytPct+'% · kurang '+Math.max(0,ytTarget-ytWatchHours)+' jam lagi';
-  // Shorts views
-  document.getElementById('monetShVal').textContent=fmtNum(shTotalViews)+' views';
+  document.getElementById('monetYtPct').textContent=ytPct+'% tercapai · kurang '+fmtNum(Math.max(0,ytTarget-ytWatchHours))+' jam lagi';
+  document.getElementById('monetShVal').textContent=fmtNum(shTotalViews);
   document.getElementById('monetShBar').style.width=shPct+'%';
   if(shPct>=100)document.getElementById('monetShBar').classList.add('done');
-  document.getElementById('monetShPct').textContent=shPct+'% · kurang '+fmtNum(Math.max(0,shTarget-shTotalViews))+' views lagi';
-  // Estimasi
+  document.getElementById('monetShPct').textContent=shPct+'% tercapai · kurang '+fmtNum(Math.max(0,shTarget-shTotalViews))+' views lagi';
   const rows=ytAnalytics?.rows||[];const subsPerDay=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0)/Math.max(rows.length,1);
   const daysToSubGoal=subsPerDay>0?Math.ceil((subTarget-subs)/subsPerDay):null;
   let etaMsg='';
   if(subs>=subTarget&&(ytWatchHours>=ytTarget||shTotalViews>=shTarget)){etaMsg='🎉 Syarat monetisasi terpenuhi! Segera daftar ke YouTube Partner Program.';}
   else if(subs>=subTarget){etaMsg=`✅ Subscriber cukup! Fokus naikkan ${ytWatchHours<ytTarget?'watch time YouTube':'views Shorts'}.`;}
-  else if(daysToSubGoal&&daysToSubGoal<365){const tgl=new Date(Date.now()+daysToSubGoal*86400000);etaMsg=`📅 Estimasi capai 1.000 subscriber: ${tgl.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})} (${daysToSubGoal} hari lagi).`;}
-  else{etaMsg=`⚠️ Pertumbuhan subscriber lambat. Konsistensi upload dan promosi konten adalah kunci.`;}
+  else if(daysToSubGoal&&daysToSubGoal<365){const tgl=new Date(Date.now()+daysToSubGoal*86400000);etaMsg=`📅 Estimasi 1.000 subscriber: ${tgl.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})} (${daysToSubGoal} hari lagi)`;}
+  else{etaMsg=`⚠️ Pertumbuhan subscriber lambat. Konsistensi upload + promosi adalah kunci.`;}
   document.getElementById('monetEta').textContent=etaMsg;
-  document.getElementById('monetSub').textContent='Pantau progress monetisasi kamu · diperbarui realtime';
+  document.getElementById('monetSub').textContent='▶ YT dan ⚡ Shorts punya syarat monetisasi BERBEDA — pantau masing-masing';
 }
 
 function renderStats(){
   const rows=ytAnalytics?.rows||[];
   const totV=rows.reduce((s,r)=>s+(r[1]||0),0);const totW=rows.reduce((s,r)=>s+(r[2]||0),0);
   const totS=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0);
-  // Fix CTR: ambil dari semua baris, filter yg ada nilai
   const ctrRows=rows.filter(r=>r[5]>0);const avgCtr=ctrRows.length>0?ctrRows.reduce((s,r)=>s+(r[5]||0),0)/ctrRows.length*100:0;
   document.getElementById('statViews').textContent=fmtNum(totV);
   document.getElementById('statWatch').textContent=fmtNum(Math.round(totW/60));
@@ -1086,8 +1015,8 @@ function renderStats(){
   const vChg=v1>0?Math.round((v2-v1)/v1*100):0;
   const vEl=document.getElementById('statViewsC');vEl.textContent=(vChg>=0?'↑ +':'↓ ')+vChg+'% vs periode sebelumnya';vEl.className='stat-change '+(vChg>=0?'up':'down');
   document.getElementById('statWatchC').textContent=curRange+' hari terakhir';document.getElementById('statWatchC').className='stat-change';
-  document.getElementById('statSubsC').textContent='subscriber bersih gained-lost';document.getElementById('statSubsC').className='stat-change';
-  document.getElementById('statCtrC').textContent=avgCtr<=0?'Data tidak tersedia':avgCtr<2?'⚠️ Di bawah standar (2-5%)':avgCtr>=4?'✅ Di atas rata-rata':'Normal 2-4%';
+  document.getElementById('statSubsC').textContent='gained minus lost';document.getElementById('statSubsC').className='stat-change';
+  document.getElementById('statCtrC').textContent=avgCtr<=0?'Data tidak tersedia via Analytics API':avgCtr<2?'⚠️ Di bawah standar (2-5%)':avgCtr>=4?'✅ Di atas rata-rata':'Normal 2-4%';
   document.getElementById('statCtrC').className='stat-change '+(avgCtr>=2?'up':'down');
 }
 
@@ -1116,7 +1045,6 @@ function renderHeatmap(){
   });
   let maxAvg=0;const avgData={};
   days.forEach(d=>{avgData[d]={};for(let h=0;h<24;h++){const slot=heatData[d][h];const avg=slot.count>0?slot.views/slot.count:0;avgData[d][h]=avg;if(avg>maxAvg)maxAvg=avg;}});
-  // Find best slot
   let bestDay='',bestHour=0,bestAvg=0;
   days.forEach(d=>{for(let h=0;h<24;h++){if(avgData[d][h]>bestAvg){bestAvg=avgData[d][h];bestDay=d;bestHour=h;}}});
   const hours=Array.from({length:24},(_,i)=>i);
@@ -1127,102 +1055,115 @@ function renderHeatmap(){
       const avg=avgData[day]?.[h]||0;const pct=maxAvg>0?avg/maxAvg:0;
       const isBest=day===bestDay&&h===bestHour&&avg>0;
       const color=pct>0.7?`rgba(224,59,46,${0.2+pct*0.8})`:pct>0.4?`rgba(224,155,59,${0.2+pct*0.8})`:pct>0.1?`rgba(59,123,224,${0.2+pct*0.8})`:'var(--border)';
-      const tip=avg>0?`${day} jam ${h}:00 · rata-rata ${fmtNum(Math.round(avg))} views · ${heatData[day][h].count} video`:`${day} jam ${h}:00 · belum ada upload`;
-      html+=`<div class="heatmap-cell" style="background:${color};${isBest?'outline:2px solid var(--text);outline-offset:1px':''}" data-tip="${tip}"></div>`;
+      const tip=avg>0?`${day} jam ${h}:00 · rata-rata ${fmtNum(Math.round(avg))} views · ${heatData[day][h].count} video upload`:`${day} jam ${h}:00 · belum pernah upload`;
+      html+=`<div class="heatmap-cell" style="background:${color};${isBest?'outline:2px solid #1a1a18;outline-offset:1px':''}" data-tip="${tip}"></div>`;
     });
   });
-  // Legend + rekomendasi jadwal
+  // Legenda + rekomendasi jadwal
   const topSlots=[];days.forEach(d=>{for(let h=0;h<24;h++){if(avgData[d][h]>0)topSlots.push({day:d,hour:h,avg:avgData[d][h]});}});
   topSlots.sort((a,b)=>b.avg-a.avg);const top6=topSlots.slice(0,6);
   const jadwal=top6.length>0?top6.map(s=>`${s.day} ${s.hour}:00`).join(' · '):'Belum cukup data';
   html+=`<div style="grid-column:1/-1;margin-top:14px">
-    <div style="display:flex;align-items:center;gap:16px;font-size:11px;color:var(--muted);flex-wrap:wrap;margin-bottom:10px">
-      <span style="font-weight:600">Cara baca:</span>
-      <span>⬜ Belum ada upload</span>
-      <div style="display:flex;gap:4px;align-items:center"><div style="width:14px;height:10px;border-radius:2px;background:rgba(59,123,224,0.5)"></div><span>Views rendah</span></div>
-      <div style="display:flex;gap:4px;align-items:center"><div style="width:14px;height:10px;border-radius:2px;background:rgba(224,155,59,0.7)"></div><span>Views sedang</span></div>
-      <div style="display:flex;gap:4px;align-items:center"><div style="width:14px;height:10px;border-radius:2px;background:rgba(224,59,46,0.9)"></div><span>Views tinggi</span></div>
-      ${bestAvg>0?`<span style="margin-left:4px">⭐ Terbaik: <strong>${bestDay} jam ${bestHour}:00</strong> — rata-rata ${fmtNum(Math.round(bestAvg))} views</span>`:''}
+    <div style="display:flex;align-items:center;gap:12px;font-size:11px;color:var(--muted);flex-wrap:wrap;margin-bottom:10px">
+      <strong>Cara baca:</strong>
+      <span>⬜ Belum upload</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(59,123,224,0.5);display:inline-block"></span> Views rendah</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(224,155,59,0.7);display:inline-block"></span> Views sedang</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(224,59,46,0.9);display:inline-block"></span> Views tinggi</span>
+      ${bestAvg>0?`<strong>⭐ Terbaik: ${bestDay} jam ${bestHour}:00 — rata-rata ${fmtNum(Math.round(bestAvg))} views</strong>`:''}
     </div>
     ${top6.length>0?`<div style="background:var(--bg);border-radius:10px;padding:14px;border-left:3px solid var(--green)">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:6px">📅 REKOMENDASI JADWAL 6 SHORTS/HARI</div>
-      <div style="font-size:13px;font-weight:500;margin-bottom:4px">${jadwal}</div>
-      <div style="font-size:12px;color:var(--muted)">Berdasarkan jam upload yang rata-rata viewsnya paling tinggi di channel kamu. Upload di jam-jam ini untuk maksimalkan jangkauan.</div>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:6px">📅 REKOMENDASI JADWAL 6 SHORTS/HARI (berdasarkan data channel kamu)</div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px">${jadwal}</div>
+      <div style="font-size:12px;color:var(--muted)">Jam-jam upload yang rata-rata viewsnya paling tinggi di channel kamu. Distribusikan 6 Shorts di jam-jam ini untuk reach maksimal.</div>
     </div>`:''}
   </div>`;
   document.getElementById('heatmapGrid').innerHTML=html;
 }
 
-// AI OVERALL — menggunakan Claude API untuk analisis mendalam
+// AI OVERALL — Gemini
 async function generateAIAdvice(){
   document.getElementById('adviceList').innerHTML='<div class="yt-loading" style="padding:20px"><div class="spinner"></div></div>';
   const rows=ytAnalytics?.rows||[];
-  const totViews=rows.reduce((s,r)=>s+(r[1]||0),0);
-  const totSubs=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0);
+  const totViews=rows.reduce((s,r)=>s+(r[1]||0),0);const totSubs=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0);
   const ctrRows=rows.filter(r=>r[5]>0);const avgCtr=ctrRows.length>0?ctrRows.reduce((s,r)=>s+r[5],0)/ctrRows.length*100:0;
   const ytVids=ytAllVideos.filter(v=>!isShort(v));const shVids=ytAllVideos.filter(v=>isShort(v));
-  const avgViews=ytAllVideos.length>0?ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0)/ytAllVideos.length:0;
   const totalViewsAll=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);
+  const avgViews=ytAllVideos.length>0?totalViewsAll/ytAllVideos.length:0;
   const totalLikes=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.likeCount||0),0);
   const totalComments=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.commentCount||0),0);
   const overallEng=totalViewsAll>0?(totalLikes+totalComments)/totalViewsAll*100:0;
-  // Fix: hitung gap dengan sort benar
-  const sortedDates=[...ytAllVideos].sort((a,b)=>new Date(a.snippet?.publishedAt)-new Date(b.snippet?.publishedAt)).map(v=>v.snippet?.publishedAt?.split('T')[0]).filter(Boolean);
+  // Fix gap calculation
+  const sortedByDate=[...ytAllVideos].sort((a,b)=>new Date(a.snippet?.publishedAt)-new Date(b.snippet?.publishedAt));
+  const uploadDates=sortedByDate.map(v=>v.snippet?.publishedAt?.split('T')[0]).filter(Boolean);
   let avgGap=0;
-  if(sortedDates.length>=2){const gaps=[];for(let i=1;i<Math.min(sortedDates.length,30);i++){const diff=(new Date(sortedDates[i])-new Date(sortedDates[i-1]))/86400000;if(diff>=0&&diff<90)gaps.push(diff);}if(gaps.length>0)avgGap=gaps.reduce((a,b)=>a+b,0)/gaps.length;}
-  const top5=([...ytAllVideos].sort((a,b)=>parseInt(b.statistics?.viewCount||0)-parseInt(a.statistics?.viewCount||0))).slice(0,5);
-  const bot5=([...ytAllVideos].sort((a,b)=>parseInt(a.statistics?.viewCount||0)-parseInt(b.statistics?.viewCount||0))).filter(v=>parseInt(v.statistics?.viewCount||0)>0).slice(0,5);
-  // Analisis judul top vs bottom
-  const top5titles=top5.map(v=>`"${v.snippet?.title}" (${fmtNum(parseInt(v.statistics?.viewCount||0))} views, ${fmtDur(v.contentDetails?.duration)})`).join('\n');
-  const bot5titles=bot5.map(v=>`"${v.snippet?.title}" (${fmtNum(parseInt(v.statistics?.viewCount||0))} views, ${fmtDur(v.contentDetails?.duration)})`).join('\n');
+  if(uploadDates.length>=2){const gaps=[];for(let i=1;i<Math.min(uploadDates.length,30);i++){const diff=(new Date(uploadDates[i])-new Date(uploadDates[i-1]))/86400000;if(diff>=0&&diff<90)gaps.push(diff);}if(gaps.length>0)avgGap=gaps.reduce((a,b)=>a+b,0)/gaps.length;}
+  const top5=[...ytAllVideos].sort((a,b)=>parseInt(b.statistics?.viewCount||0)-parseInt(a.statistics?.viewCount||0)).slice(0,5);
+  const bot5=[...ytAllVideos].sort((a,b)=>parseInt(a.statistics?.viewCount||0)-parseInt(b.statistics?.viewCount||0)).filter(v=>parseInt(v.statistics?.viewCount||0)>0).slice(0,5);
+  const top5titles=top5.map(v=>`"${v.snippet?.title}" (${fmtNum(parseInt(v.statistics?.viewCount||0))} views, durasi ${fmtDur(v.contentDetails?.duration)})`).join('\n');
+  const bot5titles=bot5.map(v=>`"${v.snippet?.title}" (${fmtNum(parseInt(v.statistics?.viewCount||0))} views)`).join('\n');
   const subs=parseInt(ytChannel?.statistics?.subscriberCount||0);
-  const totalWatchHours=Math.round(ytAllVideos.reduce((s,v)=>s+getDurSec(v)*parseInt(v.statistics?.viewCount||0)/3600,0));
-  document.getElementById('aiOverallSub').textContent=`Analisis ${ytAllVideos.length} video · ${curRange} hari terakhir · diperbarui realtime`;
-  if(!getApiKey()){document.getElementById('adviceList').innerHTML=`<div class="advice-item warning"><div class="advice-label">⚠️ API Key Belum Diset</div><div class="advice-text">Klik tombol <strong>🔑 Set API Key</strong> di atas untuk mengaktifkan analisis AI mendalam. Tanpa API key, analisis hanya menggunakan data dasar.</div></div>`;renderLocalAdvice(avgCtr,avgGap,overallEng,avgViews,subs,totalWatchHours,top5,shVids,ytVids);return;}
+  const totalWatchHours=Math.round(ytVids.reduce((s,v)=>s+getDurSec(v)*parseInt(v.statistics?.viewCount||0)/3600,0));
+  document.getElementById('aiOverallSub').textContent=`Analisis ${ytAllVideos.length} video · ${curRange} hari terakhir · powered by Gemini AI · diperbarui realtime`;
+  if(!getApiKey()){
+    document.getElementById('adviceList').innerHTML=`<div class="advice-item warning"><div class="advice-label">⚠️ Gemini API Key Belum Diset</div><div class="advice-text">Klik tombol <strong>🔑 Set Gemini Key</strong> di atas dan masukkan API key dari <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--sh)">aistudio.google.com/apikey</a> (gratis) untuk aktifkan analisis AI mendalam.</div></div>`;
+    renderLocalAdvice(avgCtr,avgGap,overallEng,avgViews,subs,totalWatchHours,top5,shVids,ytVids);
+    return;
+  }
   try{
-    const text=await claudeAI(`Kamu adalah YouTube analytics expert dan growth consultant terbaik Indonesia. Analisis data channel ini secara MENDALAM dan SPESIFIK. Kasih insight berdasarkan DATA NYATA, dengan langkah konkret.
+    const text=await geminiAI(`Kamu adalah YouTube analytics expert dan growth consultant terbaik untuk konten Indonesia. Analisis data channel ini MENDALAM dan SPESIFIK. Semua insight harus berdasarkan DATA NYATA dengan langkah konkret.
 
-DATA:
-- Total video: ${ytAllVideos.length} (${ytVids.length} YouTube + ${shVids.length} Shorts)
-- Subscriber: ${fmtNum(subs)} (target monet: 1.000)
-- Total views: ${fmtNum(totalViewsAll)} | Rata-rata per video: ${fmtNum(Math.round(avgViews))}
-- Engagement rate: ${overallEng.toFixed(2)}% | CTR: ${avgCtr>0?avgCtr.toFixed(1)+'%':'tidak tersedia'}
-- Upload rata-rata: setiap ${avgGap>0?avgGap.toFixed(1)+' hari':'tidak dapat dihitung'}
-- Watch time estimasi: ${fmtNum(totalWatchHours)} jam (target monet: 4.000 jam)
+DATA CHANNEL:
+- Total video: ${ytAllVideos.length} (${ytVids.length} YouTube long-form + ${shVids.length} Shorts)
+- Subscriber: ${fmtNum(subs)} / 1.000 (target monetisasi)
+- Total views keseluruhan: ${fmtNum(totalViewsAll)} | Rata-rata per video: ${fmtNum(Math.round(avgViews))}
+- Engagement rate: ${overallEng.toFixed(2)}% | CTR rata-rata: ${avgCtr>0?avgCtr.toFixed(1)+'%':'tidak tersedia'}
+- Frekuensi upload: setiap ${avgGap>0?avgGap.toFixed(1)+' hari':'data tidak cukup'}
+- YouTube Watch Time: ${fmtNum(totalWatchHours)} jam / 4.000 jam target
 - ${curRange} hari terakhir: ${fmtNum(totViews)} views, ${totSubs>0?'+':''}${totSubs} subscriber
 
 5 VIDEO TERBAIK:
 ${top5titles}
 
-5 VIDEO TERBURUK:
+5 VIDEO TERENDAH:
 ${bot5titles}
 
-Format JSON (HANYA JSON):
-{"kesimpulan":"2-3 kalimat kondisi channel saat ini secara jujur","insights":[{"type":"critical|warning|tip|good","label":"judul dengan emoji","text":"analisis spesifik berdasarkan data nyata + langkah konkret"}]}
+Berikan analisis dalam format JSON (HANYA JSON, tanpa markdown backticks):
+{"kesimpulan":"2-3 kalimat kondisi channel saat ini secara jujur dan spesifik","insights":[{"type":"critical|warning|tip|good","label":"judul singkat dengan emoji","text":"analisis spesifik berdasarkan data + langkah konkret yang bisa dilakukan sekarang"}]}
 
-Harus ada insight tentang:
-1. Kenapa ada video ratusan ribu views vs puluhan — analisis pola spesifik dari judul/topik yang diberikan
-2. Formula dari video terbaik kamu (topik, kata kunci di judul, durasi)
-3. Langkah konkret naikkan views+likes+komentar sekaligus
-4. Prediksi views video berikutnya berdasarkan tren
-5. Rekomendasi konten spesifik yang berpotensi meledak
-6. Strategi monetisasi tercepat berdasarkan data
-7. Analisis engagement dan cara meningkatkan
-Minimal 7 insights. Semua spesifik, tidak generic.`);
-    const clean=text.replace(/```json|```/g,'').trim();const parsed=JSON.parse(clean);
+Wajib ada insight tentang:
+1. Kenapa video terbaik bisa viral — analisis pola dari judul/topik/durasi yang diberikan
+2. Kenapa video terendah gagal — apa yang berbeda
+3. Formula konkret untuk video berikutnya berdasarkan data
+4. Langkah spesifik naikkan views+likes+komentar sekarang juga
+5. Strategi monetisasi tercepat berdasarkan kondisi channel saat ini
+6. Prediksi performa video berikutnya jika mengikuti formula terbaik
+7. Rekomendasi konten spesifik yang berpotensi viral di niche ini
+8. Analisis engagement dan cara tingkatkan
+9. Evaluasi frekuensi upload — cukup atau perlu ditingkatkan
+10. Satu hal yang HARUS diubah sekarang jika ingin channel berkembang
+
+Minimal 8 insights. Semua harus SPESIFIK dan ACTIONABLE, bukan saran generik.`);
+    const clean=text.replace(/```json|```/g,'').trim();
+    // Handle JSON that might start after some text
+    const jsonStart=clean.indexOf('{');const jsonEnd=clean.lastIndexOf('}');
+    const jsonStr=jsonStart>=0?clean.slice(jsonStart,jsonEnd+1):clean;
+    const parsed=JSON.parse(jsonStr);
     document.getElementById('adviceList').innerHTML=
       (parsed.kesimpulan?`<div style="background:var(--bg);border-radius:10px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--border)"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:4px">📋 KESIMPULAN CHANNEL</div><div style="font-size:13px;line-height:1.6">${parsed.kesimpulan}</div></div>`:'') +
-      (parsed.insights||[]).map(a=>`<div class="advice-item ${a.type}"><div class="advice-label">${a.label}</div><div class="advice-text">${a.text}</div></div>`).join('');
-  }catch(e){renderLocalAdvice(avgCtr,avgGap,overallEng,avgViews,subs,totalWatchHours,top5,shVids,ytVids);}
+      (parsed.insights||[]).map(a=>`<div class="advice-item ${a.type||'tip'}"><div class="advice-label">${a.label}</div><div class="advice-text">${a.text}</div></div>`).join('');
+  }catch(e){
+    renderLocalAdvice(avgCtr,avgGap,overallEng,avgViews,subs,totalWatchHours,top5,shVids,ytVids);
+  }
 }
 
 function renderLocalAdvice(avgCtr,avgGap,overallEng,avgViews,subs,totalWatchHours,top5,shVids,ytVids){
   const advices=[];const top=top5[0];const topV=parseInt(top?.statistics?.viewCount||0);
-  if(topV>avgViews*5){const topDur=fmtDur(top?.contentDetails?.duration);const topTitle=top?.snippet?.title||'';advices.push({type:'good',label:'🏆 Formula Video Viral Kamu',text:`"${topTitle.slice(0,60)}" dapat ${fmtNum(topV)} views (${Math.round(topV/avgViews)}x rata-rata). Durasi: ${topDur}. Pola yang terdeteksi: judul pakai pertanyaan/angka, topik trending geopolitik. Replikasi: buat 3 video dengan formula serupa minggu ini.`});}
-  if(avgGap>1){advices.push({type:'good',label:'✅ Frekuensi Upload',text:`Upload rata-rata setiap ${avgGap.toFixed(1)} hari — konsistensi yang baik. Pertahankan ritme ini.`});}
-  if(avgCtr<2&&avgCtr>0){advices.push({type:'critical',label:'🚨 CTR Kritis',text:`CTR ${avgCtr.toFixed(1)}% jauh di bawah standar 2-5%. Redesign thumbnail: gunakan wajah dengan ekspresi shock/penasaran, teks maksimal 3 kata dengan ukuran besar, kontras warna tinggi merah/kuning.`});}
-  if(overallEng<1){advices.push({type:'warning',label:'💬 Engagement Perlu Ditingkatkan',text:`Engagement ${overallEng.toFixed(2)}% rendah. Strategi: (1) Pin pertanyaan di komentar setiap upload, (2) Balas semua komentar 24 jam pertama, (3) Akhiri video dengan pertanyaan spesifik yang mudah dijawab.`});}
-  if(subs<1000){const need=1000-subs;advices.push({type:'tip',label:'🎯 Strategi Monet Tercepat',text:`Kurang ${need} subscriber lagi. Cara tercepat: upload Shorts setiap hari selama 30 hari — Shorts adalah mesin subscriber terkencang. Plus tambah CTA subscribe di tengah setiap video, bukan hanya di akhir.`});}
+  if(topV>avgViews*5){const topDur=fmtDur(top?.contentDetails?.duration);advices.push({type:'good',label:'🏆 Formula Video Viral',text:`"${(top?.snippet?.title||'').slice(0,60)}" dapat ${fmtNum(topV)} views (${Math.round(topV/avgViews)}x rata-rata). Durasi: ${topDur}. Replikasi topik, angle, dan format video ini.`});}
+  if(avgGap>0){advices.push({type:avgGap<=3?'good':'warning',label:avgGap<=3?'✅ Frekuensi Bagus':'⚠️ Frekuensi Upload',text:`Upload rata-rata setiap ${avgGap.toFixed(1)} hari. ${avgGap>3?'Idealnya upload lebih sering — setiap 1-2 hari untuk growth optimal.':'Pertahankan konsistensi ini.'}`});}
+  if(avgCtr>0&&avgCtr<2)advices.push({type:'critical',label:'🚨 CTR Kritis',text:`CTR ${avgCtr.toFixed(1)}% jauh di bawah standar 2-5%. Redesign thumbnail: gunakan wajah ekspresif, teks max 3 kata ukuran besar, kontras tinggi merah/kuning.`});
+  if(overallEng<1)advices.push({type:'warning',label:'💬 Tingkatkan Engagement',text:`Engagement ${overallEng.toFixed(2)}% rendah. Strategi: pin pertanyaan di komentar setiap upload, balas semua komentar 24 jam pertama, akhiri video dengan pertanyaan mudah dijawab.`});
+  if(subs<1000)advices.push({type:'tip',label:'🎯 Strategi Monet Tercepat',text:`Kurang ${1000-subs} subscriber lagi. Cara tercepat: upload Shorts setiap hari 30 hari berturut-turut + tambah CTA subscribe di tengah video (bukan hanya di akhir).`});
   document.getElementById('adviceList').innerHTML=advices.map(a=>`<div class="advice-item ${a.type}"><div class="advice-label">${a.label}</div><div class="advice-text">${a.text}</div></div>`).join('');
 }
 
@@ -1269,15 +1210,16 @@ function renderVideoTable(){
 }
 function loadMoreVideos(){vDisplayCount+=25;renderVideoTable();}
 
-// CTR & SUBS PER VIDEO
+// CTR & SUBS
 async function fetchVideoAnalytics(videoId){
   const end=new Date().toISOString().split('T')[0];const start=new Date(Date.now()-365*86400000).toISOString().split('T')[0];
   try{
-    const r=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${start}&endDate=${end}&metrics=impressionClickThroughRate,subscribersGained&dimensions=video&filters=video%3D%3D${videoId}`,{headers:{Authorization:'Bearer '+ytToken}});
+    const r=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${start}&endDate=${end}&metrics=subscribersGained&dimensions=video&filters=video%3D%3D${videoId}`,{headers:{Authorization:'Bearer '+ytToken}});
     const d=await r.json();const rows=d.rows||[];
-    if(rows.length>0)return{ctr:rows[0][1]*100,subs:rows[0][2]||0};return null;
+    if(rows.length>0)return{ctr:null,subs:rows[0][1]||0};return{ctr:null,subs:0};
   }catch{return null;}
 }
+
 async function startLoadCTR(){
   if(!ytToken)return;ctrStop=false;
   document.getElementById('ctrProgress').style.display='block';
@@ -1286,22 +1228,33 @@ async function startLoadCTR(){
   for(let i=0;i<total;i++){
     if(ctrStop)break;const v=ytAllVideos[i];
     const result=await fetchVideoAnalytics(v.id);
-    if(result){ctrData[v.id]=result.ctr;subsData[v.id]=result.subs;}
+    if(result){if(result.subs!=null)subsData[v.id]=result.subs;}
     const pct=Math.round((i+1)/total*100);
     document.getElementById('ctrBarFill').style.width=pct+'%';
-    document.getElementById('ctrProgressTxt').textContent=`Mengambil CTR & Subscriber... ${i+1}/${total}`;
-    const ctrCell=document.getElementById('ctr_'+v.id);const subCell=document.getElementById('sub_'+v.id);
-    if(result){
-      if(ctrCell)ctrCell.innerHTML=`<span style="color:${result.ctr>=4?'var(--green)':result.ctr>=2?'var(--text)':'var(--yt)'};font-weight:600">${result.ctr.toFixed(1)}%</span>`;
-      if(subCell)subCell.innerHTML=`<span style="color:${result.subs>0?'var(--green)':'var(--muted)'};font-weight:600">${result.subs>0?'+':''}${result.subs}</span>`;
-    }
-    await new Promise(r=>setTimeout(r,150));
+    document.getElementById('ctrProgressTxt').textContent=`Mengambil Subscriber... ${i+1}/${total}`;
+    const subCell=document.getElementById('sub_'+v.id);
+    if(result&&result.subs!=null&&subCell)subCell.innerHTML=`<span style="color:${result.subs>0?'var(--green)':'var(--muted)'};font-weight:600">${result.subs>0?'+':''}${result.subs}</span>`;
+    await new Promise(r=>setTimeout(r,200));
   }
   document.getElementById('ctrProgressTxt').textContent=ctrStop?'Dihentikan.':'✅ Selesai!';
-  document.getElementById('loadCtrBtn').disabled=false;document.getElementById('loadCtrBtn').textContent='📊 Refresh CTR';
+  document.getElementById('loadCtrBtn').disabled=false;document.getElementById('loadCtrBtn').textContent='📊 Refresh Data';
   renderVideoTable();
 }
 function stopCTR(){ctrStop=true;document.getElementById('loadCtrBtn').disabled=false;document.getElementById('loadCtrBtn').textContent='📊 Load CTR';}
+
+async function autoFetchSubscribers(){
+  if(!ytToken)return;
+  for(let i=0;i<Math.min(ytAllVideos.length,50);i++){
+    const v=ytAllVideos[i];if(subsData[v.id]!=null)continue;
+    const result=await fetchVideoAnalytics(v.id);
+    if(result!=null){
+      subsData[v.id]=result.subs||0;
+      const subCell=document.getElementById('sub_'+v.id);
+      if(subCell)subCell.innerHTML=`<span style="color:${result.subs>0?'var(--green)':'var(--muted)'};font-weight:600">${result.subs>0?'+':''}${result.subs}</span>`;
+    }
+    await new Promise(r=>setTimeout(r,250));
+  }
+}
 
 // VIDEO DETAIL
 function openVideoDetail(videoId){
@@ -1310,10 +1263,8 @@ function openVideoDetail(videoId){
   const views=parseInt(stats.viewCount||0);const likes=parseInt(stats.likeCount||0);const comments=parseInt(stats.commentCount||0);
   const dur=fmtDur(v.contentDetails?.duration);const type=isShort(v)?'Shorts':'YouTube';
   const date=snip.publishedAt?new Date(snip.publishedAt).toLocaleDateString('id-ID',{dateStyle:'long'}):'—';
-  const engRate=views>0?((likes+comments)/views*100).toFixed(2):'0';
-  const likeRate=views>0?(likes/views*100).toFixed(2):'0';
-  const ctrNow=ctrData[videoId];const subNow=subsData[videoId];
-  const ctrHtml=ctrNow!=null?`<span style="color:${ctrNow>=4?'var(--green)':ctrNow>=2?'var(--text)':'var(--yt)'};font-weight:700">${ctrNow.toFixed(1)}%</span>`:`<span id="vd_ctr_val" style="color:var(--muted);font-size:12px">Memuat<span class="spinner-sm"></span></span>`;
+  const engRate=views>0?((likes+comments)/views*100).toFixed(2):'0';const likeRate=views>0?(likes/views*100).toFixed(2):'0';
+  const subNow=subsData[videoId];
   const subHtml=subNow!=null?`<span style="color:${subNow>0?'var(--green)':'var(--muted)'};font-weight:700">${subNow>0?'+':''}${subNow}</span>`:`<span id="vd_sub_val" style="color:var(--muted);font-size:12px">Memuat<span class="spinner-sm"></span></span>`;
   document.getElementById('vdetBody').innerHTML=`
     <div class="vd-head"><img class="vd-thumb" src="${thumb}" alt=""><div><div class="vd-title">${snip.title||'—'}</div><div class="vd-meta">${type} · ${date} · ${dur}</div></div></div>
@@ -1322,108 +1273,74 @@ function openVideoDetail(videoId){
       <div class="vd-stat"><div class="vd-stat-label">Likes</div><div class="vd-stat-value">${fmtNum(likes)}</div><div class="vd-stat-sub">like rate ${likeRate}%</div></div>
       <div class="vd-stat"><div class="vd-stat-label">Komentar</div><div class="vd-stat-value">${fmtNum(comments)}</div><div class="vd-stat-sub">total</div></div>
       <div class="vd-stat"><div class="vd-stat-label">Engagement</div><div class="vd-stat-value">${engRate}%</div><div class="vd-stat-sub">likes+komen/views</div></div>
-      <div class="vd-stat"><div class="vd-stat-label">CTR</div><div class="vd-stat-value" id="vd_ctr_box">${ctrHtml}</div><div class="vd-stat-sub">click-through rate</div></div>
+      <div class="vd-stat"><div class="vd-stat-label">Durasi</div><div class="vd-stat-value">${dur}</div><div class="vd-stat-sub">${type}</div></div>
       <div class="vd-stat"><div class="vd-stat-label">+Subscriber</div><div class="vd-stat-value" id="vd_sub_box">${subHtml}</div><div class="vd-stat-sub">dari video ini</div></div>
     </div>
-    <div class="vd-sec">🤖 Analisis AI — Video Ini</div>
+    <div class="vd-sec">🤖 Analisis AI — Video Ini (Gemini)</div>
     <div id="vd_ai_loading"><div class="yt-loading" style="padding:16px"><div class="spinner"></div></div></div>
     <div id="vd_ai_content"></div>
   `;
   document.getElementById('vdetModal').classList.add('open');
-  // Fetch CTR & subs kalau belum ada
-  if(ctrNow==null||subNow==null){
+  if(subNow==null){
     fetchVideoAnalytics(videoId).then(result=>{
       if(result){
-        ctrData[videoId]=result.ctr;subsData[videoId]=result.subs;
-        const ctrBox=document.getElementById('vd_ctr_box');const subBox=document.getElementById('vd_sub_box');
-        if(ctrBox)ctrBox.innerHTML=`<span style="color:${result.ctr>=4?'var(--green)':result.ctr>=2?'var(--text)':'var(--yt)'};font-weight:700">${result.ctr.toFixed(1)}%</span>`;
+        subsData[videoId]=result.subs||0;
+        const subBox=document.getElementById('vd_sub_box');
         if(subBox)subBox.innerHTML=`<span style="color:${result.subs>0?'var(--green)':'var(--muted)'};font-weight:700">${result.subs>0?'+':''}${result.subs}</span>`;
-        const ctrCell=document.getElementById('ctr_'+videoId);const subCell=document.getElementById('sub_'+videoId);
-        if(ctrCell)ctrCell.innerHTML=`<span style="color:${result.ctr>=4?'var(--green)':result.ctr>=2?'var(--text)':'var(--yt)'};font-weight:600">${result.ctr.toFixed(1)}%</span>`;
+        const subCell=document.getElementById('sub_'+videoId);
         if(subCell)subCell.innerHTML=`<span style="color:${result.subs>0?'var(--green)':'var(--muted)'};font-weight:600">${result.subs>0?'+':''}${result.subs}</span>`;
-        generateVideoAI(v,result.ctr,result.subs);
-      }else generateVideoAI(v,null,null);
+        generateVideoAI(v,result.subs);
+      }else generateVideoAI(v,null);
     });
-  }else generateVideoAI(v,ctrNow,subNow);
+  }else generateVideoAI(v,subNow);
 }
 
-async function generateVideoAI(v,ctr,subs){
+async function generateVideoAI(v,subs){
   const stats=v.statistics||{},snip=v.snippet||{};
   const views=parseInt(stats.viewCount||0);const likes=parseInt(stats.likeCount||0);const comments=parseInt(stats.commentCount||0);
   const avgViews=ytAllVideos.length>0?ytAllVideos.reduce((s,x)=>s+parseInt(x.statistics?.viewCount||0),0)/ytAllVideos.length:0;
   const engRate=views>0?((likes+comments)/views*100).toFixed(2):'0';
   const type=isShort(v)?'Shorts':'YouTube';const dur=fmtDur(v.contentDetails?.duration);
+  if(!getApiKey()){
+    document.getElementById('vd_ai_loading').style.display='none';
+    document.getElementById('vd_ai_content').innerHTML=generateLocalVideoAdvice(v,subs,avgViews).map(a=>`<div class="vd-advice ${a.type}"><div class="vd-advice-label">${a.label}</div><div class="vd-advice-text">${a.text}</div></div>`).join('');
+    return;
+  }
   try{
-    const text=await claudeAI(`Kamu adalah YouTube growth consultant. Analisis video ini secara spesifik berdasarkan data nyata. Kasih saran konkret.
+    const text=await geminiAI(`Kamu adalah YouTube growth consultant. Analisis video ini berdasarkan data nyata. Kasih saran yang spesifik dan actionable.
 
 DATA VIDEO:
 - Judul: "${snip.title||'—'}"
 - Tipe: ${type} | Durasi: ${dur}
 - Views: ${fmtNum(views)} (rata-rata channel: ${fmtNum(Math.round(avgViews))})
-- Likes: ${fmtNum(likes)} (like rate: ${views>0?(likes/views*100).toFixed(2):'0'}%)
+- Likes: ${fmtNum(likes)} | Like rate: ${views>0?(likes/views*100).toFixed(2):'0'}%
 - Komentar: ${comments} | Engagement: ${engRate}%
-- CTR: ${ctr!=null?ctr.toFixed(1)+'%':'tidak tersedia'}
 - Subscriber gained: ${subs!=null?'+'+subs:'tidak tersedia'}
 
-Format JSON (HANYA JSON):
-{"insights":[{"type":"good|warning|tip|critical","label":"judul dengan emoji","text":"analisis spesifik + saran konkret"}]}
+Format JSON (HANYA JSON tanpa markdown):
+{"insights":[{"type":"good|warning|tip|critical","label":"judul singkat dengan emoji","text":"analisis spesifik + saran konkret bisa dilakukan sekarang"}]}
 
-Analisis: kenapa views tinggi/rendah, CTR artinya apa, engagement, saran video sejenis berikutnya, apakah durasi optimal. Minimal 4 insights.`);
-    const clean=text.replace(/```json|```/g,'').trim();const parsed=JSON.parse(clean);
+Analisis: performa vs rata-rata channel, engagement, durasi optimal, saran video sejenis berikutnya. Minimal 4 insights.`);
+    const clean=text.replace(/```json|```/g,'').trim();
+    const jsonStart=clean.indexOf('{');const jsonEnd=clean.lastIndexOf('}');
+    const parsed=JSON.parse(jsonStart>=0?clean.slice(jsonStart,jsonEnd+1):clean);
     document.getElementById('vd_ai_loading').style.display='none';
-    document.getElementById('vd_ai_content').innerHTML=(parsed.insights||[]).map(a=>`<div class="vd-advice ${a.type}"><div class="vd-advice-label">${a.label}</div><div class="vd-advice-text">${a.text}</div></div>`).join('');
+    document.getElementById('vd_ai_content').innerHTML=(parsed.insights||[]).map(a=>`<div class="vd-advice ${a.type||'tip'}"><div class="vd-advice-label">${a.label}</div><div class="vd-advice-text">${a.text}</div></div>`).join('');
   }catch(e){
     document.getElementById('vd_ai_loading').style.display='none';
-    if(e.message==='no_key')document.getElementById('vd_ai_content').innerHTML=`<div class="vd-advice warning"><div class="vd-advice-label">⚠️ API Key Belum Diset</div><div class="vd-advice-text">Set API key di halaman YT Analytics untuk aktifkan analisis AI per video.</div></div>`;
-    else document.getElementById('vd_ai_content').innerHTML=generateLocalVideoAdvice(v,ctr,subs,avgViews).map(a=>`<div class="vd-advice ${a.type}"><div class="vd-advice-label">${a.label}</div><div class="vd-advice-text">${a.text}</div></div>`).join('');
+    document.getElementById('vd_ai_content').innerHTML=generateLocalVideoAdvice(v,subs,avgViews).map(a=>`<div class="vd-advice ${a.type}"><div class="vd-advice-label">${a.label}</div><div class="vd-advice-text">${a.text}</div></div>`).join('');
   }
 }
 
-function generateLocalVideoAdvice(v,ctr,subs,avgViews){
+function generateLocalVideoAdvice(v,subs,avgViews){
   const stats=v.statistics||{};const views=parseInt(stats.viewCount||0);const likes=parseInt(stats.likeCount||0);const comments=parseInt(stats.commentCount||0);
-  const engRate=views>0?(likes+comments)/views*100:0;const likeRate=views>0?likes/views*100:0;const type=isShort(v)?'Shorts':'YouTube';const advices=[];
-  if(views>avgViews*1.5)advices.push({type:'good',label:'🔥 Performa Di Atas Rata-Rata',text:`${fmtNum(views)} views — ${Math.round(views/avgViews*100-100)}% lebih tinggi dari rata-rata channel (${fmtNum(Math.round(avgViews))}). Replikasi formula ini: topik, angle, durasi, dan gaya judul video ini.`});
-  else if(views<avgViews*0.5&&views>0)advices.push({type:'warning',label:'📉 Performa Di Bawah Rata-Rata',text:`Hanya ${fmtNum(views)} views vs rata-rata ${fmtNum(Math.round(avgViews))}. Evaluasi: thumbnail kurang menarik? Judul tidak hook? Topik kurang relevan? Coba update thumbnail dan judul video ini.`});
-  if(ctr!=null){if(ctr<2)advices.push({type:'critical',label:'🚨 CTR Sangat Rendah',text:`CTR ${ctr.toFixed(1)}% — sangat di bawah standar. Thumbnail ini tidak menarik cukup untuk diklik. Ganti thumbnail sekarang: gunakan wajah ekspresif, teks singkat, kontras tinggi.`});else if(ctr>=4)advices.push({type:'good',label:'✅ CTR Bagus',text:`CTR ${ctr.toFixed(1)}% di atas rata-rata! Thumbnail dan judul video ini efektif. Simpan style ini sebagai referensi untuk video berikutnya.`});}
-  if(engRate<1&&views>100)advices.push({type:'warning',label:'⚠️ Engagement Rendah',text:`Engagement ${engRate.toFixed(1)}% — penonton nonton tapi tidak berinteraksi. Tambah pertanyaan spesifik di video berikutnya: "Kalian setuju? Komen A atau B di bawah!"`});
-  if(subs!=null&&subs>5)advices.push({type:'good',label:'🎯 Video Penghasil Subscriber',text:`Video ini menghasilkan +${subs} subscriber — lebih dari rata-rata. Buat lebih banyak konten dengan format dan topik serupa untuk boost pertumbuhan subscriber.`});
-  if(advices.length===0)advices.push({type:'tip',label:'📊 Performa Normal',text:`Video ini performa stabil. Pantau kembali dalam beberapa minggu dan fokus pada konsistensi upload.`});
+  const engRate=views>0?(likes+comments)/views*100:0;const advices=[];
+  if(views>avgViews*1.5)advices.push({type:'good',label:'🔥 Di Atas Rata-Rata',text:`${fmtNum(views)} views — ${Math.round(views/avgViews*100-100)}% lebih tinggi dari rata-rata channel (${fmtNum(Math.round(avgViews))}). Replikasi topik, angle, dan format ini.`});
+  else if(views<avgViews*0.5&&views>0)advices.push({type:'warning',label:'📉 Di Bawah Rata-Rata',text:`Hanya ${fmtNum(views)} views vs rata-rata ${fmtNum(Math.round(avgViews))}. Evaluasi thumbnail, judul, dan relevansi topik.`});
+  if(engRate<1&&views>100)advices.push({type:'warning',label:'⚠️ Engagement Rendah',text:`${engRate.toFixed(1)}% rendah. Tambah pertanyaan spesifik di video: "Kalian setuju? Komen A atau B!"`});
+  if(subs!=null&&subs>3)advices.push({type:'good',label:'🎯 Penghasil Subscriber',text:`+${subs} subscriber dari video ini. Buat lebih banyak konten serupa.`});
+  if(advices.length===0)advices.push({type:'tip',label:'📊 Performa Normal',text:`Performa stabil. Pantau lagi dalam beberapa minggu dan fokus pada konsistensi.`});
   return advices;
-}
-
-// API KEY MANAGEMENT
-function getApiKey(){return localStorage.getItem('claude_api_key')||'';}
-function saveApiKey(){const k=document.getElementById('apiKeyInput').value.trim();if(!k){toast('Masukkan API key dulu!');return;}localStorage.setItem('claude_api_key',k);updateApiKeyStatus();document.getElementById('apiKeyInputWrap').style.display='none';toast('API key disimpan! ✅');generateAIAdvice();}
-function clearApiKey(){localStorage.removeItem('claude_api_key');document.getElementById('apiKeyInput').value='';updateApiKeyStatus();toast('API key dihapus');}
-function toggleApiKeyInput(){const wrap=document.getElementById('apiKeyInputWrap');const isHidden=wrap.style.display==='none';wrap.style.display=isHidden?'block':'none';if(isHidden){const k=getApiKey();document.getElementById('apiKeyInput').value=k?'•'.repeat(20):'';}}
-function updateApiKeyStatus(){const k=getApiKey();const el=document.getElementById('apiKeyStatus');if(el){if(k){el.style.background='#e6f4ea';el.style.color='var(--green)';el.textContent='🔑 API Key ✅';}else{el.style.background='#fff3cd';el.style.color='#b07c00';el.textContent='🔑 Set API Key';}}}
-
-async function claudeAI(prompt){
-  const key=getApiKey();if(!key)throw new Error('no_key');
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:prompt}]})
-    });
-    if(!res.ok){const err=await res.json();throw new Error(err.error?.message||'API error');}
-    const data=await res.json();
-    return data.content?.map(c=>c.text||'').join('');
-  }catch(e){throw e;}
-}
-
-async function autoFetchSubscribers(){
-  if(!ytToken)return;
-  for(let i=0;i<ytAllVideos.length;i++){
-    const v=ytAllVideos[i];if(subsData[v.id]!=null)continue;
-    const result=await fetchVideoAnalytics(v.id);
-    if(result!=null){
-      subsData[v.id]=result.subs;
-      const subCell=document.getElementById('sub_'+v.id);
-      if(subCell)subCell.innerHTML=`<span style="color:${result.subs>0?'var(--green)':'var(--muted)'};font-weight:600">${result.subs>0?'+':''}${result.subs}</span>`;
-    }
-    await new Promise(r=>setTimeout(r,200));
-  }
 }
 
 // OAuth callback
