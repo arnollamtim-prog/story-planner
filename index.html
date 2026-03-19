@@ -153,14 +153,17 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .heatmap-day-label{font-size:10px;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
 .heatmap-cell{height:22px;border-radius:3px;background:var(--border);position:relative;cursor:default}
 .heatmap-cell:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:var(--text);color:white;font-size:10px;padding:3px 6px;border-radius:4px;white-space:nowrap;z-index:10;pointer-events:none}
-.export-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
-.trending-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
-.trending-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:12px}
-.trending-card{background:var(--bg);border-radius:10px;padding:14px;border:1px solid var(--border)}
-.trending-rank{font-size:10px;font-weight:700;color:var(--muted);margin-bottom:4px}
-.trending-title{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:6px}
-.trending-views{font-size:11.5px;color:var(--muted)}
-.trending-angle{font-size:12px;color:var(--sh);margin-top:6px;line-height:1.4;font-style:italic}
+.ai-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
+.ai-section-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px}
+.ai-section-sub{font-size:12px;color:var(--muted);margin-bottom:16px}
+.advice-list{display:flex;flex-direction:column;gap:10px}
+.advice-item{background:var(--bg);border-radius:10px;padding:14px 16px;border-left:3px solid var(--text)}
+.advice-item.tip{border-left-color:var(--sh)}
+.advice-item.warning{border-left-color:var(--orange)}
+.advice-item.good{border-left-color:var(--green)}
+.advice-item.critical{border-left-color:var(--yt)}
+.advice-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.advice-text{font-size:13px;line-height:1.6}
 .videos-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
 .videos-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
 .videos-title{font-weight:600;font-size:13.5px}
@@ -207,6 +210,21 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .vd-stat-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .vd-stat-value{font-family:'DM Serif Display',serif;font-size:20px}
 .vd-stat-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.vd-sec{font-weight:600;font-size:13px;margin-bottom:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:16px}
+.vd-advice{background:var(--bg);border-radius:10px;padding:14px 16px;border-left:3px solid var(--text);margin-bottom:8px}
+.vd-advice.tip{border-left-color:var(--sh)}
+.vd-advice.warning{border-left-color:var(--orange)}
+.vd-advice.good{border-left-color:var(--green)}
+.vd-advice.critical{border-left-color:var(--yt)}
+.vd-advice-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.vd-advice-text{font-size:13px;line-height:1.6}
+.trending-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
+.trending-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:12px}
+.trending-card{background:var(--bg);border-radius:10px;padding:14px;border:1px solid var(--border)}
+.trending-rank{font-size:10px;font-weight:700;color:var(--muted);margin-bottom:4px}
+.trending-title{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:6px}
+.trending-views{font-size:11.5px;color:var(--muted)}
+.trending-angle{font-size:12px;color:var(--sh);margin-top:6px;line-height:1.4;font-style:italic}
 .narasi-list-section{margin-top:28px}
 .narasi-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px}
 .narasi-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
@@ -228,6 +246,23 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .acc-body.open{max-height:9999px}
 .acc-inner{padding:14px}
 .narasi-item-content{font-size:13px;color:var(--muted);line-height:1.6;white-space:pre-wrap;max-height:100px;overflow:hidden;margin-bottom:12px}
+.ai-gen-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:12px}
+.ai-gen-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px}
+.ai-gen-loading{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.ai-gen-section{margin-bottom:14px}
+.ai-gen-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:6px}
+.ai-judul-super{background:linear-gradient(135deg,#1a1a18,#3a3a38);color:white;border-radius:8px;padding:12px 14px;font-size:14px;font-weight:600;line-height:1.4;margin-bottom:8px;position:relative}
+.ai-judul-super::before{content:"⚡ SUPER HOOK";font-size:9px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.6);display:block;margin-bottom:4px}
+.ai-judul-alt{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:13px;line-height:1.4;margin-bottom:6px;cursor:pointer;transition:border-color .15s;display:flex;align-items:center;gap:8px}
+.ai-judul-alt:hover{border-color:var(--text)}
+.ai-judul-alt-num{font-size:10px;font-weight:700;color:var(--muted);margin-right:2px;flex-shrink:0}
+.ai-desc-box{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:12px;font-size:13px;line-height:1.7;color:var(--text)}
+.ai-hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px}
+.ai-hashtag{background:var(--sh);color:white;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:500;cursor:pointer}
+.ai-hashtag:hover{opacity:.8}
+.ai-prompt-box{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:12px;font-size:12.5px;line-height:1.7;color:var(--text);white-space:pre-wrap;max-height:200px;overflow-y:auto}
+.copy-all-btn{font-size:11.5px;padding:6px 12px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;margin-top:8px}
+.copy-all-btn:hover{background:var(--hover)}
 .yt-loading{text-align:center;padding:40px;color:var(--muted);font-size:13.5px}
 .spinner{width:28px;height:28px;border:2.5px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
 .spinner-sm{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--muted);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle;margin-left:6px}
@@ -333,7 +368,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 <!-- VAULT -->
 <div class="page" id="page-vault">
   <div class="page-title">Prompt Vault</div>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Simpan prompt terbaik kamu sebagai referensi.</p>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Simpan <strong>1 contoh prompt terbaik kamu</strong> — AI akan belajar dari style-nya untuk generate prompt di Narasi & Scene.</p>
   <button class="btn-add" style="margin-bottom:20px" onclick="openVaultModal()">+ Prompt Baru</button>
   <div class="card-grid" id="vaultGrid"></div>
 </div>
@@ -342,7 +377,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
   <div class="page-title">YouTube Analytics</div>
   <div class="yt-login" id="ytLogin">
     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e03b2e" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#e03b2e" stroke="none"/></svg>
-    <div><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px">Hubungkan ke YouTube</div><p>Login dengan Google untuk lihat semua statistik channel, analisis mendalam, dan rekomendasi konten viral.</p></div>
+    <div><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px">Hubungkan ke YouTube</div><p>Login dengan Google untuk lihat semua statistik channel, analisis AI mendalam, dan rekomendasi konten viral.</p></div>
     <button class="btn-google" onclick="ytLogin()">
       <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       Masuk dengan Google
@@ -355,16 +390,27 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
         <div class="yt-avatar"><img id="ytAvatar" src="" alt=""></div>
         <div><div class="yt-ch-name" id="ytChName">—</div><div class="yt-ch-sub" id="ytChSub">—</div></div>
       </div>
-      <button class="btn-sm" onclick="ytLogout()">Keluar</button>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div id="apiKeyStatus" style="font-size:11px;padding:4px 10px;border-radius:6px;background:var(--hover);color:var(--muted);cursor:pointer" onclick="toggleApiKeyInput()">🔑 Set Gemini Key</div>
+        <button class="btn-sm" onclick="ytLogout()">Keluar</button>
+      </div>
+    </div>
+    <div id="apiKeyInputWrap" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:16px">
+      <div style="font-size:12px;font-weight:600;margin-bottom:4px">🔑 Gemini API Key <span style="font-weight:400;color:var(--muted)">(tersimpan di browser, tidak dikirim ke mana-mana)</span></div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px">Dapatkan gratis di <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--sh)">aistudio.google.com/apikey</a></div>
+      <div style="display:flex;gap:8px">
+        <input type="password" id="apiKeyInput" placeholder="AIza..." style="flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--bg);outline:none">
+        <button onclick="saveApiKey()" style="padding:8px 16px;background:var(--text);color:white;border:none;border-radius:7px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px">Simpan</button>
+        <button onclick="clearApiKey()" style="padding:8px 12px;border:1px solid var(--border);background:var(--surface);border-radius:7px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px">Hapus</button>
+      </div>
     </div>
     <div class="range-tabs">
       <button class="range-tab on" onclick="switchRange(7,this)">7 Hari</button>
-      <button class="range-tab" onclick="switchRange(14,this)">2 Minggu</button>
-      <button class="range-tab" onclick="switchRange(28,this)">1 Bulan</button>
-      <button class="range-tab" onclick="switchRange(90,this)">3 Bulan</button>
-      <button class="range-tab" onclick="switchRange(180,this)">6 Bulan</button>
+      <button class="range-tab" onclick="switchRange(28,this)">28 Hari</button>
+      <button class="range-tab" onclick="switchRange(90,this)">90 Hari</button>
       <button class="range-tab" onclick="switchRange(365,this)">1 Tahun</button>
     </div>
+    <!-- MONET -->
     <div class="monet-section">
       <div class="monet-title">🎯 Progress Monetisasi</div>
       <div class="monet-sub" id="monetSub">—</div>
@@ -390,56 +436,37 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
       </div>
       <div class="monet-eta" id="monetEta">Menghitung estimasi...</div>
     </div>
+    <!-- STATS -->
     <div class="stats-grid">
       <div class="stat-card"><div class="stat-label">Views</div><div class="stat-value" id="statViews">—</div><div class="stat-change" id="statViewsC"></div></div>
       <div class="stat-card"><div class="stat-label">Watch Time (jam)</div><div class="stat-value" id="statWatch">—</div><div class="stat-change" id="statWatchC"></div></div>
       <div class="stat-card"><div class="stat-label">Subscriber Baru</div><div class="stat-value" id="statSubs">—</div><div class="stat-change" id="statSubsC"></div></div>
       <div class="stat-card"><div class="stat-label">Avg CTR</div><div class="stat-value" id="statCtr">—</div><div class="stat-change" id="statCtrC"></div></div>
     </div>
+    <!-- CHARTS -->
     <div class="charts-grid">
       <div class="chart-card"><div class="chart-title">Views Harian</div><div class="chart-wrap"><canvas id="viewsChart"></canvas></div></div>
       <div class="chart-card"><div class="chart-title">YouTube vs Shorts</div><div class="chart-wrap"><canvas id="donutChart"></canvas></div></div>
     </div>
+    <!-- HEATMAP -->
     <div class="heatmap-section">
       <div class="chart-title">🕐 Jam & Hari Upload Terbaik</div>
       <p style="font-size:12px;color:var(--muted);margin-top:4px">Berdasarkan rata-rata views semua video kamu · warna merah = views tertinggi</p>
       <div class="heatmap-grid" id="heatmapGrid"></div>
     </div>
+    <!-- TRENDING -->
     <div class="trending-section">
       <div class="chart-title">🔥 Trending YouTube — Indonesia & Global</div>
       <p style="font-size:12px;color:var(--muted);margin-top:4px" id="trendingSub">Memuat...</p>
       <div class="trending-grid" id="trendingGrid"></div>
     </div>
-    <div class="export-section">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
-        <div>
-          <div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">📋 Export Rekap Channel</div>
-          <div style="font-size:12px;color:var(--muted)" id="exportSubtitle">Generate teks lengkap semua data · siap paste ke ChatGPT, Gemini, atau AI apapun</div>
-        </div>
-        <button onclick="generateExport()" style="background:var(--text);color:white;border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;white-space:nowrap">📤 Generate Rekap</button>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-        <span style="font-size:12px;color:var(--muted);font-weight:600">Periode statistik:</span>
-        <div style="display:flex;gap:4px;flex-wrap:wrap" id="exportRangeTabs">
-          <button class="range-tab on" onclick="setExportRange(7,this)">7 Hari</button>
-          <button class="range-tab" onclick="setExportRange(14,this)">2 Minggu</button>
-          <button class="range-tab" onclick="setExportRange(28,this)">1 Bulan</button>
-          <button class="range-tab" onclick="setExportRange(90,this)">3 Bulan</button>
-          <button class="range-tab" onclick="setExportRange(180,this)">6 Bulan</button>
-          <button class="range-tab" onclick="setExportRange(365,this)">1 Tahun</button>
-        </div>
-      </div>
-      <div id="exportResult" style="display:none">
-        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
-            <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)" id="exportRangeLabel">Rekap — Siap di-paste ke AI</span>
-            <button onclick="copyExport()" style="background:var(--text);color:white;border:none;padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">📋 Copy Semua</button>
-          </div>
-          <textarea id="exportText" readonly style="width:100%;min-height:400px;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:11.5px;font-family:monospace;background:white;color:var(--text);line-height:1.7;resize:vertical;outline:none"></textarea>
-          <div style="font-size:11px;color:var(--muted);margin-top:8px">💡 Tip: Paste teks ini ke AI lalu tambahkan pertanyaanmu</div>
-        </div>
-      </div>
+    <!-- AI OVERALL -->
+    <div class="ai-section">
+      <div class="ai-section-title">🤖 Analisis AI Mendalam — Channel Kamu</div>
+      <div class="ai-section-sub" id="aiOverallSub">Menganalisis semua data...</div>
+      <div class="advice-list" id="adviceList"><div class="yt-loading" style="padding:20px"><div class="spinner"></div></div></div>
     </div>
+    <!-- VIDEO TABLE -->
     <div class="videos-section">
       <div class="videos-top">
         <span class="videos-title">Semua Video <span id="videoCount" style="color:var(--muted);font-weight:400;font-size:12px"></span></span>
@@ -452,17 +479,18 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
           </div>
           <select class="yt-sort" onchange="sortVideos(this.value)">
             <option value="views">Sort: Views</option>
+            <option value="ctr">Sort: CTR</option>
             <option value="subs">Sort: Subscriber</option>
             <option value="likes">Sort: Likes</option>
             <option value="comments">Sort: Komentar</option>
             <option value="date">Sort: Terbaru</option>
             <option value="duration">Sort: Durasi</option>
           </select>
-          <button class="btn-add" id="loadCtrBtn" onclick="startLoadCTR()" style="font-size:12px;padding:6px 12px">📊 Load +Sub</button>
+          <button class="btn-add" id="loadCtrBtn" onclick="startLoadCTR()" style="font-size:12px;padding:6px 12px">📊 Load CTR</button>
         </div>
       </div>
       <div class="ctr-progress" id="ctrProgress">
-        <div class="ctr-progress-top"><span style="font-size:12px;color:var(--muted)" id="ctrProgressTxt">Mengambil data...</span><button onclick="stopCTR()" style="font-size:11px;padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer">Stop</button></div>
+        <div class="ctr-progress-top"><span style="font-size:12px;color:var(--muted)" id="ctrProgressTxt">Mengambil CTR...</span><button onclick="stopCTR()" style="font-size:11px;padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer">Stop</button></div>
         <div class="ctr-bar-wrap"><div class="ctr-bar-fill" id="ctrBarFill"></div></div>
       </div>
       <div style="overflow-x:auto">
@@ -470,6 +498,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
           <thead><tr>
             <th style="width:280px">Video</th>
             <th class="num" onclick="sortVideos('views')">Views ↕</th>
+            <th class="num" onclick="sortVideos('ctr')">CTR ↕</th>
             <th class="num" onclick="sortVideos('subs')">+Sub ↕</th>
             <th class="num" onclick="sortVideos('likes')">Likes ↕</th>
             <th class="num" onclick="sortVideos('comments')">Komen ↕</th>
@@ -547,7 +576,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 </div>
 <div class="modal-overlay" id="vdetModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal modal-lg vd-modal">
-    <div class="modal-header"><div class="modal-title">Detail Video</div><button class="modal-close" onclick="document.getElementById('vdetModal').classList.remove('open')">×</button></div>
+    <div class="modal-header"><div class="modal-title">Detail & Analisis Video</div><button class="modal-close" onclick="document.getElementById('vdetModal').classList.remove('open')">×</button></div>
     <div class="modal-body" id="vdetBody"></div>
   </div>
 </div>
@@ -566,9 +595,62 @@ let curDate=new Date(),calData=[],selCalDate=null,calFmt='yt',addFmt='yt',curCap
 let ideasData=[],ideaFilter='all',captionsData=[],vaultData=[];
 let ytToken=null,viewsChartInst=null,donutChartInst=null;
 let ytChannel=null,ytAllVideos=[],ytAnalytics=null;
-let curRange=7,exportRange=7,vTypeFilter='all',vSortBy='views';
-let vDisplayCount=25,filteredVideos=[],subsData={},ctrStop=false;
+let curRange=7,vTypeFilter='all',vSortBy='views';
+let vDisplayCount=25,filteredVideos=[],ctrData={},subsData={},ctrStop=false;
 const narasiStore={};
+
+// ===== GEMINI AI =====
+function getApiKey(){return localStorage.getItem('gemini_api_key')||'';}
+function saveApiKey(){
+  const k=document.getElementById('apiKeyInput').value.trim();
+  if(!k){toast('Masukkan API key dulu!');return;}
+  localStorage.setItem('gemini_api_key',k);
+  updateApiKeyStatus();
+  document.getElementById('apiKeyInputWrap').style.display='none';
+  toast('Gemini API key disimpan! ✅');
+  generateAIAdvice();
+}
+function clearApiKey(){localStorage.removeItem('gemini_api_key');document.getElementById('apiKeyInput').value='';updateApiKeyStatus();toast('API key dihapus');}
+function toggleApiKeyInput(){
+  const wrap=document.getElementById('apiKeyInputWrap');
+  const isHidden=wrap.style.display==='none';
+  wrap.style.display=isHidden?'block':'none';
+  if(isHidden){const k=getApiKey();document.getElementById('apiKeyInput').value=k?'•'.repeat(20):'';}
+}
+function updateApiKeyStatus(){
+  const k=getApiKey();const el=document.getElementById('apiKeyStatus');
+  if(!el)return;
+  if(k){el.style.background='#e6f4ea';el.style.color='var(--green)';el.textContent='🔑 Gemini Key ✅';}
+  else{el.style.background='#fff3cd';el.style.color='#b07c00';el.textContent='🔑 Set Gemini Key';}
+}
+
+async function geminiAI(prompt,retries=3){
+  const key=getApiKey();if(!key)throw new Error('no_key');
+  for(let attempt=0;attempt<retries;attempt++){
+    try{
+      const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7,maxOutputTokens:2000}})
+      });
+      if(res.status===429){
+        // Rate limit — tunggu lalu retry
+        const wait=(attempt+1)*25000;
+        //console.log(`Gemini rate limit, retry ${attempt+1}/${retries} dalam ${wait/1000}s...`);
+        await new Promise(r=>setTimeout(r,wait));
+        continue;
+      }
+      if(!res.ok){const err=await res.json();throw new Error(err.error?.message||'Gemini API error');}
+      const data=await res.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    }catch(e){
+      if(e.message==='no_key')throw e;
+      if(attempt===retries-1)throw e;
+      await new Promise(r=>setTimeout(r,3000));
+    }
+  }
+  throw new Error('Gemini rate limit — coba lagi dalam 1 menit');
+}
 
 // NAV
 document.querySelectorAll('.nav-item').forEach(item=>{
@@ -662,13 +744,17 @@ async function deleteCalContent(id){await db.from('calendar').delete().eq('id',i
 // ===== NARASI =====
 function cleanNarasi(){const content=document.getElementById('narasiContent').value.trim();if(!content){toast('Paste narasi dulu!');return;}const secs=doClean(content);if(!secs.length){toast('Tidak ada teks narasi!');return;}const gabungan=secs.join('\n\n');document.getElementById('sceneCards').innerHTML=`<div style="border:1px solid var(--border);border-radius:10px;padding:14px"><div style="font-size:13px;line-height:1.8;white-space:pre-wrap">${gabungan}</div><button class="btn-sm" style="margin-top:8px" onclick="copyText(this.dataset.text)" data-text="${gabungan.replace(/"/g,'&quot;')}">📋 Copy Semua</button></div>`;toast('Narasi berhasil dibersihkan!');}
 async function saveNarasi(){const title=document.getElementById('narasiTitle').value.trim(),content=document.getElementById('narasiContent').value.trim();if(!title||!content){toast('Lengkapi judul dan narasi!');return;}const secs=doClean(content);const bersih=secs.length>0?secs.join('\n\n'):content;const{error}=await db.from('narasi').insert([{title,content:bersih}]);if(!error){toast('Narasi disimpan!');loadNarasi();}}
+
 async function loadNarasi(){
   const[calRes,narasiRes]=await Promise.all([db.from('calendar').select('*').order('date',{ascending:false}),db.from('narasi').select('*').order('created_at',{ascending:false})]);
   const calItems=(calRes.data||[]).filter(e=>e.narasi&&e.narasi.length>0);
   const narasiItems=narasiRes.data||[];
-  renderNarasiList(calItems,narasiItems);
+  const vaultRes=await db.from('prompts').select('*').limit(1);
+  const stylePrompt=vaultRes.data?.[0]?.body||'';
+  renderNarasiList(calItems,narasiItems,stylePrompt);
 }
-function renderNarasiList(calItems,narasiItems){
+
+function renderNarasiList(calItems,narasiItems,stylePrompt){
   if(calItems.length===0&&narasiItems.length===0){document.getElementById('narasiList').innerHTML='<p style="color:var(--muted);font-size:13px">Belum ada narasi.</p>';return;}
   const grouped={};
   calItems.forEach(e=>{const d=e.date||'Tanpa Tanggal';if(!grouped[d])grouped[d]=[];grouped[d].push(e);});
@@ -688,14 +774,17 @@ function renderNarasiList(calItems,narasiItems){
       <div class="acc-body ${isFirst?'open':''}" id="acc_${date.replace(/-/g,'_')}"><div class="acc-inner">`;
     grouped[date].forEach(e=>{
       const narasiTampil=e.narasi_asli||e.narasi||'';
+      const safeTitle=encodeURIComponent(e.title);const safeNarasi=encodeURIComponent(narasiTampil);const safeStyle=encodeURIComponent(stylePrompt);
       html+=`<div class="narasi-item">
         <div class="narasi-item-header">
           <div><div class="narasi-item-title">${e.title}</div><div class="narasi-item-date"><span class="badge ${e.type||'yt'}">${e.type==='short'?'⚡ Shorts':'▶ YouTube'}</span></div></div>
           <div style="display:flex;gap:8px">
             <button class="btn-sm" onclick="copyText(this.dataset.text)" data-text="${narasiTampil.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}">Copy</button>
+            <button class="btn-add" style="font-size:11px;padding:5px 10px" onclick="generateAI('cal_${e.id}','${safeTitle}','${safeNarasi}','${safeStyle}')">✨ Generate AI</button>
           </div>
         </div>
         <div class="narasi-item-content">${narasiTampil}</div>
+        <div id="ai_cal_${e.id}"></div>
       </div>`;
     });
     html+=`</div></div></div>`;
@@ -708,23 +797,68 @@ function renderNarasiList(calItems,narasiItems){
       </div>
       <div class="acc-body" id="acc_manual"><div class="acc-inner">`;
     narasiItems.forEach(n=>{
+      const safeTitle=encodeURIComponent(n.title);const safeContent=encodeURIComponent(n.content||'');const safeStyle=encodeURIComponent(stylePrompt);
       html+=`<div class="narasi-item">
         <div class="narasi-item-header">
           <div class="narasi-item-title">${n.title}</div>
           <div style="display:flex;gap:8px">
             <button class="btn-sm" onclick="copyText(this.dataset.text)" data-text="${(n.content||'').replace(/"/g,'&quot;')}">Copy</button>
+            <button class="btn-add" style="font-size:11px;padding:5px 10px" onclick="generateAI('man_${n.id}','${safeTitle}','${safeContent}','${safeStyle}')">✨ Generate AI</button>
             <button class="btn-sm red" onclick="deleteNarasi('${n.id}')">Hapus</button>
           </div>
         </div>
         <div class="narasi-item-content">${n.content||''}</div>
+        <div id="ai_man_${n.id}"></div>
       </div>`;
     });
     html+=`</div></div></div>`;
   }
   document.getElementById('narasiList').innerHTML=html;
 }
+
 function toggleAcc(id,header){const body=document.getElementById(id);const arrow=header.querySelector('.acc-arrow');const isOpen=body.classList.contains('open');body.classList.toggle('open',!isOpen);arrow.classList.toggle('open',!isOpen);header.classList.toggle('open',!isOpen);}
 async function deleteNarasi(id){await db.from('narasi').delete().eq('id',id);toast('Narasi dihapus!');loadNarasi();}
+
+async function generateAI(id,titleEnc,narasiEnc,styleEnc){
+  const title=decodeURIComponent(titleEnc);const narasi=decodeURIComponent(narasiEnc);const style=decodeURIComponent(styleEnc);
+  const box=document.getElementById('ai_'+id);if(!box)return;
+  if(!getApiKey()){box.innerHTML=`<div class="ai-gen-box"><p style="color:var(--yt);font-size:13px">⚠️ Gemini API key belum diset. Klik tombol <strong>🔑 Set Gemini Key</strong> di halaman YT Analytics.</p></div>`;return;}
+  box.innerHTML=`<div class="ai-gen-box"><div class="ai-gen-loading"><div class="spinner" style="width:16px;height:16px;border-width:2px"></div>Gemini AI sedang menganalisis narasi...</div></div>`;
+  try{
+    const prompt=`Kamu adalah expert YouTube content strategist dan copywriter viral Indonesia.
+
+Narasi:
+JUDUL: ${title}
+ISI: ${narasi}
+
+${style?`STYLE REFERENSI (ikuti gaya penulisan ini, terutama format scene/visual jika ada):
+${style.slice(0,800)}
+
+`:''}
+
+Generate dalam format JSON (HANYA JSON tanpa markdown backticks):
+{"prompt":"scene prompt sinematik lengkap sesuai style referensi, kontekstual dengan narasi ini — gunakan format scene yang sama jika ada di style referensi","judul_super":"1 judul SUPER HOOK paling powerful — pakai formula viral global (curiosity gap, angka spesifik, emosi kuat, FOMO) — fresh dan tidak generik","judul_alternatif":["judul hook 2","judul hook 3","judul hook 4","judul hook 5"],"deskripsi":"paragraf pertama hook + SEO-friendly 150-200 kata","hashtag":["tag1","tag2","tag3","tag4","tag5","tag6","tag7","tag8","tag9","tag10"]}`;
+    const text=await geminiAI(prompt);
+    const clean=text.replace(/```json|```/g,'').trim();
+    renderAIResult(id,JSON.parse(clean));
+  }catch(e){
+    if(e.message==='no_key')box.innerHTML=`<div class="ai-gen-box"><p style="color:var(--yt);font-size:13px">⚠️ Set Gemini API key dulu.</p></div>`;
+    else box.innerHTML=`<div class="ai-gen-box"><p style="color:var(--muted);font-size:13px">Gagal generate: ${e.message}. Coba lagi.</p></div>`;
+  }
+}
+
+function renderAIResult(id,data){
+  const box=document.getElementById('ai_'+id);if(!box)return;
+  const hashtagsHtml=(data.hashtag||[]).map(h=>`<span class="ai-hashtag" onclick="copyText('#${h.replace('#','')}')">#${h.replace('#','')}</span>`).join('');
+  const altJudulHtml=(data.judul_alternatif||[]).map((j,i)=>`<div class="ai-judul-alt"><span class="ai-judul-alt-num">${i+2}.</span><span style="flex:1">${j}</span><button class="btn-sm" style="font-size:10px;flex-shrink:0" onclick="copyText('${j.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">Copy</button></div>`).join('');
+  box.innerHTML=`<div class="ai-gen-box">
+    <div class="ai-gen-title">✨ Hasil Generate AI (Gemini)</div>
+    ${data.prompt?`<div class="ai-gen-section"><div class="ai-gen-section-label">📋 Prompt / Scene</div><div class="ai-prompt-box">${data.prompt}</div><button class="copy-all-btn" onclick="copyText(this.dataset.t)" data-t="${(data.prompt||'').replace(/"/g,'&quot;')}">Copy Prompt</button></div>`:''}
+    <div class="ai-gen-section"><div class="ai-gen-section-label">🎯 Judul</div><div class="ai-judul-super">${data.judul_super||'—'}<button class="btn-sm" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10px;background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:white" onclick="copyText('${(data.judul_super||'').replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">Copy</button></div>${altJudulHtml}</div>
+    <div class="ai-gen-section"><div class="ai-gen-section-label">📝 Deskripsi</div><div class="ai-desc-box">${data.deskripsi||'—'}</div><button class="copy-all-btn" onclick="copyText(this.dataset.t)" data-t="${(data.deskripsi||'').replace(/"/g,'&quot;')}">Copy Deskripsi</button></div>
+    <div class="ai-gen-section"><div class="ai-gen-section-label">#️⃣ Hashtag</div><div class="ai-hashtag-wrap">${hashtagsHtml}</div><button class="copy-all-btn" style="margin-top:8px" onclick="copyText('${(data.hashtag||[]).map(h=>'#'+h.replace('#','')).join(' ')}')">Copy Semua Hashtag</button></div>
+  </div>`;
+}
 
 // ===== IDEAS =====
 async function loadIdeas(){const{data}=await db.from('ideas').select('*').order('created_at',{ascending:false});ideasData=data||[];renderIdeas();}
@@ -747,237 +881,56 @@ async function saveCaption(){const title=document.getElementById('captionFormTit
 
 // ===== VAULT =====
 async function loadVault(){const{data}=await db.from('prompts').select('*').order('created_at',{ascending:false});vaultData=data||[];renderVault();}
-function renderVault(){document.getElementById('vaultGrid').innerHTML=vaultData.length===0?'<p style="color:var(--muted);font-size:13px">Belum ada prompt.</p>':vaultData.map(p=>`<div class="card"><div class="card-header"><div class="card-title">${p.name}</div><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--hover);color:var(--muted)">${p.type||'Lainnya'}</span></div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:12px;white-space:pre-wrap;max-height:100px;overflow-y:auto">${p.body||''}</div><div style="display:flex;gap:8px"><button class="btn-sm" onclick="copyText(this.dataset.t)" data-t="${(p.body||'').replace(/"/g,'&quot;')}">📋 Copy</button><button class="btn-sm red" onclick="deleteVault('${p.id}')">Hapus</button></div></div>`).join('');}
+function renderVault(){document.getElementById('vaultGrid').innerHTML=vaultData.length===0?'<p style="color:var(--muted);font-size:13px">Belum ada prompt. Simpan 1 contoh prompt terbaik kamu.</p>':vaultData.map(p=>`<div class="card"><div class="card-header"><div class="card-title">${p.name}</div><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--hover);color:var(--muted)">${p.type||'Lainnya'}</span></div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:12px;white-space:pre-wrap;max-height:100px;overflow-y:auto">${p.body||''}</div><div style="display:flex;gap:8px"><button class="btn-sm" onclick="copyText(this.dataset.t)" data-t="${(p.body||'').replace(/"/g,'&quot;')}">📋 Copy</button><button class="btn-sm red" onclick="deleteVault('${p.id}')">Hapus</button></div></div>`).join('');}
 function openVaultModal(){document.getElementById('vaultModal').classList.add('open');}
 async function saveVault(){const name=document.getElementById('vaultFormName').value.trim();if(!name){toast('Nama tidak boleh kosong!');return;}const{data,error}=await db.from('prompts').insert([{name,type:document.getElementById('vaultFormType').value,body:document.getElementById('vaultFormBody').value.trim()}]).select();if(!error&&data){vaultData.unshift(data[0]);renderVault();document.getElementById('vaultModal').classList.remove('open');toast('Prompt disimpan!');}}
 async function deleteVault(id){await db.from('prompts').delete().eq('id',id);vaultData=vaultData.filter(p=>p.id!==id);renderVault();toast('Prompt dihapus!');}
 
 // ===== YOUTUBE ANALYTICS =====
-
-function ytLogin(){
-  const p=new URLSearchParams({
-    client_id:YT_CLIENT,
-    redirect_uri:YT_REDIRECT,
-    response_type:'token',
-    scope:YT_SCOPE,
-    include_granted_scopes:'true',
-    state:'ytanalytics',
-    prompt:'consent',
-    access_type:'online'
-  });
-  window.location.href='https://accounts.google.com/o/oauth2/v2/auth?'+p.toString();
-}
-
-function ytLogout(){
-  ytToken=null;
-  localStorage.removeItem('yt_token');
-  localStorage.removeItem('yt_token_exp');
-  ytAllVideos=[];
-  subsData={};
-  showLoginScreen();
-  toast('Keluar dari YouTube');
-}
-
-function showLoginScreen(){
-  document.getElementById('ytLoading').style.display='none';
-  document.getElementById('ytDash').classList.remove('on');
-  const el=document.getElementById('ytLogin');
-  el.style.display='flex';
-  el.innerHTML=`
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e03b2e" stroke-width="1.5">
-      <path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/>
-      <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#e03b2e" stroke="none"/>
-    </svg>
-    <div>
-      <div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px">Hubungkan ke YouTube</div>
-      <p style="color:var(--muted);font-size:13.5px;max-width:360px;line-height:1.6">Login dengan Google untuk lihat semua statistik channel kamu.</p>
-    </div>
-    <button class="btn-google" onclick="ytLogin()">
-      <svg viewBox="0 0 24 24" width="18" height="18">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-      </svg>
-      Masuk dengan Google
-    </button>`;
-}
-
-function showReloginBanner(reason){
-  document.getElementById('ytLoading').style.display='none';
-  document.getElementById('ytDash').classList.remove('on');
-  const el=document.getElementById('ytLogin');
-  el.style.display='flex';
-  const msg=reason||'Token Google expired (berlaku 1 jam). Login ulang untuk lanjut.';
-  el.innerHTML=`
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e09b3b" stroke-width="1.5">
-      <path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/>
-      <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#e09b3b" stroke="none"/>
-    </svg>
-    <div>
-      <div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px">⏰ Sesi Habis</div>
-      <p style="color:var(--muted);font-size:13.5px;max-width:360px;line-height:1.6">${msg}</p>
-    </div>
-    <button class="btn-google" onclick="ytLogin()">
-      <svg viewBox="0 0 24 24" width="18" height="18">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-      </svg>
-      Login Ulang dengan Google
-    </button>
-    <div style="font-size:11px;color:var(--muted);margin-top:-8px">Token OAuth berlaku 1 jam — ini normal, bukan error.</div>`;
-}
-
-// ===== KEY FIX: ytFetch hanya logout saat 401, BUKAN 403 =====
-// 403 bisa terjadi karena: trailing API propagation, quota, atau permission scope
-// 401 = token benar-benar expired/invalid → harus logout
-async function ytFetch(url, retryCount=0){
-  const r=await fetch(url,{headers:{Authorization:'Bearer '+ytToken}});
-  const d=await r.json();
-
-  // 401 = token expired/revoked → logout
-  if(d.error?.code===401){
-    localStorage.removeItem('yt_token');
-    localStorage.removeItem('yt_token_exp');
-    ytToken=null;
-    showReloginBanner('Token Google sudah tidak valid. Silakan login ulang.');
-    throw new Error('401');
-  }
-
-  // 403 = forbidden (bisa karena propagation delay setelah fresh token)
-  // Retry sekali setelah 2 detik sebelum throw error
-  if(d.error?.code===403){
-    if(retryCount<1){
-      await new Promise(res=>setTimeout(res,2000));
-      return ytFetch(url, retryCount+1);
-    }
-    // Setelah retry, throw tapi JANGAN logout
-    throw new Error('403: '+( d.error?.message||'Forbidden'));
-  }
-
-  if(d.error){
-    throw new Error(d.error?.message||'API error');
-  }
-
-  return d;
-}
+function ytLogin(){const p=new URLSearchParams({client_id:YT_CLIENT,redirect_uri:YT_REDIRECT,response_type:'token',scope:YT_SCOPE,include_granted_scopes:'true',state:'ytanalytics'});window.location.href='https://accounts.google.com/o/oauth2/v2/auth?'+p.toString();}
+function ytLogout(){ytToken=null;localStorage.removeItem('yt_token');localStorage.removeItem('yt_token_exp');ytAllVideos=[];ctrData={};subsData={};document.getElementById('ytDash').classList.remove('on');document.getElementById('ytLogin').style.display='flex';toast('Keluar dari YouTube');}
 
 function initYTPage(){
-  // 1. Baca token dari OAuth hash dulu (kalau baru redirect dari Google)
   const hash=window.location.hash;
-  if(hash&&hash.includes('access_token')){
-    const p=new URLSearchParams(hash.substring(1));
-    const tok=p.get('access_token');
-    const exp=parseInt(p.get('expires_in')||'3600');
-    if(tok){
-      ytToken=tok;
-      localStorage.setItem('yt_token',tok);
-      localStorage.setItem('yt_token_exp',String(Date.now()+exp*1000));
-      // Bersihkan hash dari URL
-      window.history.replaceState({},document.title,window.location.pathname);
-    }
-  }
-
-  // 2. Kalau tidak ada dari hash, cek localStorage
-  if(!ytToken){
-    const s=localStorage.getItem('yt_token');
-    const e=localStorage.getItem('yt_token_exp');
-    if(s&&e&&Date.now()<parseInt(e)){
-      ytToken=s;
-    }
-  }
-
-  // 3. Tampilkan UI sesuai kondisi
-  if(ytToken){
-    document.getElementById('ytLogin').style.display='none';
-    document.getElementById('ytLoading').style.display='block';
-    document.getElementById('ytDash').classList.remove('on');
-    fetchYTData();
-  }else{
-    showLoginScreen();
-  }
+  if(hash&&hash.includes('access_token')){const p=new URLSearchParams(hash.substring(1));const tok=p.get('access_token');const exp=p.get('expires_in');if(tok){ytToken=tok;localStorage.setItem('yt_token',tok);localStorage.setItem('yt_token_exp',Date.now()+parseInt(exp)*1000);window.history.replaceState({},document.title,window.location.pathname);}}
+  else{const s=localStorage.getItem('yt_token');const e=localStorage.getItem('yt_token_exp');if(s&&e&&Date.now()<parseInt(e))ytToken=s;}
+  if(ytToken){document.getElementById('ytLogin').style.display='none';document.getElementById('ytLoading').style.display='block';document.getElementById('ytDash').classList.remove('on');fetchYTData();}
+  else{document.getElementById('ytLogin').style.display='flex';document.getElementById('ytDash').classList.remove('on');document.getElementById('ytLoading').style.display='none';}
 }
+
+async function ytFetch(url){const r=await fetch(url,{headers:{Authorization:'Bearer '+ytToken}});const d=await r.json();if(d.error?.code===401){ytLogout();toast('Sesi habis, silakan login ulang');throw new Error('401');}return d;}
 
 async function fetchYTData(){
   try{
-    // Ambil data channel
     const ch=await ytFetch('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&mine=true');
     ytChannel=ch.items?.[0];
-
-    if(!ytChannel){
-      showReloginBanner('Tidak bisa mengambil data channel. Coba login ulang.');
-      return;
-    }
-
-    // Ambil semua video (pagination)
-    ytAllVideos=[];
-    let pageToken='',page=0;
+    ytAllVideos=[];let pageToken='',page=0;
     while(page<20){
       const url=`https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&maxResults=50&order=date${pageToken?'&pageToken='+pageToken:''}`;
-      const sd=await ytFetch(url);
-      const ids=(sd.items||[]).map(v=>v.id.videoId).filter(Boolean);
-      if(ids.length>0){
-        const vd=await ytFetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,contentDetails&id=${ids.join(',')}`);
-        ytAllVideos.push(...(vd.items||[]));
-      }
-      pageToken=sd.nextPageToken||'';
-      page++;
-      if(!pageToken)break;
+      const sd=await ytFetch(url);const ids=(sd.items||[]).map(v=>v.id.videoId).filter(Boolean);
+      if(ids.length>0){const vd=await ytFetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,contentDetails&id=${ids.join(',')}`);ytAllVideos.push(...(vd.items||[]));}
+      pageToken=sd.nextPageToken||'';page++;if(!pageToken)break;
     }
-
-    // Fetch analytics & trending (error di sini tidak logout user)
     await fetchAnalytics();
-    fetchTrending(); // non-blocking, error tidak apa-apa
-
+    await fetchTrending();
     renderDashboard();
+    updateApiKeyStatus();
     setTimeout(()=>autoFetchSubscribers(),3000);
-
-  }catch(e){
-    // Kalau bukan 401 (sudah dihandle di ytFetch), tampilkan error generic
-    if(e.message!=='401'){
-      document.getElementById('ytLoading').style.display='none';
-      document.getElementById('ytLogin').style.display='flex';
-      toast('Gagal mengambil data: '+e.message);
-      console.error('fetchYTData error:',e);
-    }
-  }
+  }catch(e){if(e.message!=='401'){document.getElementById('ytLoading').style.display='none';document.getElementById('ytLogin').style.display='flex';toast('Gagal mengambil data');}}
 }
 
-async function fetchAnalytics(days){
-  const d=days||curRange;
-  const end=new Date().toISOString().split('T')[0];
-  const start=new Date(Date.now()-d*86400000).toISOString().split('T')[0];
-  try{
-    const r=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${start}&endDate=${end}&metrics=views,estimatedMinutesWatched,subscribersGained,subscribersLost,annotationClickThroughRate&dimensions=day&sort=day`,{headers:{Authorization:'Bearer '+ytToken}});
-    ytAnalytics=await r.json();
-  }catch{ytAnalytics=null;}
+async function fetchAnalytics(){
+  const end=new Date().toISOString().split('T')[0];const start=new Date(Date.now()-curRange*86400000).toISOString().split('T')[0];
+  try{const r=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${start}&endDate=${end}&metrics=views,estimatedMinutesWatched,subscribersGained,subscribersLost,annotationClickThroughRate&dimensions=day&sort=day`,{headers:{Authorization:'Bearer '+ytToken}});ytAnalytics=await r.json();}
+  catch{ytAnalytics=null;}
 }
 
-async function fetchAnalyticsForRange(days){
-  const end=new Date().toISOString().split('T')[0];
-  const start=new Date(Date.now()-days*86400000).toISOString().split('T')[0];
-  try{
-    const r=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${start}&endDate=${end}&metrics=views,estimatedMinutesWatched,subscribersGained,subscribersLost,annotationClickThroughRate&dimensions=day&sort=day`,{headers:{Authorization:'Bearer '+ytToken}});
-    return await r.json();
-  }catch{return null;}
-}
-
-// Trending: pakai fetch biasa, TIDAK pakai ytFetch supaya error tidak logout user
 async function fetchTrending(){
   try{
-    const trendFetch=async(url)=>{
-      try{
-        const r=await fetch(url,{headers:{Authorization:'Bearer '+ytToken}});
-        if(!r.ok)return{items:[]};
-        return await r.json();
-      }catch{return{items:[]};}
-    };
     const[news,entertainment,tech]=await Promise.all([
-      trendFetch('https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=ID&maxResults=3&videoCategoryId=25'),
-      trendFetch('https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=ID&maxResults=2&videoCategoryId=24'),
-      trendFetch('https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=US&maxResults=2&videoCategoryId=28')
+      ytFetch('https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=ID&maxResults=3&videoCategoryId=25'),
+      ytFetch('https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=ID&maxResults=2&videoCategoryId=24'),
+      ytFetch('https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=US&maxResults=2&videoCategoryId=28')
     ]);
     const allItems=[
       ...(news.items||[]).map(v=>({...v,_source:'🇮🇩 News Indonesia'})),
@@ -985,9 +938,7 @@ async function fetchTrending(){
       ...(tech.items||[]).map(v=>({...v,_source:'🌍 Global Tech'}))
     ];
     renderTrending(allItems);
-  }catch{
-    document.getElementById('trendingSub').textContent='Tidak dapat memuat trending saat ini.';
-  }
+  }catch{document.getElementById('trendingSub').textContent='Tidak dapat memuat trending saat ini.';}
 }
 
 function renderTrending(items){
@@ -1021,27 +972,7 @@ function suggestAngle(title){
   return'Angle: cari angle lokal Indonesia yang belum banyak dibahas — diferensiasi adalah kunci';
 }
 
-function rangeName(days){
-  if(days===7)return'7 Hari';if(days===14)return'2 Minggu';if(days===28)return'1 Bulan';
-  if(days===90)return'3 Bulan';if(days===180)return'6 Bulan';if(days===365)return'1 Tahun';
-  return days+' Hari';
-}
-
-async function switchRange(days,btn){
-  curRange=days;
-  document.querySelectorAll('.range-tabs .range-tab').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  await fetchAnalytics(days);
-  renderStats();renderCharts();
-}
-
-function setExportRange(days,btn){
-  exportRange=days;
-  document.querySelectorAll('#exportRangeTabs .range-tab').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('exportSubtitle').textContent=`Statistik periode: ${rangeName(days)} · semua ${ytAllVideos.length} video · siap paste ke AI`;
-  document.getElementById('exportResult').style.display='none';
-}
+async function switchRange(days,btn){curRange=days;document.querySelectorAll('.range-tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');await fetchAnalytics();renderStats();renderCharts();generateAIAdvice();}
 
 function fmtNum(n){n=parseInt(n)||0;if(n>=1000000)return(n/1000000).toFixed(1)+'jt';if(n>=1000)return(n/1000).toFixed(1)+'rb';return n.toString();}
 function fmtDur(iso){if(!iso)return'—';const m=iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);if(!m)return'—';const h=parseInt(m[1]||0),min=parseInt(m[2]||0),s=parseInt(m[3]||0);if(h>0)return`${h}:${String(min).padStart(2,'0')}:${String(s).padStart(2,'0')}`;return`${min}:${String(s).padStart(2,'0')}`;}
@@ -1049,16 +980,9 @@ function isShort(v){const dur=v.contentDetails?.duration||'';const m=dur.match(/
 function getDurSec(v){const m=(v.contentDetails?.duration||'').match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);if(!m)return 0;return parseInt(m[1]||0)*3600+parseInt(m[2]||0)*60+parseInt(m[3]||0);}
 
 function renderDashboard(){
-  document.getElementById('ytLoading').style.display='none';
-  document.getElementById('ytDash').classList.add('on');
-  if(ytChannel){
-    const snip=ytChannel.snippet,stats=ytChannel.statistics;
-    document.getElementById('ytAvatar').src=snip?.thumbnails?.default?.url||'';
-    document.getElementById('ytChName').textContent=snip?.title||'—';
-    document.getElementById('ytChSub').textContent=fmtNum(stats?.subscriberCount)+' subscriber · '+fmtNum(stats?.videoCount)+' video';
-  }
-  renderMonet();renderStats();renderCharts();renderHeatmap();applyVideoFilters();
-  document.getElementById('exportSubtitle').textContent=`Statistik periode: ${rangeName(exportRange)} · semua ${ytAllVideos.length} video · siap paste ke AI`;
+  document.getElementById('ytLoading').style.display='none';document.getElementById('ytDash').classList.add('on');
+  if(ytChannel){const snip=ytChannel.snippet,stats=ytChannel.statistics;document.getElementById('ytAvatar').src=snip?.thumbnails?.default?.url||'';document.getElementById('ytChName').textContent=snip?.title||'—';document.getElementById('ytChSub').textContent=fmtNum(stats?.subscriberCount)+' subscriber · '+fmtNum(stats?.videoCount)+' video';}
+  renderMonet();renderStats();renderCharts();renderHeatmap();applyVideoFilters();generateAIAdvice();
 }
 
 function renderMonet(){
@@ -1106,7 +1030,7 @@ function renderStats(){
   const half=Math.floor(rows.length/2);const v1=rows.slice(0,half).reduce((s,r)=>s+(r[1]||0),0);const v2=rows.slice(half).reduce((s,r)=>s+(r[1]||0),0);
   const vChg=v1>0?Math.round((v2-v1)/v1*100):0;
   const vEl=document.getElementById('statViewsC');vEl.textContent=(vChg>=0?'↑ +':'↓ ')+vChg+'% vs periode sebelumnya';vEl.className='stat-change '+(vChg>=0?'up':'down');
-  document.getElementById('statWatchC').textContent=rangeName(curRange)+' terakhir';document.getElementById('statWatchC').className='stat-change';
+  document.getElementById('statWatchC').textContent=curRange+' hari terakhir';document.getElementById('statWatchC').className='stat-change';
   document.getElementById('statSubsC').textContent='gained minus lost';document.getElementById('statSubsC').className='stat-change';
   document.getElementById('statCtrC').textContent=avgCtr<=0?'Data tidak tersedia via Analytics API':avgCtr<2?'⚠️ Di bawah standar (2-5%)':avgCtr>=4?'✅ Di atas rata-rata':'Normal 2-4%';
   document.getElementById('statCtrC').className='stat-change '+(avgCtr>=2?'up':'down');
@@ -1151,135 +1075,113 @@ function renderHeatmap(){
       html+=`<div class="heatmap-cell" style="background:${color};${isBest?'outline:2px solid #1a1a18;outline-offset:1px':''}" data-tip="${tip}"></div>`;
     });
   });
+  // Legenda + rekomendasi jadwal
   const topSlots=[];days.forEach(d=>{for(let h=0;h<24;h++){if(avgData[d][h]>0)topSlots.push({day:d,hour:h,avg:avgData[d][h]});}});
   topSlots.sort((a,b)=>b.avg-a.avg);const top6=topSlots.slice(0,6);
   const jadwal=top6.length>0?top6.map(s=>`${s.day} ${s.hour}:00`).join(' · '):'Belum cukup data';
   html+=`<div style="grid-column:1/-1;margin-top:14px">
     <div style="display:flex;align-items:center;gap:12px;font-size:11px;color:var(--muted);flex-wrap:wrap;margin-bottom:10px">
-      <strong>Cara baca:</strong><span>⬜ Belum upload</span>
+      <strong>Cara baca:</strong>
+      <span>⬜ Belum upload</span>
       <span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(59,123,224,0.5);display:inline-block"></span> Views rendah</span>
       <span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(224,155,59,0.7);display:inline-block"></span> Views sedang</span>
       <span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(224,59,46,0.9);display:inline-block"></span> Views tinggi</span>
       ${bestAvg>0?`<strong>⭐ Terbaik: ${bestDay} jam ${bestHour}:00 — rata-rata ${fmtNum(Math.round(bestAvg))} views</strong>`:''}
     </div>
     ${top6.length>0?`<div style="background:var(--bg);border-radius:10px;padding:14px;border-left:3px solid var(--green)">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:6px">📅 REKOMENDASI JADWAL 6 SHORTS/HARI</div>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:6px">📅 REKOMENDASI JADWAL 6 SHORTS/HARI (berdasarkan data channel kamu)</div>
       <div style="font-size:13px;font-weight:600;margin-bottom:4px">${jadwal}</div>
-      <div style="font-size:12px;color:var(--muted)">Jam-jam upload yang rata-rata viewsnya paling tinggi di channel kamu.</div>
+      <div style="font-size:12px;color:var(--muted)">Jam-jam upload yang rata-rata viewsnya paling tinggi di channel kamu. Distribusikan 6 Shorts di jam-jam ini untuk reach maksimal.</div>
     </div>`:''}
   </div>`;
   document.getElementById('heatmapGrid').innerHTML=html;
 }
 
-async function generateExport(){
-  if(!ytChannel||!ytAllVideos.length){toast('Data belum loaded!');return;}
-  toast('Generating rekap... ⏳');
-  let expAnalytics=ytAnalytics;
-  if(exportRange!==curRange){expAnalytics=await fetchAnalyticsForRange(exportRange);}
-  document.getElementById('exportRangeLabel').textContent=`Rekap periode ${rangeName(exportRange)} · ${ytAllVideos.length} video · ${new Date().toLocaleDateString('id-ID')}`;
-  const stats=ytChannel.statistics||{};
-  const subs=parseInt(stats.subscriberCount||0);
-  const totalVidsCount=parseInt(stats.videoCount||0);
-  const ytVids=ytAllVideos.filter(v=>!isShort(v));
-  const shVids=ytAllVideos.filter(v=>isShort(v));
+// AI OVERALL — Gemini
+async function generateAIAdvice(){
+  document.getElementById('adviceList').innerHTML='<div class="yt-loading" style="padding:20px"><div class="spinner"></div></div>';
+  const rows=ytAnalytics?.rows||[];
+  const totViews=rows.reduce((s,r)=>s+(r[1]||0),0);const totSubs=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0);
+  const ctrRows=rows.filter(r=>r[5]>0);const avgCtr=ctrRows.length>0?ctrRows.reduce((s,r)=>s+r[5],0)/ctrRows.length*100:0;
+  const ytVids=ytAllVideos.filter(v=>!isShort(v));const shVids=ytAllVideos.filter(v=>isShort(v));
   const totalViewsAll=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);
+  const avgViews=ytAllVideos.length>0?totalViewsAll/ytAllVideos.length:0;
   const totalLikes=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.likeCount||0),0);
   const totalComments=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.commentCount||0),0);
-  const avgViews=ytAllVideos.length>0?Math.round(totalViewsAll/ytAllVideos.length):0;
-  const overallEng=totalViewsAll>0?((totalLikes+totalComments)/totalViewsAll*100).toFixed(2):0;
-  const ytWatchHours=Math.round(ytVids.reduce((s,v)=>s+getDurSec(v)*parseInt(v.statistics?.viewCount||0)/3600,0));
-  const shTotalViews=shVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);
+  const overallEng=totalViewsAll>0?(totalLikes+totalComments)/totalViewsAll*100:0;
+  // Fix gap calculation
   const sortedByDate=[...ytAllVideos].sort((a,b)=>new Date(a.snippet?.publishedAt)-new Date(b.snippet?.publishedAt));
   const uploadDates=sortedByDate.map(v=>v.snippet?.publishedAt?.split('T')[0]).filter(Boolean);
   let avgGap=0;
-  if(uploadDates.length>=2){const gaps=[];for(let i=1;i<Math.min(uploadDates.length,50);i++){const diff=(new Date(uploadDates[i])-new Date(uploadDates[i-1]))/86400000;if(diff>=0&&diff<90)gaps.push(diff);}if(gaps.length>0)avgGap=gaps.reduce((a,b)=>a+b,0)/gaps.length;}
-  const rows=expAnalytics?.rows||[];
-  const totViewsPeriod=rows.reduce((s,r)=>s+(r[1]||0),0);
-  const totWatchPeriod=Math.round(rows.reduce((s,r)=>s+(r[2]||0),0)/60);
-  const totSubsPeriod=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0);
-  const ctrRows=rows.filter(r=>r[5]>0);
-  const avgCtr=ctrRows.length>0?ctrRows.reduce((s,r)=>s+r[5],0)/ctrRows.length*100:0;
-  const sortedByViews=[...ytAllVideos].sort((a,b)=>parseInt(b.statistics?.viewCount||0)-parseInt(a.statistics?.viewCount||0));
-  const top20=sortedByViews.slice(0,20);
-  const bot10=sortedByViews.filter(v=>parseInt(v.statistics?.viewCount||0)>0).slice(-10).reverse();
-  const dist={over100k:0,over10k:0,over1k:0,over100:0,under100:0};
-  ytAllVideos.forEach(v=>{const vw=parseInt(v.statistics?.viewCount||0);if(vw>=100000)dist.over100k++;else if(vw>=10000)dist.over10k++;else if(vw>=1000)dist.over1k++;else if(vw>=100)dist.over100++;else dist.under100++;});
-  const durBuckets={'0-1 menit':{views:0,count:0},'1-3 menit':{views:0,count:0},'3-10 menit':{views:0,count:0},'10-20 menit':{views:0,count:0},'20+ menit':{views:0,count:0}};
-  ytAllVideos.forEach(v=>{const sec=getDurSec(v);const vw=parseInt(v.statistics?.viewCount||0);let b='20+ menit';if(sec<60)b='0-1 menit';else if(sec<180)b='1-3 menit';else if(sec<600)b='3-10 menit';else if(sec<1200)b='10-20 menit';durBuckets[b].views+=vw;durBuckets[b].count++;});
-  const ytTotalV=ytVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);
-  const shTotalV=shVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);
-  const ytAvgV=ytVids.length>0?Math.round(ytTotalV/ytVids.length):0;
-  const shAvgV=shVids.length>0?Math.round(shTotalV/shVids.length):0;
-  const hdays=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
-  const heatData={};hdays.forEach(d=>{heatData[d]={};for(let h=0;h<24;h++)heatData[d][h]={views:0,count:0};});
-  ytAllVideos.forEach(v=>{const pub=v.snippet?.publishedAt;if(!pub)return;const d=new Date(pub);const dn=hdays[d.getDay()];const hr=d.getHours();const vw=parseInt(v.statistics?.viewCount||0);if(heatData[dn])heatData[dn][hr].views+=vw,heatData[dn][hr].count++;});
-  const topSlots=[];hdays.forEach(d=>{for(let h=0;h<24;h++){const slot=heatData[d][h];if(slot.count>0)topSlots.push({day:d,hour:h,avg:slot.views/slot.count,count:slot.count});}});
-  topSlots.sort((a,b)=>b.avg-a.avg);const top6Slots=topSlots.slice(0,6);
-  const half=Math.floor(rows.length/2);
-  const v1=rows.slice(0,half).reduce((s,r)=>s+(r[1]||0),0);
-  const v2=rows.slice(half).reduce((s,r)=>s+(r[1]||0),0);
-  const vTrend=v1>0?Math.round((v2-v1)/v1*100):0;
-  const now=new Date();const L=[];
-  L.push('═══════════════════════════════════════════════════════════════');
-  L.push('📊 REKAP DATA CHANNEL YOUTUBE — '+(ytChannel.snippet?.title||'').toUpperCase());
-  L.push('Dibuat   : '+now.toLocaleDateString('id-ID',{dateStyle:'full'})+' pukul '+now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
-  L.push('Periode  : '+rangeName(exportRange)+' terakhir');
-  L.push('Total    : '+ytAllVideos.length+' video dianalisis ('+ytVids.length+' YouTube + '+shVids.length+' Shorts)');
-  L.push('═══════════════════════════════════════════════════════════════');
-  L.push('');L.push('━━━ 🏠 INFO CHANNEL ━━━');
-  L.push('Nama Channel   : '+(ytChannel.snippet?.title||'—'));
-  L.push('Subscriber     : '+fmtNum(subs)+' / 1.000 target ('+Math.round(subs/1000*100)+'% — kurang '+Math.max(0,1000-subs)+')');
-  L.push('Total Video    : '+totalVidsCount+' ('+ytVids.length+' YouTube long-form + '+shVids.length+' Shorts)');
-  L.push('Upload rata-2  : '+(avgGap>0?'setiap ~'+avgGap.toFixed(1)+' hari':'data tidak cukup'));
-  L.push('');L.push('━━━ 💰 PROGRESS MONETISASI ━━━');
-  L.push('[ JALUR 1 — YouTube Long-form ]');
-  L.push('  Subscriber   : '+fmtNum(subs)+'/1.000 ('+Math.round(subs/1000*100)+'%)');
-  L.push('  Watch Time   : '+fmtNum(ytWatchHours)+' jam / 4.000 jam ('+Math.round(ytWatchHours/4000*100)+'% — kurang '+fmtNum(Math.max(0,4000-ytWatchHours))+' jam)');
-  L.push('[ JALUR 2 — Shorts ]');
-  L.push('  Subscriber   : '+fmtNum(subs)+'/1.000 (sama)');
-  L.push('  Shorts Views : '+fmtNum(shTotalViews)+' / 10.000.000 ('+(shTotalViews/10000000*100).toFixed(2)+'% — kurang '+fmtNum(Math.max(0,10000000-shTotalViews))+')');
-  L.push('');L.push('━━━ 📈 STATISTIK PERIODE: '+rangeName(exportRange).toUpperCase()+' ━━━');
-  L.push('Views periode    : '+fmtNum(totViewsPeriod));
-  L.push('Watch Time       : '+fmtNum(totWatchPeriod)+' jam');
-  L.push('Subscriber baru  : '+(totSubsPeriod>=0?'+':'')+fmtNum(totSubsPeriod));
-  L.push('CTR rata-rata    : '+(avgCtr>0?avgCtr.toFixed(2)+'%':'tidak tersedia'));
-  L.push('Tren views       : '+(vTrend>=0?'+':'')+vTrend+'% (separuh akhir vs separuh awal periode)');
-  L.push('');L.push('━━━ 📊 STATISTIK KESELURUHAN SEMUA VIDEO ━━━');
-  L.push('Total views      : '+fmtNum(totalViewsAll));L.push('Rata-rata views  : '+fmtNum(avgViews)+' per video');
-  L.push('Total likes      : '+fmtNum(totalLikes));L.push('Total komentar   : '+fmtNum(totalComments));L.push('Engagement rate  : '+overallEng+'%');
-  L.push('');L.push('━━━ 📹 PERFORMA YOUTUBE vs SHORTS ━━━');
-  L.push('YouTube Long-form ('+ytVids.length+' video)');L.push('  Total views    : '+fmtNum(ytTotalV));L.push('  Rata-rata/vid  : '+fmtNum(ytAvgV));L.push('  Watch hours    : '+fmtNum(ytWatchHours)+' jam');
-  L.push('Shorts ('+shVids.length+' video)');L.push('  Total views    : '+fmtNum(shTotalV));L.push('  Rata-rata/vid  : '+fmtNum(shAvgV));
-  L.push('');L.push('━━━ 📉 DISTRIBUSI VIEWS ━━━');
-  L.push('  ≥ 100.000 views  : '+dist.over100k+' video ('+Math.round(dist.over100k/ytAllVideos.length*100)+'%)');
-  L.push('  10.000 – 99.999  : '+dist.over10k+' video ('+Math.round(dist.over10k/ytAllVideos.length*100)+'%)');
-  L.push('  1.000 – 9.999    : '+dist.over1k+' video ('+Math.round(dist.over1k/ytAllVideos.length*100)+'%)');
-  L.push('  100 – 999        : '+dist.over100+' video ('+Math.round(dist.over100/ytAllVideos.length*100)+'%)');
-  L.push('  < 100 views      : '+dist.under100+' video ('+Math.round(dist.under100/ytAllVideos.length*100)+'%)');
-  L.push('');L.push('━━━ ⏱️ ANALISIS DURASI vs VIEWS ━━━');
-  Object.entries(durBuckets).forEach(([bucket,data])=>{if(data.count>0){const avg=Math.round(data.views/data.count);L.push('  '+bucket.padEnd(12)+' : '+data.count+' video · rata-rata '+fmtNum(avg)+' views/video');}});
-  L.push('');L.push('━━━ 🕐 TOP 6 JAM UPLOAD TERBAIK ━━━');
-  if(top6Slots.length>0){top6Slots.forEach((s,i)=>{L.push('  '+(i+1)+'. '+s.day+' jam '+s.hour+':00 — avg '+fmtNum(Math.round(s.avg))+' views (dari '+s.count+' upload)');});}else{L.push('  Belum cukup data upload.');}
-  L.push('');L.push('━━━ 🏆 TOP 20 VIDEO TERBAIK ━━━');
-  top20.forEach((v,i)=>{const vw=parseInt(v.statistics?.viewCount||0);const lk=parseInt(v.statistics?.likeCount||0);const cm=parseInt(v.statistics?.commentCount||0);const dur=fmtDur(v.contentDetails?.duration);const type=isShort(v)?'Shorts':'YouTube';const date=v.snippet?.publishedAt?new Date(v.snippet.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'—';const sub=subsData[v.id];const eng=vw>0?((lk+cm)/vw*100).toFixed(2):'0';L.push((i+1)+'. "'+(v.snippet?.title||'—')+'"');L.push('   Tipe: '+type+' | Durasi: '+dur+' | Upload: '+date);L.push('   Views: '+fmtNum(vw)+' | Likes: '+fmtNum(lk)+' | Komen: '+cm+' | Eng: '+eng+'%');if(sub!=null)L.push('   +Subscriber: +'+sub);L.push('');});
-  L.push('━━━ 📉 10 VIDEO VIEWS TERENDAH ━━━');
-  bot10.forEach((v,i)=>{const vw=parseInt(v.statistics?.viewCount||0);const lk=parseInt(v.statistics?.likeCount||0);const cm=parseInt(v.statistics?.commentCount||0);const dur=fmtDur(v.contentDetails?.duration);const type=isShort(v)?'Shorts':'YouTube';const date=v.snippet?.publishedAt?new Date(v.snippet.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'—';L.push((i+1)+'. "'+(v.snippet?.title||'—')+'"');L.push('   Tipe: '+type+' | Durasi: '+dur+' | Upload: '+date);L.push('   Views: '+fmtNum(vw)+' | Likes: '+fmtNum(lk)+' | Komen: '+cm);L.push('');});
-  L.push('━━━ 📋 SEMUA VIDEO ('+ytAllVideos.length+' video) ━━━');
-  L.push('No  | Tipe    | Views    | Likes  | Komen | Durasi | Upload     | +Sub | Judul');
-  L.push('─'.repeat(110));
-  sortedByViews.forEach((v,i)=>{const vw=parseInt(v.statistics?.viewCount||0);const lk=parseInt(v.statistics?.likeCount||0);const cm=parseInt(v.statistics?.commentCount||0);const dur=fmtDur(v.contentDetails?.duration);const type=isShort(v)?'Shorts ':'YouTube';const date=v.snippet?.publishedAt?new Date(v.snippet.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'2-digit'}):'—';const sub=subsData[v.id]!=null?'+'+subsData[v.id]:'—';const title=(v.snippet?.title||'—').slice(0,60);const no=String(i+1).padStart(3);L.push(no+' | '+type+' | '+fmtNum(vw).padStart(8)+' | '+fmtNum(lk).padStart(6)+' | '+String(cm).padStart(5)+' | '+dur.padStart(6)+' | '+date.padStart(10)+' | '+sub.padStart(4)+' | '+title);});
-  L.push('');L.push('═══════════════════════════════════════════════════════════════');
-  L.push('💡 DATA DI ATAS ADALAH DATA NYATA DARI CHANNEL YOUTUBE SAYA.');
-  L.push('   Silakan analisis dan berikan rekomendasi yang spesifik.');
-  L.push('   [TULIS PERTANYAANMU DI SINI sebelum paste ke AI]');
-  L.push('═══════════════════════════════════════════════════════════════');
-  document.getElementById('exportText').value=L.join('\n');
-  document.getElementById('exportResult').style.display='block';
-  document.getElementById('exportResult').scrollIntoView({behavior:'smooth',block:'start'});
-  toast('Rekap '+ytAllVideos.length+' video berhasil di-generate! ✅');
+  if(uploadDates.length>=2){const gaps=[];for(let i=1;i<Math.min(uploadDates.length,30);i++){const diff=(new Date(uploadDates[i])-new Date(uploadDates[i-1]))/86400000;if(diff>=0&&diff<90)gaps.push(diff);}if(gaps.length>0)avgGap=gaps.reduce((a,b)=>a+b,0)/gaps.length;}
+  const top5=[...ytAllVideos].sort((a,b)=>parseInt(b.statistics?.viewCount||0)-parseInt(a.statistics?.viewCount||0)).slice(0,5);
+  const bot5=[...ytAllVideos].sort((a,b)=>parseInt(a.statistics?.viewCount||0)-parseInt(b.statistics?.viewCount||0)).filter(v=>parseInt(v.statistics?.viewCount||0)>0).slice(0,5);
+  const top5titles=top5.map(v=>`"${v.snippet?.title}" (${fmtNum(parseInt(v.statistics?.viewCount||0))} views, durasi ${fmtDur(v.contentDetails?.duration)})`).join('\n');
+  const bot5titles=bot5.map(v=>`"${v.snippet?.title}" (${fmtNum(parseInt(v.statistics?.viewCount||0))} views)`).join('\n');
+  const subs=parseInt(ytChannel?.statistics?.subscriberCount||0);
+  const totalWatchHours=Math.round(ytVids.reduce((s,v)=>s+getDurSec(v)*parseInt(v.statistics?.viewCount||0)/3600,0));
+  document.getElementById('aiOverallSub').textContent=`Analisis ${ytAllVideos.length} video · ${curRange} hari terakhir · powered by Gemini AI · diperbarui realtime`;
+  if(!getApiKey()){
+    document.getElementById('adviceList').innerHTML=`<div class="advice-item warning"><div class="advice-label">⚠️ Gemini API Key Belum Diset</div><div class="advice-text">Klik tombol <strong>🔑 Set Gemini Key</strong> di atas dan masukkan API key dari <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--sh)">aistudio.google.com/apikey</a> (gratis) untuk aktifkan analisis AI mendalam.</div></div>`;
+    renderLocalAdvice(avgCtr,avgGap,overallEng,avgViews,subs,totalWatchHours,top5,shVids,ytVids);
+    return;
+  }
+  try{
+    const text=await geminiAI(`Kamu adalah YouTube analytics expert dan growth consultant terbaik untuk konten Indonesia. Analisis data channel ini MENDALAM dan SPESIFIK. Semua insight harus berdasarkan DATA NYATA dengan langkah konkret.
+
+DATA CHANNEL:
+- Total video: ${ytAllVideos.length} (${ytVids.length} YouTube long-form + ${shVids.length} Shorts)
+- Subscriber: ${fmtNum(subs)} / 1.000 (target monetisasi)
+- Total views keseluruhan: ${fmtNum(totalViewsAll)} | Rata-rata per video: ${fmtNum(Math.round(avgViews))}
+- Engagement rate: ${overallEng.toFixed(2)}% | CTR rata-rata: ${avgCtr>0?avgCtr.toFixed(1)+'%':'tidak tersedia'}
+- Frekuensi upload: setiap ${avgGap>0?avgGap.toFixed(1)+' hari':'data tidak cukup'}
+- YouTube Watch Time: ${fmtNum(totalWatchHours)} jam / 4.000 jam target
+- ${curRange} hari terakhir: ${fmtNum(totViews)} views, ${totSubs>0?'+':''}${totSubs} subscriber
+
+5 VIDEO TERBAIK:
+${top5titles}
+
+5 VIDEO TERENDAH:
+${bot5titles}
+
+Berikan analisis dalam format JSON (HANYA JSON, tanpa markdown backticks):
+{"kesimpulan":"2-3 kalimat kondisi channel saat ini secara jujur dan spesifik","insights":[{"type":"critical|warning|tip|good","label":"judul singkat dengan emoji","text":"analisis spesifik berdasarkan data + langkah konkret yang bisa dilakukan sekarang"}]}
+
+Wajib ada insight tentang:
+1. Kenapa video terbaik bisa viral — analisis pola dari judul/topik/durasi yang diberikan
+2. Kenapa video terendah gagal — apa yang berbeda
+3. Formula konkret untuk video berikutnya berdasarkan data
+4. Langkah spesifik naikkan views+likes+komentar sekarang juga
+5. Strategi monetisasi tercepat berdasarkan kondisi channel saat ini
+6. Prediksi performa video berikutnya jika mengikuti formula terbaik
+7. Rekomendasi konten spesifik yang berpotensi viral di niche ini
+8. Analisis engagement dan cara tingkatkan
+9. Evaluasi frekuensi upload — cukup atau perlu ditingkatkan
+10. Satu hal yang HARUS diubah sekarang jika ingin channel berkembang
+
+Minimal 8 insights. Semua harus SPESIFIK dan ACTIONABLE, bukan saran generik.`);
+    const clean=text.replace(/```json|```/g,'').trim();
+    // Handle JSON that might start after some text
+    const jsonStart=clean.indexOf('{');const jsonEnd=clean.lastIndexOf('}');
+    const jsonStr=jsonStart>=0?clean.slice(jsonStart,jsonEnd+1):clean;
+    const parsed=JSON.parse(jsonStr);
+    document.getElementById('adviceList').innerHTML=
+      (parsed.kesimpulan?`<div style="background:var(--bg);border-radius:10px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--border)"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:4px">📋 KESIMPULAN CHANNEL</div><div style="font-size:13px;line-height:1.6">${parsed.kesimpulan}</div></div>`:'') +
+      (parsed.insights||[]).map(a=>`<div class="advice-item ${a.type||'tip'}"><div class="advice-label">${a.label}</div><div class="advice-text">${a.text}</div></div>`).join('');
+  }catch(e){
+    renderLocalAdvice(avgCtr,avgGap,overallEng,avgViews,subs,totalWatchHours,top5,shVids,ytVids);
+  }
 }
 
-function copyExport(){const text=document.getElementById('exportText').value;if(!text){toast('Generate rekap dulu!');return;}navigator.clipboard.writeText(text).then(()=>toast('Rekap disalin! Siap di-paste ke AI 🚀'));}
+function renderLocalAdvice(avgCtr,avgGap,overallEng,avgViews,subs,totalWatchHours,top5,shVids,ytVids){
+  const advices=[];const top=top5[0];const topV=parseInt(top?.statistics?.viewCount||0);
+  if(topV>avgViews*5){const topDur=fmtDur(top?.contentDetails?.duration);advices.push({type:'good',label:'🏆 Formula Video Viral',text:`"${(top?.snippet?.title||'').slice(0,60)}" dapat ${fmtNum(topV)} views (${Math.round(topV/avgViews)}x rata-rata). Durasi: ${topDur}. Replikasi topik, angle, dan format video ini.`});}
+  if(avgGap>0){advices.push({type:avgGap<=3?'good':'warning',label:avgGap<=3?'✅ Frekuensi Bagus':'⚠️ Frekuensi Upload',text:`Upload rata-rata setiap ${avgGap.toFixed(1)} hari. ${avgGap>3?'Idealnya upload lebih sering — setiap 1-2 hari untuk growth optimal.':'Pertahankan konsistensi ini.'}`});}
+  if(avgCtr>0&&avgCtr<2)advices.push({type:'critical',label:'🚨 CTR Kritis',text:`CTR ${avgCtr.toFixed(1)}% jauh di bawah standar 2-5%. Redesign thumbnail: gunakan wajah ekspresif, teks max 3 kata ukuran besar, kontras tinggi merah/kuning.`});
+  if(overallEng<1)advices.push({type:'warning',label:'💬 Tingkatkan Engagement',text:`Engagement ${overallEng.toFixed(2)}% rendah. Strategi: pin pertanyaan di komentar setiap upload, balas semua komentar 24 jam pertama, akhiri video dengan pertanyaan mudah dijawab.`});
+  if(subs<1000)advices.push({type:'tip',label:'🎯 Strategi Monet Tercepat',text:`Kurang ${1000-subs} subscriber lagi. Cara tercepat: upload Shorts setiap hari 30 hari berturut-turut + tambah CTA subscribe di tengah video (bukan hanya di akhir).`});
+  document.getElementById('adviceList').innerHTML=advices.map(a=>`<div class="advice-item ${a.type}"><div class="advice-label">${a.label}</div><div class="advice-text">${a.text}</div></div>`).join('');
+}
 
 // VIDEO TABLE
 function setTypeFilter(type,btn){vTypeFilter=type;document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');vDisplayCount=25;applyVideoFilters();}
@@ -1291,6 +1193,7 @@ function applyVideoFilters(){
   if(search)vids=vids.filter(v=>(v.snippet?.title||'').toLowerCase().includes(search));
   vids.sort((a,b)=>{
     if(vSortBy==='views')return parseInt(b.statistics?.viewCount||0)-parseInt(a.statistics?.viewCount||0);
+    if(vSortBy==='ctr')return(ctrData[b.id]||0)-(ctrData[a.id]||0);
     if(vSortBy==='subs')return(subsData[b.id]||0)-(subsData[a.id]||0);
     if(vSortBy==='likes')return parseInt(b.statistics?.likeCount||0)-parseInt(a.statistics?.likeCount||0);
     if(vSortBy==='comments')return parseInt(b.statistics?.commentCount||0)-parseInt(a.statistics?.commentCount||0);
@@ -1308,25 +1211,28 @@ function renderVideoTable(){
     const dur=fmtDur(v.contentDetails?.duration);const type=isShort(v)?'sh':'yt';
     const date=snip.publishedAt?new Date(snip.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'2-digit'}):'—';
     const barPct=Math.round(views/maxV*100);const barClass=barPct>66?'hi':barPct>33?'mid':'';
+    const ctr=ctrData[v.id];const ctrHtml=ctr!=null?`<span style="color:${ctr>=4?'var(--green)':ctr>=2?'var(--text)':'var(--yt)'};font-weight:600">${ctr.toFixed(1)}%</span>`:'<span style="color:var(--muted);font-size:11px">—</span>';
     const sub=subsData[v.id];const subHtml=sub!=null?`<span style="color:${sub>0?'var(--green)':'var(--muted)'};font-weight:600">${sub>0?'+':''}${sub}</span>`:'<span style="color:var(--muted);font-size:11px">—</span>';
     return`<tr><td><div class="vtitle-cell"><img class="vthumb" src="${thumb}" alt="" onerror="this.style.background='var(--border)'"><div><span class="vpill ${type}">${type==='sh'?'⚡ Shorts':'▶ YT'}</span><div class="vtitle-txt">${snip.title||'—'}</div></div></div></td>
     <td class="num"><strong>${fmtNum(views)}</strong><div class="vbar"><div class="vbar-fill ${barClass}" style="width:${barPct}%"></div></div></td>
+    <td class="num" id="ctr_${v.id}">${ctrHtml}</td>
     <td class="num" id="sub_${v.id}">${subHtml}</td>
     <td class="num">${fmtNum(likes)}</td><td class="num">${fmtNum(comments)}</td>
     <td class="num" style="color:var(--muted)">${dur}</td>
     <td class="num" style="color:var(--muted);font-size:11.5px">${date}</td>
-    <td><button class="vdet-btn" onclick="openVideoDetail('${v.id}')">Detail</button></td></tr>`;
+    <td><button class="vdet-btn" onclick="openVideoDetail('${v.id}')">Detail + AI</button></td></tr>`;
   }).join('');
   const lb=document.getElementById('loadMoreBtn');if(filteredVideos.length>vDisplayCount){lb.style.display='block';lb.textContent=`+ Muat ${filteredVideos.length-vDisplayCount} video lagi`;}else lb.style.display='none';
 }
 function loadMoreVideos(){vDisplayCount+=25;renderVideoTable();}
 
-async function fetchVideoSubs(videoId){
+// CTR & SUBS
+async function fetchVideoAnalytics(videoId){
   const end=new Date().toISOString().split('T')[0];const start=new Date(Date.now()-365*86400000).toISOString().split('T')[0];
   try{
     const r=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${start}&endDate=${end}&metrics=subscribersGained&dimensions=video&filters=video%3D%3D${videoId}`,{headers:{Authorization:'Bearer '+ytToken}});
     const d=await r.json();const rows=d.rows||[];
-    if(rows.length>0)return rows[0][1]||0;return 0;
+    if(rows.length>0)return{ctr:null,subs:rows[0][1]||0};return{ctr:null,subs:0};
   }catch{return null;}
 }
 
@@ -1337,35 +1243,36 @@ async function startLoadCTR(){
   const total=ytAllVideos.length;
   for(let i=0;i<total;i++){
     if(ctrStop)break;const v=ytAllVideos[i];
-    const result=await fetchVideoSubs(v.id);
-    if(result!=null)subsData[v.id]=result;
+    const result=await fetchVideoAnalytics(v.id);
+    if(result){if(result.subs!=null)subsData[v.id]=result.subs;}
     const pct=Math.round((i+1)/total*100);
     document.getElementById('ctrBarFill').style.width=pct+'%';
-    document.getElementById('ctrProgressTxt').textContent=`Mengambil +Subscriber... ${i+1}/${total}`;
+    document.getElementById('ctrProgressTxt').textContent=`Mengambil Subscriber... ${i+1}/${total}`;
     const subCell=document.getElementById('sub_'+v.id);
-    if(result!=null&&subCell)subCell.innerHTML=`<span style="color:${result>0?'var(--green)':'var(--muted)'};font-weight:600">${result>0?'+':''}${result}</span>`;
+    if(result&&result.subs!=null&&subCell)subCell.innerHTML=`<span style="color:${result.subs>0?'var(--green)':'var(--muted)'};font-weight:600">${result.subs>0?'+':''}${result.subs}</span>`;
     await new Promise(r=>setTimeout(r,200));
   }
-  document.getElementById('ctrProgressTxt').textContent=ctrStop?'Dihentikan.':'✅ Selesai! Data +Sub tersimpan untuk export.';
-  document.getElementById('loadCtrBtn').disabled=false;document.getElementById('loadCtrBtn').textContent='📊 Refresh +Sub';
+  document.getElementById('ctrProgressTxt').textContent=ctrStop?'Dihentikan.':'✅ Selesai!';
+  document.getElementById('loadCtrBtn').disabled=false;document.getElementById('loadCtrBtn').textContent='📊 Refresh Data';
   renderVideoTable();
 }
-function stopCTR(){ctrStop=true;document.getElementById('loadCtrBtn').disabled=false;document.getElementById('loadCtrBtn').textContent='📊 Load +Sub';}
+function stopCTR(){ctrStop=true;document.getElementById('loadCtrBtn').disabled=false;document.getElementById('loadCtrBtn').textContent='📊 Load CTR';}
 
 async function autoFetchSubscribers(){
   if(!ytToken)return;
   for(let i=0;i<Math.min(ytAllVideos.length,50);i++){
     const v=ytAllVideos[i];if(subsData[v.id]!=null)continue;
-    const result=await fetchVideoSubs(v.id);
+    const result=await fetchVideoAnalytics(v.id);
     if(result!=null){
-      subsData[v.id]=result;
+      subsData[v.id]=result.subs||0;
       const subCell=document.getElementById('sub_'+v.id);
-      if(subCell)subCell.innerHTML=`<span style="color:${result>0?'var(--green)':'var(--muted)'};font-weight:600">${result>0?'+':''}${result}</span>`;
+      if(subCell)subCell.innerHTML=`<span style="color:${result.subs>0?'var(--green)':'var(--muted)'};font-weight:600">${result.subs>0?'+':''}${result.subs}</span>`;
     }
     await new Promise(r=>setTimeout(r,250));
   }
 }
 
+// VIDEO DETAIL
 function openVideoDetail(videoId){
   const v=ytAllVideos.find(x=>x.id===videoId);if(!v)return;
   const stats=v.statistics||{},snip=v.snippet||{};const thumb=snip.thumbnails?.medium?.url||'';
@@ -1374,45 +1281,90 @@ function openVideoDetail(videoId){
   const date=snip.publishedAt?new Date(snip.publishedAt).toLocaleDateString('id-ID',{dateStyle:'long'}):'—';
   const engRate=views>0?((likes+comments)/views*100).toFixed(2):'0';const likeRate=views>0?(likes/views*100).toFixed(2):'0';
   const subNow=subsData[videoId];
-  const subHtml=subNow!=null?`<span style="font-weight:700;color:${subNow>0?'var(--green)':'var(--muted)'}">+${subNow}</span>`:`<span style="color:var(--muted);font-size:12px">Memuat...</span>`;
+  const subHtml=subNow!=null?`<span style="color:${subNow>0?'var(--green)':'var(--muted)'};font-weight:700">${subNow>0?'+':''}${subNow}</span>`:`<span id="vd_sub_val" style="color:var(--muted);font-size:12px">Memuat<span class="spinner-sm"></span></span>`;
   document.getElementById('vdetBody').innerHTML=`
     <div class="vd-head"><img class="vd-thumb" src="${thumb}" alt=""><div><div class="vd-title">${snip.title||'—'}</div><div class="vd-meta">${type} · ${date} · ${dur}</div></div></div>
     <div class="vd-stats">
-      <div class="vd-stat"><div class="vd-stat-label">Views</div><div class="vd-stat-value">${fmtNum(views)}</div><div class="vd-stat-sub">total</div></div>
+      <div class="vd-stat"><div class="vd-stat-label">Views</div><div class="vd-stat-value">${fmtNum(views)}</div><div class="vd-stat-sub">total penonton</div></div>
       <div class="vd-stat"><div class="vd-stat-label">Likes</div><div class="vd-stat-value">${fmtNum(likes)}</div><div class="vd-stat-sub">like rate ${likeRate}%</div></div>
       <div class="vd-stat"><div class="vd-stat-label">Komentar</div><div class="vd-stat-value">${fmtNum(comments)}</div><div class="vd-stat-sub">total</div></div>
       <div class="vd-stat"><div class="vd-stat-label">Engagement</div><div class="vd-stat-value">${engRate}%</div><div class="vd-stat-sub">likes+komen/views</div></div>
       <div class="vd-stat"><div class="vd-stat-label">Durasi</div><div class="vd-stat-value">${dur}</div><div class="vd-stat-sub">${type}</div></div>
       <div class="vd-stat"><div class="vd-stat-label">+Subscriber</div><div class="vd-stat-value" id="vd_sub_box">${subHtml}</div><div class="vd-stat-sub">dari video ini</div></div>
     </div>
-    <div style="background:var(--bg);border-radius:10px;padding:14px;margin-top:8px">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:6px">📋 DATA MENTAH</div>
-      <div style="font-size:12px;color:var(--muted);line-height:1.8">
-        Video ID: <code style="background:var(--surface);padding:2px 6px;border-radius:4px">${v.id}</code><br>
-        URL: <a href="https://youtu.be/${v.id}" target="_blank" style="color:var(--sh)">https://youtu.be/${v.id}</a>
-      </div>
-    </div>`;
+    <div class="vd-sec">🤖 Analisis AI — Video Ini (Gemini)</div>
+    <div id="vd_ai_loading"><div class="yt-loading" style="padding:16px"><div class="spinner"></div></div></div>
+    <div id="vd_ai_content"></div>
+  `;
   document.getElementById('vdetModal').classList.add('open');
   if(subNow==null){
-    fetchVideoSubs(videoId).then(result=>{
-      if(result!=null){
-        subsData[videoId]=result;
+    fetchVideoAnalytics(videoId).then(result=>{
+      if(result){
+        subsData[videoId]=result.subs||0;
         const subBox=document.getElementById('vd_sub_box');
-        if(subBox)subBox.innerHTML=`<span style="font-weight:700;color:${result>0?'var(--green)':'var(--muted)'}">+${result}</span>`;
+        if(subBox)subBox.innerHTML=`<span style="color:${result.subs>0?'var(--green)':'var(--muted)'};font-weight:700">${result.subs>0?'+':''}${result.subs}</span>`;
         const subCell=document.getElementById('sub_'+videoId);
-        if(subCell)subCell.innerHTML=`<span style="color:${result>0?'var(--green)':'var(--muted)'};font-weight:600">${result>0?'+':''}${result}</span>`;
-      }
+        if(subCell)subCell.innerHTML=`<span style="color:${result.subs>0?'var(--green)':'var(--muted)'};font-weight:600">${result.subs>0?'+':''}${result.subs}</span>`;
+        generateVideoAI(v,result.subs);
+      }else generateVideoAI(v,null);
     });
+  }else generateVideoAI(v,subNow);
+}
+
+async function generateVideoAI(v,subs){
+  const stats=v.statistics||{},snip=v.snippet||{};
+  const views=parseInt(stats.viewCount||0);const likes=parseInt(stats.likeCount||0);const comments=parseInt(stats.commentCount||0);
+  const avgViews=ytAllVideos.length>0?ytAllVideos.reduce((s,x)=>s+parseInt(x.statistics?.viewCount||0),0)/ytAllVideos.length:0;
+  const engRate=views>0?((likes+comments)/views*100).toFixed(2):'0';
+  const type=isShort(v)?'Shorts':'YouTube';const dur=fmtDur(v.contentDetails?.duration);
+  if(!getApiKey()){
+    document.getElementById('vd_ai_loading').style.display='none';
+    document.getElementById('vd_ai_content').innerHTML=generateLocalVideoAdvice(v,subs,avgViews).map(a=>`<div class="vd-advice ${a.type}"><div class="vd-advice-label">${a.label}</div><div class="vd-advice-text">${a.text}</div></div>`).join('');
+    return;
+  }
+  try{
+    const text=await geminiAI(`Kamu adalah YouTube growth consultant. Analisis video ini berdasarkan data nyata. Kasih saran yang spesifik dan actionable.
+
+DATA VIDEO:
+- Judul: "${snip.title||'—'}"
+- Tipe: ${type} | Durasi: ${dur}
+- Views: ${fmtNum(views)} (rata-rata channel: ${fmtNum(Math.round(avgViews))})
+- Likes: ${fmtNum(likes)} | Like rate: ${views>0?(likes/views*100).toFixed(2):'0'}%
+- Komentar: ${comments} | Engagement: ${engRate}%
+- Subscriber gained: ${subs!=null?'+'+subs:'tidak tersedia'}
+
+Format JSON (HANYA JSON tanpa markdown):
+{"insights":[{"type":"good|warning|tip|critical","label":"judul singkat dengan emoji","text":"analisis spesifik + saran konkret bisa dilakukan sekarang"}]}
+
+Analisis: performa vs rata-rata channel, engagement, durasi optimal, saran video sejenis berikutnya. Minimal 4 insights.`);
+    const clean=text.replace(/```json|```/g,'').trim();
+    const jsonStart=clean.indexOf('{');const jsonEnd=clean.lastIndexOf('}');
+    const parsed=JSON.parse(jsonStart>=0?clean.slice(jsonStart,jsonEnd+1):clean);
+    document.getElementById('vd_ai_loading').style.display='none';
+    document.getElementById('vd_ai_content').innerHTML=(parsed.insights||[]).map(a=>`<div class="vd-advice ${a.type||'tip'}"><div class="vd-advice-label">${a.label}</div><div class="vd-advice-text">${a.text}</div></div>`).join('');
+  }catch(e){
+    document.getElementById('vd_ai_loading').style.display='none';
+    document.getElementById('vd_ai_content').innerHTML=generateLocalVideoAdvice(v,subs,avgViews).map(a=>`<div class="vd-advice ${a.type}"><div class="vd-advice-label">${a.label}</div><div class="vd-advice-text">${a.text}</div></div>`).join('');
   }
 }
 
-// OAuth redirect handler — jalankan initYTPage kalau ada token di URL
+function generateLocalVideoAdvice(v,subs,avgViews){
+  const stats=v.statistics||{};const views=parseInt(stats.viewCount||0);const likes=parseInt(stats.likeCount||0);const comments=parseInt(stats.commentCount||0);
+  const engRate=views>0?(likes+comments)/views*100:0;const advices=[];
+  if(views>avgViews*1.5)advices.push({type:'good',label:'🔥 Di Atas Rata-Rata',text:`${fmtNum(views)} views — ${Math.round(views/avgViews*100-100)}% lebih tinggi dari rata-rata channel (${fmtNum(Math.round(avgViews))}). Replikasi topik, angle, dan format ini.`});
+  else if(views<avgViews*0.5&&views>0)advices.push({type:'warning',label:'📉 Di Bawah Rata-Rata',text:`Hanya ${fmtNum(views)} views vs rata-rata ${fmtNum(Math.round(avgViews))}. Evaluasi thumbnail, judul, dan relevansi topik.`});
+  if(engRate<1&&views>100)advices.push({type:'warning',label:'⚠️ Engagement Rendah',text:`${engRate.toFixed(1)}% rendah. Tambah pertanyaan spesifik di video: "Kalian setuju? Komen A atau B!"`});
+  if(subs!=null&&subs>3)advices.push({type:'good',label:'🎯 Penghasil Subscriber',text:`+${subs} subscriber dari video ini. Buat lebih banyak konten serupa.`});
+  if(advices.length===0)advices.push({type:'tip',label:'📊 Performa Normal',text:`Performa stabil. Pantau lagi dalam beberapa minggu dan fokus pada konsistensi.`});
+  return advices;
+}
+
+// OAuth callback
 if(window.location.hash.includes('access_token')){
   document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelector('[data-page="ytanalytics"]').classList.add('active');
   document.getElementById('page-ytanalytics').classList.add('active');
-  initYTPage();
 }
 
 checkStatus();
