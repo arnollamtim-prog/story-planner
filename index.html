@@ -1126,18 +1126,45 @@ function generateExport(){
   const overallEng=totalViewsAll>0?((totalLikes+totalComments)/totalViewsAll*100).toFixed(2):0;
   const ytWatchHours=Math.round(ytVids.reduce((s,v)=>s+getDurSec(v)*parseInt(v.statistics?.viewCount||0)/3600,0));
   const shTotalViews=shVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);
+  // Upload gap
   const sortedByDate=[...ytAllVideos].sort((a,b)=>new Date(a.snippet?.publishedAt)-new Date(b.snippet?.publishedAt));
   const uploadDates=sortedByDate.map(v=>v.snippet?.publishedAt?.split('T')[0]).filter(Boolean);
   let avgGap=0;
   if(uploadDates.length>=2){const gaps=[];for(let i=1;i<Math.min(uploadDates.length,30);i++){const diff=(new Date(uploadDates[i])-new Date(uploadDates[i-1]))/86400000;if(diff>=0&&diff<90)gaps.push(diff);}if(gaps.length>0)avgGap=gaps.reduce((a,b)=>a+b,0)/gaps.length;}
+  // Sorted by views
   const sorted=[...ytAllVideos].sort((a,b)=>parseInt(b.statistics?.viewCount||0)-parseInt(a.statistics?.viewCount||0));
-  const top10=sorted.slice(0,10);
-  const bot5=sorted.filter(v=>parseInt(v.statistics?.viewCount||0)>0).slice(-5).reverse();
+  const bot10=sorted.filter(v=>parseInt(v.statistics?.viewCount||0)>0).slice(-10).reverse();
+  // Analytics rows
   const rows=ytAnalytics?.rows||[];
   const totViewsPeriod=rows.reduce((s,r)=>s+(r[1]||0),0);
   const totSubsPeriod=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0);
   const ctrRows=rows.filter(r=>r[5]>0);
   const avgCtr=ctrRows.length>0?ctrRows.reduce((s,r)=>s+r[5],0)/ctrRows.length*100:0;
+  // Tren: bandingkan 2 periode
+  const half=Math.floor(rows.length/2);
+  const v1=rows.slice(0,half).reduce((s,r)=>s+(r[1]||0),0);
+  const v2=rows.slice(half).reduce((s,r)=>s+(r[1]||0),0);
+  const trendPct=v1>0?((v2-v1)/v1*100).toFixed(1):null;
+  // Distribusi views
+  const dist={v100k:0,v10k:0,v1k:0,v100:0,v10:0,v0:0};
+  ytAllVideos.forEach(v=>{const vw=parseInt(v.statistics?.viewCount||0);if(vw>=100000)dist.v100k++;else if(vw>=10000)dist.v10k++;else if(vw>=1000)dist.v1k++;else if(vw>=100)dist.v100++;else if(vw>=10)dist.v10++;else dist.v0++;});
+  // Analisis durasi bucket
+  const durBuckets={'<15s':{views:0,count:0},'15-30s':{views:0,count:0},'30-60s':{views:0,count:0},'1-2m':{views:0,count:0},'2-5m':{views:0,count:0},'>5m':{views:0,count:0}};
+  ytAllVideos.forEach(v=>{const sec=getDurSec(v);const vw=parseInt(v.statistics?.viewCount||0);let b=sec<15?'<15s':sec<30?'15-30s':sec<60?'30-60s':sec<120?'1-2m':sec<300?'2-5m':'>5m';durBuckets[b].views+=vw;durBuckets[b].count++;});
+  // Pola topik — deteksi kata kunci dari judul
+  const topicMap={};
+  ytAllVideos.forEach(v=>{
+    const title=(v.snippet?.title||'').toLowerCase();const vw=parseInt(v.statistics?.viewCount||0);
+    const keywords=['iran','israel','perang','militer','trump','china','rusia','korea','geopolitik','konflik','nato','nuklir','ekonomi','rupiah','inflasi','teknologi','ai','robot','sains','alam','hewan','fakta','misteri','sejarah','indonesia','palestin','gaza'];
+    keywords.forEach(k=>{if(title.includes(k)){if(!topicMap[k])topicMap[k]={views:0,count:0};topicMap[k].views+=vw;topicMap[k].count++;}});
+  });
+  const topTopics=Object.entries(topicMap).filter(([,v])=>v.count>=2).sort((a,b)=>b[1].views/b[1].count-a[1].views/a[1].count).slice(0,10);
+  // Performa Shorts vs YT
+  const ytAvgViews=ytVids.length>0?Math.round(ytVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0)/ytVids.length):0;
+  const shAvgViews=shVids.length>0?Math.round(shVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0)/shVids.length):0;
+  const ytAvgEng=ytVids.length>0?ytVids.reduce((s,v)=>{const vw=parseInt(v.statistics?.viewCount||1);return s+(parseInt(v.statistics?.likeCount||0)+parseInt(v.statistics?.commentCount||0))/vw;},0)/ytVids.length*100:0;
+  const shAvgEng=shVids.length>0?shVids.reduce((s,v)=>{const vw=parseInt(v.statistics?.viewCount||1);return s+(parseInt(v.statistics?.likeCount||0)+parseInt(v.statistics?.commentCount||0))/vw;},0)/shVids.length*100:0;
+  // Heatmap
   const days=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
   const heatData={};
   days.forEach(d=>{heatData[d]={};for(let h=0;h<24;h++)heatData[d][h]={views:0,count:0};});
@@ -1146,82 +1173,124 @@ function generateExport(){
   topSlots.sort((a,b)=>b.avg-a.avg);const top6Slots=topSlots.slice(0,6);
 
   const L=[];
-  L.push('═══════════════════════════════════════════════════════');
-  L.push('📊 REKAP DATA CHANNEL YOUTUBE — ' + (ytChannel.snippet?.title||'').toUpperCase());
+  L.push('═══════════════════════════════════════════════════════════');
+  L.push('📊 REKAP LENGKAP DATA CHANNEL YOUTUBE — '+(ytChannel.snippet?.title||'').toUpperCase());
   L.push('Dibuat: '+new Date().toLocaleDateString('id-ID',{dateStyle:'full'})+' pukul '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
-  L.push('═══════════════════════════════════════════════════════');
+  L.push('Data mencakup '+ytAllVideos.length+' video total');
+  L.push('═══════════════════════════════════════════════════════════');
   L.push('');
   L.push('━━━ 🏠 INFO CHANNEL ━━━');
-  L.push('Nama Channel  : '+( ytChannel.snippet?.title||'—'));
+  L.push('Nama Channel  : '+(ytChannel.snippet?.title||'—'));
   L.push('Subscriber    : '+fmtNum(subs)+' / 1.000 target — kurang '+Math.max(0,1000-subs)+' lagi ('+Math.round(subs/1000*100)+'%)');
-  L.push('Total Video   : '+totalVids+' ('+ytVids.length+' YouTube + '+shVids.length+' Shorts)');
+  L.push('Total Video   : '+totalVids+' ('+ytVids.length+' YouTube long-form + '+shVids.length+' Shorts)');
   L.push('Upload rata2  : '+(avgGap>0?'setiap '+avgGap.toFixed(1)+' hari':'data tidak cukup'));
   L.push('');
   L.push('━━━ 💰 PROGRESS MONETISASI ━━━');
   L.push('[ JALUR 1 — YouTube Long-form ]');
   L.push('  Subscriber   : '+fmtNum(subs)+'/1.000 ('+Math.round(subs/1000*100)+'% — kurang '+Math.max(0,1000-subs)+')');
   L.push('  Watch Time   : '+fmtNum(ytWatchHours)+' jam / 4.000 jam ('+Math.round(ytWatchHours/4000*100)+'% — kurang '+fmtNum(Math.max(0,4000-ytWatchHours))+' jam)');
-  L.push('[ JALUR 2 — Shorts (syarat BERBEDA) ]');
+  L.push('[ JALUR 2 — Shorts ]');
   L.push('  Subscriber   : '+fmtNum(subs)+'/1.000 (sama)');
   L.push('  Shorts Views : '+fmtNum(shTotalViews)+' / 10.000.000 views ('+(shTotalViews/10000000*100).toFixed(1)+'% — kurang '+fmtNum(Math.max(0,10000000-shTotalViews))+' views)');
   L.push('');
   L.push('━━━ 📈 STATISTIK '+curRange+' HARI TERAKHIR ━━━');
-  L.push('Views periode   : '+fmtNum(totViewsPeriod));
-  L.push('Subscriber baru : '+(totSubsPeriod>0?'+':'')+fmtNum(totSubsPeriod));
-  L.push('CTR rata-rata   : '+(avgCtr>0?avgCtr.toFixed(1)+'%':'tidak tersedia'));
+  L.push('Views periode    : '+fmtNum(totViewsPeriod));
+  L.push('Subscriber baru  : '+(totSubsPeriod>0?'+':'')+fmtNum(totSubsPeriod));
+  L.push('CTR rata-rata    : '+(avgCtr>0?avgCtr.toFixed(1)+'%':'tidak tersedia via Analytics API'));
+  if(trendPct!==null)L.push('Tren views       : '+(parseFloat(trendPct)>=0?'↑ +':'↓ ')+trendPct+'% dibanding '+curRange+' hari sebelumnya');
   L.push('');
-  L.push('━━━ 📊 STATISTIK KESELURUHAN SEMUA VIDEO ━━━');
-  L.push('Total views      : '+fmtNum(totalViewsAll));
+  L.push('━━━ 📊 STATISTIK KESELURUHAN ━━━');
+  L.push('Total views all  : '+fmtNum(totalViewsAll));
   L.push('Rata-rata views  : '+fmtNum(avgViews)+' per video');
   L.push('Total likes      : '+fmtNum(totalLikes));
   L.push('Total komentar   : '+fmtNum(totalComments));
-  L.push('Engagement rate  : '+overallEng+'%');
+  L.push('Engagement rate  : '+overallEng+'% (likes+komen/views)');
   L.push('');
-  L.push('━━━ 🏆 TOP 10 VIDEO TERBAIK ━━━');
-  top10.forEach((v,i)=>{
-    const vw=parseInt(v.statistics?.viewCount||0);
-    const lk=parseInt(v.statistics?.likeCount||0);
-    const cm=parseInt(v.statistics?.commentCount||0);
-    const dur=fmtDur(v.contentDetails?.duration);
-    const type=isShort(v)?'Shorts':'YouTube';
-    const date=v.snippet?.publishedAt?new Date(v.snippet.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'—';
-    const ctr=ctrData[v.id];const sub=subsData[v.id];
-    L.push((i+1)+'. "'+( v.snippet?.title||'—')+'"');
-    L.push('   Tipe: '+type+' | Durasi: '+dur+' | Upload: '+date);
-    L.push('   Views: '+fmtNum(vw)+' | Likes: '+fmtNum(lk)+' | Komentar: '+cm);
-    L.push('   CTR: '+(ctr!=null?ctr.toFixed(1)+'%':'belum di-load')+' | +Subscriber: '+(sub!=null?'+'+sub:'belum di-load'));
-    L.push('   Engagement: '+(vw>0?((lk+cm)/vw*100).toFixed(2):'0')+'%');
-    L.push('');
+  L.push('━━━ 📺 PERFORMA SHORTS vs YOUTUBE LONG-FORM ━━━');
+  L.push('YouTube Long-form ('+ytVids.length+' video):');
+  L.push('  Rata-rata views/video  : '+fmtNum(ytAvgViews));
+  L.push('  Rata-rata engagement   : '+ytAvgEng.toFixed(2)+'%');
+  L.push('  Total views            : '+fmtNum(ytVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0)));
+  L.push('Shorts ('+shVids.length+' video):');
+  L.push('  Rata-rata views/video  : '+fmtNum(shAvgViews));
+  L.push('  Rata-rata engagement   : '+shAvgEng.toFixed(2)+'%');
+  L.push('  Total views            : '+fmtNum(shTotalViews));
+  L.push('');
+  L.push('━━━ 📊 DISTRIBUSI VIEWS SEMUA VIDEO ━━━');
+  L.push('100.000+ views  : '+dist.v100k+' video ('+((dist.v100k/ytAllVideos.length)*100).toFixed(1)+'%)');
+  L.push('10.000–99.999   : '+dist.v10k+' video ('+((dist.v10k/ytAllVideos.length)*100).toFixed(1)+'%)');
+  L.push('1.000–9.999     : '+dist.v1k+' video ('+((dist.v1k/ytAllVideos.length)*100).toFixed(1)+'%)');
+  L.push('100–999         : '+dist.v100+' video ('+((dist.v100/ytAllVideos.length)*100).toFixed(1)+'%)');
+  L.push('10–99           : '+dist.v10+' video ('+((dist.v10/ytAllVideos.length)*100).toFixed(1)+'%)');
+  L.push('0–9             : '+dist.v0+' video ('+((dist.v0/ytAllVideos.length)*100).toFixed(1)+'%)');
+  L.push('');
+  L.push('━━━ ⏱️ ANALISIS DURASI vs RATA-RATA VIEWS ━━━');
+  Object.entries(durBuckets).forEach(([bucket,data])=>{
+    if(data.count>0)L.push(bucket.padEnd(8)+' : '+data.count+' video — rata-rata '+fmtNum(Math.round(data.views/data.count))+' views/video');
   });
-  L.push('━━━ 📉 5 VIDEO VIEWS TERENDAH ━━━');
-  bot5.forEach((v,i)=>{
-    const vw=parseInt(v.statistics?.viewCount||0);
-    const lk=parseInt(v.statistics?.likeCount||0);
-    const cm=parseInt(v.statistics?.commentCount||0);
-    const dur=fmtDur(v.contentDetails?.duration);
-    const type=isShort(v)?'Shorts':'YouTube';
-    const date=v.snippet?.publishedAt?new Date(v.snippet.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'—';
-    const ctr=ctrData[v.id];const sub=subsData[v.id];
-    L.push((i+1)+'. "'+( v.snippet?.title||'—')+'"');
-    L.push('   Tipe: '+type+' | Durasi: '+dur+' | Upload: '+date);
-    L.push('   Views: '+fmtNum(vw)+' | Likes: '+fmtNum(lk)+' | Komentar: '+cm);
-    L.push('   CTR: '+(ctr!=null?ctr.toFixed(1)+'%':'belum di-load')+' | +Subscriber: '+(sub!=null?'+'+sub:'belum di-load'));
-    L.push('');
-  });
+  L.push('');
+  L.push('━━━ 🏷️ POLA TOPIK vs RATA-RATA VIEWS (topik dengan 2+ video) ━━━');
+  if(topTopics.length>0){
+    topTopics.forEach(([topic,data])=>{L.push(topic.padEnd(12)+' : '+data.count+' video — rata-rata '+fmtNum(Math.round(data.views/data.count))+' views/video — total '+fmtNum(data.views)+' views');});
+  }else{L.push('Tidak cukup data untuk deteksi pola topik.');}
+  L.push('');
   L.push('━━━ 🕐 TOP 6 JAM UPLOAD TERBAIK ━━━');
   if(top6Slots.length>0){
-    top6Slots.forEach((s,i)=>{L.push((i+1)+'. '+s.day+' jam '+s.hour+':00 — rata-rata '+fmtNum(Math.round(s.avg))+' views (dari '+s.count+' video upload di jam ini)');});
-  }else{L.push('Belum cukup data upload.');}
+    top6Slots.forEach((s,i)=>{L.push((i+1)+'. '+s.day+' jam '+s.hour+':00 — rata-rata '+fmtNum(Math.round(s.avg))+' views (dari '+s.count+' video)');});
+  }else{L.push('Belum cukup data.');}
   L.push('');
-  L.push('═══════════════════════════════════════════════════════');
-  L.push('💡 DATA DI ATAS ADALAH DATA NYATA DARI CHANNEL YOUTUBE SAYA.');
-  L.push('   Silakan analisis dan berikan rekomendasi spesifik.');
-  L.push('═══════════════════════════════════════════════════════');
+  L.push('━━━ 🏆 TOP 20 VIDEO TERBAIK ━━━');
+  sorted.slice(0,20).forEach((v,i)=>{
+    const vw=parseInt(v.statistics?.viewCount||0);
+    const lk=parseInt(v.statistics?.likeCount||0);
+    const cm=parseInt(v.statistics?.commentCount||0);
+    const dur=fmtDur(v.contentDetails?.duration);const sec=getDurSec(v);
+    const type=isShort(v)?'Shorts':'YouTube';
+    const date=v.snippet?.publishedAt?new Date(v.snippet.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'—';
+    const ctr=ctrData[v.id];const sub=subsData[v.id];
+    L.push((i+1)+'. "'+( v.snippet?.title||'—')+'"');
+    L.push('   Tipe: '+type+' | Durasi: '+dur+' ('+sec+'s) | Upload: '+date);
+    L.push('   Views: '+fmtNum(vw)+' | Likes: '+fmtNum(lk)+' | Komentar: '+cm+' | Engagement: '+(vw>0?((lk+cm)/vw*100).toFixed(2):'0')+'%');
+    L.push('   CTR: '+(ctr!=null?ctr.toFixed(1)+'%':'belum di-load')+' | +Subscriber: '+(sub!=null?'+'+sub:'belum di-load'));
+    L.push('');
+  });
+  L.push('━━━ 📉 10 VIDEO VIEWS TERENDAH ━━━');
+  bot10.forEach((v,i)=>{
+    const vw=parseInt(v.statistics?.viewCount||0);
+    const lk=parseInt(v.statistics?.likeCount||0);
+    const cm=parseInt(v.statistics?.commentCount||0);
+    const dur=fmtDur(v.contentDetails?.duration);const sec=getDurSec(v);
+    const type=isShort(v)?'Shorts':'YouTube';
+    const date=v.snippet?.publishedAt?new Date(v.snippet.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'—';
+    const ctr=ctrData[v.id];const sub=subsData[v.id];
+    L.push((i+1)+'. "'+( v.snippet?.title||'—')+'"');
+    L.push('   Tipe: '+type+' | Durasi: '+dur+' ('+sec+'s) | Upload: '+date);
+    L.push('   Views: '+fmtNum(vw)+' | Likes: '+fmtNum(lk)+' | Komentar: '+cm);
+    L.push('   CTR: '+(ctr!=null?ctr.toFixed(1)+'%':'belum di-load')+' | +Subscriber: '+(sub!=null?'+'+sub:'belum di-load'));
+    L.push('');
+  });
+  L.push('━━━ 📋 SEMUA VIDEO (urut views tertinggi) ━━━');
+  sorted.forEach((v,i)=>{
+    const vw=parseInt(v.statistics?.viewCount||0);
+    const lk=parseInt(v.statistics?.likeCount||0);
+    const cm=parseInt(v.statistics?.commentCount||0);
+    const dur=fmtDur(v.contentDetails?.duration);const sec=getDurSec(v);
+    const type=isShort(v)?'S':'YT';
+    const date=v.snippet?.publishedAt?new Date(v.snippet.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'2-digit'}):'—';
+    const ctr=ctrData[v.id];const sub=subsData[v.id];
+    L.push((i+1)+'. ['+type+'] "'+( v.snippet?.title||'—')+'" | '+date+' | '+dur+' ('+sec+'s) | '+fmtNum(vw)+' views | '+fmtNum(lk)+' likes | '+cm+' komen | eng:'+(vw>0?((lk+cm)/vw*100).toFixed(1):'0')+'% | CTR:'+(ctr!=null?ctr.toFixed(1)+'%':'?')+' | +sub:'+(sub!=null?sub:'?'));
+  });
+  L.push('');
+  L.push('═══════════════════════════════════════════════════════════');
+  L.push('💡 INI ADALAH DATA NYATA CHANNEL YOUTUBE SAYA.');
+  L.push('   Analisis semua data di atas dan berikan rekomendasi spesifik.');
+  L.push('   Pertanyaan saya: [TULIS PERTANYAAN KAMU DI SINI]');
+  L.push('═══════════════════════════════════════════════════════════');
 
   document.getElementById('exportText').value=L.join('\n');
   document.getElementById('exportResult').style.display='block';
   document.getElementById('exportResult').scrollIntoView({behavior:'smooth',block:'start'});
-  toast('Rekap berhasil di-generate! ✅');
+  toast('Rekap lengkap berhasil di-generate! ✅');
 }
 function copyExport(){
   const text=document.getElementById('exportText').value;
