@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Planner — YouTube & Shorts</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root { --bg:#f7f6f2; --surface:#ffffff; --border:#e8e6df; --text:#1a1a18; --text-muted:#8a8878; --accent-yt:#e03b2e; --accent-short:#3b7be0; --hover:#f0ede6; --radius:12px; --sidebar:220px; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); display:flex; height:100vh; overflow:hidden; }
+  .sidebar { width:var(--sidebar); background:var(--surface); border-right:1px solid var(--border); display:flex; flex-direction:column; padding:24px 0; flex-shrink:0; }
+  .logo { padding:0 20px 24px; border-bottom:1px solid var(--border); }
+  .logo-icon { width:32px; height:32px; background:var(--text); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
+  .logo-icon svg { width:16px; height:16px; fill:white; }
+  .logo h1 { font-family:'DM Serif Display',serif; font-size:15px; letter-spacing:-0.3px; line-height:1.2; }
+  .logo p { font-size:11px; color:var(--text-muted); margin-top:2px; }
+  .nav-section { padding:16px 12px 0; }
+  .nav-label { font-size:10px; font-weight:600; letter-spacing:1.2px; color:var(--text-muted); padding:0 8px; margin-bottom:6px; text-transform:uppercase; }
+  .nav-item { display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:8px; cursor:pointer; font-size:13.5px; color:var(--text-muted); transition:all 0.15s; margin-bottom:1px; }
+  .nav-item:hover { background:var(--hover); color:var(--text); }
+  .nav-item.active { background:var(--text); color:white; font-weight:500; }
+  .nav-item svg { width:15px; height:15px; flex-shrink:0; }
+  .status-dot { margin-top:auto; padding:16px 20px; display:flex; align-items:center; gap:8px; font-size:11.5px; color:var(--text-muted); }
+  .dot { width:7px; height:7px; border-radius:50%; background:#ccc; flex-shrink:0; }
+  .dot.connected { background:#4caf50; }
+  .main { flex:1; overflow-y:auto; padding:32px 36px; }
+  .page { display:none; }
+  .page.active { display:block; }
+  .page-title { font-family:'DM Serif Display',serif; font-size:26px; margin-bottom:24px; letter-spacing:-0.5px; }
+  .cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+  .cal-nav { display:flex; align-items:center; gap:12px; }
+  .cal-nav button { background:var(--surface); border:1px solid var(--border); width:32px; height:32px; border-radius:8px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:background 0.15s; }
+  .cal-nav button:hover { background:var(--hover); }
+  .cal-month { font-family:'DM Serif Display',serif; font-size:20px; letter-spacing:-0.4px; }
+  .cal-legend { display:flex; gap:16px; align-items:center; }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-muted); }
+  .legend-dot { width:8px; height:8px; border-radius:50%; }
+  .legend-dot.yt { background:var(--accent-yt); }
+  .legend-dot.short { background:var(--accent-short); }
+  .btn-add { background:var(--text); color:white; border:none; padding:8px 16px; border-radius:8px; font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; display:flex; align-items:center; gap:6px; transition:opacity 0.15s; }
+  .btn-add:hover { opacity:0.8; }
+  .cal-grid { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+  .cal-days-header { display:grid; grid-template-columns:repeat(7,1fr); border-bottom:1px solid var(--border); }
+  .cal-day-name { padding:10px; text-align:center; font-size:11px; font-weight:600; letter-spacing:0.8px; color:var(--text-muted); text-transform:uppercase; }
+  .cal-cells { display:grid; grid-template-columns:repeat(7,1fr); }
+  .cal-cell { min-height:90px; padding:8px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.15s; }
+  .cal-cell:hover { background:var(--hover); }
+  .cal-cell:nth-child(7n) { border-right:none; }
+  .cal-cell.other-month .cal-date { color:#ccc; }
+  .cal-cell.today .cal-date { background:var(--accent-yt); color:white; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; }
+  .cal-date { font-size:13px; font-weight:500; width:24px; height:24px; display:flex; align-items:center; justify-content:center; margin-bottom:4px; }
+  .cal-events { display:flex; flex-direction:column; gap:2px; }
+  .cal-event { font-size:10.5px; padding:2px 6px; border-radius:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:500; }
+  .cal-event.yt { background:#fde8e7; color:var(--accent-yt); }
+  .cal-event.short { background:#e7eeff; color:var(--accent-short); }
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:100; align-items:center; justify-content:center; backdrop-filter:blur(2px); }
+  .modal-overlay.open { display:flex; }
+  .modal { background:var(--surface); border-radius:16px; width:520px; max-width:95vw; max-height:88vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.15); }
+  .modal-header { padding:24px 24px 16px; display:flex; align-items:flex-start; justify-content:space-between; position:sticky; top:0; background:var(--surface); border-bottom:1px solid var(--border); }
+  .modal-title { font-family:'DM Serif Display',serif; font-size:20px; }
+  .modal-subtitle { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .modal-close { background:var(--hover); border:none; width:30px; height:30px; border-radius:50%; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; }
+  .modal-close:hover { background:var(--border); }
+  .modal-body { padding:20px 24px 24px; }
+  .content-list { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+  .content-card { border:1px solid var(--border); border-radius:10px; padding:14px; }
+  .content-card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .content-card-title { font-weight:600; font-size:14px; }
+  .content-badge { font-size:10px; font-weight:600; padding:3px 8px; border-radius:20px; letter-spacing:0.4px; }
+  .content-badge.yt { background:#fde8e7; color:var(--accent-yt); }
+  .content-badge.short { background:#e7eeff; color:var(--accent-short); }
+  .content-narasi { font-size:13px; color:var(--text-muted); line-height:1.6; white-space:pre-wrap; max-height:140px; overflow-y:auto; }
+  .content-card-actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .btn-sm { font-size:11.5px; padding:5px 10px; border-radius:6px; cursor:pointer; border:1px solid var(--border); background:var(--surface); font-family:'DM Sans',sans-serif; transition:background 0.15s; }
+  .btn-sm:hover { background:var(--hover); }
+  .btn-sm.danger { color:var(--accent-yt); border-color:#fde8e7; }
+  .btn-sm.danger:hover { background:#fde8e7; }
+  .btn-sm.active-toggle { background:var(--text); color:white; border-color:var(--text); }
+  .divider { border:none; border-top:1px solid var(--border); margin:16px 0; }
+  .add-form-title { font-weight:600; font-size:11px; margin-bottom:14px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.6px; }
+  .form-group { margin-bottom:14px; }
+  label { display:block; font-size:12px; font-weight:600; color:var(--text-muted); margin-bottom:6px; letter-spacing:0.3px; text-transform:uppercase; }
+  input[type="text"],input[type="date"],textarea,select { width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:13.5px; font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); transition:border-color 0.15s; outline:none; }
+  input:focus,textarea:focus,select:focus { border-color:var(--text); }
+  textarea { resize:vertical; min-height:120px; line-height:1.6; }
+  .format-select { display:flex; gap:8px; }
+  .format-btn { flex:1; padding:9px; border:1.5px solid var(--border); border-radius:8px; cursor:pointer; text-align:center; font-size:13px; font-weight:500; background:var(--surface); transition:all 0.15s; font-family:'DM Sans',sans-serif; }
+  .format-btn:hover { border-color:var(--text); }
+  .format-btn.selected.yt { border-color:var(--accent-yt); background:#fde8e7; color:var(--accent-yt); }
+  .format-btn.selected.short { border-color:var(--accent-short); background:#e7eeff; color:var(--accent-short); }
+  .btn-primary { width:100%; background:var(--text); color:white; border:none; padding:11px; border-radius:8px; font-size:14px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:opacity 0.15s; margin-top:4px; }
+  .btn-primary:hover { opacity:0.8; }
+  .empty-state { text-align:center; padding:20px; color:var(--text-muted); font-size:13px; }
+  .ideas-toolbar { display:flex; gap:10px; margin-bottom:20px; align-items:center; flex-wrap:wrap; }
+  .filter-btn { padding:8px 14px; border:1.5px solid var(--border); border-radius:8px; cursor:pointer; font-size:12.5px; background:var(--surface); transition:all 0.15s; font-family:'DM Sans',sans-serif; font-weight:500; }
+  .filter-btn:hover,.filter-btn.active { background:var(--text); color:white; border-color:var(--text); }
+  .ideas-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+  .idea-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px; transition:box-shadow 0.15s; }
+  .idea-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.06); }
+  .idea-card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+  .idea-title { font-weight:600; font-size:14px; flex:1; }
+  .status-badge { font-size:10px; font-weight:600; padding:3px 8px; border-radius:20px; cursor:pointer; flex-shrink:0; margin-left:8px; }
+  .status-badge.idea { background:#f0ede6; color:#7a7060; }
+  .status-badge.draft { background:#fff3cd; color:#b07c00; }
+  .status-badge.done { background:#e6f4ea; color:#2d7a3e; }
+  .idea-desc { font-size:12.5px; color:var(--text-muted); line-height:1.5; margin-bottom:10px; }
+  .idea-meta { display:flex; gap:8px; }
+  .caption-layout { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .caption-list { display:flex; flex-direction:column; gap:10px; }
+  .caption-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px; cursor:pointer; transition:all 0.15s; }
+  .caption-card:hover,.caption-card.selected { border-color:var(--text); }
+  .caption-card-title { font-weight:600; font-size:13.5px; margin-bottom:4px; }
+  .caption-card-meta { font-size:11.5px; color:var(--text-muted); }
+  .caption-editor { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+  .caption-editor h3 { font-family:'DM Serif Display',serif; font-size:18px; margin-bottom:16px; }
+  .char-count { font-size:11.5px; color:var(--text-muted); text-align:right; margin-top:6px; }
+  .narasi-layout { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .narasi-panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+  .narasi-panel h3 { font-family:'DM Serif Display',serif; font-size:17px; margin-bottom:14px; }
+  .scene-cards { display:flex; flex-direction:column; gap:10px; }
+  .scene-card { border:1px solid var(--border); border-radius:10px; padding:14px; }
+  .scene-label { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
+  .scene-content { font-size:13px; line-height:1.8; color:var(--text); white-space:pre-wrap; }
+  .scene-copy { display:inline-flex; align-items:center; gap:5px; font-size:11px; color:var(--text-muted); cursor:pointer; margin-top:8px; padding:3px 8px; border-radius:5px; border:1px solid var(--border); background:var(--bg); }
+  .scene-copy:hover { background:var(--hover); }
+  .vault-layout { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
+  .vault-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px; }
+  .vault-card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+  .vault-title { font-weight:600; font-size:14px; }
+  .vault-type { font-size:10px; font-weight:600; padding:2px 8px; border-radius:20px; background:var(--hover); color:var(--text-muted); }
+  .vault-body { font-size:12.5px; color:var(--text-muted); line-height:1.6; margin-bottom:12px; white-space:pre-wrap; max-height:100px; overflow-y:auto; }
+  .vault-actions { display:flex; gap:8px; }
+  .toast { position:fixed; bottom:24px; right:24px; background:var(--text); color:white; padding:12px 18px; border-radius:10px; font-size:13px; z-index:999; opacity:0; transform:translateY(10px); transition:all 0.25s; pointer-events:none; }
+  .toast.show { opacity:1; transform:translateY(0); }
+  ::-webkit-scrollbar { width:5px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+  /* ===== YOUTUBE ANALYTICS STYLES ===== */
+  .yt-login-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; gap:16px; text-align:center; }
+  .yt-login-screen p { color:var(--text-muted); font-size:13.5px; max-width:360px; line-height:1.6; }
+  .btn-google { display:inline-flex; align-items:center; gap:10px; background:white; border:1.5px solid var(--border); padding:11px 20px; border-radius:10px; font-size:14px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; color:var(--text); }
+  .btn-google:hover { border-color:var(--text); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  .btn-google svg { width:18px; height:18px; }
+  .yt-dashboard { display:none; }
+  .yt-dashboard.visible { display:block; }
+  .yt-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
+  .yt-header-left { display:flex; align-items:center; gap:12px; }
+  .yt-channel-avatar { width:40px; height:40px; border-radius:50%; background:var(--border); overflow:hidden; }
+  .yt-channel-avatar img { width:100%; height:100%; object-fit:cover; }
+  .yt-channel-name { font-weight:600; font-size:15px; }
+  .yt-channel-sub { font-size:12px; color:var(--text-muted); }
+  .btn-logout { font-size:12px; padding:6px 12px; border-radius:7px; cursor:pointer; border:1px solid var(--border); background:var(--surface); font-family:'DM Sans',sans-serif; color:var(--text-muted); }
+  .btn-logout:hover { background:var(--hover); }
+  .yt-range-tabs { display:flex; gap:6px; margin-bottom:20px; }
+  .range-tab { padding:6px 14px; border:1.5px solid var(--border); border-radius:7px; cursor:pointer; font-size:12px; font-weight:500; background:var(--surface); font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+  .range-tab.active { background:var(--text); color:white; border-color:var(--text); }
+  .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
+  .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
+  .stat-label { font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:8px; }
+  .stat-value { font-family:'DM Serif Display',serif; font-size:26px; letter-spacing:-0.5px; }
+  .stat-change { font-size:11.5px; margin-top:4px; }
+  .stat-change.up { color:#2d7a3e; }
+  .stat-change.down { color:var(--accent-yt); }
+  .charts-grid { display:grid; grid-template-columns:2fr 1fr; gap:16px; margin-bottom:24px; }
+  .chart-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+  .chart-title { font-weight:600; font-size:13.5px; margin-bottom:16px; }
+  .chart-wrap { position:relative; height:200px; }
+  .videos-section { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:24px; }
+  .videos-section-title { font-weight:600; font-size:13.5px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; }
+  .video-list { display:flex; flex-direction:column; gap:10px; }
+  .video-row { display:grid; grid-template-columns:auto 1fr auto auto auto; gap:12px; align-items:center; padding:10px; border-radius:8px; transition:background 0.15s; }
+  .video-row:hover { background:var(--hover); }
+  .video-thumb { width:60px; height:34px; border-radius:5px; background:var(--border); object-fit:cover; flex-shrink:0; }
+  .video-title-text { font-size:13px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .video-stat { font-size:12px; color:var(--text-muted); text-align:right; white-space:nowrap; }
+  .video-stat span { display:block; font-size:10px; color:var(--text-muted); }
+  .video-stat strong { font-size:13px; color:var(--text); }
+  .ai-advice { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+  .ai-advice-title { font-family:'DM Serif Display',serif; font-size:18px; margin-bottom:4px; }
+  .ai-advice-sub { font-size:12px; color:var(--text-muted); margin-bottom:16px; }
+  .advice-list { display:flex; flex-direction:column; gap:10px; }
+  .advice-item { background:var(--bg); border-radius:10px; padding:14px 16px; border-left:3px solid var(--text); }
+  .advice-item.tip { border-left-color:#3b7be0; }
+  .advice-item.warning { border-left-color:#e09b3b; }
+  .advice-item.good { border-left-color:#2d7a3e; }
+  .advice-label { font-size:10px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; }
+  .advice-text { font-size:13px; line-height:1.6; }
+  .yt-loading { text-align:center; padding:40px; color:var(--text-muted); font-size:13.5px; }
+  .yt-loading .spinner { width:28px; height:28px; border:2.5px solid var(--border); border-top-color:var(--text); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 12px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="logo">
+    <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+    <h1>Story Planner</h1><p>YouTube & Shorts</p>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Konten</div>
+    <div class="nav-item active" data-page="calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Kalender</div>
+    <div class="nav-item" data-page="narasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Narasi & Scene</div>
+    <div class="nav-item" data-page="ideas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Ideas Board</div>
+    <div class="nav-item" data-page="caption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Caption Draft</div>
+  </div>
+  <div class="nav-section" style="margin-top:8px;">
+    <div class="nav-label">Aset</div>
+    <div class="nav-item" data-page="vault"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Prompt Vault</div>
+  </div>
+  <div class="nav-section" style="margin-top:8px;">
+    <div class="nav-label">Analitik</div>
+    <div class="nav-item" data-page="ytanalytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>YT Analytics</div>
+  </div>
+  <div class="status-dot"><div class="dot" id="statusDot"></div><span id="statusText">Menghubungkan...</span></div>
+</nav>
+
+<main class="main">
+  <!-- KALENDER -->
+  <div class="page active" id="page-calendar">
+    <div class="cal-header">
+      <div class="cal-nav">
+        <button onclick="changeMonth(-1)">‹</button>
+        <span class="cal-month" id="calMonth"></span>
+        <button onclick="changeMonth(1)">›</button>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <div class="cal-legend">
+          <div class="legend-item"><div class="legend-dot yt"></div>YouTube</div>
+          <div class="legend-item"><div class="legend-dot short"></div>Shorts</div>
+        </div>
+        <button class="btn-add" onclick="openAddModal()">+ Tambah</button>
+      </div>
+    </div>
+    <div class="cal-grid">
+      <div class="cal-days-header">
+        <div class="cal-day-name">Min</div><div class="cal-day-name">Sen</div><div class="cal-day-name">Sel</div><div class="cal-day-name">Rab</div><div class="cal-day-name">Kam</div><div class="cal-day-name">Jum</div><div class="cal-day-name">Sab</div>
+      </div>
+      <div class="cal-cells" id="calCells"></div>
+    </div>
+  </div>
+
+  <!-- NARASI -->
+  <div class="page" id="page-narasi">
+    <div class="page-title">Narasi & Scene</div>
+    <div class="narasi-layout">
+      <div class="narasi-panel">
+        <h3>Bersihkan Narasi</h3>
+        <div class="form-group"><label>Judul Konten</label><input type="text" id="narasiTitle" placeholder="Judul video..."></div>
+        <div class="form-group"><label>Narasi Lengkap</label><textarea id="narasiContent" style="min-height:200px;" placeholder="Paste narasi lengkap di sini..."></textarea></div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-primary" style="flex:1;" onclick="cleanNarasi()">🧹 Bersihkan</button>
+          <button class="btn-primary" style="flex:1;background:var(--bg);color:var(--text);border:1px solid var(--border);" onclick="saveNarasi()">Simpan</button>
+        </div>
+      </div>
+      <div class="narasi-panel">
+        <h3>Hasil Bersih</h3>
+        <div class="scene-cards" id="sceneCards"><div class="empty-state"><p>Paste narasi dan klik "Bersihkan"</p></div></div>
+      </div>
+    </div>
+    <div style="margin-top:28px;">
+      <div class="page-title" style="font-size:20px;margin-bottom:16px;">Narasi Tersimpan</div>
+      <div id="narasiList" class="ideas-grid"></div>
+    </div>
+  </div>
+
+  <!-- IDEAS -->
+  <div class="page" id="page-ideas">
+    <div class="page-title">Ideas Board</div>
+    <div class="ideas-toolbar">
+      <input type="text" id="ideaSearch" placeholder="Cari ide..." oninput="renderIdeas()" style="max-width:220px;">
+      <button class="filter-btn active" onclick="filterIdeas('all',this)">Semua</button>
+      <button class="filter-btn" onclick="filterIdeas('yt',this)">YouTube</button>
+      <button class="filter-btn" onclick="filterIdeas('short',this)">Shorts</button>
+      <button class="btn-add" onclick="openIdeaModal()">+ Ide Baru</button>
+    </div>
+    <div class="ideas-grid" id="ideasGrid"></div>
+  </div>
+
+  <!-- CAPTION -->
+  <div class="page" id="page-caption">
+    <div class="page-title">Caption Draft</div>
+    <div class="caption-layout">
+      <div>
+        <button class="btn-add" style="margin-bottom:16px;" onclick="openCaptionModal()">+ Draft Baru</button>
+        <div class="caption-list" id="captionList"></div>
+      </div>
+      <div class="caption-editor" id="captionEditor">
+        <h3>Pilih caption untuk edit</h3>
+        <p style="color:var(--text-muted);font-size:13px;">Klik salah satu draft di kiri untuk mulai edit.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- VAULT -->
+  <div class="page" id="page-vault">
+    <div class="page-title">Prompt Vault</div>
+    <button class="btn-add" style="margin-bottom:20px;" onclick="openVaultModal()">+ Prompt Baru</button>
+    <div class="vault-layout" id="vaultGrid"></div>
+  </div>
+
+  <!-- YOUTUBE ANALYTICS -->
+  <div class="page" id="page-ytanalytics">
+    <div class="page-title">YouTube Analytics</div>
+
+    <!-- Login screen -->
+    <div class="yt-login-screen" id="ytLoginScreen">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e03b2e" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#e03b2e" stroke="none"/></svg>
+      <div>
+        <div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px;">Hubungkan ke YouTube</div>
+        <p>Login dengan akun Google kamu untuk lihat statistik channel dan dapat saran konten dari AI.</p>
+      </div>
+      <button class="btn-google" onclick="ytLogin()">
+        <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Masuk dengan Google
+      </button>
+    </div>
+
+    <!-- Loading -->
+    <div class="yt-loading" id="ytLoading" style="display:none;">
+      <div class="spinner"></div>
+      Mengambil data channel kamu...
+    </div>
+
+    <!-- Dashboard -->
+    <div class="yt-dashboard" id="ytDashboard">
+      <div class="yt-header">
+        <div class="yt-header-left">
+          <div class="yt-channel-avatar"><img id="ytAvatar" src="" alt=""></div>
+          <div>
+            <div class="yt-channel-name" id="ytChannelName">—</div>
+            <div class="yt-channel-sub" id="ytChannelSub">—</div>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="ytLogout()">Keluar</button>
+      </div>
+
+      <div class="yt-range-tabs">
+        <button class="range-tab active" onclick="switchRange(7,this)">7 Hari</button>
+        <button class="range-tab" onclick="switchRange(28,this)">28 Hari</button>
+        <button class="range-tab" onclick="switchRange(90,this)">90 Hari</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Views</div><div class="stat-value" id="statViews">—</div><div class="stat-change" id="statViewsChange"></div></div>
+        <div class="stat-card"><div class="stat-label">Watch Time (jam)</div><div class="stat-value" id="statWatch">—</div><div class="stat-change" id="statWatchChange"></div></div>
+        <div class="stat-card"><div class="stat-label">Subscriber</div><div class="stat-value" id="statSubs">—</div><div class="stat-change" id="statSubsChange"></div></div>
+        <div class="stat-card"><div class="stat-label">CTR</div><div class="stat-value" id="statCtr">—</div><div class="stat-change" id="statCtrChange"></div></div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Views Harian</div>
+          <div class="chart-wrap"><canvas id="viewsChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Traffic Source</div>
+          <div class="chart-wrap"><canvas id="trafficChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="videos-section">
+        <div class="videos-section-title">
+          <span>Video Terbaru</span>
+          <span style="font-size:12px;color:var(--text-muted);font-weight:400;">Diurutkan berdasarkan views</span>
+        </div>
+        <div class="video-list" id="videoList"></div>
+      </div>
+
+      <div class="ai-advice">
+        <div class="ai-advice-title">Saran AI untuk Kamu</div>
+        <div class="ai-advice-sub">Berdasarkan performa channel kamu saat ini</div>
+        <div class="advice-list" id="adviceList"><div class="yt-loading"><div class="spinner"></div>Menganalisis data...</div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- MODALS (sama seperti sebelumnya) -->
+<div class="modal-overlay" id="calModal" onclick="closeCalModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div><div class="modal-title" id="calModalTitle"></div><div class="modal-subtitle" id="calModalDate"></div></div>
+      <button class="modal-close" onclick="document.getElementById('calModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="calModalContent"></div>
+      <hr class="divider">
+      <div class="add-form-title">+ Tambah Konten Baru</div>
+      <div class="form-group"><label>Judul</label><input type="text" id="calFormTitle" placeholder="Judul video..."></div>
+      <div class="form-group"><label>Format</label>
+        <div class="format-select">
+          <button class="format-btn selected yt" id="fmtYT" onclick="selectFormat('yt')">▶ YouTube</button>
+          <button class="format-btn" id="fmtShort" onclick="selectFormat('short')">⚡ Shorts</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Narasi</label>
+        <textarea id="calFormNarasi" placeholder="Paste narasi lengkap — judul section & tanda petik otomatis dibersihkan"></textarea>
+      </div>
+      <button class="btn-primary" onclick="saveCalContent()">Simpan Konten</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="addModal" onclick="closeAddModal(event)">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Tambah Konten</div><button class="modal-close" onclick="document.getElementById('addModal').classList.remove('open')">×</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Tanggal</label><input type="date" id="addFormDate"></div>
+      <div class="form-group"><label>Judul</label><input type="text" id="addFormTitle" placeholder="Judul video..."></div>
+      <div class="form-group"><label>Format</label>
+        <div class="format-select">
+          <button class="format-btn selected yt" id="addFmtYT" onclick="selectAddFormat('yt')">▶ YouTube</button>
+          <button class="format-btn" id="addFmtShort" onclick="selectAddFormat('short')">⚡ Shorts</button>
+        </div>
+      </div>
+      <div class="form-group"><label>Narasi</label><textarea id="addFormNarasi" placeholder="Paste narasi lengkap — otomatis dibersihkan saat disimpan"></textarea></div>
+      <button class="btn-primary" onclick="saveAddContent()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="ideaModal" onclick="closeIdeaModal(event)">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Ide Baru</div><button class="modal-close" onclick="document.getElementById('ideaModal').classList.remove('open')">×</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Judul Ide</label><input type="text" id="ideaFormTitle" placeholder="Ide konten..."></div>
+      <div class="form-group"><label>Deskripsi</label><textarea id="ideaFormDesc" placeholder="Ceritakan idenya..." style="min-height:80px;"></textarea></div>
+      <div class="form-group"><label>Format</label><select id="ideaFormType"><option value="yt">YouTube</option><option value="short">Shorts</option></select></div>
+      <button class="btn-primary" onclick="saveIdea()">Simpan Ide</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="captionModal" onclick="closeCaptionModal(event)">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Draft Baru</div><button class="modal-close" onclick="document.getElementById('captionModal').classList.remove('open')">×</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Judul</label><input type="text" id="captionFormTitle" placeholder="Judul konten..."></div>
+      <div class="form-group"><label>Format</label><select id="captionFormType"><option value="yt">YouTube</option><option value="short">Shorts</option></select></div>
+      <div class="form-group"><label>Caption</label><textarea id="captionFormBody" placeholder="Tulis caption..." style="min-height:140px;"></textarea></div>
+      <button class="btn-primary" onclick="saveCaption()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="vaultModal" onclick="closeVaultModal(event)">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Prompt Baru</div><button class="modal-close" onclick="document.getElementById('vaultModal').classList.remove('open')">×</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Nama Prompt</label><input type="text" id="vaultFormName" placeholder="Nama prompt..."></div>
+      <div class="form-group"><label>Tipe</label><select id="vaultFormType"><option>System Prompt</option><option>Template Narasi</option><option>Caption Template</option><option>Lainnya</option></select></div>
+      <div class="form-group"><label>Isi Prompt</label><textarea id="vaultFormBody" placeholder="Tulis prompt..." style="min-height:140px;"></textarea></div>
+      <button class="btn-primary" onclick="saveVault()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== CONFIG =====
+const SUPABASE_URL = 'https://qlnjfqldkbpubhsjovrc.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_YQ9DtOevkeJdyIefK8v_Kg_BWjY8fw6';
+const YT_CLIENT_ID = '149194749854-n4ro3pfusotri027gm7nvuqap94k9mc0.apps.googleusercontent.com';
+const YT_REDIRECT_URI = 'https://story-planner-fawn.vercel.app/callback';
+const YT_SCOPES = 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly';
+
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let currentDate = new Date(), calendarData = [], selectedCalDate = null;
+let selectedCalFormat = 'yt', selectedAddFormat = 'yt', currentCaptionId = null;
+let ideasData = [], ideaFilter = 'all', captionsData = [], vaultData = [];
+let ytToken = null, viewsChartInst = null, trafficChartInst = null;
+let ytChannelData = null, ytVideosData = [], ytAnalyticsData = null;
+let currentRange = 7;
+const narasiStore = {};
+
+// ===== NAV =====
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById('page-' + item.dataset.page).classList.add('active');
+    if (item.dataset.page === 'ideas') loadIdeas();
+    if (item.dataset.page === 'caption') loadCaptions();
+    if (item.dataset.page === 'vault') loadVault();
+    if (item.dataset.page === 'narasi') loadNarasi();
+    if (item.dataset.page === 'ytanalytics') initYTPage();
+  });
+});
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+async function checkStatus() {
+  try {
+    const { error } = await db.from('calendar').select('id').limit(1);
+    const dot = document.getElementById('statusDot'), txt = document.getElementById('statusText');
+    if (!error) { dot.classList.add('connected'); txt.textContent = 'Tersambung ke Supabase'; }
+    else { txt.textContent = 'Gagal terhubung'; }
+  } catch { document.getElementById('statusText').textContent = 'Gagal terhubung'; }
+}
+
+// ===== CALENDAR =====
+async function loadCalendar() {
+  const { data } = await db.from('calendar').select('*');
+  calendarData = data || []; renderCalendar();
+}
+
+function renderCalendar() {
+  const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  document.getElementById('calMonth').textContent = months[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
+  const year = currentDate.getFullYear(), month = currentDate.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const daysInPrev = new Date(year, month, 0).getDate();
+  const today = new Date();
+  const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+  let cells = '', dayCount = 1, nextCount = 1;
+  for (let i = 0; i < totalCells; i++) {
+    let day, dateStr, isOther = false;
+    if (i < firstDay) { day = daysInPrev - firstDay + i + 1; dateStr = formatDate(new Date(year, month-1, day)); isOther = true; }
+    else if (dayCount <= daysInMonth) { day = dayCount++; dateStr = formatDate(new Date(year, month, day)); }
+    else { day = nextCount++; dateStr = formatDate(new Date(year, month+1, day)); isOther = true; }
+    const isToday = !isOther && new Date(year, month, day).toDateString() === today.toDateString();
+    const dayEvents = calendarData.filter(e => e.date === dateStr);
+    const eventsHtml = dayEvents.slice(0,3).map(e => `<div class="cal-event ${e.type||'yt'}">${e.title}</div>`).join('');
+    cells += `<div class="cal-cell ${isOther?'other-month':''} ${isToday?'today':''}" onclick="openDayModal('${dateStr}')"><div class="cal-date">${day}</div><div class="cal-events">${eventsHtml}</div></div>`;
+  }
+  document.getElementById('calCells').innerHTML = cells;
+}
+
+function formatDate(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function changeMonth(dir) { currentDate.setMonth(currentDate.getMonth()+dir); renderCalendar(); }
+
+function openDayModal(dateStr) {
+  selectedCalDate = dateStr;
+  const d = new Date(dateStr+'T00:00:00');
+  const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agt','Sep','Okt','Nov','Des'];
+  document.getElementById('calModalTitle').textContent = days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+  document.getElementById('calModalDate').textContent = dateStr;
+  const dayEvents = calendarData.filter(e => e.date === dateStr);
+  dayEvents.forEach(e => { narasiStore[e.id] = { bersih: e.narasi || '', asli: e.narasi_asli || '' }; });
+  let contentHtml = dayEvents.length === 0 ? '<div class="empty-state"><p>Belum ada konten di hari ini.</p></div>' :
+    '<div class="content-list">'+dayEvents.map(e => {
+      const hasAsli = (e.narasi_asli || '').length > 0;
+      return `<div class="content-card">
+        <div class="content-card-header"><span class="content-card-title">${e.title}</span><span class="content-badge ${e.type||'yt'}">${e.type==='short'?'⚡ Shorts':'▶ YouTube'}</span></div>
+        <div class="content-narasi" id="card_${e.id}">${e.narasi || 'Tidak ada narasi.'}</div>
+        <div class="content-card-actions">
+          <button class="btn-sm" onclick="copyNarasi('${e.id}')">📋 Copy</button>
+          ${hasAsli ? `<button class="btn-sm" id="toggle_${e.id}" data-mode="bersih" onclick="toggleNarasi('${e.id}')">👁 Lihat Asli</button>` : ''}
+          <button class="btn-sm danger" onclick="deleteCalContent('${e.id}')">Hapus</button>
+        </div>
+      </div>`;
+    }).join('')+'</div>';
+  document.getElementById('calModalContent').innerHTML = contentHtml;
+  document.getElementById('calFormTitle').value = '';
+  document.getElementById('calFormNarasi').value = '';
+  selectFormat('yt');
+  document.getElementById('calModal').classList.add('open');
+}
+
+function toggleNarasi(id) {
+  const el = document.getElementById('card_' + id), btn = document.getElementById('toggle_' + id), store = narasiStore[id];
+  if (!store || !el || !btn) return;
+  if (btn.dataset.mode === 'bersih') { el.textContent = store.asli; btn.textContent = '✏️ Lihat Bersih'; btn.dataset.mode = 'asli'; btn.classList.add('active-toggle'); }
+  else { el.textContent = store.bersih; btn.textContent = '👁 Lihat Asli'; btn.dataset.mode = 'bersih'; btn.classList.remove('active-toggle'); }
+}
+
+function copyNarasi(id) {
+  const el = document.getElementById('card_' + id);
+  if (el) navigator.clipboard.writeText(el.textContent).then(() => showToast('Disalin!'));
+}
+
+function openAddModal() {
+  document.getElementById('addFormDate').value = formatDate(new Date());
+  document.getElementById('addFormTitle').value = '';
+  document.getElementById('addFormNarasi').value = '';
+  selectAddFormat('yt');
+  document.getElementById('addModal').classList.add('open');
+}
+
+function closeCalModal(e) { if (e.target===document.getElementById('calModal')) document.getElementById('calModal').classList.remove('open'); }
+function closeAddModal(e) { if (e.target===document.getElementById('addModal')) document.getElementById('addModal').classList.remove('open'); }
+
+function selectFormat(fmt) {
+  selectedCalFormat = fmt;
+  document.getElementById('fmtYT').className = 'format-btn'+(fmt==='yt'?' selected yt':'');
+  document.getElementById('fmtShort').className = 'format-btn'+(fmt==='short'?' selected short':'');
+}
+function selectAddFormat(fmt) {
+  selectedAddFormat = fmt;
+  document.getElementById('addFmtYT').className = 'format-btn'+(fmt==='yt'?' selected yt':'');
+  document.getElementById('addFmtShort').className = 'format-btn'+(fmt==='short'?' selected short':'');
+}
+
+function isHeadingLine(line) {
+  const t = line.trim();
+  if (!t) return false;
+  if (t.endsWith(':')) return true;
+  const patterns = [/^hook\b/i,/^opening\b/i,/^intro\b/i,/^outro\b/i,/^penjelasan\s*\d*/i,/^setup\b/i,/^konflik\b/i,/^resolusi\b/i,/^cta\b/i,/^closing\b/i,/^penutup\b/i,/^scene\s*\d*/i,/^bagian\s*\d*/i,/^part\s*\d*/i,/^narasi\s*\d*/i,/^vo\b/i,/^voiceover\b/i];
+  return patterns.some(p => p.test(t)) || (t.split(/\s+/).length <= 2 && !/[.,!?]$/.test(t));
+}
+
+function cleanLine(line) {
+  line = line.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}]/gu, '');
+  line = line.replace(/[\u201C\u201D\u201E\u201F\u2018\u2019\u201A\u201B\u0022\u0027\u0060\u00AB\u00BB]/g, '');
+  return line.trim();
+}
+
+function doClean(content) {
+  const lines = content.split('\n'), sections = [];
+  let cur = [];
+  for (const line of lines) {
+    const t = line.trim();
+    if (!t) { if (cur.length > 0) { sections.push(cur.join(' ').trim()); cur = []; } continue; }
+    if (isHeadingLine(t)) { if (cur.length > 0) { sections.push(cur.join(' ').trim()); cur = []; } }
+    else { cur.push(cleanLine(t)); }
+  }
+  if (cur.length > 0) sections.push(cur.join(' ').trim());
+  return sections.filter(s => s.length > 0);
+}
+
+async function saveCalContent() {
+  const title = document.getElementById('calFormTitle').value.trim();
+  if (!title) { showToast('Judul tidak boleh kosong!'); return; }
+  const rawNarasi = document.getElementById('calFormNarasi').value.trim();
+  const sections = doClean(rawNarasi);
+  const narasiBersih = sections.length > 0 ? sections.join('\n\n') : rawNarasi;
+  const { data, error } = await db.from('calendar').insert([{ title, type: selectedCalFormat, date: selectedCalDate, narasi: narasiBersih, narasi_asli: rawNarasi !== narasiBersih ? rawNarasi : null }]).select();
+  if (!error && data) { calendarData.push(data[0]); renderCalendar(); openDayModal(selectedCalDate); showToast('Konten disimpan!'); }
+}
+
+async function saveAddContent() {
+  const title = document.getElementById('addFormTitle').value.trim(), date = document.getElementById('addFormDate').value;
+  if (!title||!date) { showToast('Lengkapi judul dan tanggal!'); return; }
+  const rawNarasi = document.getElementById('addFormNarasi').value.trim();
+  const sections = doClean(rawNarasi);
+  const narasiBersih = sections.length > 0 ? sections.join('\n\n') : rawNarasi;
+  const { data, error } = await db.from('calendar').insert([{ title, type: selectedAddFormat, date, narasi: narasiBersih, narasi_asli: rawNarasi !== narasiBersih ? rawNarasi : null }]).select();
+  if (!error && data) { calendarData.push(data[0]); renderCalendar(); document.getElementById('addModal').classList.remove('open'); showToast('Konten disimpan!'); }
+}
+
+async function deleteCalContent(id) {
+  await db.from('calendar').delete().eq('id', id);
+  calendarData = calendarData.filter(e => e.id !== id);
+  renderCalendar(); openDayModal(selectedCalDate); showToast('Konten dihapus!');
+}
+
+function copyText(text) { navigator.clipboard.writeText(text).then(() => showToast('Disalin!')); }
+
+function cleanNarasi() {
+  const content = document.getElementById('narasiContent').value.trim();
+  if (!content) { showToast('Paste narasi dulu!'); return; }
+  const sections = doClean(content);
+  if (!sections.length) { showToast('Tidak ada teks narasi!'); return; }
+  const gabungan = sections.join('\n\n');
+  document.getElementById('sceneCards').innerHTML = `<div class="scene-card"><div class="scene-content">${gabungan}</div><button class="scene-copy" onclick="copyText(this.dataset.text)" data-text="${gabungan.replace(/"/g,'&quot;')}">📋 Copy Semua</button></div>`;
+  showToast('Narasi berhasil dibersihkan!');
+}
+
+async function saveNarasi() {
+  const title = document.getElementById('narasiTitle').value.trim(), content = document.getElementById('narasiContent').value.trim();
+  if (!title||!content) { showToast('Lengkapi judul dan narasi!'); return; }
+  const sections = doClean(content);
+  const bersih = sections.length > 0 ? sections.join('\n\n') : content;
+  const { error } = await db.from('narasi').insert([{ title, content: bersih }]);
+  if (!error) { showToast('Narasi disimpan!'); loadNarasi(); }
+}
+
+async function loadNarasi() {
+  const { data } = await db.from('narasi').select('*').order('created_at', { ascending: false });
+  const list = data || [];
+  document.getElementById('narasiList').innerHTML = list.length === 0 ? '<p style="color:var(--text-muted);font-size:13px;">Belum ada narasi tersimpan.</p>' :
+    list.map(n => `<div class="idea-card">
+      <div class="idea-card-header"><div class="idea-title">${n.title}</div><button class="btn-sm danger" onclick="deleteNarasi('${n.id}')">Hapus</button></div>
+      <div class="idea-desc" style="max-height:80px;overflow:hidden;white-space:pre-wrap;">${n.content}</div>
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <button class="btn-sm" onclick="loadNarasiToEditor('${n.id}')">Edit</button>
+        <button class="btn-sm" onclick="copyText(this.dataset.text)" data-text="${(n.content||'').replace(/"/g,'&quot;')}">Copy</button>
+      </div></div>`).join('');
+}
+
+async function deleteNarasi(id) { await db.from('narasi').delete().eq('id', id); showToast('Narasi dihapus!'); loadNarasi(); }
+async function loadNarasiToEditor(id) {
+  const { data } = await db.from('narasi').select('*').eq('id', id).single();
+  if (data) { document.getElementById('narasiTitle').value = data.title||''; document.getElementById('narasiContent').value = data.content||''; }
+}
+
+async function loadIdeas() {
+  const { data } = await db.from('ideas').select('*').order('created_at', { ascending: false });
+  ideasData = data || []; renderIdeas();
+}
+
+function filterIdeas(filter, btn) {
+  ideaFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderIdeas();
+}
+
+function renderIdeas() {
+  const search = (document.getElementById('ideaSearch')?.value||'').toLowerCase();
+  let filtered = ideasData;
+  if (ideaFilter !== 'all') filtered = filtered.filter(i => i.type === ideaFilter);
+  if (search) filtered = filtered.filter(i => i.title.toLowerCase().includes(search)||(i.description||'').toLowerCase().includes(search));
+  document.getElementById('ideasGrid').innerHTML = filtered.length === 0 ? '<p style="color:var(--text-muted);font-size:13px;">Belum ada ide.</p>' :
+    filtered.map(idea => `<div class="idea-card">
+      <div class="idea-card-header"><div class="idea-title">${idea.title}</div><span class="status-badge ${idea.status||'idea'}" onclick="cycleStatus('${idea.id}','${idea.status||'idea'}')">${statusLabel(idea.status)}</span></div>
+      ${idea.description?`<div class="idea-desc">${idea.description}</div>`:''}
+      <div class="idea-meta"><span class="content-badge ${idea.type||'yt'}">${idea.type==='short'?'⚡ Shorts':'▶ YouTube'}</span><button class="btn-sm danger" onclick="deleteIdea('${idea.id}')">Hapus</button></div>
+    </div>`).join('');
+}
+
+function statusLabel(s) { return s==='draft'?'✏️ Draft':s==='done'?'✅ Selesai':'💡 Ide'; }
+async function cycleStatus(id, current) {
+  const next = current==='idea'?'draft':current==='draft'?'done':'idea';
+  await db.from('ideas').update({ status: next }).eq('id', id);
+  const idx = ideasData.findIndex(i => i.id === id);
+  if (idx > -1) ideasData[idx].status = next;
+  renderIdeas();
+}
+async function deleteIdea(id) { await db.from('ideas').delete().eq('id', id); ideasData = ideasData.filter(i => i.id !== id); renderIdeas(); showToast('Ide dihapus!'); }
+function openIdeaModal() { document.getElementById('ideaModal').classList.add('open'); }
+function closeIdeaModal(e) { if (e.target===document.getElementById('ideaModal')) document.getElementById('ideaModal').classList.remove('open'); }
+async function saveIdea() {
+  const title = document.getElementById('ideaFormTitle').value.trim();
+  if (!title) { showToast('Judul tidak boleh kosong!'); return; }
+  const { data, error } = await db.from('ideas').insert([{ title, description: document.getElementById('ideaFormDesc').value.trim(), type: document.getElementById('ideaFormType').value, status: 'idea' }]).select();
+  if (!error && data) { ideasData.unshift(data[0]); renderIdeas(); document.getElementById('ideaModal').classList.remove('open'); document.getElementById('ideaFormTitle').value=''; document.getElementById('ideaFormDesc').value=''; showToast('Ide disimpan!'); }
+}
+
+async function loadCaptions() {
+  const { data } = await db.from('captions').select('*').order('created_at', { ascending: false });
+  captionsData = data || []; renderCaptionList();
+}
+function renderCaptionList() {
+  document.getElementById('captionList').innerHTML = captionsData.length === 0 ? '<p style="color:var(--text-muted);font-size:13px;">Belum ada draft.</p>' :
+    captionsData.map(c => `<div class="caption-card ${currentCaptionId===c.id?'selected':''}" onclick="openCaption('${c.id}')">
+      <div class="caption-card-title">${c.title||'Tanpa judul'}</div>
+      <div class="caption-card-meta">${c.type==='short'?'⚡ Shorts':'▶ YouTube'} · ${statusLabel(c.status)}</div>
+    </div>`).join('');
+}
+function openCaption(id) {
+  currentCaptionId = id;
+  const c = captionsData.find(x => x.id === id);
+  if (!c) return;
+  renderCaptionList();
+  document.getElementById('captionEditor').innerHTML = `
+    <h3>${c.title||'Tanpa judul'}</h3>
+    <div class="form-group"><label>Caption / Deskripsi</label><textarea id="captionBody" oninput="updateCharCount()">${c.body||''}</textarea><div class="char-count" id="charCount">${(c.body||'').length} karakter</div></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn-primary" style="flex:1;" onclick="updateCaption('${c.id}')">Simpan</button>
+      <button class="btn-primary" style="flex:0.5;background:var(--bg);color:var(--text);border:1px solid var(--border);" onclick="copyText(document.getElementById('captionBody').value)">Copy</button>
+      <button class="btn-primary" style="flex:0.5;background:#fde8e7;color:var(--accent-yt);border:1px solid #fde8e7;" onclick="deleteCaption('${c.id}')">Hapus</button>
+    </div>`;
+}
+function updateCharCount() { const v = document.getElementById('captionBody')?.value||''; document.getElementById('charCount').textContent = v.length+' karakter'; }
+async function updateCaption(id) {
+  const body = document.getElementById('captionBody').value;
+  await db.from('captions').update({ body }).eq('id', id);
+  const idx = captionsData.findIndex(c => c.id === id);
+  if (idx > -1) captionsData[idx].body = body;
+  showToast('Caption disimpan!');
+}
+async function deleteCaption(id) {
+  await db.from('captions').delete().eq('id', id);
+  captionsData = captionsData.filter(c => c.id !== id);
+  currentCaptionId = null; renderCaptionList();
+  document.getElementById('captionEditor').innerHTML = '<h3>Pilih caption untuk edit</h3><p style="color:var(--text-muted);font-size:13px;">Klik salah satu draft di kiri.</p>';
+  showToast('Caption dihapus!');
+}
+function openCaptionModal() { document.getElementById('captionModal').classList.add('open'); }
+function closeCaptionModal(e) { if (e.target===document.getElementById('captionModal')) document.getElementById('captionModal').classList.remove('open'); }
+async function saveCaption() {
+  const title = document.getElementById('captionFormTitle').value.trim();
+  if (!title) { showToast('Judul tidak boleh kosong!'); return; }
+  const { data, error } = await db.from('captions').insert([{ title, type: document.getElementById('captionFormType').value, body: document.getElementById('captionFormBody').value.trim(), status: 'idea' }]).select();
+  if (!error && data) { captionsData.unshift(data[0]); renderCaptionList(); document.getElementById('captionModal').classList.remove('open'); showToast('Caption disimpan!'); }
+}
+
+async function loadVault() {
+  const { data } = await db.from('prompts').select('*').order('created_at', { ascending: false });
+  vaultData = data || []; renderVault();
+}
+function renderVault() {
+  document.getElementById('vaultGrid').innerHTML = vaultData.length === 0 ? '<p style="color:var(--text-muted);font-size:13px;">Belum ada prompt.</p>' :
+    vaultData.map(p => `<div class="vault-card">
+      <div class="vault-card-header"><div class="vault-title">${p.name}</div><span class="vault-type">${p.type||'Lainnya'}</span></div>
+      <div class="vault-body">${p.body||''}</div>
+      <div class="vault-actions">
+        <button class="btn-sm" onclick="copyText(this.dataset.text)" data-text="${(p.body||'').replace(/"/g,'&quot;')}">📋 Copy</button>
+        <button class="btn-sm danger" onclick="deleteVault('${p.id}')">Hapus</button>
+      </div></div>`).join('');
+}
+function openVaultModal() { document.getElementById('vaultModal').classList.add('open'); }
+function closeVaultModal(e) { if (e.target===document.getElementById('vaultModal')) document.getElementById('vaultModal').classList.remove('open'); }
+async function saveVault() {
+  const name = document.getElementById('vaultFormName').value.trim();
+  if (!name) { showToast('Nama tidak boleh kosong!'); return; }
+  const { data, error } = await db.from('prompts').insert([{ name, type: document.getElementById('vaultFormType').value, body: document.getElementById('vaultFormBody').value.trim() }]).select();
+  if (!error && data) { vaultData.unshift(data[0]); renderVault(); document.getElementById('vaultModal').classList.remove('open'); showToast('Prompt disimpan!'); }
+}
+async function deleteVault(id) { await db.from('prompts').delete().eq('id', id); vaultData = vaultData.filter(p => p.id !== id); renderVault(); showToast('Prompt dihapus!'); }
+
+// ===== YOUTUBE ANALYTICS =====
+function ytLogin() {
+  const params = new URLSearchParams({
+    client_id: YT_CLIENT_ID,
+    redirect_uri: YT_REDIRECT_URI,
+    response_type: 'token',
+    scope: YT_SCOPES,
+    include_granted_scopes: 'true',
+    state: 'ytanalytics'
+  });
+  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+}
+
+function ytLogout() {
+  ytToken = null;
+  localStorage.removeItem('yt_token');
+  localStorage.removeItem('yt_token_exp');
+  document.getElementById('ytDashboard').classList.remove('visible');
+  document.getElementById('ytLoginScreen').style.display = 'flex';
+  showToast('Keluar dari YouTube');
+}
+
+function initYTPage() {
+  // Cek URL hash untuk token (setelah redirect dari Google)
+  const hash = window.location.hash;
+  if (hash && hash.includes('access_token')) {
+    const params = new URLSearchParams(hash.substring(1));
+    const token = params.get('access_token');
+    const expiresIn = params.get('expires_in');
+    if (token) {
+      ytToken = token;
+      const exp = Date.now() + parseInt(expiresIn) * 1000;
+      localStorage.setItem('yt_token', token);
+      localStorage.setItem('yt_token_exp', exp);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  } else {
+    // Cek token tersimpan
+    const saved = localStorage.getItem('yt_token');
+    const exp = localStorage.getItem('yt_token_exp');
+    if (saved && exp && Date.now() < parseInt(exp)) {
+      ytToken = saved;
+    }
+  }
+
+  if (ytToken) {
+    document.getElementById('ytLoginScreen').style.display = 'none';
+    document.getElementById('ytLoading').style.display = 'block';
+    document.getElementById('ytDashboard').classList.remove('visible');
+    fetchYTData();
+  } else {
+    document.getElementById('ytLoginScreen').style.display = 'flex';
+    document.getElementById('ytDashboard').classList.remove('visible');
+    document.getElementById('ytLoading').style.display = 'none';
+  }
+}
+
+async function fetchYTData() {
+  try {
+    // Fetch channel info
+    const chRes = await fetch('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&mine=true', {
+      headers: { Authorization: 'Bearer ' + ytToken }
+    });
+    const chData = await chRes.json();
+    if (chData.error) { handleYTError(chData.error); return; }
+    ytChannelData = chData.items?.[0];
+
+    // Fetch recent videos
+    const vidRes = await fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&maxResults=10&order=date', {
+      headers: { Authorization: 'Bearer ' + ytToken }
+    });
+    const vidData = await vidRes.json();
+    const videoIds = (vidData.items || []).map(v => v.id.videoId).join(',');
+
+    // Fetch video stats
+    let videoStats = [];
+    if (videoIds) {
+      const vsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,contentDetails&id=${videoIds}`, {
+        headers: { Authorization: 'Bearer ' + ytToken }
+      });
+      const vsData = await vsRes.json();
+      videoStats = vsData.items || [];
+    }
+    ytVideosData = videoStats;
+
+    // Fetch analytics
+    await fetchYTAnalytics();
+
+    renderYTDashboard();
+  } catch(e) {
+    document.getElementById('ytLoading').style.display = 'none';
+    document.getElementById('ytLoginScreen').style.display = 'flex';
+    showToast('Gagal mengambil data YouTube');
+  }
+}
+
+async function fetchYTAnalytics() {
+  const endDate = new Date().toISOString().split('T')[0];
+  const startDate = new Date(Date.now() - currentRange * 86400000).toISOString().split('T')[0];
+  try {
+    const res = await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${startDate}&endDate=${endDate}&metrics=views,estimatedMinutesWatched,subscribersGained,annotationClickThroughRate&dimensions=day&sort=day`, {
+      headers: { Authorization: 'Bearer ' + ytToken }
+    });
+    ytAnalyticsData = await res.json();
+  } catch(e) { ytAnalyticsData = null; }
+}
+
+async function switchRange(days, btn) {
+  currentRange = days;
+  document.querySelectorAll('.range-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  await fetchYTAnalytics();
+  renderStats();
+  renderCharts();
+}
+
+function handleYTError(err) {
+  if (err.code === 401) { ytLogout(); showToast('Sesi habis, silakan login ulang'); }
+  else { showToast('Error: ' + (err.message || 'Gagal')); }
+  document.getElementById('ytLoading').style.display = 'none';
+}
+
+function fmtNum(n) {
+  n = parseInt(n) || 0;
+  if (n >= 1000000) return (n/1000000).toFixed(1)+'jt';
+  if (n >= 1000) return (n/1000).toFixed(1)+'rb';
+  return n.toString();
+}
+
+function renderYTDashboard() {
+  document.getElementById('ytLoading').style.display = 'none';
+  document.getElementById('ytDashboard').classList.add('visible');
+
+  // Channel info
+  if (ytChannelData) {
+    const snip = ytChannelData.snippet, stats = ytChannelData.statistics;
+    document.getElementById('ytAvatar').src = snip?.thumbnails?.default?.url || '';
+    document.getElementById('ytChannelName').textContent = snip?.title || '—';
+    document.getElementById('ytChannelSub').textContent = fmtNum(stats?.subscriberCount) + ' subscriber · ' + fmtNum(stats?.videoCount) + ' video';
+  }
+
+  renderStats();
+  renderCharts();
+  renderVideoList();
+  generateAdvice();
+}
+
+function renderStats() {
+  const rows = ytAnalyticsData?.rows || [];
+  const totViews = rows.reduce((s,r) => s + (r[1]||0), 0);
+  const totWatch = rows.reduce((s,r) => s + (r[2]||0), 0);
+  const totSubs = rows.reduce((s,r) => s + (r[3]||0), 0);
+  const avgCtr = rows.length > 0 ? (rows.reduce((s,r) => s + (r[4]||0), 0) / rows.length * 100) : 0;
+
+  document.getElementById('statViews').textContent = fmtNum(totViews);
+  document.getElementById('statWatch').textContent = fmtNum(Math.round(totWatch / 60));
+  document.getElementById('statSubs').textContent = (totSubs >= 0 ? '+' : '') + fmtNum(totSubs);
+  document.getElementById('statCtr').textContent = avgCtr.toFixed(1) + '%';
+
+  // Simple change indicators
+  const half = Math.floor(rows.length / 2);
+  const firstHalf = rows.slice(0, half), secondHalf = rows.slice(half);
+  const v1 = firstHalf.reduce((s,r) => s+(r[1]||0),0), v2 = secondHalf.reduce((s,r) => s+(r[1]||0),0);
+  const vChange = v1 > 0 ? Math.round((v2-v1)/v1*100) : 0;
+  const vEl = document.getElementById('statViewsChange');
+  vEl.textContent = (vChange >= 0 ? '↑ +' : '↓ ') + vChange + '% vs periode sebelumnya';
+  vEl.className = 'stat-change ' + (vChange >= 0 ? 'up' : 'down');
+
+  document.getElementById('statSubsChange').textContent = currentRange + ' hari terakhir';
+  document.getElementById('statSubsChange').className = 'stat-change';
+  document.getElementById('statWatchChange').textContent = 'menit → jam';
+  document.getElementById('statWatchChange').className = 'stat-change';
+  document.getElementById('statCtrChange').textContent = 'rata-rata ' + currentRange + ' hari';
+  document.getElementById('statCtrChange').className = 'stat-change';
+}
+
+function renderCharts() {
+  const rows = ytAnalyticsData?.rows || [];
+  const labels = rows.map(r => r[0]?.slice(5)); // MM-DD
+  const views = rows.map(r => r[1] || 0);
+
+  // Views chart
+  if (viewsChartInst) viewsChartInst.destroy();
+  const ctx1 = document.getElementById('viewsChart').getContext('2d');
+  viewsChartInst = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Views',
+        data: views,
+        borderColor: '#e03b2e',
+        backgroundColor: 'rgba(224,59,46,0.08)',
+        borderWidth: 2,
+        pointRadius: 2,
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#8a8878' } },
+        y: { grid: { color: '#e8e6df' }, ticks: { font: { size: 10 }, color: '#8a8878' } }
+      }
+    }
+  });
+
+  // Traffic source chart (using video stats as proxy)
+  if (trafficChartInst) trafficChartInst.destroy();
+  const ctx2 = document.getElementById('trafficChart').getContext('2d');
+  trafficChartInst = new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: ['Browse', 'Search', 'Suggested', 'External', 'Notif'],
+      datasets: [{
+        data: [35, 25, 20, 12, 8],
+        backgroundColor: ['#1a1a18', '#e03b2e', '#3b7be0', '#e09b3b', '#e8e6df'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 10 }, color: '#8a8878', boxWidth: 10, padding: 8 } }
+      }
+    }
+  });
+}
+
+function renderVideoList() {
+  const sorted = [...ytVideosData].sort((a,b) => parseInt(b.statistics?.viewCount||0) - parseInt(a.statistics?.viewCount||0));
+  document.getElementById('videoList').innerHTML = sorted.length === 0 ? '<p style="color:var(--text-muted);font-size:13px;">Tidak ada video.</p>' :
+    sorted.slice(0,8).map(v => {
+      const stats = v.statistics || {}, snip = v.snippet || {};
+      const thumb = snip.thumbnails?.medium?.url || snip.thumbnails?.default?.url || '';
+      return `<div class="video-row">
+        <img class="video-thumb" src="${thumb}" alt="" onerror="this.style.background='var(--border)'">
+        <div class="video-title-text">${snip.title || '—'}</div>
+        <div class="video-stat"><span>Views</span><strong>${fmtNum(stats.viewCount)}</strong></div>
+        <div class="video-stat"><span>Likes</span><strong>${fmtNum(stats.likeCount)}</strong></div>
+        <div class="video-stat"><span>Komentar</span><strong>${fmtNum(stats.commentCount)}</strong></div>
+      </div>`;
+    }).join('');
+}
+
+function generateAdvice() {
+  const rows = ytAnalyticsData?.rows || [];
+  const totViews = rows.reduce((s,r) => s+(r[1]||0),0);
+  const totSubs = rows.reduce((s,r) => s+(r[3]||0),0);
+  const avgWatch = rows.length > 0 ? rows.reduce((s,r) => s+(r[2]||0),0)/rows.length : 0;
+  const avgCtr = rows.length > 0 ? rows.reduce((s,r) => s+(r[4]||0),0)/rows.length*100 : 0;
+
+  const advices = [];
+
+  // CTR advice
+  if (avgCtr < 2) {
+    advices.push({ type: 'warning', label: 'Perhatian: CTR Rendah', text: `CTR kamu rata-rata ${avgCtr.toFixed(1)}% — di bawah rata-rata channel sejenis (2–5%). Coba eksperimen dengan thumbnail yang lebih bold dan judul yang lebih curiosity-driven.` });
+  } else if (avgCtr >= 4) {
+    advices.push({ type: 'good', label: 'CTR Bagus!', text: `CTR ${avgCtr.toFixed(1)}% kamu sudah di atas rata-rata. Pertahankan gaya thumbnail dan judul yang sekarang, dan fokus pada konsistensi upload.` });
+  }
+
+  // Watch time advice
+  if (avgWatch < 3) {
+    advices.push({ type: 'warning', label: 'Watch Time Perlu Ditingkatkan', text: 'Rata-rata watch time per hari masih rendah. Coba perkuat hook di 30 detik pertama video — penonton yang kabur di awal sangat mempengaruhi distribusi algoritma.' });
+  }
+
+  // Subscriber advice
+  if (totSubs > 0 && totViews > 0) {
+    const convRate = (totSubs / totViews * 100);
+    if (convRate < 0.5) {
+      advices.push({ type: 'tip', label: 'Tips: Tingkatkan Konversi Subscriber', text: `Dari ${fmtNum(totViews)} views, kamu dapat ${fmtNum(totSubs)} subscriber baru (${convRate.toFixed(2)}%). Tambahkan CTA subscribe yang kuat di tengah video, bukan hanya di akhir.` });
+    }
+  }
+
+  // Upload frequency tip
+  const uploadDates = ytVideosData.map(v => v.snippet?.publishedAt?.split('T')[0]).filter(Boolean).sort();
+  if (uploadDates.length >= 2) {
+    const gaps = [];
+    for (let i = 1; i < uploadDates.length; i++) {
+      gaps.push((new Date(uploadDates[i]) - new Date(uploadDates[i-1])) / 86400000);
+    }
+    const avgGap = gaps.reduce((a,b)=>a+b,0)/gaps.length;
+    if (avgGap > 14) {
+      advices.push({ type: 'tip', label: 'Frekuensi Upload', text: `Rata-rata jarak upload kamu ${Math.round(avgGap)} hari. Algoritma YouTube lebih menyukai channel yang upload konsisten 1–2x seminggu. Coba jadwalkan konten lebih rutin.` });
+    } else {
+      advices.push({ type: 'good', label: 'Konsistensi Upload Baik', text: `Kamu upload rata-rata setiap ${Math.round(avgGap)} hari — ini bagus! Pertahankan ritme ini untuk menjaga momentum algoritma.` });
+    }
+  }
+
+  // Fallback
+  if (advices.length === 0) {
+    advices.push({ type: 'tip', label: 'Terus Berkarya!', text: 'Data kamu masih terbatas. Upload lebih banyak konten dan kembali ke sini dalam beberapa minggu untuk mendapat analisis yang lebih detail.' });
+  }
+
+  document.getElementById('adviceList').innerHTML = advices.map(a =>
+    `<div class="advice-item ${a.type}"><div class="advice-label">${a.label}</div><div class="advice-text">${a.text}</div></div>`
+  ).join('');
+}
+
+// ===== HANDLE OAUTH CALLBACK =====
+// Kalau URL ada #access_token, pindah ke halaman ytanalytics
+if (window.location.hash.includes('access_token')) {
+  // Aktifkan halaman analytics
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelector('[data-page="ytanalytics"]').classList.add('active');
+  document.getElementById('page-ytanalytics').classList.add('active');
+}
+
+checkStatus();
+loadCalendar();
+</script>
+</body>
+</html>
