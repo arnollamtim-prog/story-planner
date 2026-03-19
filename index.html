@@ -11,7 +11,7 @@
   :root { --bg:#f7f6f2; --surface:#ffffff; --border:#e8e6df; --text:#1a1a18; --text-muted:#8a8878; --accent-yt:#e03b2e; --accent-short:#3b7be0; --hover:#f0ede6; --radius:12px; --sidebar:220px; }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); display:flex; height:100vh; overflow:hidden; }
-  .sidebar { width:var(--sidebar); background:var(--surface); border-right:1px solid var(--border); display:flex; flex-direction:column; padding:24px 0; flex-shrink:0; }
+  .sidebar { width:var(--sidebar); background:var(--surface); border-right:1px solid var(--border); display:flex; flex-direction:column; padding:24px 0; flex-shrink:0; overflow-y:auto; }
   .logo { padding:0 20px 24px; border-bottom:1px solid var(--border); }
   .logo-icon { width:32px; height:32px; background:var(--text); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
   .logo-icon svg { width:16px; height:16px; fill:white; }
@@ -122,7 +122,6 @@
   .narasi-panel h3 { font-family:'DM Serif Display',serif; font-size:17px; margin-bottom:14px; }
   .scene-cards { display:flex; flex-direction:column; gap:10px; }
   .scene-card { border:1px solid var(--border); border-radius:10px; padding:14px; }
-  .scene-label { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
   .scene-content { font-size:13px; line-height:1.8; color:var(--text); white-space:pre-wrap; }
   .scene-copy { display:inline-flex; align-items:center; gap:5px; font-size:11px; color:var(--text-muted); cursor:pointer; margin-top:8px; padding:3px 8px; border-radius:5px; border:1px solid var(--border); background:var(--bg); }
   .scene-copy:hover { background:var(--hover); }
@@ -139,7 +138,7 @@
   ::-webkit-scrollbar-track { background:transparent; }
   ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
-  /* ===== YOUTUBE ANALYTICS STYLES ===== */
+  /* ===== YOUTUBE ANALYTICS ===== */
   .yt-login-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; gap:16px; text-align:center; }
   .yt-login-screen p { color:var(--text-muted); font-size:13.5px; max-width:360px; line-height:1.6; }
   .btn-google { display:inline-flex; align-items:center; gap:10px; background:white; border:1.5px solid var(--border); padding:11px 20px; border-radius:10px; font-size:14px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; color:var(--text); }
@@ -155,7 +154,7 @@
   .yt-channel-sub { font-size:12px; color:var(--text-muted); }
   .btn-logout { font-size:12px; padding:6px 12px; border-radius:7px; cursor:pointer; border:1px solid var(--border); background:var(--surface); font-family:'DM Sans',sans-serif; color:var(--text-muted); }
   .btn-logout:hover { background:var(--hover); }
-  .yt-range-tabs { display:flex; gap:6px; margin-bottom:20px; }
+  .yt-range-tabs { display:flex; gap:6px; margin-bottom:20px; flex-wrap:wrap; }
   .range-tab { padding:6px 14px; border:1.5px solid var(--border); border-radius:7px; cursor:pointer; font-size:12px; font-weight:500; background:var(--surface); font-family:'DM Sans',sans-serif; transition:all 0.15s; }
   .range-tab.active { background:var(--text); color:white; border-color:var(--text); }
   .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
@@ -170,23 +169,62 @@
   .chart-title { font-weight:600; font-size:13.5px; margin-bottom:16px; }
   .chart-wrap { position:relative; height:200px; }
   .videos-section { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:24px; }
-  .videos-section-title { font-weight:600; font-size:13.5px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; }
-  .video-list { display:flex; flex-direction:column; gap:10px; }
-  .video-row { display:grid; grid-template-columns:auto 1fr auto auto auto; gap:12px; align-items:center; padding:10px; border-radius:8px; transition:background 0.15s; }
-  .video-row:hover { background:var(--hover); }
-  .video-thumb { width:60px; height:34px; border-radius:5px; background:var(--border); object-fit:cover; flex-shrink:0; }
-  .video-title-text { font-size:13px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .video-stat { font-size:12px; color:var(--text-muted); text-align:right; white-space:nowrap; }
-  .video-stat span { display:block; font-size:10px; color:var(--text-muted); }
-  .video-stat strong { font-size:13px; color:var(--text); }
-  .ai-advice { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
-  .ai-advice-title { font-family:'DM Serif Display',serif; font-size:18px; margin-bottom:4px; }
+  .videos-section-title { font-weight:600; font-size:13.5px; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .yt-toolbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .yt-search { padding:6px 12px; border:1px solid var(--border); border-radius:7px; font-size:12.5px; font-family:'DM Sans',sans-serif; background:var(--bg); outline:none; width:180px; }
+  .yt-sort { padding:6px 10px; border:1px solid var(--border); border-radius:7px; font-size:12px; font-family:'DM Sans',sans-serif; background:var(--bg); cursor:pointer; outline:none; }
+  .yt-filter-type { display:flex; gap:4px; }
+  .yt-filter-btn { padding:5px 10px; border:1px solid var(--border); border-radius:6px; font-size:11px; font-weight:600; cursor:pointer; background:var(--surface); font-family:'DM Sans',sans-serif; transition:all 0.12s; }
+  .yt-filter-btn.active { background:var(--text); color:white; border-color:var(--text); }
+  .yt-filter-btn.yt-type.active { background:var(--accent-yt); border-color:var(--accent-yt); }
+  .yt-filter-btn.short-type.active { background:var(--accent-short); border-color:var(--accent-short); }
+  .video-table { width:100%; border-collapse:collapse; }
+  .video-table th { text-align:left; font-size:10.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.6px; padding:8px 10px; border-bottom:1px solid var(--border); white-space:nowrap; cursor:pointer; user-select:none; }
+  .video-table th:hover { color:var(--text); }
+  .video-table td { padding:10px; border-bottom:1px solid var(--border); font-size:12.5px; vertical-align:middle; }
+  .video-table tr:last-child td { border-bottom:none; }
+  .video-table tr:hover td { background:var(--hover); }
+  .video-thumb-sm { width:72px; height:40px; border-radius:5px; object-fit:cover; background:var(--border); flex-shrink:0; }
+  .video-title-cell { display:flex; align-items:center; gap:10px; min-width:200px; max-width:300px; }
+  .video-title-txt { font-size:12.5px; font-weight:500; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .type-pill { font-size:9px; font-weight:700; padding:2px 6px; border-radius:20px; white-space:nowrap; flex-shrink:0; }
+  .type-pill.yt { background:#fde8e7; color:var(--accent-yt); }
+  .type-pill.short { background:#e7eeff; color:var(--accent-short); }
+  .num-cell { text-align:right; font-variant-numeric:tabular-nums; }
+  .score-bar { height:4px; background:var(--border); border-radius:2px; margin-top:3px; min-width:60px; }
+  .score-fill { height:100%; border-radius:2px; background:var(--accent-yt); }
+  .score-fill.good { background:#2d7a3e; }
+  .score-fill.mid { background:#e09b3b; }
+  .video-detail-btn { font-size:11px; padding:4px 8px; border-radius:5px; border:1px solid var(--border); background:var(--surface); cursor:pointer; font-family:'DM Sans',sans-serif; white-space:nowrap; }
+  .video-detail-btn:hover { background:var(--hover); }
+  .load-more-btn { width:100%; padding:10px; border:1.5px dashed var(--border); border-radius:8px; background:transparent; font-size:13px; color:var(--text-muted); cursor:pointer; font-family:'DM Sans',sans-serif; margin-top:12px; transition:all 0.15s; }
+  .load-more-btn:hover { border-color:var(--text); color:var(--text); }
+  .video-detail-modal { background:var(--surface); border-radius:16px; width:680px; max-width:95vw; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.15); }
+  .vd-header { display:flex; gap:14px; align-items:flex-start; margin-bottom:20px; }
+  .vd-thumb { width:140px; height:78px; border-radius:8px; object-fit:cover; flex-shrink:0; }
+  .vd-title { font-family:'DM Serif Display',serif; font-size:17px; line-height:1.3; margin-bottom:6px; }
+  .vd-meta { font-size:12px; color:var(--text-muted); }
+  .vd-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+  .vd-stat { background:var(--bg); border-radius:10px; padding:12px; }
+  .vd-stat-label { font-size:10px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+  .vd-stat-value { font-family:'DM Serif Display',serif; font-size:20px; }
+  .vd-stat-sub { font-size:11px; color:var(--text-muted); margin-top:2px; }
+  .vd-section-title { font-weight:600; font-size:13px; margin-bottom:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
+  .vd-advice { background:var(--bg); border-radius:10px; padding:14px 16px; border-left:3px solid var(--text); margin-bottom:10px; }
+  .vd-advice.tip { border-left-color:#3b7be0; }
+  .vd-advice.warning { border-left-color:#e09b3b; }
+  .vd-advice.good { border-left-color:#2d7a3e; }
+  .vd-advice-label { font-size:10px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; }
+  .vd-advice-text { font-size:13px; line-height:1.6; }
+  .ai-advice { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:24px; }
+  .ai-advice-title { font-family:'DM Serif Display',serif; font-size:20px; margin-bottom:4px; }
   .ai-advice-sub { font-size:12px; color:var(--text-muted); margin-bottom:16px; }
   .advice-list { display:flex; flex-direction:column; gap:10px; }
   .advice-item { background:var(--bg); border-radius:10px; padding:14px 16px; border-left:3px solid var(--text); }
   .advice-item.tip { border-left-color:#3b7be0; }
   .advice-item.warning { border-left-color:#e09b3b; }
   .advice-item.good { border-left-color:#2d7a3e; }
+  .advice-item.critical { border-left-color:#e03b2e; }
   .advice-label { font-size:10px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; }
   .advice-text { font-size:13px; line-height:1.6; }
   .yt-loading { text-align:center; padding:40px; color:var(--text-muted); font-size:13.5px; }
@@ -219,7 +257,6 @@
 </nav>
 
 <main class="main">
-  <!-- KALENDER -->
   <div class="page active" id="page-calendar">
     <div class="cal-header">
       <div class="cal-nav">
@@ -243,7 +280,6 @@
     </div>
   </div>
 
-  <!-- NARASI -->
   <div class="page" id="page-narasi">
     <div class="page-title">Narasi & Scene</div>
     <div class="narasi-layout">
@@ -267,7 +303,6 @@
     </div>
   </div>
 
-  <!-- IDEAS -->
   <div class="page" id="page-ideas">
     <div class="page-title">Ideas Board</div>
     <div class="ideas-toolbar">
@@ -280,7 +315,6 @@
     <div class="ideas-grid" id="ideasGrid"></div>
   </div>
 
-  <!-- CAPTION -->
   <div class="page" id="page-caption">
     <div class="page-title">Caption Draft</div>
     <div class="caption-layout">
@@ -295,37 +329,29 @@
     </div>
   </div>
 
-  <!-- VAULT -->
   <div class="page" id="page-vault">
     <div class="page-title">Prompt Vault</div>
     <button class="btn-add" style="margin-bottom:20px;" onclick="openVaultModal()">+ Prompt Baru</button>
     <div class="vault-layout" id="vaultGrid"></div>
   </div>
 
-  <!-- YOUTUBE ANALYTICS -->
   <div class="page" id="page-ytanalytics">
     <div class="page-title">YouTube Analytics</div>
-
-    <!-- Login screen -->
     <div class="yt-login-screen" id="ytLoginScreen">
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e03b2e" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#e03b2e" stroke="none"/></svg>
       <div>
         <div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px;">Hubungkan ke YouTube</div>
-        <p>Login dengan akun Google kamu untuk lihat statistik channel dan dapat saran konten dari AI.</p>
+        <p>Login dengan akun Google untuk lihat semua statistik channel secara lengkap dan dapat saran AI mendalam per video.</p>
       </div>
       <button class="btn-google" onclick="ytLogin()">
         <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         Masuk dengan Google
       </button>
     </div>
-
-    <!-- Loading -->
     <div class="yt-loading" id="ytLoading" style="display:none;">
       <div class="spinner"></div>
-      Mengambil data channel kamu...
+      Mengambil semua video channel kamu... (ini mungkin butuh beberapa detik)
     </div>
-
-    <!-- Dashboard -->
     <div class="yt-dashboard" id="ytDashboard">
       <div class="yt-header">
         <div class="yt-header-left">
@@ -337,49 +363,75 @@
         </div>
         <button class="btn-logout" onclick="ytLogout()">Keluar</button>
       </div>
-
       <div class="yt-range-tabs">
         <button class="range-tab active" onclick="switchRange(7,this)">7 Hari</button>
         <button class="range-tab" onclick="switchRange(28,this)">28 Hari</button>
         <button class="range-tab" onclick="switchRange(90,this)">90 Hari</button>
+        <button class="range-tab" onclick="switchRange(365,this)">1 Tahun</button>
       </div>
-
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-label">Views</div><div class="stat-value" id="statViews">—</div><div class="stat-change" id="statViewsChange"></div></div>
         <div class="stat-card"><div class="stat-label">Watch Time (jam)</div><div class="stat-value" id="statWatch">—</div><div class="stat-change" id="statWatchChange"></div></div>
-        <div class="stat-card"><div class="stat-label">Subscriber</div><div class="stat-value" id="statSubs">—</div><div class="stat-change" id="statSubsChange"></div></div>
-        <div class="stat-card"><div class="stat-label">CTR</div><div class="stat-value" id="statCtr">—</div><div class="stat-change" id="statCtrChange"></div></div>
+        <div class="stat-card"><div class="stat-label">Subscriber Baru</div><div class="stat-value" id="statSubs">—</div><div class="stat-change" id="statSubsChange"></div></div>
+        <div class="stat-card"><div class="stat-label">Avg CTR</div><div class="stat-value" id="statCtr">—</div><div class="stat-change" id="statCtrChange"></div></div>
       </div>
-
       <div class="charts-grid">
         <div class="chart-card">
           <div class="chart-title">Views Harian</div>
           <div class="chart-wrap"><canvas id="viewsChart"></canvas></div>
         </div>
         <div class="chart-card">
-          <div class="chart-title">Traffic Source</div>
+          <div class="chart-title">YouTube vs Shorts</div>
           <div class="chart-wrap"><canvas id="trafficChart"></canvas></div>
         </div>
       </div>
-
+      <div class="ai-advice">
+        <div class="ai-advice-title">🤖 Analisis AI — Channel Kamu</div>
+        <div class="ai-advice-sub" id="aiOverallSub">Menganalisis data...</div>
+        <div class="advice-list" id="adviceList"><div class="yt-loading" style="padding:20px;"><div class="spinner"></div></div></div>
+      </div>
       <div class="videos-section">
         <div class="videos-section-title">
-          <span>Video Terbaru</span>
-          <span style="font-size:12px;color:var(--text-muted);font-weight:400;">Diurutkan berdasarkan views</span>
+          <span>Semua Video <span id="videoCount" style="color:var(--text-muted);font-weight:400;font-size:12px;"></span></span>
+          <div class="yt-toolbar">
+            <input class="yt-search" type="text" placeholder="Cari video..." oninput="filterVideos()" id="videoSearch">
+            <div class="yt-filter-type">
+              <button class="yt-filter-btn active" onclick="setTypeFilter('all',this)">Semua</button>
+              <button class="yt-filter-btn yt-type" onclick="setTypeFilter('yt',this)">YouTube</button>
+              <button class="yt-filter-btn short-type" onclick="setTypeFilter('short',this)">Shorts</button>
+            </div>
+            <select class="yt-sort" onchange="sortVideos(this.value)">
+              <option value="views">Sort: Views</option>
+              <option value="likes">Sort: Likes</option>
+              <option value="comments">Sort: Komentar</option>
+              <option value="date">Sort: Terbaru</option>
+              <option value="duration">Sort: Durasi</option>
+            </select>
+          </div>
         </div>
-        <div class="video-list" id="videoList"></div>
-      </div>
-
-      <div class="ai-advice">
-        <div class="ai-advice-title">Saran AI untuk Kamu</div>
-        <div class="ai-advice-sub">Berdasarkan performa channel kamu saat ini</div>
-        <div class="advice-list" id="adviceList"><div class="yt-loading"><div class="spinner"></div>Menganalisis data...</div></div>
+        <div style="overflow-x:auto;">
+          <table class="video-table">
+            <thead>
+              <tr>
+                <th style="width:300px;">Video</th>
+                <th class="num-cell" onclick="sortVideos('views')">Views ↕</th>
+                <th class="num-cell" onclick="sortVideos('likes')">Likes ↕</th>
+                <th class="num-cell" onclick="sortVideos('comments')">Komen ↕</th>
+                <th class="num-cell">Durasi</th>
+                <th class="num-cell">Upload</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="videoTableBody"></tbody>
+          </table>
+        </div>
+        <button class="load-more-btn" id="loadMoreBtn" onclick="loadMoreVideos()" style="display:none;">+ Muat lebih banyak</button>
       </div>
     </div>
   </div>
 </main>
 
-<!-- MODALS (sama seperti sebelumnya) -->
+<!-- MODALS -->
 <div class="modal-overlay" id="calModal" onclick="closeCalModal(event)">
   <div class="modal">
     <div class="modal-header">
@@ -397,15 +449,11 @@
           <button class="format-btn" id="fmtShort" onclick="selectFormat('short')">⚡ Shorts</button>
         </div>
       </div>
-      <div class="form-group">
-        <label>Narasi</label>
-        <textarea id="calFormNarasi" placeholder="Paste narasi lengkap — judul section & tanda petik otomatis dibersihkan"></textarea>
-      </div>
+      <div class="form-group"><label>Narasi</label><textarea id="calFormNarasi" placeholder="Paste narasi lengkap"></textarea></div>
       <button class="btn-primary" onclick="saveCalContent()">Simpan Konten</button>
     </div>
   </div>
 </div>
-
 <div class="modal-overlay" id="addModal" onclick="closeAddModal(event)">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Tambah Konten</div><button class="modal-close" onclick="document.getElementById('addModal').classList.remove('open')">×</button></div>
@@ -418,12 +466,11 @@
           <button class="format-btn" id="addFmtShort" onclick="selectAddFormat('short')">⚡ Shorts</button>
         </div>
       </div>
-      <div class="form-group"><label>Narasi</label><textarea id="addFormNarasi" placeholder="Paste narasi lengkap — otomatis dibersihkan saat disimpan"></textarea></div>
+      <div class="form-group"><label>Narasi</label><textarea id="addFormNarasi" placeholder="Paste narasi lengkap"></textarea></div>
       <button class="btn-primary" onclick="saveAddContent()">Simpan</button>
     </div>
   </div>
 </div>
-
 <div class="modal-overlay" id="ideaModal" onclick="closeIdeaModal(event)">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Ide Baru</div><button class="modal-close" onclick="document.getElementById('ideaModal').classList.remove('open')">×</button></div>
@@ -435,7 +482,6 @@
     </div>
   </div>
 </div>
-
 <div class="modal-overlay" id="captionModal" onclick="closeCaptionModal(event)">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Draft Baru</div><button class="modal-close" onclick="document.getElementById('captionModal').classList.remove('open')">×</button></div>
@@ -447,7 +493,6 @@
     </div>
   </div>
 </div>
-
 <div class="modal-overlay" id="vaultModal" onclick="closeVaultModal(event)">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Prompt Baru</div><button class="modal-close" onclick="document.getElementById('vaultModal').classList.remove('open')">×</button></div>
@@ -459,11 +504,19 @@
     </div>
   </div>
 </div>
+<div class="modal-overlay" id="videoDetailModal" onclick="closeVideoDetail(event)">
+  <div class="video-detail-modal modal">
+    <div class="modal-header">
+      <div><div class="modal-title">Detail & Analisis Video</div></div>
+      <button class="modal-close" onclick="document.getElementById('videoDetailModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body" id="vdModalBody"></div>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== CONFIG =====
 const SUPABASE_URL = 'https://qlnjfqldkbpubhsjovrc.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_YQ9DtOevkeJdyIefK8v_Kg_BWjY8fw6';
 const YT_CLIENT_ID = '149194749854-n4ro3pfusotri027gm7nvuqap94k9mc0.apps.googleusercontent.com';
@@ -477,11 +530,11 @@ let currentDate = new Date(), calendarData = [], selectedCalDate = null;
 let selectedCalFormat = 'yt', selectedAddFormat = 'yt', currentCaptionId = null;
 let ideasData = [], ideaFilter = 'all', captionsData = [], vaultData = [];
 let ytToken = null, viewsChartInst = null, trafficChartInst = null;
-let ytChannelData = null, ytVideosData = [], ytAnalyticsData = null;
-let currentRange = 7;
+let ytChannelData = null, ytAllVideos = [], ytAnalyticsData = null;
+let currentRange = 7, videoTypeFilter = 'all', videoSortBy = 'views';
+let videoDisplayCount = 25, filteredVideos = [];
 const narasiStore = {};
 
-// ===== NAV =====
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -511,12 +564,10 @@ async function checkStatus() {
   } catch { document.getElementById('statusText').textContent = 'Gagal terhubung'; }
 }
 
-// ===== CALENDAR =====
 async function loadCalendar() {
   const { data } = await db.from('calendar').select('*');
   calendarData = data || []; renderCalendar();
 }
-
 function renderCalendar() {
   const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
   document.getElementById('calMonth').textContent = months[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
@@ -539,10 +590,8 @@ function renderCalendar() {
   }
   document.getElementById('calCells').innerHTML = cells;
 }
-
 function formatDate(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function changeMonth(dir) { currentDate.setMonth(currentDate.getMonth()+dir); renderCalendar(); }
-
 function openDayModal(dateStr) {
   selectedCalDate = dateStr;
   const d = new Date(dateStr+'T00:00:00');
@@ -551,16 +600,16 @@ function openDayModal(dateStr) {
   document.getElementById('calModalTitle').textContent = days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
   document.getElementById('calModalDate').textContent = dateStr;
   const dayEvents = calendarData.filter(e => e.date === dateStr);
-  dayEvents.forEach(e => { narasiStore[e.id] = { bersih: e.narasi || '', asli: e.narasi_asli || '' }; });
+  dayEvents.forEach(e => { narasiStore[e.id] = { bersih: e.narasi||'', asli: e.narasi_asli||'' }; });
   let contentHtml = dayEvents.length === 0 ? '<div class="empty-state"><p>Belum ada konten di hari ini.</p></div>' :
     '<div class="content-list">'+dayEvents.map(e => {
-      const hasAsli = (e.narasi_asli || '').length > 0;
+      const hasAsli = (e.narasi_asli||'').length > 0;
       return `<div class="content-card">
         <div class="content-card-header"><span class="content-card-title">${e.title}</span><span class="content-badge ${e.type||'yt'}">${e.type==='short'?'⚡ Shorts':'▶ YouTube'}</span></div>
-        <div class="content-narasi" id="card_${e.id}">${e.narasi || 'Tidak ada narasi.'}</div>
+        <div class="content-narasi" id="card_${e.id}">${e.narasi||'Tidak ada narasi.'}</div>
         <div class="content-card-actions">
           <button class="btn-sm" onclick="copyNarasi('${e.id}')">📋 Copy</button>
-          ${hasAsli ? `<button class="btn-sm" id="toggle_${e.id}" data-mode="bersih" onclick="toggleNarasi('${e.id}')">👁 Lihat Asli</button>` : ''}
+          ${hasAsli?`<button class="btn-sm" id="toggle_${e.id}" data-mode="bersih" onclick="toggleNarasi('${e.id}')">👁 Lihat Asli</button>`:''}
           <button class="btn-sm danger" onclick="deleteCalContent('${e.id}')">Hapus</button>
         </div>
       </div>`;
@@ -571,557 +620,327 @@ function openDayModal(dateStr) {
   selectFormat('yt');
   document.getElementById('calModal').classList.add('open');
 }
-
 function toggleNarasi(id) {
-  const el = document.getElementById('card_' + id), btn = document.getElementById('toggle_' + id), store = narasiStore[id];
-  if (!store || !el || !btn) return;
-  if (btn.dataset.mode === 'bersih') { el.textContent = store.asli; btn.textContent = '✏️ Lihat Bersih'; btn.dataset.mode = 'asli'; btn.classList.add('active-toggle'); }
-  else { el.textContent = store.bersih; btn.textContent = '👁 Lihat Asli'; btn.dataset.mode = 'bersih'; btn.classList.remove('active-toggle'); }
+  const el = document.getElementById('card_'+id), btn = document.getElementById('toggle_'+id), store = narasiStore[id];
+  if (!store||!el||!btn) return;
+  if (btn.dataset.mode==='bersih') { el.textContent=store.asli; btn.textContent='✏️ Lihat Bersih'; btn.dataset.mode='asli'; btn.classList.add('active-toggle'); }
+  else { el.textContent=store.bersih; btn.textContent='👁 Lihat Asli'; btn.dataset.mode='bersih'; btn.classList.remove('active-toggle'); }
 }
-
-function copyNarasi(id) {
-  const el = document.getElementById('card_' + id);
-  if (el) navigator.clipboard.writeText(el.textContent).then(() => showToast('Disalin!'));
-}
-
-function openAddModal() {
-  document.getElementById('addFormDate').value = formatDate(new Date());
-  document.getElementById('addFormTitle').value = '';
-  document.getElementById('addFormNarasi').value = '';
-  selectAddFormat('yt');
-  document.getElementById('addModal').classList.add('open');
-}
-
-function closeCalModal(e) { if (e.target===document.getElementById('calModal')) document.getElementById('calModal').classList.remove('open'); }
-function closeAddModal(e) { if (e.target===document.getElementById('addModal')) document.getElementById('addModal').classList.remove('open'); }
-
-function selectFormat(fmt) {
-  selectedCalFormat = fmt;
-  document.getElementById('fmtYT').className = 'format-btn'+(fmt==='yt'?' selected yt':'');
-  document.getElementById('fmtShort').className = 'format-btn'+(fmt==='short'?' selected short':'');
-}
-function selectAddFormat(fmt) {
-  selectedAddFormat = fmt;
-  document.getElementById('addFmtYT').className = 'format-btn'+(fmt==='yt'?' selected yt':'');
-  document.getElementById('addFmtShort').className = 'format-btn'+(fmt==='short'?' selected short':'');
-}
-
+function copyNarasi(id) { const el=document.getElementById('card_'+id); if(el) navigator.clipboard.writeText(el.textContent).then(()=>showToast('Disalin!')); }
+function openAddModal() { document.getElementById('addFormDate').value=formatDate(new Date()); document.getElementById('addFormTitle').value=''; document.getElementById('addFormNarasi').value=''; selectAddFormat('yt'); document.getElementById('addModal').classList.add('open'); }
+function closeCalModal(e) { if(e.target===document.getElementById('calModal')) document.getElementById('calModal').classList.remove('open'); }
+function closeAddModal(e) { if(e.target===document.getElementById('addModal')) document.getElementById('addModal').classList.remove('open'); }
+function selectFormat(fmt) { selectedCalFormat=fmt; document.getElementById('fmtYT').className='format-btn'+(fmt==='yt'?' selected yt':''); document.getElementById('fmtShort').className='format-btn'+(fmt==='short'?' selected short':''); }
+function selectAddFormat(fmt) { selectedAddFormat=fmt; document.getElementById('addFmtYT').className='format-btn'+(fmt==='yt'?' selected yt':''); document.getElementById('addFmtShort').className='format-btn'+(fmt==='short'?' selected short':''); }
 function isHeadingLine(line) {
-  const t = line.trim();
-  if (!t) return false;
-  if (t.endsWith(':')) return true;
-  const patterns = [/^hook\b/i,/^opening\b/i,/^intro\b/i,/^outro\b/i,/^penjelasan\s*\d*/i,/^setup\b/i,/^konflik\b/i,/^resolusi\b/i,/^cta\b/i,/^closing\b/i,/^penutup\b/i,/^scene\s*\d*/i,/^bagian\s*\d*/i,/^part\s*\d*/i,/^narasi\s*\d*/i,/^vo\b/i,/^voiceover\b/i];
-  return patterns.some(p => p.test(t)) || (t.split(/\s+/).length <= 2 && !/[.,!?]$/.test(t));
+  const t=line.trim(); if(!t)return false; if(t.endsWith(':'))return true;
+  const patterns=[/^hook\b/i,/^opening\b/i,/^intro\b/i,/^outro\b/i,/^penjelasan\s*\d*/i,/^setup\b/i,/^konflik\b/i,/^resolusi\b/i,/^cta\b/i,/^closing\b/i,/^penutup\b/i,/^scene\s*\d*/i,/^bagian\s*\d*/i,/^part\s*\d*/i,/^narasi\s*\d*/i,/^vo\b/i,/^voiceover\b/i];
+  return patterns.some(p=>p.test(t))||(t.split(/\s+/).length<=2&&!/[.,!?]$/.test(t));
 }
-
-function cleanLine(line) {
-  line = line.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}]/gu, '');
-  line = line.replace(/[\u201C\u201D\u201E\u201F\u2018\u2019\u201A\u201B\u0022\u0027\u0060\u00AB\u00BB]/g, '');
-  return line.trim();
-}
-
+function cleanLine(line) { return line.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}]/gu,'').replace(/[\u201C\u201D\u201E\u201F\u2018\u2019\u201A\u201B\u0022\u0027\u0060\u00AB\u00BB]/g,'').trim(); }
 function doClean(content) {
-  const lines = content.split('\n'), sections = [];
-  let cur = [];
-  for (const line of lines) {
-    const t = line.trim();
-    if (!t) { if (cur.length > 0) { sections.push(cur.join(' ').trim()); cur = []; } continue; }
-    if (isHeadingLine(t)) { if (cur.length > 0) { sections.push(cur.join(' ').trim()); cur = []; } }
-    else { cur.push(cleanLine(t)); }
-  }
-  if (cur.length > 0) sections.push(cur.join(' ').trim());
-  return sections.filter(s => s.length > 0);
+  const lines=content.split('\n'),sections=[];let cur=[];
+  for(const line of lines){const t=line.trim();if(!t){if(cur.length>0){sections.push(cur.join(' ').trim());cur=[];}continue;}if(isHeadingLine(t)){if(cur.length>0){sections.push(cur.join(' ').trim());cur=[];}}else{cur.push(cleanLine(t));}}
+  if(cur.length>0)sections.push(cur.join(' ').trim());return sections.filter(s=>s.length>0);
 }
-
 async function saveCalContent() {
-  const title = document.getElementById('calFormTitle').value.trim();
-  if (!title) { showToast('Judul tidak boleh kosong!'); return; }
-  const rawNarasi = document.getElementById('calFormNarasi').value.trim();
-  const sections = doClean(rawNarasi);
-  const narasiBersih = sections.length > 0 ? sections.join('\n\n') : rawNarasi;
-  const { data, error } = await db.from('calendar').insert([{ title, type: selectedCalFormat, date: selectedCalDate, narasi: narasiBersih, narasi_asli: rawNarasi !== narasiBersih ? rawNarasi : null }]).select();
-  if (!error && data) { calendarData.push(data[0]); renderCalendar(); openDayModal(selectedCalDate); showToast('Konten disimpan!'); }
+  const title=document.getElementById('calFormTitle').value.trim();if(!title){showToast('Judul tidak boleh kosong!');return;}
+  const rawNarasi=document.getElementById('calFormNarasi').value.trim();const sections=doClean(rawNarasi);const narasiBersih=sections.length>0?sections.join('\n\n'):rawNarasi;
+  const{data,error}=await db.from('calendar').insert([{title,type:selectedCalFormat,date:selectedCalDate,narasi:narasiBersih,narasi_asli:rawNarasi!==narasiBersih?rawNarasi:null}]).select();
+  if(!error&&data){calendarData.push(data[0]);renderCalendar();openDayModal(selectedCalDate);showToast('Konten disimpan!');}
 }
-
 async function saveAddContent() {
-  const title = document.getElementById('addFormTitle').value.trim(), date = document.getElementById('addFormDate').value;
-  if (!title||!date) { showToast('Lengkapi judul dan tanggal!'); return; }
-  const rawNarasi = document.getElementById('addFormNarasi').value.trim();
-  const sections = doClean(rawNarasi);
-  const narasiBersih = sections.length > 0 ? sections.join('\n\n') : rawNarasi;
-  const { data, error } = await db.from('calendar').insert([{ title, type: selectedAddFormat, date, narasi: narasiBersih, narasi_asli: rawNarasi !== narasiBersih ? rawNarasi : null }]).select();
-  if (!error && data) { calendarData.push(data[0]); renderCalendar(); document.getElementById('addModal').classList.remove('open'); showToast('Konten disimpan!'); }
+  const title=document.getElementById('addFormTitle').value.trim(),date=document.getElementById('addFormDate').value;if(!title||!date){showToast('Lengkapi judul dan tanggal!');return;}
+  const rawNarasi=document.getElementById('addFormNarasi').value.trim();const sections=doClean(rawNarasi);const narasiBersih=sections.length>0?sections.join('\n\n'):rawNarasi;
+  const{data,error}=await db.from('calendar').insert([{title,type:selectedAddFormat,date,narasi:narasiBersih,narasi_asli:rawNarasi!==narasiBersih?rawNarasi:null}]).select();
+  if(!error&&data){calendarData.push(data[0]);renderCalendar();document.getElementById('addModal').classList.remove('open');showToast('Konten disimpan!');}
 }
-
-async function deleteCalContent(id) {
-  await db.from('calendar').delete().eq('id', id);
-  calendarData = calendarData.filter(e => e.id !== id);
-  renderCalendar(); openDayModal(selectedCalDate); showToast('Konten dihapus!');
-}
-
-function copyText(text) { navigator.clipboard.writeText(text).then(() => showToast('Disalin!')); }
-
+async function deleteCalContent(id) { await db.from('calendar').delete().eq('id',id);calendarData=calendarData.filter(e=>e.id!==id);renderCalendar();openDayModal(selectedCalDate);showToast('Konten dihapus!'); }
+function copyText(text) { navigator.clipboard.writeText(text).then(()=>showToast('Disalin!')); }
 function cleanNarasi() {
-  const content = document.getElementById('narasiContent').value.trim();
-  if (!content) { showToast('Paste narasi dulu!'); return; }
-  const sections = doClean(content);
-  if (!sections.length) { showToast('Tidak ada teks narasi!'); return; }
-  const gabungan = sections.join('\n\n');
-  document.getElementById('sceneCards').innerHTML = `<div class="scene-card"><div class="scene-content">${gabungan}</div><button class="scene-copy" onclick="copyText(this.dataset.text)" data-text="${gabungan.replace(/"/g,'&quot;')}">📋 Copy Semua</button></div>`;
+  const content=document.getElementById('narasiContent').value.trim();if(!content){showToast('Paste narasi dulu!');return;}
+  const sections=doClean(content);if(!sections.length){showToast('Tidak ada teks narasi!');return;}
+  const gabungan=sections.join('\n\n');
+  document.getElementById('sceneCards').innerHTML=`<div class="scene-card"><div class="scene-content">${gabungan}</div><button class="scene-copy" onclick="copyText(this.dataset.text)" data-text="${gabungan.replace(/"/g,'&quot;')}">📋 Copy Semua</button></div>`;
   showToast('Narasi berhasil dibersihkan!');
 }
-
 async function saveNarasi() {
-  const title = document.getElementById('narasiTitle').value.trim(), content = document.getElementById('narasiContent').value.trim();
-  if (!title||!content) { showToast('Lengkapi judul dan narasi!'); return; }
-  const sections = doClean(content);
-  const bersih = sections.length > 0 ? sections.join('\n\n') : content;
-  const { error } = await db.from('narasi').insert([{ title, content: bersih }]);
-  if (!error) { showToast('Narasi disimpan!'); loadNarasi(); }
+  const title=document.getElementById('narasiTitle').value.trim(),content=document.getElementById('narasiContent').value.trim();if(!title||!content){showToast('Lengkapi judul dan narasi!');return;}
+  const sections=doClean(content);const bersih=sections.length>0?sections.join('\n\n'):content;
+  const{error}=await db.from('narasi').insert([{title,content:bersih}]);if(!error){showToast('Narasi disimpan!');loadNarasi();}
 }
-
 async function loadNarasi() {
-  const { data } = await db.from('narasi').select('*').order('created_at', { ascending: false });
-  const list = data || [];
-  document.getElementById('narasiList').innerHTML = list.length === 0 ? '<p style="color:var(--text-muted);font-size:13px;">Belum ada narasi tersimpan.</p>' :
-    list.map(n => `<div class="idea-card">
-      <div class="idea-card-header"><div class="idea-title">${n.title}</div><button class="btn-sm danger" onclick="deleteNarasi('${n.id}')">Hapus</button></div>
-      <div class="idea-desc" style="max-height:80px;overflow:hidden;white-space:pre-wrap;">${n.content}</div>
-      <div style="display:flex;gap:8px;margin-top:10px;">
-        <button class="btn-sm" onclick="loadNarasiToEditor('${n.id}')">Edit</button>
-        <button class="btn-sm" onclick="copyText(this.dataset.text)" data-text="${(n.content||'').replace(/"/g,'&quot;')}">Copy</button>
-      </div></div>`).join('');
+  const{data}=await db.from('narasi').select('*').order('created_at',{ascending:false});const list=data||[];
+  document.getElementById('narasiList').innerHTML=list.length===0?'<p style="color:var(--text-muted);font-size:13px;">Belum ada narasi tersimpan.</p>':
+    list.map(n=>`<div class="idea-card"><div class="idea-card-header"><div class="idea-title">${n.title}</div><button class="btn-sm danger" onclick="deleteNarasi('${n.id}')">Hapus</button></div><div class="idea-desc" style="max-height:80px;overflow:hidden;white-space:pre-wrap;">${n.content}</div><div style="display:flex;gap:8px;margin-top:10px;"><button class="btn-sm" onclick="loadNarasiToEditor('${n.id}')">Edit</button><button class="btn-sm" onclick="copyText(this.dataset.text)" data-text="${(n.content||'').replace(/"/g,'&quot;')}">Copy</button></div></div>`).join('');
 }
-
-async function deleteNarasi(id) { await db.from('narasi').delete().eq('id', id); showToast('Narasi dihapus!'); loadNarasi(); }
-async function loadNarasiToEditor(id) {
-  const { data } = await db.from('narasi').select('*').eq('id', id).single();
-  if (data) { document.getElementById('narasiTitle').value = data.title||''; document.getElementById('narasiContent').value = data.content||''; }
+async function deleteNarasi(id){await db.from('narasi').delete().eq('id',id);showToast('Narasi dihapus!');loadNarasi();}
+async function loadNarasiToEditor(id){const{data}=await db.from('narasi').select('*').eq('id',id).single();if(data){document.getElementById('narasiTitle').value=data.title||'';document.getElementById('narasiContent').value=data.content||'';}}
+async function loadIdeas(){const{data}=await db.from('ideas').select('*').order('created_at',{ascending:false});ideasData=data||[];renderIdeas();}
+function filterIdeas(filter,btn){ideaFilter=filter;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderIdeas();}
+function renderIdeas(){
+  const search=(document.getElementById('ideaSearch')?.value||'').toLowerCase();
+  let filtered=ideasData;if(ideaFilter!=='all')filtered=filtered.filter(i=>i.type===ideaFilter);if(search)filtered=filtered.filter(i=>i.title.toLowerCase().includes(search)||(i.description||'').toLowerCase().includes(search));
+  document.getElementById('ideasGrid').innerHTML=filtered.length===0?'<p style="color:var(--text-muted);font-size:13px;">Belum ada ide.</p>':
+    filtered.map(idea=>`<div class="idea-card"><div class="idea-card-header"><div class="idea-title">${idea.title}</div><span class="status-badge ${idea.status||'idea'}" onclick="cycleStatus('${idea.id}','${idea.status||'idea'}')">${statusLabel(idea.status)}</span></div>${idea.description?`<div class="idea-desc">${idea.description}</div>`:''}<div class="idea-meta"><span class="content-badge ${idea.type||'yt'}">${idea.type==='short'?'⚡ Shorts':'▶ YouTube'}</span><button class="btn-sm danger" onclick="deleteIdea('${idea.id}')">Hapus</button></div></div>`).join('');
 }
-
-async function loadIdeas() {
-  const { data } = await db.from('ideas').select('*').order('created_at', { ascending: false });
-  ideasData = data || []; renderIdeas();
+function statusLabel(s){return s==='draft'?'✏️ Draft':s==='done'?'✅ Selesai':'💡 Ide';}
+async function cycleStatus(id,current){const next=current==='idea'?'draft':current==='draft'?'done':'idea';await db.from('ideas').update({status:next}).eq('id',id);const idx=ideasData.findIndex(i=>i.id===id);if(idx>-1)ideasData[idx].status=next;renderIdeas();}
+async function deleteIdea(id){await db.from('ideas').delete().eq('id',id);ideasData=ideasData.filter(i=>i.id!==id);renderIdeas();showToast('Ide dihapus!');}
+function openIdeaModal(){document.getElementById('ideaModal').classList.add('open');}
+function closeIdeaModal(e){if(e.target===document.getElementById('ideaModal'))document.getElementById('ideaModal').classList.remove('open');}
+async function saveIdea(){
+  const title=document.getElementById('ideaFormTitle').value.trim();if(!title){showToast('Judul tidak boleh kosong!');return;}
+  const{data,error}=await db.from('ideas').insert([{title,description:document.getElementById('ideaFormDesc').value.trim(),type:document.getElementById('ideaFormType').value,status:'idea'}]).select();
+  if(!error&&data){ideasData.unshift(data[0]);renderIdeas();document.getElementById('ideaModal').classList.remove('open');document.getElementById('ideaFormTitle').value='';document.getElementById('ideaFormDesc').value='';showToast('Ide disimpan!');}
 }
-
-function filterIdeas(filter, btn) {
-  ideaFilter = filter;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  renderIdeas();
+async function loadCaptions(){const{data}=await db.from('captions').select('*').order('created_at',{ascending:false});captionsData=data||[];renderCaptionList();}
+function renderCaptionList(){
+  document.getElementById('captionList').innerHTML=captionsData.length===0?'<p style="color:var(--text-muted);font-size:13px;">Belum ada draft.</p>':
+    captionsData.map(c=>`<div class="caption-card ${currentCaptionId===c.id?'selected':''}" onclick="openCaption('${c.id}')"><div class="caption-card-title">${c.title||'Tanpa judul'}</div><div class="caption-card-meta">${c.type==='short'?'⚡ Shorts':'▶ YouTube'} · ${statusLabel(c.status)}</div></div>`).join('');
 }
-
-function renderIdeas() {
-  const search = (document.getElementById('ideaSearch')?.value||'').toLowerCase();
-  let filtered = ideasData;
-  if (ideaFilter !== 'all') filtered = filtered.filter(i => i.type === ideaFilter);
-  if (search) filtered = filtered.filter(i => i.title.toLowerCase().includes(search)||(i.description||'').toLowerCase().includes(search));
-  document.getElementById('ideasGrid').innerHTML = filtered.length === 0 ? '<p style="color:var(--text-muted);font-size:13px;">Belum ada ide.</p>' :
-    filtered.map(idea => `<div class="idea-card">
-      <div class="idea-card-header"><div class="idea-title">${idea.title}</div><span class="status-badge ${idea.status||'idea'}" onclick="cycleStatus('${idea.id}','${idea.status||'idea'}')">${statusLabel(idea.status)}</span></div>
-      ${idea.description?`<div class="idea-desc">${idea.description}</div>`:''}
-      <div class="idea-meta"><span class="content-badge ${idea.type||'yt'}">${idea.type==='short'?'⚡ Shorts':'▶ YouTube'}</span><button class="btn-sm danger" onclick="deleteIdea('${idea.id}')">Hapus</button></div>
-    </div>`).join('');
+function openCaption(id){
+  currentCaptionId=id;const c=captionsData.find(x=>x.id===id);if(!c)return;renderCaptionList();
+  document.getElementById('captionEditor').innerHTML=`<h3>${c.title||'Tanpa judul'}</h3><div class="form-group"><label>Caption / Deskripsi</label><textarea id="captionBody" oninput="updateCharCount()">${c.body||''}</textarea><div class="char-count" id="charCount">${(c.body||'').length} karakter</div></div><div style="display:flex;gap:8px;"><button class="btn-primary" style="flex:1;" onclick="updateCaption('${c.id}')">Simpan</button><button class="btn-primary" style="flex:0.5;background:var(--bg);color:var(--text);border:1px solid var(--border);" onclick="copyText(document.getElementById('captionBody').value)">Copy</button><button class="btn-primary" style="flex:0.5;background:#fde8e7;color:var(--accent-yt);border:1px solid #fde8e7;" onclick="deleteCaption('${c.id}')">Hapus</button></div>`;
 }
-
-function statusLabel(s) { return s==='draft'?'✏️ Draft':s==='done'?'✅ Selesai':'💡 Ide'; }
-async function cycleStatus(id, current) {
-  const next = current==='idea'?'draft':current==='draft'?'done':'idea';
-  await db.from('ideas').update({ status: next }).eq('id', id);
-  const idx = ideasData.findIndex(i => i.id === id);
-  if (idx > -1) ideasData[idx].status = next;
-  renderIdeas();
+function updateCharCount(){const v=document.getElementById('captionBody')?.value||'';document.getElementById('charCount').textContent=v.length+' karakter';}
+async function updateCaption(id){const body=document.getElementById('captionBody').value;await db.from('captions').update({body}).eq('id',id);const idx=captionsData.findIndex(c=>c.id===id);if(idx>-1)captionsData[idx].body=body;showToast('Caption disimpan!');}
+async function deleteCaption(id){await db.from('captions').delete().eq('id',id);captionsData=captionsData.filter(c=>c.id!==id);currentCaptionId=null;renderCaptionList();document.getElementById('captionEditor').innerHTML='<h3>Pilih caption untuk edit</h3><p style="color:var(--text-muted);font-size:13px;">Klik salah satu draft di kiri.</p>';showToast('Caption dihapus!');}
+function openCaptionModal(){document.getElementById('captionModal').classList.add('open');}
+function closeCaptionModal(e){if(e.target===document.getElementById('captionModal'))document.getElementById('captionModal').classList.remove('open');}
+async function saveCaption(){
+  const title=document.getElementById('captionFormTitle').value.trim();if(!title){showToast('Judul tidak boleh kosong!');return;}
+  const{data,error}=await db.from('captions').insert([{title,type:document.getElementById('captionFormType').value,body:document.getElementById('captionFormBody').value.trim(),status:'idea'}]).select();
+  if(!error&&data){captionsData.unshift(data[0]);renderCaptionList();document.getElementById('captionModal').classList.remove('open');showToast('Caption disimpan!');}
 }
-async function deleteIdea(id) { await db.from('ideas').delete().eq('id', id); ideasData = ideasData.filter(i => i.id !== id); renderIdeas(); showToast('Ide dihapus!'); }
-function openIdeaModal() { document.getElementById('ideaModal').classList.add('open'); }
-function closeIdeaModal(e) { if (e.target===document.getElementById('ideaModal')) document.getElementById('ideaModal').classList.remove('open'); }
-async function saveIdea() {
-  const title = document.getElementById('ideaFormTitle').value.trim();
-  if (!title) { showToast('Judul tidak boleh kosong!'); return; }
-  const { data, error } = await db.from('ideas').insert([{ title, description: document.getElementById('ideaFormDesc').value.trim(), type: document.getElementById('ideaFormType').value, status: 'idea' }]).select();
-  if (!error && data) { ideasData.unshift(data[0]); renderIdeas(); document.getElementById('ideaModal').classList.remove('open'); document.getElementById('ideaFormTitle').value=''; document.getElementById('ideaFormDesc').value=''; showToast('Ide disimpan!'); }
+async function loadVault(){const{data}=await db.from('prompts').select('*').order('created_at',{ascending:false});vaultData=data||[];renderVault();}
+function renderVault(){
+  document.getElementById('vaultGrid').innerHTML=vaultData.length===0?'<p style="color:var(--text-muted);font-size:13px;">Belum ada prompt.</p>':
+    vaultData.map(p=>`<div class="vault-card"><div class="vault-card-header"><div class="vault-title">${p.name}</div><span class="vault-type">${p.type||'Lainnya'}</span></div><div class="vault-body">${p.body||''}</div><div class="vault-actions"><button class="btn-sm" onclick="copyText(this.dataset.text)" data-text="${(p.body||'').replace(/"/g,'&quot;')}">📋 Copy</button><button class="btn-sm danger" onclick="deleteVault('${p.id}')">Hapus</button></div></div>`).join('');
 }
-
-async function loadCaptions() {
-  const { data } = await db.from('captions').select('*').order('created_at', { ascending: false });
-  captionsData = data || []; renderCaptionList();
+function openVaultModal(){document.getElementById('vaultModal').classList.add('open');}
+function closeVaultModal(e){if(e.target===document.getElementById('vaultModal'))document.getElementById('vaultModal').classList.remove('open');}
+async function saveVault(){
+  const name=document.getElementById('vaultFormName').value.trim();if(!name){showToast('Nama tidak boleh kosong!');return;}
+  const{data,error}=await db.from('prompts').insert([{name,type:document.getElementById('vaultFormType').value,body:document.getElementById('vaultFormBody').value.trim()}]).select();
+  if(!error&&data){vaultData.unshift(data[0]);renderVault();document.getElementById('vaultModal').classList.remove('open');showToast('Prompt disimpan!');}
 }
-function renderCaptionList() {
-  document.getElementById('captionList').innerHTML = captionsData.length === 0 ? '<p style="color:var(--text-muted);font-size:13px;">Belum ada draft.</p>' :
-    captionsData.map(c => `<div class="caption-card ${currentCaptionId===c.id?'selected':''}" onclick="openCaption('${c.id}')">
-      <div class="caption-card-title">${c.title||'Tanpa judul'}</div>
-      <div class="caption-card-meta">${c.type==='short'?'⚡ Shorts':'▶ YouTube'} · ${statusLabel(c.status)}</div>
-    </div>`).join('');
-}
-function openCaption(id) {
-  currentCaptionId = id;
-  const c = captionsData.find(x => x.id === id);
-  if (!c) return;
-  renderCaptionList();
-  document.getElementById('captionEditor').innerHTML = `
-    <h3>${c.title||'Tanpa judul'}</h3>
-    <div class="form-group"><label>Caption / Deskripsi</label><textarea id="captionBody" oninput="updateCharCount()">${c.body||''}</textarea><div class="char-count" id="charCount">${(c.body||'').length} karakter</div></div>
-    <div style="display:flex;gap:8px;">
-      <button class="btn-primary" style="flex:1;" onclick="updateCaption('${c.id}')">Simpan</button>
-      <button class="btn-primary" style="flex:0.5;background:var(--bg);color:var(--text);border:1px solid var(--border);" onclick="copyText(document.getElementById('captionBody').value)">Copy</button>
-      <button class="btn-primary" style="flex:0.5;background:#fde8e7;color:var(--accent-yt);border:1px solid #fde8e7;" onclick="deleteCaption('${c.id}')">Hapus</button>
-    </div>`;
-}
-function updateCharCount() { const v = document.getElementById('captionBody')?.value||''; document.getElementById('charCount').textContent = v.length+' karakter'; }
-async function updateCaption(id) {
-  const body = document.getElementById('captionBody').value;
-  await db.from('captions').update({ body }).eq('id', id);
-  const idx = captionsData.findIndex(c => c.id === id);
-  if (idx > -1) captionsData[idx].body = body;
-  showToast('Caption disimpan!');
-}
-async function deleteCaption(id) {
-  await db.from('captions').delete().eq('id', id);
-  captionsData = captionsData.filter(c => c.id !== id);
-  currentCaptionId = null; renderCaptionList();
-  document.getElementById('captionEditor').innerHTML = '<h3>Pilih caption untuk edit</h3><p style="color:var(--text-muted);font-size:13px;">Klik salah satu draft di kiri.</p>';
-  showToast('Caption dihapus!');
-}
-function openCaptionModal() { document.getElementById('captionModal').classList.add('open'); }
-function closeCaptionModal(e) { if (e.target===document.getElementById('captionModal')) document.getElementById('captionModal').classList.remove('open'); }
-async function saveCaption() {
-  const title = document.getElementById('captionFormTitle').value.trim();
-  if (!title) { showToast('Judul tidak boleh kosong!'); return; }
-  const { data, error } = await db.from('captions').insert([{ title, type: document.getElementById('captionFormType').value, body: document.getElementById('captionFormBody').value.trim(), status: 'idea' }]).select();
-  if (!error && data) { captionsData.unshift(data[0]); renderCaptionList(); document.getElementById('captionModal').classList.remove('open'); showToast('Caption disimpan!'); }
-}
-
-async function loadVault() {
-  const { data } = await db.from('prompts').select('*').order('created_at', { ascending: false });
-  vaultData = data || []; renderVault();
-}
-function renderVault() {
-  document.getElementById('vaultGrid').innerHTML = vaultData.length === 0 ? '<p style="color:var(--text-muted);font-size:13px;">Belum ada prompt.</p>' :
-    vaultData.map(p => `<div class="vault-card">
-      <div class="vault-card-header"><div class="vault-title">${p.name}</div><span class="vault-type">${p.type||'Lainnya'}</span></div>
-      <div class="vault-body">${p.body||''}</div>
-      <div class="vault-actions">
-        <button class="btn-sm" onclick="copyText(this.dataset.text)" data-text="${(p.body||'').replace(/"/g,'&quot;')}">📋 Copy</button>
-        <button class="btn-sm danger" onclick="deleteVault('${p.id}')">Hapus</button>
-      </div></div>`).join('');
-}
-function openVaultModal() { document.getElementById('vaultModal').classList.add('open'); }
-function closeVaultModal(e) { if (e.target===document.getElementById('vaultModal')) document.getElementById('vaultModal').classList.remove('open'); }
-async function saveVault() {
-  const name = document.getElementById('vaultFormName').value.trim();
-  if (!name) { showToast('Nama tidak boleh kosong!'); return; }
-  const { data, error } = await db.from('prompts').insert([{ name, type: document.getElementById('vaultFormType').value, body: document.getElementById('vaultFormBody').value.trim() }]).select();
-  if (!error && data) { vaultData.unshift(data[0]); renderVault(); document.getElementById('vaultModal').classList.remove('open'); showToast('Prompt disimpan!'); }
-}
-async function deleteVault(id) { await db.from('prompts').delete().eq('id', id); vaultData = vaultData.filter(p => p.id !== id); renderVault(); showToast('Prompt dihapus!'); }
+async function deleteVault(id){await db.from('prompts').delete().eq('id',id);vaultData=vaultData.filter(p=>p.id!==id);renderVault();showToast('Prompt dihapus!');}
 
 // ===== YOUTUBE ANALYTICS =====
-function ytLogin() {
-  const params = new URLSearchParams({
-    client_id: YT_CLIENT_ID,
-    redirect_uri: YT_REDIRECT_URI,
-    response_type: 'token',
-    scope: YT_SCOPES,
-    include_granted_scopes: 'true',
-    state: 'ytanalytics'
-  });
-  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+function ytLogin(){
+  const params=new URLSearchParams({client_id:YT_CLIENT_ID,redirect_uri:YT_REDIRECT_URI,response_type:'token',scope:YT_SCOPES,include_granted_scopes:'true',state:'ytanalytics'});
+  window.location.href='https://accounts.google.com/o/oauth2/v2/auth?'+params.toString();
 }
+function ytLogout(){ytToken=null;localStorage.removeItem('yt_token');localStorage.removeItem('yt_token_exp');ytAllVideos=[];document.getElementById('ytDashboard').classList.remove('visible');document.getElementById('ytLoginScreen').style.display='flex';showToast('Keluar dari YouTube');}
 
-function ytLogout() {
-  ytToken = null;
-  localStorage.removeItem('yt_token');
-  localStorage.removeItem('yt_token_exp');
-  document.getElementById('ytDashboard').classList.remove('visible');
-  document.getElementById('ytLoginScreen').style.display = 'flex';
-  showToast('Keluar dari YouTube');
-}
-
-function initYTPage() {
-  // Cek URL hash untuk token (setelah redirect dari Google)
-  const hash = window.location.hash;
-  if (hash && hash.includes('access_token')) {
-    const params = new URLSearchParams(hash.substring(1));
-    const token = params.get('access_token');
-    const expiresIn = params.get('expires_in');
-    if (token) {
-      ytToken = token;
-      const exp = Date.now() + parseInt(expiresIn) * 1000;
-      localStorage.setItem('yt_token', token);
-      localStorage.setItem('yt_token_exp', exp);
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
-  } else {
-    // Cek token tersimpan
-    const saved = localStorage.getItem('yt_token');
-    const exp = localStorage.getItem('yt_token_exp');
-    if (saved && exp && Date.now() < parseInt(exp)) {
-      ytToken = saved;
-    }
+function initYTPage(){
+  const hash=window.location.hash;
+  if(hash&&hash.includes('access_token')){
+    const params=new URLSearchParams(hash.substring(1));const token=params.get('access_token');const expiresIn=params.get('expires_in');
+    if(token){ytToken=token;localStorage.setItem('yt_token',token);localStorage.setItem('yt_token_exp',Date.now()+parseInt(expiresIn)*1000);window.history.replaceState({},document.title,window.location.pathname);}
+  }else{
+    const saved=localStorage.getItem('yt_token');const exp=localStorage.getItem('yt_token_exp');
+    if(saved&&exp&&Date.now()<parseInt(exp))ytToken=saved;
   }
-
-  if (ytToken) {
-    document.getElementById('ytLoginScreen').style.display = 'none';
-    document.getElementById('ytLoading').style.display = 'block';
-    document.getElementById('ytDashboard').classList.remove('visible');
-    fetchYTData();
-  } else {
-    document.getElementById('ytLoginScreen').style.display = 'flex';
-    document.getElementById('ytDashboard').classList.remove('visible');
-    document.getElementById('ytLoading').style.display = 'none';
-  }
+  if(ytToken){document.getElementById('ytLoginScreen').style.display='none';document.getElementById('ytLoading').style.display='block';document.getElementById('ytDashboard').classList.remove('visible');fetchYTData();}
+  else{document.getElementById('ytLoginScreen').style.display='flex';document.getElementById('ytDashboard').classList.remove('visible');document.getElementById('ytLoading').style.display='none';}
 }
 
-async function fetchYTData() {
-  try {
-    // Fetch channel info
-    const chRes = await fetch('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&mine=true', {
-      headers: { Authorization: 'Bearer ' + ytToken }
-    });
-    const chData = await chRes.json();
-    if (chData.error) { handleYTError(chData.error); return; }
-    ytChannelData = chData.items?.[0];
+async function ytFetch(url){
+  const res=await fetch(url,{headers:{Authorization:'Bearer '+ytToken}});const data=await res.json();
+  if(data.error?.code===401){ytLogout();showToast('Sesi habis, silakan login ulang');throw new Error('401');}
+  return data;
+}
 
-    // Fetch recent videos
-    const vidRes = await fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&maxResults=10&order=date', {
-      headers: { Authorization: 'Bearer ' + ytToken }
-    });
-    const vidData = await vidRes.json();
-    const videoIds = (vidData.items || []).map(v => v.id.videoId).join(',');
-
-    // Fetch video stats
-    let videoStats = [];
-    if (videoIds) {
-      const vsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,contentDetails&id=${videoIds}`, {
-        headers: { Authorization: 'Bearer ' + ytToken }
-      });
-      const vsData = await vsRes.json();
-      videoStats = vsData.items || [];
+async function fetchYTData(){
+  try{
+    const chData=await ytFetch('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&mine=true');
+    ytChannelData=chData.items?.[0];
+    ytAllVideos=[];
+    let pageToken='',page=0;
+    while(page<20){
+      const url=`https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&maxResults=50&order=date${pageToken?'&pageToken='+pageToken:''}`;
+      const searchData=await ytFetch(url);
+      const ids=(searchData.items||[]).map(v=>v.id.videoId).filter(Boolean);
+      if(ids.length>0){const statsData=await ytFetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,contentDetails&id=${ids.join(',')}`);ytAllVideos.push(...(statsData.items||[]));}
+      pageToken=searchData.nextPageToken||'';page++;if(!pageToken)break;
     }
-    ytVideosData = videoStats;
-
-    // Fetch analytics
     await fetchYTAnalytics();
-
     renderYTDashboard();
-  } catch(e) {
-    document.getElementById('ytLoading').style.display = 'none';
-    document.getElementById('ytLoginScreen').style.display = 'flex';
-    showToast('Gagal mengambil data YouTube');
+  }catch(e){if(e.message!=='401'){document.getElementById('ytLoading').style.display='none';document.getElementById('ytLoginScreen').style.display='flex';showToast('Gagal mengambil data YouTube');}}
+}
+
+async function fetchYTAnalytics(){
+  const endDate=new Date().toISOString().split('T')[0];
+  const startDate=new Date(Date.now()-currentRange*86400000).toISOString().split('T')[0];
+  try{
+    const res=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${startDate}&endDate=${endDate}&metrics=views,estimatedMinutesWatched,subscribersGained,subscribersLost,annotationClickThroughRate&dimensions=day&sort=day`,{headers:{Authorization:'Bearer '+ytToken}});
+    ytAnalyticsData=await res.json();
+  }catch(e){ytAnalyticsData=null;}
+}
+
+async function switchRange(days,btn){
+  currentRange=days;document.querySelectorAll('.range-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  await fetchYTAnalytics();renderStats();renderCharts();
+}
+
+function fmtNum(n){n=parseInt(n)||0;if(n>=1000000)return(n/1000000).toFixed(1)+'jt';if(n>=1000)return(n/1000).toFixed(1)+'rb';return n.toString();}
+function fmtDuration(iso){if(!iso)return'—';const m=iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);if(!m)return'—';const h=parseInt(m[1]||0),min=parseInt(m[2]||0),s=parseInt(m[3]||0);if(h>0)return`${h}:${String(min).padStart(2,'0')}:${String(s).padStart(2,'0')}`;return`${min}:${String(s).padStart(2,'0')}`;}
+function isShort(video){const dur=video.contentDetails?.duration||'';const m=dur.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);if(!m)return false;const h=parseInt(m[1]||0),min=parseInt(m[2]||0),s=parseInt(m[3]||0);return h*3600+min*60+s<=60;}
+
+function renderYTDashboard(){
+  document.getElementById('ytLoading').style.display='none';document.getElementById('ytDashboard').classList.add('visible');
+  if(ytChannelData){
+    const snip=ytChannelData.snippet,stats=ytChannelData.statistics;
+    document.getElementById('ytAvatar').src=snip?.thumbnails?.default?.url||'';
+    document.getElementById('ytChannelName').textContent=snip?.title||'—';
+    document.getElementById('ytChannelSub').textContent=fmtNum(stats?.subscriberCount)+' subscriber · '+fmtNum(stats?.videoCount)+' video · '+fmtNum(stats?.viewCount)+' total views';
   }
+  renderStats();renderCharts();applyVideoFilters();generateOverallAdvice();
 }
 
-async function fetchYTAnalytics() {
-  const endDate = new Date().toISOString().split('T')[0];
-  const startDate = new Date(Date.now() - currentRange * 86400000).toISOString().split('T')[0];
-  try {
-    const res = await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${startDate}&endDate=${endDate}&metrics=views,estimatedMinutesWatched,subscribersGained,annotationClickThroughRate&dimensions=day&sort=day`, {
-      headers: { Authorization: 'Bearer ' + ytToken }
-    });
-    ytAnalyticsData = await res.json();
-  } catch(e) { ytAnalyticsData = null; }
+function renderStats(){
+  const rows=ytAnalyticsData?.rows||[];
+  const totViews=rows.reduce((s,r)=>s+(r[1]||0),0);const totWatch=rows.reduce((s,r)=>s+(r[2]||0),0);
+  const totSubs=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0);const avgCtr=rows.length>0?rows.reduce((s,r)=>s+(r[5]||0),0)/rows.length*100:0;
+  document.getElementById('statViews').textContent=fmtNum(totViews);
+  document.getElementById('statWatch').textContent=fmtNum(Math.round(totWatch/60));
+  document.getElementById('statSubs').textContent=(totSubs>=0?'+':'')+fmtNum(totSubs);
+  document.getElementById('statCtr').textContent=avgCtr.toFixed(1)+'%';
+  const half=Math.floor(rows.length/2);const v1=rows.slice(0,half).reduce((s,r)=>s+(r[1]||0),0);const v2=rows.slice(half).reduce((s,r)=>s+(r[1]||0),0);
+  const vChange=v1>0?Math.round((v2-v1)/v1*100):0;
+  const vEl=document.getElementById('statViewsChange');vEl.textContent=(vChange>=0?'↑ +':'↓ ')+vChange+'% vs periode sebelumnya';vEl.className='stat-change '+(vChange>=0?'up':'down');
+  document.getElementById('statWatchChange').textContent=currentRange+' hari terakhir';document.getElementById('statWatchChange').className='stat-change';
+  document.getElementById('statSubsChange').textContent='subscriber bersih';document.getElementById('statSubsChange').className='stat-change';
+  document.getElementById('statCtrChange').textContent=avgCtr<2?'⚠️ Di bawah rata-rata':avgCtr>=4?'✅ Di atas rata-rata':'Normal';
+  document.getElementById('statCtrChange').className='stat-change '+(avgCtr>=2?'up':'down');
 }
 
-async function switchRange(days, btn) {
-  currentRange = days;
-  document.querySelectorAll('.range-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  await fetchYTAnalytics();
-  renderStats();
-  renderCharts();
+function renderCharts(){
+  const rows=ytAnalyticsData?.rows||[];const labels=rows.map(r=>r[0]?.slice(5));const views=rows.map(r=>r[1]||0);
+  if(viewsChartInst)viewsChartInst.destroy();
+  const ctx1=document.getElementById('viewsChart').getContext('2d');
+  viewsChartInst=new Chart(ctx1,{type:'line',data:{labels,datasets:[{label:'Views',data:views,borderColor:'#e03b2e',backgroundColor:'rgba(224,59,46,0.08)',borderWidth:2,pointRadius:2,fill:true,tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#8a8878'}},y:{grid:{color:'#e8e6df'},ticks:{font:{size:10},color:'#8a8878'}}}}});
+  const ytVids=ytAllVideos.filter(v=>!isShort(v));const shortVids=ytAllVideos.filter(v=>isShort(v));
+  const ytViews=ytVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);const shortViews=shortVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);
+  if(trafficChartInst)trafficChartInst.destroy();
+  const ctx2=document.getElementById('trafficChart').getContext('2d');
+  trafficChartInst=new Chart(ctx2,{type:'doughnut',data:{labels:[`YouTube (${ytVids.length} video)`,`Shorts (${shortVids.length} video)`],datasets:[{data:[ytViews||1,shortViews||1],backgroundColor:['#e03b2e','#3b7be0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},color:'#8a8878',boxWidth:10,padding:8}}}}});
 }
 
-function handleYTError(err) {
-  if (err.code === 401) { ytLogout(); showToast('Sesi habis, silakan login ulang'); }
-  else { showToast('Error: ' + (err.message || 'Gagal')); }
-  document.getElementById('ytLoading').style.display = 'none';
-}
+function setTypeFilter(type,btn){videoTypeFilter=type;document.querySelectorAll('.yt-filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');videoDisplayCount=25;applyVideoFilters();}
+function sortVideos(by){videoSortBy=by;applyVideoFilters();}
+function filterVideos(){videoDisplayCount=25;applyVideoFilters();}
 
-function fmtNum(n) {
-  n = parseInt(n) || 0;
-  if (n >= 1000000) return (n/1000000).toFixed(1)+'jt';
-  if (n >= 1000) return (n/1000).toFixed(1)+'rb';
-  return n.toString();
-}
-
-function renderYTDashboard() {
-  document.getElementById('ytLoading').style.display = 'none';
-  document.getElementById('ytDashboard').classList.add('visible');
-
-  // Channel info
-  if (ytChannelData) {
-    const snip = ytChannelData.snippet, stats = ytChannelData.statistics;
-    document.getElementById('ytAvatar').src = snip?.thumbnails?.default?.url || '';
-    document.getElementById('ytChannelName').textContent = snip?.title || '—';
-    document.getElementById('ytChannelSub').textContent = fmtNum(stats?.subscriberCount) + ' subscriber · ' + fmtNum(stats?.videoCount) + ' video';
-  }
-
-  renderStats();
-  renderCharts();
-  renderVideoList();
-  generateAdvice();
-}
-
-function renderStats() {
-  const rows = ytAnalyticsData?.rows || [];
-  const totViews = rows.reduce((s,r) => s + (r[1]||0), 0);
-  const totWatch = rows.reduce((s,r) => s + (r[2]||0), 0);
-  const totSubs = rows.reduce((s,r) => s + (r[3]||0), 0);
-  const avgCtr = rows.length > 0 ? (rows.reduce((s,r) => s + (r[4]||0), 0) / rows.length * 100) : 0;
-
-  document.getElementById('statViews').textContent = fmtNum(totViews);
-  document.getElementById('statWatch').textContent = fmtNum(Math.round(totWatch / 60));
-  document.getElementById('statSubs').textContent = (totSubs >= 0 ? '+' : '') + fmtNum(totSubs);
-  document.getElementById('statCtr').textContent = avgCtr.toFixed(1) + '%';
-
-  // Simple change indicators
-  const half = Math.floor(rows.length / 2);
-  const firstHalf = rows.slice(0, half), secondHalf = rows.slice(half);
-  const v1 = firstHalf.reduce((s,r) => s+(r[1]||0),0), v2 = secondHalf.reduce((s,r) => s+(r[1]||0),0);
-  const vChange = v1 > 0 ? Math.round((v2-v1)/v1*100) : 0;
-  const vEl = document.getElementById('statViewsChange');
-  vEl.textContent = (vChange >= 0 ? '↑ +' : '↓ ') + vChange + '% vs periode sebelumnya';
-  vEl.className = 'stat-change ' + (vChange >= 0 ? 'up' : 'down');
-
-  document.getElementById('statSubsChange').textContent = currentRange + ' hari terakhir';
-  document.getElementById('statSubsChange').className = 'stat-change';
-  document.getElementById('statWatchChange').textContent = 'menit → jam';
-  document.getElementById('statWatchChange').className = 'stat-change';
-  document.getElementById('statCtrChange').textContent = 'rata-rata ' + currentRange + ' hari';
-  document.getElementById('statCtrChange').className = 'stat-change';
-}
-
-function renderCharts() {
-  const rows = ytAnalyticsData?.rows || [];
-  const labels = rows.map(r => r[0]?.slice(5)); // MM-DD
-  const views = rows.map(r => r[1] || 0);
-
-  // Views chart
-  if (viewsChartInst) viewsChartInst.destroy();
-  const ctx1 = document.getElementById('viewsChart').getContext('2d');
-  viewsChartInst = new Chart(ctx1, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        label: 'Views',
-        data: views,
-        borderColor: '#e03b2e',
-        backgroundColor: 'rgba(224,59,46,0.08)',
-        borderWidth: 2,
-        pointRadius: 2,
-        fill: true,
-        tension: 0.4
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#8a8878' } },
-        y: { grid: { color: '#e8e6df' }, ticks: { font: { size: 10 }, color: '#8a8878' } }
-      }
-    }
+function applyVideoFilters(){
+  const search=(document.getElementById('videoSearch')?.value||'').toLowerCase();let vids=[...ytAllVideos];
+  if(videoTypeFilter==='yt')vids=vids.filter(v=>!isShort(v));else if(videoTypeFilter==='short')vids=vids.filter(v=>isShort(v));
+  if(search)vids=vids.filter(v=>(v.snippet?.title||'').toLowerCase().includes(search));
+  vids.sort((a,b)=>{
+    if(videoSortBy==='views')return parseInt(b.statistics?.viewCount||0)-parseInt(a.statistics?.viewCount||0);
+    if(videoSortBy==='likes')return parseInt(b.statistics?.likeCount||0)-parseInt(a.statistics?.likeCount||0);
+    if(videoSortBy==='comments')return parseInt(b.statistics?.commentCount||0)-parseInt(a.statistics?.commentCount||0);
+    if(videoSortBy==='date')return new Date(b.snippet?.publishedAt)-new Date(a.snippet?.publishedAt);
+    if(videoSortBy==='duration'){const getDur=v=>{const m=(v.contentDetails?.duration||'').match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);if(!m)return 0;return(parseInt(m[1]||0)*3600)+(parseInt(m[2]||0)*60)+parseInt(m[3]||0);};return getDur(b)-getDur(a);}
+    return 0;
   });
-
-  // Traffic source chart (using video stats as proxy)
-  if (trafficChartInst) trafficChartInst.destroy();
-  const ctx2 = document.getElementById('trafficChart').getContext('2d');
-  trafficChartInst = new Chart(ctx2, {
-    type: 'doughnut',
-    data: {
-      labels: ['Browse', 'Search', 'Suggested', 'External', 'Notif'],
-      datasets: [{
-        data: [35, 25, 20, 12, 8],
-        backgroundColor: ['#1a1a18', '#e03b2e', '#3b7be0', '#e09b3b', '#e8e6df'],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { position: 'bottom', labels: { font: { size: 10 }, color: '#8a8878', boxWidth: 10, padding: 8 } }
-      }
-    }
-  });
+  filteredVideos=vids;document.getElementById('videoCount').textContent=`(${vids.length} video)`;renderVideoTable();
 }
 
-function renderVideoList() {
-  const sorted = [...ytVideosData].sort((a,b) => parseInt(b.statistics?.viewCount||0) - parseInt(a.statistics?.viewCount||0));
-  document.getElementById('videoList').innerHTML = sorted.length === 0 ? '<p style="color:var(--text-muted);font-size:13px;">Tidak ada video.</p>' :
-    sorted.slice(0,8).map(v => {
-      const stats = v.statistics || {}, snip = v.snippet || {};
-      const thumb = snip.thumbnails?.medium?.url || snip.thumbnails?.default?.url || '';
-      return `<div class="video-row">
-        <img class="video-thumb" src="${thumb}" alt="" onerror="this.style.background='var(--border)'">
-        <div class="video-title-text">${snip.title || '—'}</div>
-        <div class="video-stat"><span>Views</span><strong>${fmtNum(stats.viewCount)}</strong></div>
-        <div class="video-stat"><span>Likes</span><strong>${fmtNum(stats.likeCount)}</strong></div>
-        <div class="video-stat"><span>Komentar</span><strong>${fmtNum(stats.commentCount)}</strong></div>
-      </div>`;
-    }).join('');
+function renderVideoTable(){
+  const toShow=filteredVideos.slice(0,videoDisplayCount);const maxViews=Math.max(...filteredVideos.map(v=>parseInt(v.statistics?.viewCount||0)),1);
+  document.getElementById('videoTableBody').innerHTML=toShow.map(v=>{
+    const stats=v.statistics||{},snip=v.snippet||{};const thumb=snip.thumbnails?.medium?.url||snip.thumbnails?.default?.url||'';
+    const views=parseInt(stats.viewCount||0);const likes=parseInt(stats.likeCount||0);const comments=parseInt(stats.commentCount||0);
+    const dur=fmtDuration(v.contentDetails?.duration);const type=isShort(v)?'short':'yt';
+    const date=snip.publishedAt?new Date(snip.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'2-digit'}):'—';
+    const barPct=Math.round(views/maxViews*100);const barClass=barPct>66?'good':barPct>33?'mid':'';
+    return `<tr><td><div class="video-title-cell"><img class="video-thumb-sm" src="${thumb}" alt="" onerror="this.style.background='var(--border)'"><div><span class="type-pill ${type}">${type==='short'?'⚡ Shorts':'▶ YT'}</span><div class="video-title-txt" title="${(snip.title||'').replace(/"/g,'&quot;')}">${snip.title||'—'}</div></div></div></td>
+    <td class="num-cell"><strong>${fmtNum(views)}</strong><div class="score-bar"><div class="score-fill ${barClass}" style="width:${barPct}%"></div></div></td>
+    <td class="num-cell">${fmtNum(likes)}</td><td class="num-cell">${fmtNum(comments)}</td>
+    <td class="num-cell" style="color:var(--text-muted)">${dur}</td>
+    <td class="num-cell" style="color:var(--text-muted);font-size:11.5px;">${date}</td>
+    <td><button class="video-detail-btn" onclick="openVideoDetail('${v.id}')">Detail + AI</button></td></tr>`;
+  }).join('');
+  const lb=document.getElementById('loadMoreBtn');
+  if(filteredVideos.length>videoDisplayCount){lb.style.display='block';lb.textContent=`+ Muat ${filteredVideos.length-videoDisplayCount} video lagi`;}else{lb.style.display='none';}
 }
 
-function generateAdvice() {
-  const rows = ytAnalyticsData?.rows || [];
-  const totViews = rows.reduce((s,r) => s+(r[1]||0),0);
-  const totSubs = rows.reduce((s,r) => s+(r[3]||0),0);
-  const avgWatch = rows.length > 0 ? rows.reduce((s,r) => s+(r[2]||0),0)/rows.length : 0;
-  const avgCtr = rows.length > 0 ? rows.reduce((s,r) => s+(r[4]||0),0)/rows.length*100 : 0;
+function loadMoreVideos(){videoDisplayCount+=25;renderVideoTable();}
 
-  const advices = [];
+function openVideoDetail(videoId){
+  const v=ytAllVideos.find(x=>x.id===videoId);if(!v)return;
+  const stats=v.statistics||{},snip=v.snippet||{};const thumb=snip.thumbnails?.medium?.url||'';
+  const views=parseInt(stats.viewCount||0);const likes=parseInt(stats.likeCount||0);const comments=parseInt(stats.commentCount||0);
+  const dur=fmtDuration(v.contentDetails?.duration);const type=isShort(v)?'Shorts':'YouTube';
+  const date=snip.publishedAt?new Date(snip.publishedAt).toLocaleDateString('id-ID',{dateStyle:'long'}):'—';
+  const engRate=views>0?((likes+comments)/views*100).toFixed(2):'0';
+  const likeRate=views>0?(likes/views*100).toFixed(2):'0';
+  const advices=generateVideoAdvice(v);
+  document.getElementById('vdModalBody').innerHTML=`
+    <div class="vd-header"><img class="vd-thumb" src="${thumb}" alt=""><div><div class="vd-title">${snip.title||'—'}</div><div class="vd-meta">${type} · ${date} · Durasi: ${dur}</div></div></div>
+    <div class="vd-stats">
+      <div class="vd-stat"><div class="vd-stat-label">Views</div><div class="vd-stat-value">${fmtNum(views)}</div><div class="vd-stat-sub">total penonton</div></div>
+      <div class="vd-stat"><div class="vd-stat-label">Likes</div><div class="vd-stat-value">${fmtNum(likes)}</div><div class="vd-stat-sub">like rate ${likeRate}%</div></div>
+      <div class="vd-stat"><div class="vd-stat-label">Komentar</div><div class="vd-stat-value">${fmtNum(comments)}</div><div class="vd-stat-sub">total komentar</div></div>
+      <div class="vd-stat"><div class="vd-stat-label">Engagement Rate</div><div class="vd-stat-value">${engRate}%</div><div class="vd-stat-sub">likes+komen / views</div></div>
+      <div class="vd-stat"><div class="vd-stat-label">Durasi</div><div class="vd-stat-value">${dur}</div><div class="vd-stat-sub">${type}</div></div>
+      <div class="vd-stat"><div class="vd-stat-label">Tipe Konten</div><div class="vd-stat-value" style="font-size:16px;">${type}</div><div class="vd-stat-sub">${isShort(v)?'≤60 detik':'video panjang'}</div></div>
+    </div>
+    ${snip.description?`<div style="margin-bottom:20px;"><div class="vd-section-title">Deskripsi Video</div><div style="font-size:12.5px;color:var(--text-muted);line-height:1.6;max-height:80px;overflow:hidden;">${snip.description.slice(0,400)}${snip.description.length>400?'...':''}</div></div>`:''}
+    <div class="vd-section-title">🤖 Analisis AI untuk Video Ini</div>
+    ${advices.map(a=>`<div class="vd-advice ${a.type}"><div class="vd-advice-label">${a.label}</div><div class="vd-advice-text">${a.text}</div></div>`).join('')}
+  `;
+  document.getElementById('videoDetailModal').classList.add('open');
+}
+function closeVideoDetail(e){if(e.target===document.getElementById('videoDetailModal'))document.getElementById('videoDetailModal').classList.remove('open');}
 
-  // CTR advice
-  if (avgCtr < 2) {
-    advices.push({ type: 'warning', label: 'Perhatian: CTR Rendah', text: `CTR kamu rata-rata ${avgCtr.toFixed(1)}% — di bawah rata-rata channel sejenis (2–5%). Coba eksperimen dengan thumbnail yang lebih bold dan judul yang lebih curiosity-driven.` });
-  } else if (avgCtr >= 4) {
-    advices.push({ type: 'good', label: 'CTR Bagus!', text: `CTR ${avgCtr.toFixed(1)}% kamu sudah di atas rata-rata. Pertahankan gaya thumbnail dan judul yang sekarang, dan fokus pada konsistensi upload.` });
-  }
-
-  // Watch time advice
-  if (avgWatch < 3) {
-    advices.push({ type: 'warning', label: 'Watch Time Perlu Ditingkatkan', text: 'Rata-rata watch time per hari masih rendah. Coba perkuat hook di 30 detik pertama video — penonton yang kabur di awal sangat mempengaruhi distribusi algoritma.' });
-  }
-
-  // Subscriber advice
-  if (totSubs > 0 && totViews > 0) {
-    const convRate = (totSubs / totViews * 100);
-    if (convRate < 0.5) {
-      advices.push({ type: 'tip', label: 'Tips: Tingkatkan Konversi Subscriber', text: `Dari ${fmtNum(totViews)} views, kamu dapat ${fmtNum(totSubs)} subscriber baru (${convRate.toFixed(2)}%). Tambahkan CTA subscribe yang kuat di tengah video, bukan hanya di akhir.` });
-    }
-  }
-
-  // Upload frequency tip
-  const uploadDates = ytVideosData.map(v => v.snippet?.publishedAt?.split('T')[0]).filter(Boolean).sort();
-  if (uploadDates.length >= 2) {
-    const gaps = [];
-    for (let i = 1; i < uploadDates.length; i++) {
-      gaps.push((new Date(uploadDates[i]) - new Date(uploadDates[i-1])) / 86400000);
-    }
-    const avgGap = gaps.reduce((a,b)=>a+b,0)/gaps.length;
-    if (avgGap > 14) {
-      advices.push({ type: 'tip', label: 'Frekuensi Upload', text: `Rata-rata jarak upload kamu ${Math.round(avgGap)} hari. Algoritma YouTube lebih menyukai channel yang upload konsisten 1–2x seminggu. Coba jadwalkan konten lebih rutin.` });
-    } else {
-      advices.push({ type: 'good', label: 'Konsistensi Upload Baik', text: `Kamu upload rata-rata setiap ${Math.round(avgGap)} hari — ini bagus! Pertahankan ritme ini untuk menjaga momentum algoritma.` });
-    }
-  }
-
-  // Fallback
-  if (advices.length === 0) {
-    advices.push({ type: 'tip', label: 'Terus Berkarya!', text: 'Data kamu masih terbatas. Upload lebih banyak konten dan kembali ke sini dalam beberapa minggu untuk mendapat analisis yang lebih detail.' });
-  }
-
-  document.getElementById('adviceList').innerHTML = advices.map(a =>
-    `<div class="advice-item ${a.type}"><div class="advice-label">${a.label}</div><div class="advice-text">${a.text}</div></div>`
-  ).join('');
+function generateVideoAdvice(v){
+  const stats=v.statistics||{};const views=parseInt(stats.viewCount||0);const likes=parseInt(stats.likeCount||0);const comments=parseInt(stats.commentCount||0);
+  const engRate=views>0?(likes+comments)/views*100:0;const likeRate=views>0?likes/views*100:0;const type=isShort(v)?'Shorts':'YouTube';
+  const avgViews=ytAllVideos.length>0?ytAllVideos.reduce((s,x)=>s+parseInt(x.statistics?.viewCount||0),0)/ytAllVideos.length:0;
+  const advices=[];
+  if(views>avgViews*1.5){advices.push({type:'good',label:'🔥 Performa Di Atas Rata-Rata',text:`Video ini dapat ${fmtNum(views)} views — ${Math.round(views/avgViews*100-100)}% lebih tinggi dari rata-rata channel kamu (${fmtNum(Math.round(avgViews))}). Analisis formula video ini: topik, angle, durasi, thumbnail style — dan replikasi untuk video berikutnya.`});}
+  else if(views<avgViews*0.5&&views>0){advices.push({type:'warning',label:'📉 Performa Di Bawah Rata-Rata',text:`Video ini hanya dapat ${fmtNum(views)} views, jauh di bawah rata-rata channel kamu (${fmtNum(Math.round(avgViews))}). Evaluasi: apakah thumbnail kurang menarik? Judul tidak curiosity-driven? Atau topiknya kurang relevan dengan audiens kamu saat ini?`});}
+  if(engRate>5){advices.push({type:'good',label:'✅ Engagement Sangat Tinggi',text:`Engagement rate ${engRate.toFixed(1)}% ini luar biasa! Artinya konten ini sangat resonan dengan penonton. Buat konten serupa dan aktif balas komentar untuk jaga momentum komunitas.`});}
+  else if(engRate<1&&views>100){advices.push({type:'warning',label:'⚠️ Engagement Rendah',text:`Engagement rate hanya ${engRate.toFixed(1)}%. Penonton nonton tapi tidak berinteraksi. Coba tambahkan pertanyaan spesifik di akhir video yang mudah dijawab, atau buat konten yang memancing diskusi.`});}
+  if(likeRate<0.5&&views>200){advices.push({type:'tip',label:'💡 Tingkatkan Like Rate',text:`Like rate ${likeRate}% masih rendah. Tambahkan reminder like yang natural di tengah video saat momen peak konten, bukan hanya di akhir. Contoh: "Kalau kamu setuju dengan poin ini, tunjukkan dengan like."`});}
+  if(comments===0&&views>100){advices.push({type:'tip',label:'💬 Dorong Komentar',text:`Belum ada komentar di video ini. Ajukan pertanyaan spesifik dan mudah dijawab di akhir video. Hindari "gimana pendapat kalian" — lebih baik "kamu lebih setuju dengan pendapat A atau B? Komen di bawah!"`});}
+  if(type==='Shorts'&&views<1000){advices.push({type:'tip',label:'📱 Optimasi Shorts',text:`Shorts ini belum viral. Untuk Shorts, 3 detik pertama adalah segalanya — pastikan hook visual langsung menarik tanpa intro apapun. Coba juga posting di jam 18.00-21.00 WIB saat traffic Shorts paling tinggi.`});}
+  else if(type==='YouTube'){const m=(v.contentDetails?.duration||'').match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);if(m){const totalMin=(parseInt(m[1]||0)*60)+parseInt(m[2]||0);if(totalMin>20&&views<avgViews){advices.push({type:'tip',label:'⏱️ Perhatikan Durasi vs Performa',text:`Video ini ${totalMin} menit tapi views di bawah rata-rata. Video panjang butuh hook kuat setiap 3-5 menit. Coba format lebih ringkas (8-12 menit) untuk topik sejenis — retention lebih mudah dijaga.`});}}}
+  if(advices.length===0){advices.push({type:'tip',label:'📊 Performa Normal',text:`Video ini punya performa yang cukup stabil. Biarkan video ini berjalan lebih lama dan pantau kembali dalam beberapa minggu. Fokus pada konsistensi upload dan kualitas konten.`});}
+  return advices;
 }
 
-// ===== HANDLE OAUTH CALLBACK =====
-// Kalau URL ada #access_token, pindah ke halaman ytanalytics
-if (window.location.hash.includes('access_token')) {
-  // Aktifkan halaman analytics
-  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+function generateOverallAdvice(){
+  const rows=ytAnalyticsData?.rows||[];const totViews=rows.reduce((s,r)=>s+(r[1]||0),0);const totSubs=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0);
+  const avgCtr=rows.length>0?rows.reduce((s,r)=>s+(r[5]||0),0)/rows.length*100:0;
+  const ytVids=ytAllVideos.filter(v=>!isShort(v));const shortVids=ytAllVideos.filter(v=>isShort(v));
+  const avgViews=ytAllVideos.length>0?ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0)/ytAllVideos.length:0;
+  const totalLikes=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.likeCount||0),0);const totalComments=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.commentCount||0),0);
+  const totalViewsAll=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);const overallEng=totalViewsAll>0?(totalLikes+totalComments)/totalViewsAll*100:0;
+  const dates=ytAllVideos.map(v=>v.snippet?.publishedAt?.split('T')[0]).filter(Boolean).sort();let avgGap=0;
+  if(dates.length>=2){const gaps=[];for(let i=1;i<Math.min(dates.length,10);i++)gaps.push((new Date(dates[i])-new Date(dates[i-1]))/86400000);avgGap=gaps.reduce((a,b)=>a+b,0)/gaps.length;}
+  const topVideo=[...ytAllVideos].sort((a,b)=>parseInt(b.statistics?.viewCount||0)-parseInt(a.statistics?.viewCount||0))[0];
+  const advices=[];
+  advices.push({type:'tip',label:'📊 Ringkasan Channel',text:`Channel kamu punya ${fmtNum(ytAllVideos.length)} video total (${ytVids.length} YouTube + ${shortVids.length} Shorts). Total views semua video: ${fmtNum(totalViewsAll)}. Rata-rata views per video: ${fmtNum(Math.round(avgViews))}. Engagement rate keseluruhan: ${overallEng.toFixed(2)}%.`});
+  if(avgCtr<2){advices.push({type:'critical',label:'🚨 CTR Kritis — Perbaiki Segera',text:`CTR rata-rata ${avgCtr.toFixed(1)}% jauh di bawah standar (2-5%). Thumbnail dan judul kamu tidak cukup menarik untuk diklik. Prioritas: redesign thumbnail dengan ekspresi wajah jelas, teks besar, kontras warna tinggi. A/B test minimal 3 gaya thumbnail berbeda.`});}
+  else if(avgCtr>=4){advices.push({type:'good',label:'✅ CTR Sangat Baik',text:`CTR ${avgCtr.toFixed(1)}% di atas rata-rata channel sejenis! Thumbnail dan judul kamu efektif. Fokus sekarang pada meningkatkan watch time dan konsistensi upload untuk growth lebih lanjut.`});}
+  else{advices.push({type:'tip',label:'💡 CTR Bisa Ditingkatkan',text:`CTR ${avgCtr.toFixed(1)}% masih di kisaran normal. Untuk naik ke 4%+: gunakan angka spesifik di judul, tambah kata emosi (mengejutkan, rahasia, terbukti), dan test thumbnail close-up wajah vs tanpa wajah.`});}
+  if(avgGap>14){advices.push({type:'warning',label:'⚠️ Frekuensi Upload Terlalu Jarang',text:`Rata-rata upload setiap ${Math.round(avgGap)} hari. Algoritma YouTube menyukai konsistensi — channel yang upload 1-2x seminggu dapat distribusi jauh lebih besar. Buat content calendar dan batch record untuk jaga ritme.`});}
+  else if(avgGap<=7&&avgGap>0){advices.push({type:'good',label:'🔥 Konsistensi Upload Luar Biasa',text:`Upload setiap ${Math.round(avgGap)} hari — sangat bagus! Pertahankan ritme ini. Pastikan kualitas konten tidak turun karena frekuensi yang tinggi.`});}
+  if(topVideo){const topViews=parseInt(topVideo.statistics?.viewCount||0);if(topViews>avgViews*3){advices.push({type:'good',label:'🏆 Formula Video Terbaik Kamu',text:`"${topVideo.snippet?.title?.slice(0,60)}..." dapat ${fmtNum(topViews)} views — ${Math.round(topViews/avgViews)}x rata-rata. Analisis formula video ini: topik, angle, durasi, thumbnail. Buat series atau video lanjutan dengan approach serupa.`});}}
+  if(shortVids.length===0&&ytVids.length>0){advices.push({type:'tip',label:'📱 Coba Buat Shorts',text:`Kamu belum punya Shorts. Shorts adalah mesin pertumbuhan subscriber tercepat di YouTube saat ini. Coba repurpose highlight 30-60 detik dari video panjang kamu — ini bisa menjangkau jutaan penonton baru dengan effort minimal.`});}
+  else if(shortVids.length>0&&ytVids.length>0){const ytAvgV=ytVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0)/ytVids.length;const shortAvgV=shortVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0)/shortVids.length;if(shortAvgV>ytAvgV*2){advices.push({type:'good',label:'⚡ Shorts Kamu Sangat Performa',text:`Rata-rata Shorts (${fmtNum(Math.round(shortAvgV))} views) jauh lebih tinggi dari video panjang (${fmtNum(Math.round(ytAvgV))} views). Gunakan Shorts sebagai funnel ke video panjang dengan CTA "tonton video lengkapnya di channel ini".`});}}
+  if(overallEng<1){advices.push({type:'warning',label:'💬 Tingkatkan Engagement Channel',text:`Overall engagement rate ${overallEng.toFixed(2)}% masih rendah. Strategi: (1) Balas semua komentar dalam 24 jam pertama setelah upload, (2) Pin komentar pertanyaan yang bagus, (3) Buat konten yang memancing pendapat, (4) Aktif di komunitas YouTube.`});}
+  document.getElementById('aiOverallSub').textContent=`Analisis ${ytAllVideos.length} video · data ${currentRange} hari terakhir`;
+  document.getElementById('adviceList').innerHTML=advices.map(a=>`<div class="advice-item ${a.type}"><div class="advice-label">${a.label}</div><div class="advice-text">${a.text}</div></div>`).join('');
+}
+
+if(window.location.hash.includes('access_token')){
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelector('[data-page="ytanalytics"]').classList.add('active');
   document.getElementById('page-ytanalytics').classList.add('active');
 }
