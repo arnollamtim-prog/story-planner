@@ -462,9 +462,23 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
     </div>
     <!-- AI OVERALL -->
     <div class="ai-section">
-      <div class="ai-section-title">🤖 Analisis AI Mendalam — Channel Kamu</div>
-      <div class="ai-section-sub" id="aiOverallSub">Menganalisis semua data...</div>
-      <div class="advice-list" id="adviceList"><div class="yt-loading" style="padding:20px"><div class="spinner"></div></div></div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:12px">
+        <div>
+          <div class="ai-section-title">📋 Export Rekap Channel</div>
+          <div class="ai-section-sub" style="margin-bottom:0">Generate teks lengkap siap paste ke ChatGPT, Gemini, atau AI apapun</div>
+        </div>
+        <button onclick="generateExport()" style="background:var(--text);color:white;border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;white-space:nowrap">📤 Generate Rekap</button>
+      </div>
+      <div id="exportResult" style="display:none">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:8px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)">Hasil Rekap — Siap di-paste ke AI</span>
+            <button onclick="copyExport()" style="background:var(--text);color:white;border:none;padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">📋 Copy Semua</button>
+          </div>
+          <textarea id="exportText" readonly style="width:100%;min-height:320px;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:monospace;background:white;color:var(--text);line-height:1.7;resize:vertical;outline:none"></textarea>
+          <div style="font-size:11px;color:var(--muted);margin-top:8px">💡 Tip: Paste teks ini ke AI lalu tambahkan pertanyaanmu, misal: "Berdasarkan data ini, apa yang harus aku lakukan untuk mempercepat monetisasi?"</div>
+        </div>
+      </div>
     </div>
     <!-- VIDEO TABLE -->
     <div class="videos-section">
@@ -1097,9 +1111,138 @@ function renderHeatmap(){
   document.getElementById('heatmapGrid').innerHTML=html;
 }
 
+// EXPORT REKAP
+function generateExport(){
+  if(!ytChannel||!ytAllVideos.length){toast('Data belum loaded!');return;}
+  const stats=ytChannel.statistics||{};
+  const subs=parseInt(stats.subscriberCount||0);
+  const totalVids=parseInt(stats.videoCount||0);
+  const ytVids=ytAllVideos.filter(v=>!isShort(v));
+  const shVids=ytAllVideos.filter(v=>isShort(v));
+  const totalViewsAll=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);
+  const totalLikes=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.likeCount||0),0);
+  const totalComments=ytAllVideos.reduce((s,v)=>s+parseInt(v.statistics?.commentCount||0),0);
+  const avgViews=ytAllVideos.length>0?Math.round(totalViewsAll/ytAllVideos.length):0;
+  const overallEng=totalViewsAll>0?((totalLikes+totalComments)/totalViewsAll*100).toFixed(2):0;
+  const ytWatchHours=Math.round(ytVids.reduce((s,v)=>s+getDurSec(v)*parseInt(v.statistics?.viewCount||0)/3600,0));
+  const shTotalViews=shVids.reduce((s,v)=>s+parseInt(v.statistics?.viewCount||0),0);
+  const sortedByDate=[...ytAllVideos].sort((a,b)=>new Date(a.snippet?.publishedAt)-new Date(b.snippet?.publishedAt));
+  const uploadDates=sortedByDate.map(v=>v.snippet?.publishedAt?.split('T')[0]).filter(Boolean);
+  let avgGap=0;
+  if(uploadDates.length>=2){const gaps=[];for(let i=1;i<Math.min(uploadDates.length,30);i++){const diff=(new Date(uploadDates[i])-new Date(uploadDates[i-1]))/86400000;if(diff>=0&&diff<90)gaps.push(diff);}if(gaps.length>0)avgGap=gaps.reduce((a,b)=>a+b,0)/gaps.length;}
+  const sorted=[...ytAllVideos].sort((a,b)=>parseInt(b.statistics?.viewCount||0)-parseInt(a.statistics?.viewCount||0));
+  const top10=sorted.slice(0,10);
+  const bot5=sorted.filter(v=>parseInt(v.statistics?.viewCount||0)>0).slice(-5).reverse();
+  const rows=ytAnalytics?.rows||[];
+  const totViewsPeriod=rows.reduce((s,r)=>s+(r[1]||0),0);
+  const totSubsPeriod=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0);
+  const ctrRows=rows.filter(r=>r[5]>0);
+  const avgCtr=ctrRows.length>0?ctrRows.reduce((s,r)=>s+r[5],0)/ctrRows.length*100:0;
+  const days=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+  const heatData={};
+  days.forEach(d=>{heatData[d]={};for(let h=0;h<24;h++)heatData[d][h]={views:0,count:0};});
+  ytAllVideos.forEach(v=>{const pub=v.snippet?.publishedAt;if(!pub)return;const d=new Date(pub);const dn=days[d.getDay()];const hr=d.getHours();const vw=parseInt(v.statistics?.viewCount||0);if(heatData[dn])heatData[dn][hr].views+=vw,heatData[dn][hr].count++;});
+  const topSlots=[];days.forEach(d=>{for(let h=0;h<24;h++){const slot=heatData[d][h];if(slot.count>0)topSlots.push({day:d,hour:h,avg:slot.views/slot.count,count:slot.count});}});
+  topSlots.sort((a,b)=>b.avg-a.avg);const top6Slots=topSlots.slice(0,6);
+
+  const L=[];
+  L.push('═══════════════════════════════════════════════════════');
+  L.push('📊 REKAP DATA CHANNEL YOUTUBE — ' + (ytChannel.snippet?.title||'').toUpperCase());
+  L.push('Dibuat: '+new Date().toLocaleDateString('id-ID',{dateStyle:'full'})+' pukul '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
+  L.push('═══════════════════════════════════════════════════════');
+  L.push('');
+  L.push('━━━ 🏠 INFO CHANNEL ━━━');
+  L.push('Nama Channel  : '+( ytChannel.snippet?.title||'—'));
+  L.push('Subscriber    : '+fmtNum(subs)+' / 1.000 target — kurang '+Math.max(0,1000-subs)+' lagi ('+Math.round(subs/1000*100)+'%)');
+  L.push('Total Video   : '+totalVids+' ('+ytVids.length+' YouTube + '+shVids.length+' Shorts)');
+  L.push('Upload rata2  : '+(avgGap>0?'setiap '+avgGap.toFixed(1)+' hari':'data tidak cukup'));
+  L.push('');
+  L.push('━━━ 💰 PROGRESS MONETISASI ━━━');
+  L.push('[ JALUR 1 — YouTube Long-form ]');
+  L.push('  Subscriber   : '+fmtNum(subs)+'/1.000 ('+Math.round(subs/1000*100)+'% — kurang '+Math.max(0,1000-subs)+')');
+  L.push('  Watch Time   : '+fmtNum(ytWatchHours)+' jam / 4.000 jam ('+Math.round(ytWatchHours/4000*100)+'% — kurang '+fmtNum(Math.max(0,4000-ytWatchHours))+' jam)');
+  L.push('[ JALUR 2 — Shorts (syarat BERBEDA) ]');
+  L.push('  Subscriber   : '+fmtNum(subs)+'/1.000 (sama)');
+  L.push('  Shorts Views : '+fmtNum(shTotalViews)+' / 10.000.000 views ('+(shTotalViews/10000000*100).toFixed(1)+'% — kurang '+fmtNum(Math.max(0,10000000-shTotalViews))+' views)');
+  L.push('');
+  L.push('━━━ 📈 STATISTIK '+curRange+' HARI TERAKHIR ━━━');
+  L.push('Views periode   : '+fmtNum(totViewsPeriod));
+  L.push('Subscriber baru : '+(totSubsPeriod>0?'+':'')+fmtNum(totSubsPeriod));
+  L.push('CTR rata-rata   : '+(avgCtr>0?avgCtr.toFixed(1)+'%':'tidak tersedia'));
+  L.push('');
+  L.push('━━━ 📊 STATISTIK KESELURUHAN SEMUA VIDEO ━━━');
+  L.push('Total views      : '+fmtNum(totalViewsAll));
+  L.push('Rata-rata views  : '+fmtNum(avgViews)+' per video');
+  L.push('Total likes      : '+fmtNum(totalLikes));
+  L.push('Total komentar   : '+fmtNum(totalComments));
+  L.push('Engagement rate  : '+overallEng+'%');
+  L.push('');
+  L.push('━━━ 🏆 TOP 10 VIDEO TERBAIK ━━━');
+  top10.forEach((v,i)=>{
+    const vw=parseInt(v.statistics?.viewCount||0);
+    const lk=parseInt(v.statistics?.likeCount||0);
+    const cm=parseInt(v.statistics?.commentCount||0);
+    const dur=fmtDur(v.contentDetails?.duration);
+    const type=isShort(v)?'Shorts':'YouTube';
+    const date=v.snippet?.publishedAt?new Date(v.snippet.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'—';
+    const ctr=ctrData[v.id];const sub=subsData[v.id];
+    L.push((i+1)+'. "'+( v.snippet?.title||'—')+'"');
+    L.push('   Tipe: '+type+' | Durasi: '+dur+' | Upload: '+date);
+    L.push('   Views: '+fmtNum(vw)+' | Likes: '+fmtNum(lk)+' | Komentar: '+cm);
+    L.push('   CTR: '+(ctr!=null?ctr.toFixed(1)+'%':'belum di-load')+' | +Subscriber: '+(sub!=null?'+'+sub:'belum di-load'));
+    L.push('   Engagement: '+(vw>0?((lk+cm)/vw*100).toFixed(2):'0')+'%');
+    L.push('');
+  });
+  L.push('━━━ 📉 5 VIDEO VIEWS TERENDAH ━━━');
+  bot5.forEach((v,i)=>{
+    const vw=parseInt(v.statistics?.viewCount||0);
+    const lk=parseInt(v.statistics?.likeCount||0);
+    const cm=parseInt(v.statistics?.commentCount||0);
+    const dur=fmtDur(v.contentDetails?.duration);
+    const type=isShort(v)?'Shorts':'YouTube';
+    const date=v.snippet?.publishedAt?new Date(v.snippet.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'—';
+    const ctr=ctrData[v.id];const sub=subsData[v.id];
+    L.push((i+1)+'. "'+( v.snippet?.title||'—')+'"');
+    L.push('   Tipe: '+type+' | Durasi: '+dur+' | Upload: '+date);
+    L.push('   Views: '+fmtNum(vw)+' | Likes: '+fmtNum(lk)+' | Komentar: '+cm);
+    L.push('   CTR: '+(ctr!=null?ctr.toFixed(1)+'%':'belum di-load')+' | +Subscriber: '+(sub!=null?'+'+sub:'belum di-load'));
+    L.push('');
+  });
+  L.push('━━━ 🕐 TOP 6 JAM UPLOAD TERBAIK ━━━');
+  if(top6Slots.length>0){
+    top6Slots.forEach((s,i)=>{L.push((i+1)+'. '+s.day+' jam '+s.hour+':00 — rata-rata '+fmtNum(Math.round(s.avg))+' views (dari '+s.count+' video upload di jam ini)');});
+  }else{L.push('Belum cukup data upload.');}
+  L.push('');
+  L.push('═══════════════════════════════════════════════════════');
+  L.push('💡 DATA DI ATAS ADALAH DATA NYATA DARI CHANNEL YOUTUBE SAYA.');
+  L.push('   Silakan analisis dan berikan rekomendasi spesifik.');
+  L.push('═══════════════════════════════════════════════════════');
+
+  document.getElementById('exportText').value=L.join('\n');
+  document.getElementById('exportResult').style.display='block';
+  document.getElementById('exportResult').scrollIntoView({behavior:'smooth',block:'start'});
+  toast('Rekap berhasil di-generate! ✅');
+}
+function copyExport(){
+  const text=document.getElementById('exportText').value;
+  if(!text){toast('Generate rekap dulu!');return;}
+  navigator.clipboard.writeText(text).then(()=>toast('Rekap disalin! Siap di-paste ke AI 🚀'));
+}
+
 // AI OVERALL — Gemini
-async function generateAIAdvice(){
-  document.getElementById('adviceList').innerHTML='<div class="yt-loading" style="padding:20px"><div class="spinner"></div></div>';
+async function generateAIAdvice(forceRefresh=false){
+  const cacheKey='gemini_advice_'+(ytChannel?.id||'ch');
+  const cached=localStorage.getItem(cacheKey);
+  const cacheTime=localStorage.getItem(cacheKey+'_time');
+  const sixHours=6*60*60*1000;
+  if(!forceRefresh&&cached&&cacheTime&&Date.now()-parseInt(cacheTime)<sixHours){
+    document.getElementById('adviceList').innerHTML=cached;
+    document.getElementById('aiOverallSub').textContent='Analisis '+ytAllVideos.length+' video · powered by Gemini AI · cache · klik Refresh untuk update';
+    const refreshBtn=document.createElement('button');refreshBtn.textContent='🔄 Refresh AI';refreshBtn.className='btn-sm';refreshBtn.style.marginLeft='8px';refreshBtn.onclick=()=>generateAIAdvice(true);
+    document.getElementById('aiOverallSub').appendChild(refreshBtn);
+    return;
+  }
+  document.getElementById('adviceList').innerHTML='<div class="yt-loading" style="padding:20px"><div class="spinner"></div>Menghubungi Gemini AI...</div>';
   const rows=ytAnalytics?.rows||[];
   const totViews=rows.reduce((s,r)=>s+(r[1]||0),0);const totSubs=rows.reduce((s,r)=>s+(r[3]||0)-(r[4]||0),0);
   const ctrRows=rows.filter(r=>r[5]>0);const avgCtr=ctrRows.length>0?ctrRows.reduce((s,r)=>s+r[5],0)/ctrRows.length*100:0;
@@ -1165,7 +1308,7 @@ Minimal 8 insights. Semua harus SPESIFIK dan ACTIONABLE, bukan saran generik.`);
     const jsonStart=clean.indexOf('{');const jsonEnd=clean.lastIndexOf('}');
     const jsonStr=jsonStart>=0?clean.slice(jsonStart,jsonEnd+1):clean;
     const parsed=JSON.parse(jsonStr);
-    document.getElementById('adviceList').innerHTML=
+    const htmlResult=
       (parsed.kesimpulan?`<div style="background:var(--bg);border-radius:10px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--border)"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:4px">📋 KESIMPULAN CHANNEL</div><div style="font-size:13px;line-height:1.6">${parsed.kesimpulan}</div></div>`:'') +
       (parsed.insights||[]).map(a=>`<div class="advice-item ${a.type||'tip'}"><div class="advice-label">${a.label}</div><div class="advice-text">${a.text}</div></div>`).join('');
   }catch(e){
