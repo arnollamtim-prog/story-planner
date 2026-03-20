@@ -870,14 +870,14 @@ async function fetchAnalytics(days){
   const d=days||curRange;
   const end=new Date().toISOString().split('T')[0];
   const start=new Date(Date.now()-d*86400000).toISOString().split('T')[0];
-  try{const r=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${start}&endDate=${end}&metrics=views,estimatedMinutesWatched,subscribersGained,subscribersLost,annotationClickThroughRate&dimensions=day&sort=day`,{headers:{Authorization:'Bearer '+ytToken}});ytAnalytics=await r.json();}
+  try{const r=await fetch('https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate='+(start)+'&endDate='+(end)+'&metrics=views,estimatedMinutesWatched,subscribersGained,subscribersLost,annotationClickThroughRate&dimensions=day&sort=day',{headers:{Authorization:'Bearer '+ytToken}});ytAnalytics=await r.json();}
   catch{ytAnalytics=null;}
 }
 
 async function fetchAnalyticsForRange(days){
   const end=new Date().toISOString().split('T')[0];
   const start=new Date(Date.now()-days*86400000).toISOString().split('T')[0];
-  try{const r=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${start}&endDate=${end}&metrics=views,estimatedMinutesWatched,subscribersGained,subscribersLost,annotationClickThroughRate&dimensions=day&sort=day`,{headers:{Authorization:'Bearer '+ytToken}});return await r.json();}
+  try{const r=await fetch('https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate='+(start)+'&endDate='+(end)+'&metrics=views,estimatedMinutesWatched,subscribersGained,subscribersLost,annotationClickThroughRate&dimensions=day&sort=day',{headers:{Authorization:'Bearer '+ytToken}});return await r.json();}
   catch{return null;}
 }
 
@@ -1080,29 +1080,29 @@ function renderHeatmap(){
   const jadwal=top6.length>0?top6.map(s=>`${s.day} ${s.hour}:00`).join(' · '):'Belum cukup data';
   const idPeakHours=[['Pagi','06-08','Sebelum kerja'],['Siang','12-13','Istirahat'],['Sore','16-18','Pulang kerja'],['Malam','19-22','Prime time']];
   const perDaySlots={};days.forEach(d=>{const ds=[];for(let h=0;h<24;h++){if(avgData[d][h]>0)ds.push({hour:h,avg:avgData[d][h]});}ds.sort((a,b)=>b.avg-a.avg);perDaySlots[d]=ds.slice(0,6);});
-  html+=`<div style="grid-column:1/-1;margin-top:14px">
-    <div style="display:flex;align-items:center;gap:12px;font-size:11px;color:var(--muted);flex-wrap:wrap;margin-bottom:10px">
-      <strong>Cara baca:</strong>
-      <span>⬜ Belum upload</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(59,123,224,0.5);display:inline-block"></span> Views rendah</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(224,155,59,0.7);display:inline-block"></span> Views sedang</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(224,59,46,0.9);display:inline-block"></span> Views tinggi</span>
-      ${bestAvg>0?`<strong>⭐ Terbaik: ${bestDay} jam ${bestHour}:00 — rata-rata ${fmtNum(Math.round(bestAvg))} views</strong>`:''}
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
-      <div style="background:var(--bg);border-radius:10px;padding:14px;border-left:3px solid var(--green)">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:8px">TOP 6 JAM TERBAIK CHANNEL KAMU</div>
-        ${top6.length>0?`<div style="display:flex;flex-wrap:wrap;gap:4px">${top6.map((s,i)=>'<span style="background:var(--text);color:white;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:600">'+(i+1)+'. '+s.day+' '+s.hour+':00</span>').join('')}</div><div style="font-size:11px;color:var(--muted);margin-top:6px">Distribusikan upload Shorts di jam-jam ini</div>`:'<div style="font-size:12px;color:var(--muted)">Belum cukup data</div>'}
-      </div>
-      <div style="background:var(--bg);border-radius:10px;padding:14px;border-left:3px solid var(--sh)">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:8px">JAM RAME YOUTUBE INDONESIA</div>
-        ${idPeakHours.map(p=>'<div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:600">'+p[0]+': '+p[1]+'</span><span style="font-size:11px;color:var(--muted)">'+p[2]+'</span></div>').join('')}
-      </div>
-    </div>
-    <div style="background:var(--bg);border-radius:10px;padding:14px;margin-top:8px">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px">TOP 3 JAM PER HARI (DATA CHANNEL KAMU)</div>
-      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">${days.map(d=>'<div style="text-align:center"><div style="font-size:10px;font-weight:700;color:var(--muted);margin-bottom:4px">'+d+'</div>'+(perDaySlots[d]||[]).slice(0,3).map(s=>'<div style="font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 0;margin-bottom:2px">'+s.hour+':00</div>').join('')+'</div>').join('')}</div>
-    </div>
+  html+='<div style="grid-column:1/-1;margin-top:14px">'+
+    '<div style="display:flex;align-items:center;gap:12px;font-size:11px;color:var(--muted);flex-wrap:wrap;margin-bottom:10px">'+
+    '<strong>Cara baca:</strong>'+
+    '<span>Belum upload</span>'+
+    '<span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(59,123,224,0.5);display:inline-block"></span> Views rendah</span>'+
+    '<span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(224,155,59,0.7);display:inline-block"></span> Views sedang</span>'+
+    '<span style="display:flex;align-items:center;gap:4px"><span style="width:14px;height:10px;border-radius:2px;background:rgba(224,59,46,0.9);display:inline-block"></span> Views tinggi</span>'+
+    (bestAvg>0?'<strong>Terbaik: '+bestDay+' jam '+bestHour+':00 - rata-rata '+fmtNum(Math.round(bestAvg))+' views</strong>':'')+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">'+
+    '<div style="background:var(--bg);border-radius:10px;padding:14px;border-left:3px solid var(--green)">'+
+    '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:8px">TOP 6 JAM TERBAIK CHANNEL KAMU</div>'+
+    (top6.length>0?'<div style="display:flex;flex-wrap:wrap;gap:4px">'+top6.map((s,i)=>'<span style="background:var(--text);color:white;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:600">'+(i+1)+'. '+s.day+' '+s.hour+':00</span>').join('')+'</div><div style="font-size:11px;color:var(--muted);margin-top:6px">Distribusikan upload Shorts di jam-jam ini</div>':'<div style="font-size:12px;color:var(--muted)">Belum cukup data</div>')+
+    '</div>'+
+    '<div style="background:var(--bg);border-radius:10px;padding:14px;border-left:3px solid var(--sh)">'+
+    '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:8px">JAM RAME YOUTUBE INDONESIA</div>'+
+    idPeakHours.map(p=>'<div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:600">'+p[0]+': '+p[1]+'</span><span style="font-size:11px;color:var(--muted)">'+p[2]+'</span></div>').join('')+
+    '</div></div>'+
+    '<div style="background:var(--bg);border-radius:10px;padding:14px;margin-top:8px">'+
+    '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px">TOP 3 JAM PER HARI (DATA CHANNEL KAMU)</div>'+
+    '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">'+
+    days.map(d=>'<div style="text-align:center"><div style="font-size:10px;font-weight:700;color:var(--muted);margin-bottom:4px">'+d+'</div>'+(perDaySlots[d]||[]).slice(0,3).map(s=>'<div style="font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 0;margin-bottom:2px">'+s.hour+':00</div>').join('')+'</div>').join('')+
+    '</div></div></div>';
   document.getElementById('heatmapGrid').innerHTML=html;
 }
 
@@ -1120,9 +1120,9 @@ async function generateExport(){
   const expStart=new Date(Date.now()-exportRange*86400000).toISOString().split('T')[0];
   try{
     const [tRes,dRes,iRes]=await Promise.all([
-      fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${expStart}&endDate=${expEnd}&metrics=views&dimensions=insightTrafficSourceType&sort=-views`,{headers:{Authorization:'Bearer '+ytToken}}),
-      fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${expStart}&endDate=${expEnd}&metrics=views&dimensions=ageGroup,gender&sort=-views`,{headers:{Authorization:'Bearer '+ytToken}}),
-      fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${expStart}&endDate=${expEnd}&metrics=views,estimatedMinutesWatched,averageViewDuration,averageViewPercentage,impressions,impressionsClickThroughRate&sort=-views`,{headers:{Authorization:'Bearer '+ytToken}})
+      fetch('https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate='+(expStart)+'&endDate='+(expEnd)+'&metrics=views&dimensions=insightTrafficSourceType&sort=-views',{headers:{Authorization:'Bearer '+ytToken}}),
+      fetch('https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate='+(expStart)+'&endDate='+(expEnd)+'&metrics=views&dimensions=ageGroup,gender&sort=-views',{headers:{Authorization:'Bearer '+ytToken}}),
+      fetch('https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate='+(expStart)+'&endDate='+(expEnd)+'&metrics=views,estimatedMinutesWatched,averageViewDuration,averageViewPercentage,impressions,impressionsClickThroughRate&sort=-views',{headers:{Authorization:'Bearer '+ytToken}})
     ]);
     trafficData=await tRes.json();
     demoData=await dRes.json();
@@ -1133,7 +1133,7 @@ async function generateExport(){
   const top5vids=[...ytAllVideos].sort((a,b)=>parseInt(b.statistics?.viewCount||0)-parseInt(a.statistics?.viewCount||0)).slice(0,5);
   for(const v of top5vids){
     try{
-      const r=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${expStart}&endDate=${expEnd}&metrics=audienceWatchRatio&dimensions=elapsedVideoTimeRatio&filters=video%3D%3D${v.id}`,{headers:{Authorization:'Bearer '+ytToken}});
+      const r=await fetch('https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate='+(expStart)+'&endDate='+(expEnd)+'&metrics=audienceWatchRatio&dimensions=elapsedVideoTimeRatio&filters=video%3D%3D'+v.id,{headers:{Authorization:'Bearer '+ytToken}});
       const d=await r.json();
       if(d.rows&&d.rows.length>0) retentionMap[v.id]=d.rows;
     }catch(e){}
@@ -1202,16 +1202,10 @@ async function generateExport(){
   try{
     const{data:calItems}=await db.from('calendar').select('title,narasi,type').order('date',{ascending:false}).limit(5);
     if(calItems&&calItems.length>0){
-      scriptSection='
-
-------- SCRIPT/NARASI TERBARU -------
-';
+      scriptSection='\n------- SCRIPT/NARASI TERBARU -------\n';
       calItems.forEach((item,i)=>{
         if(item.narasi&&item.narasi.length>10){
-          scriptSection+=`
-SCRIPT ${i+1}: "${item.title}" (${item.type==='short'?'Shorts':'YouTube'})
-${item.narasi.slice(0,500)}${item.narasi.length>500?'...':''}
-`;
+          scriptSection+='\nSCRIPT '+(i+1)+': "'+item.title+'" ('+(item.type==='short'?'Shorts':'YouTube')+')\n'+(item.narasi||'').slice(0,500)+(item.narasi&&item.narasi.length>500?'...':'')+'\n';
         }
       });
     }
@@ -1385,8 +1379,7 @@ ${item.narasi.slice(0,500)}${item.narasi.length>500?'...':''}
   L.push('================================================================');
 
   document.getElementById('exportRangeLabel').textContent='Rekap '+rangeName(exportRange)+' - '+ytAllVideos.length+' video - '+now.toLocaleDateString('id-ID');
-  document.getElementById('exportText').value=L.join('
-');
+  document.getElementById('exportText').value=L.join('\n');
   document.getElementById('exportResult').style.display='block';
   document.getElementById('exportResult').scrollIntoView({behavior:'smooth',block:'start'});
   toast('Rekap '+ytAllVideos.length+' video berhasil! ');
@@ -1415,7 +1408,7 @@ function applyVideoFilters(){
     if(vSortBy==='duration')return getDurSec(b)-getDurSec(a);
     return 0;
   });
-  filteredVideos=vids;document.getElementById('videoCount').textContent=`(${vids.length} video)`;renderVideoTable();
+  filteredVideos=vids;document.getElementById('videoCount').textContent='('+vids.length+' video)';renderVideoTable();
 }
 function renderVideoTable(){
   const toShow=filteredVideos.slice(0,vDisplayCount);const maxV=Math.max(...filteredVideos.map(v=>parseInt(v.statistics?.viewCount||0)),1);
@@ -1425,16 +1418,16 @@ function renderVideoTable(){
     const dur=fmtDur(v.contentDetails?.duration);const type=isShort(v)?'sh':'yt';
     const date=snip.publishedAt?new Date(snip.publishedAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'2-digit'}):'—';
     const barPct=Math.round(views/maxV*100);const barClass=barPct>66?'hi':barPct>33?'mid':'';
-    const sub=subsData[v.id];const subHtml=sub!=null?`<span style="color:${sub>0?'var(--green)':'var(--muted)'};font-weight:600">${sub>0?'+':''}${sub}</span>`:'<span style="color:var(--muted);font-size:11px">—</span>';
-    return`<tr><td><div class="vtitle-cell"><img class="vthumb" src="${thumb}" alt="" onerror="this.style.background='var(--border)'"><div><span class="vpill ${type}">${type==='sh'?'⚡ Shorts':'▶ YT'}</span><div class="vtitle-txt">${snip.title||'—'}</div></div></div></td>
-    <td class="num"><strong>${fmtNum(views)}</strong><div class="vbar"><div class="vbar-fill ${barClass}" style="width:${barPct}%"></div></div></td>
-    <td class="num" id="sub_${v.id}">${subHtml}</td>
-    <td class="num">${fmtNum(likes)}</td><td class="num">${fmtNum(comments)}</td>
-    <td class="num" style="color:var(--muted)">${dur}</td>
-    <td class="num" style="color:var(--muted);font-size:11.5px">${date}</td>
-    <td><button class="vdet-btn" onclick="openVideoDetail('${v.id}')">Detail</button></td></tr>`;
+    const sub=subsData[v.id];const subHtml=sub!=null?'<span style="color:'+(sub>0?'var(--green)':'var(--muted)')+';font-weight:600">'+(sub>0?'+':'')+sub+'</span>':'<span style="color:var(--muted);font-size:11px">—</span>';
+    return '<tr><td><div class="vtitle-cell"><img class="vthumb" src="'+thumb+'" alt="" onerror="this.style.background=\'var(--border)\'"><div><span class="vpill '+type+'">'+(type==='sh'?'Shorts':'YT')+'</span><div class="vtitle-txt">'+(snip.title||'--')+'</div></div></div></td>'+
+    '<td class="num"><strong>'+fmtNum(views)+'</strong><div class="vbar"><div class="vbar-fill '+barClass+'" style="width:'+barPct+'%"></div></div></td>'+
+    '<td class="num" id="sub_'+v.id+'">'+subHtml+'</td>'+
+    '<td class="num">'+fmtNum(likes)+'</td><td class="num">'+fmtNum(comments)+'</td>'+
+    '<td class="num" style="color:var(--muted)">'+dur+'</td>'+
+    '<td class="num" style="color:var(--muted);font-size:11.5px">'+date+'</td>'+
+    '<td><button class="vdet-btn" onclick="openVideoDetail(\''+v.id+'\')">' +'Detail</button></td></tr>';
   }).join('');
-  const lb=document.getElementById('loadMoreBtn');if(filteredVideos.length>vDisplayCount){lb.style.display='block';lb.textContent=`+ Muat ${filteredVideos.length-vDisplayCount} video lagi`;}else lb.style.display='none';
+  const lb=document.getElementById('loadMoreBtn');if(filteredVideos.length>vDisplayCount){lb.style.display='block';lb.textContent='+ Muat '+(filteredVideos.length-vDisplayCount)+' video lagi';}else lb.style.display='none';
 }
 function loadMoreVideos(){vDisplayCount+=25;renderVideoTable();}
 
@@ -1442,7 +1435,7 @@ function loadMoreVideos(){vDisplayCount+=25;renderVideoTable();}
 async function fetchVideoSubs(videoId){
   const end=new Date().toISOString().split('T')[0];const start=new Date(Date.now()-365*86400000).toISOString().split('T')[0];
   try{
-    const r=await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=${start}&endDate=${end}&metrics=subscribersGained&dimensions=video&filters=video%3D%3D${videoId}`,{headers:{Authorization:'Bearer '+ytToken}});
+    const r=await fetch('https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate='+(start)+'&endDate='+(end)+'&metrics=subscribersGained&dimensions=video&filters=video%3D%3D'+videoId,{headers:{Authorization:'Bearer '+ytToken}});
     const d=await r.json();const rows=d.rows||[];
     if(rows.length>0)return rows[0][1]||0;return 0;
   }catch{return null;}
@@ -1459,9 +1452,9 @@ async function startLoadCTR(){
     if(result!=null)subsData[v.id]=result;
     const pct=Math.round((i+1)/total*100);
     document.getElementById('ctrBarFill').style.width=pct+'%';
-    document.getElementById('ctrProgressTxt').textContent=`Mengambil +Subscriber... ${i+1}/${total}`;
+    document.getElementById('ctrProgressTxt').textContent='Mengambil +Subscriber... '+(i+1)+'/'+total;
     const subCell=document.getElementById('sub_'+v.id);
-    if(result!=null&&subCell)subCell.innerHTML=`<span style="color:${result>0?'var(--green)':'var(--muted)'};font-weight:600">${result>0?'+':''}${result}</span>`;
+    if(result!=null&&subCell)subCell.innerHTML='<span style="color:'+(result>0?'var(--green)':'var(--muted)')+';font-weight:600">'+(result>0?'+':'')+result+'</span>';
     await new Promise(r=>setTimeout(r,200));
   }
   document.getElementById('ctrProgressTxt').textContent=ctrStop?'Dihentikan.':'✅ Selesai! Data +Sub tersimpan untuk export.';
@@ -1478,7 +1471,7 @@ async function autoFetchSubscribers(){
     if(result!=null){
       subsData[v.id]=result;
       const subCell=document.getElementById('sub_'+v.id);
-      if(subCell)subCell.innerHTML=`<span style="color:${result>0?'var(--green)':'var(--muted)'};font-weight:600">${result>0?'+':''}${result}</span>`;
+      if(subCell)subCell.innerHTML='<span style="color:'+(result>0?'var(--green)':'var(--muted)')+';font-weight:600">'+(result>0?'+':'')+result+'</span>';
     }
     await new Promise(r=>setTimeout(r,250));
   }
@@ -1493,34 +1486,29 @@ function openVideoDetail(videoId){
   const date=snip.publishedAt?new Date(snip.publishedAt).toLocaleDateString('id-ID',{dateStyle:'long'}):'—';
   const engRate=views>0?((likes+comments)/views*100).toFixed(2):'0';const likeRate=views>0?(likes/views*100).toFixed(2):'0';
   const subNow=subsData[videoId];
-  const subHtml=subNow!=null?`<span style="font-weight:700;color:${subNow>0?'var(--green)':'var(--muted)'}">+${subNow}</span>`:`<span style="color:var(--muted);font-size:12px">Memuat...</span>`;
-  document.getElementById('vdetBody').innerHTML=`
-    <div class="vd-head"><img class="vd-thumb" src="${thumb}" alt=""><div><div class="vd-title">${snip.title||'—'}</div><div class="vd-meta">${type} · ${date} · ${dur}</div></div></div>
-    <div class="vd-stats">
-      <div class="vd-stat"><div class="vd-stat-label">Views</div><div class="vd-stat-value">${fmtNum(views)}</div><div class="vd-stat-sub">total</div></div>
-      <div class="vd-stat"><div class="vd-stat-label">Likes</div><div class="vd-stat-value">${fmtNum(likes)}</div><div class="vd-stat-sub">like rate ${likeRate}%</div></div>
-      <div class="vd-stat"><div class="vd-stat-label">Komentar</div><div class="vd-stat-value">${fmtNum(comments)}</div><div class="vd-stat-sub">total</div></div>
-      <div class="vd-stat"><div class="vd-stat-label">Engagement</div><div class="vd-stat-value">${engRate}%</div><div class="vd-stat-sub">likes+komen/views</div></div>
-      <div class="vd-stat"><div class="vd-stat-label">Durasi</div><div class="vd-stat-value">${dur}</div><div class="vd-stat-sub">${type}</div></div>
-      <div class="vd-stat"><div class="vd-stat-label">+Subscriber</div><div class="vd-stat-value" id="vd_sub_box">${subHtml}</div><div class="vd-stat-sub">dari video ini</div></div>
-    </div>
-    <div style="background:var(--bg);border-radius:10px;padding:14px;margin-top:8px">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:6px">📋 DATA MENTAH</div>
-      <div style="font-size:12px;color:var(--muted);line-height:1.8">
-        Video ID: <code style="background:var(--surface);padding:2px 6px;border-radius:4px">${v.id}</code><br>
-        URL: <a href="https://youtu.be/${v.id}" target="_blank" style="color:var(--sh)">https://youtu.be/${v.id}</a>
-      </div>
-    </div>
-  `;
+  const subHtml=subNow!=null?'<span style="font-weight:700;color:'+(subNow>0?'var(--green)':'var(--muted)')+'">' +subNow+'</span>':'<span style="color:var(--muted);font-size:12px">Memuat...</span>';
+  document.getElementById('vdetBody').innerHTML=
+    '<div class="vd-head"><img class="vd-thumb" src="'+thumb+'" alt=""><div><div class="vd-title">'+(snip.title||'--')+'</div><div class="vd-meta">'+type+' - '+date+' - '+dur+'</div></div></div>'+
+    '<div class="vd-stats">'+
+    '<div class="vd-stat"><div class="vd-stat-label">Views</div><div class="vd-stat-value">'+fmtNum(views)+'</div><div class="vd-stat-sub">total</div></div>'+
+    '<div class="vd-stat"><div class="vd-stat-label">Likes</div><div class="vd-stat-value">'+fmtNum(likes)+'</div><div class="vd-stat-sub">like rate '+likeRate+'%</div></div>'+
+    '<div class="vd-stat"><div class="vd-stat-label">Komentar</div><div class="vd-stat-value">'+fmtNum(comments)+'</div><div class="vd-stat-sub">total</div></div>'+
+    '<div class="vd-stat"><div class="vd-stat-label">Engagement</div><div class="vd-stat-value">'+engRate+'%</div><div class="vd-stat-sub">likes+komen/views</div></div>'+
+    '<div class="vd-stat"><div class="vd-stat-label">Durasi</div><div class="vd-stat-value">'+dur+'</div><div class="vd-stat-sub">'+type+'</div></div>'+
+    '<div class="vd-stat"><div class="vd-stat-label">+Subscriber</div><div class="vd-stat-value" id="vd_sub_box">'+subHtml+'</div><div class="vd-stat-sub">dari video ini</div></div>'+
+    '</div>'+
+    '<div style="background:var(--bg);border-radius:10px;padding:14px;margin-top:8px">'+
+    '<div style="font-size:12px;color:var(--muted);line-height:1.8">ID: '+v.id+'<br>'+
+    '<a href="https://youtu.be/'+v.id+'" target="_blank" style="color:var(--sh)">youtu.be/'+v.id+'</a></div></div>';
   document.getElementById('vdetModal').classList.add('open');
   if(subNow==null){
     fetchVideoSubs(videoId).then(result=>{
       if(result!=null){
         subsData[videoId]=result;
         const subBox=document.getElementById('vd_sub_box');
-        if(subBox)subBox.innerHTML=`<span style="font-weight:700;color:${result>0?'var(--green)':'var(--muted)'}">+${result}</span>`;
+        if(subBox)subBox.innerHTML='<span style="font-weight:700;color:'+(result>0?'var(--green)':'var(--muted)')+'">' +result+'</span>';
         const subCell=document.getElementById('sub_'+videoId);
-        if(subCell)subCell.innerHTML=`<span style="color:${result>0?'var(--green)':'var(--muted)'};font-weight:600">${result>0?'+':''}${result}</span>`;
+        if(subCell)subCell.innerHTML='<span style="color:'+(result>0?'var(--green)':'var(--muted)')+';font-weight:600">'+(result>0?'+':'')+result+'</span>';
       }
     });
   }
@@ -1564,17 +1552,15 @@ function renderJournalList(entries){
     const monthName=d.toLocaleDateString('id-ID',{month:'long',year:'numeric'});
     const avgSubs=Math.round(items.reduce((s,e)=>s+(e.subs||0),0)/items.length);
     const totalViews=items.reduce((s,e)=>s+(e.views||0),0);
-    monthlyHtml+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <div style="font-family:'DM Serif Display',serif;font-size:16px">Rekap ${monthName}</div>
-        <span style="font-size:11px;color:var(--muted)">${items.length} entry minggu</span>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-        <div style="background:var(--bg);border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600;margin-bottom:4px">Avg Subscriber</div><div style="font-family:'DM Serif Display',serif;font-size:18px">${fmtNum(avgSubs)}</div></div>
-        <div style="background:var(--bg);border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600;margin-bottom:4px">Total Views</div><div style="font-family:'DM Serif Display',serif;font-size:18px">${fmtNum(totalViews)}</div></div>
-        <div style="background:var(--bg);border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600;margin-bottom:4px">Entry</div><div style="font-family:'DM Serif Display',serif;font-size:18px">${items.length}/4</div></div>
-      </div>
-    </div>`;
+    monthlyHtml+='<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px">'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'+
+      '<div style="font-family:\'DM Serif Display\',serif;font-size:16px">Rekap '+monthName+'</div>'+
+      '<span style="font-size:11px;color:var(--muted)">'+items.length+' entry minggu</span></div>'+
+      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">'+
+      '<div style="background:var(--bg);border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600;margin-bottom:4px">Avg Subscriber</div><div style="font-family:\'DM Serif Display\',serif;font-size:18px">'+fmtNum(avgSubs)+'</div></div>'+
+      '<div style="background:var(--bg);border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600;margin-bottom:4px">Total Views</div><div style="font-family:\'DM Serif Display\',serif;font-size:18px">'+fmtNum(totalViews)+'</div></div>'+
+      '<div style="background:var(--bg);border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600;margin-bottom:4px">Entry</div><div style="font-family:\'DM Serif Display\',serif;font-size:18px">'+items.length+'/4</div></div>'+
+      '</div></div>';
   });
   document.getElementById('journalMonthlySummary').innerHTML=monthlyHtml;
 
@@ -1583,21 +1569,17 @@ function renderJournalList(entries){
   entries.forEach(e=>{
     const d=new Date(e.created_at);
     const dateStr=d.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
-    html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:10px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
-        <div>
-          <div style="font-weight:600;font-size:14px">${e.period||dateStr}</div>
-          <div style="font-size:11.5px;color:var(--muted);margin-top:2px">${dateStr}</div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          ${e.subs?`<span style="font-size:12px;background:var(--hover);padding:3px 10px;border-radius:20px">${fmtNum(e.subs)} subs</span>`:''}
-          ${e.views?`<span style="font-size:12px;background:var(--hover);padding:3px 10px;border-radius:20px">${fmtNum(e.views)} views</span>`:''}
-          <button class="btn-sm red" onclick="deleteJournalEntry('${e.id}')">Hapus</button>
-        </div>
-      </div>
-      ${e.content?`<div style="font-size:12.5px;color:var(--muted);line-height:1.6;white-space:pre-wrap;max-height:120px;overflow-y:auto;margin-bottom:10px">${e.content}</div>`:''}
-      ${e.plan?`<div style="background:var(--bg);border-radius:8px;padding:10px;border-left:3px solid var(--green)"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:4px">Rencana Aksi</div><div style="font-size:12.5px;line-height:1.6;white-space:pre-wrap">${e.plan}</div></div>`:''}
-    </div>`;
+    html+='<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:10px">'+
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">'+
+      '<div><div style="font-weight:600;font-size:14px">'+(e.period||dateStr)+'</div>'+
+      '<div style="font-size:11.5px;color:var(--muted);margin-top:2px">'+dateStr+'</div></div>'+
+      '<div style="display:flex;gap:8px;align-items:center">'+
+      (e.subs?'<span style="font-size:12px;background:var(--hover);padding:3px 10px;border-radius:20px">'+fmtNum(e.subs)+' subs</span>':'')+
+      (e.views?'<span style="font-size:12px;background:var(--hover);padding:3px 10px;border-radius:20px">'+fmtNum(e.views)+' views</span>':'')+
+      '<button class="btn-sm red" onclick="deleteJournalEntry(\''+e.id+'\')">' +'Hapus</button></div></div>'+
+      (e.content?'<div style="font-size:12.5px;color:var(--muted);line-height:1.6;white-space:pre-wrap;max-height:120px;overflow-y:auto;margin-bottom:10px">'+e.content+'</div>':'')+
+      (e.plan?'<div style="background:var(--bg);border-radius:8px;padding:10px;border-left:3px solid var(--green)"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:4px">Rencana Aksi</div><div style="font-size:12.5px;line-height:1.6;white-space:pre-wrap">'+e.plan+'</div></div>':'')+
+      '</div>';
   });
   document.getElementById('journalList').innerHTML=html;
 }
