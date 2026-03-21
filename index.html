@@ -642,8 +642,12 @@ function renderCalendar(){
       const st=e.status||'belum';
       const stColor=st==='upload'?'#2d7a3e':st==='export'?'#b07c00':'var(--yt)';
       const stBg=st==='upload'?'#e6f4ea':st==='export'?'#fff3cd':'#fde8e7';
+      const typeColor=e.type==='short'?'var(--sh)':'var(--yt)';
+      const typeLabel=e.type==='short'?'⚡ S':'▶ YT';
       return '<div class="cal-event" style="background:'+stBg+';color:'+stColor+';border-left:3px solid '+stColor+'" onclick="event.stopPropagation();cycleStatus_cal(\''+e.id+'\',\''+st+'\')">'+
-        '<span style="font-size:9px;margin-right:3px">'+(st==='upload'?'✅':st==='export'?'📤':'🔴')+'</span>'+e.title+'</div>';
+        '<span style="font-size:8px;font-weight:700;background:'+typeColor+';color:white;border-radius:3px;padding:1px 3px;margin-right:4px">'+typeLabel+'</span>'+
+        '<span style="font-size:9px;margin-right:3px">'+(st==='upload'?'✅':st==='export'?'📤':'🔴')+'</span>'+
+        e.title+'</div>';
     }).join('');
     cells+=`<div class="cal-cell ${isOther?'other-month':''} ${isToday?'today':''}" onclick="openDayModal('${dateStr}')"><div class="cal-date">${day}</div><div class="cal-events">${evsHtml}</div></div>`;
   }
