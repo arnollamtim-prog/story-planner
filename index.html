@@ -228,6 +228,10 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
 .acc-body.open{max-height:9999px}
 .acc-inner{padding:14px}
 .narasi-item-content{font-size:13px;color:var(--muted);line-height:1.6;white-space:pre-wrap;max-height:100px;overflow:hidden;margin-bottom:12px}
+.cal-event.status-belum{background:#fde8e7;color:var(--yt);border-left:3px solid var(--yt)}
+.cal-event.status-export{background:#fff3cd;color:#b07c00;border-left:3px solid #e09b3b}
+.cal-event.status-upload{background:#e6f4ea;color:var(--green);border-left:3px solid var(--green)}
+.status-dot-cal{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px;flex-shrink:0}
 .yt-loading{text-align:center;padding:40px;color:var(--muted);font-size:13.5px}
 .spinner{width:28px;height:28px;border:2.5px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
 .spinner-sm{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--muted);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle;margin-left:6px}
@@ -300,10 +304,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6}
       <div id="sceneCards"><div style="color:var(--muted);font-size:13px">Paste narasi dan klik Bersihkan</div></div>
     </div>
   </div>
-  <div class="narasi-list-section">
-    <div class="page-title" style="font-size:20px;margin-bottom:16px">Semua Narasi <span style="font-size:13px;color:var(--muted);font-weight:400">(dari Kalender + tersimpan)</span></div>
-    <div id="narasiList"></div>
-  </div>
+
 </div>
 <!-- IDEAS -->
 <div class="page" id="page-ideas">
@@ -612,7 +613,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     if(item.dataset.page==='ideas')loadIdeas();
     if(item.dataset.page==='caption')loadCaptions();
     if(item.dataset.page==='vault')loadVault();
-    if(item.dataset.page==='narasi')loadNarasi();
+    // narasi list removed
     if(item.dataset.page==='ytanalytics')initYTPage();
     if(item.dataset.page==='journal')loadJournal();
   });
@@ -637,7 +638,13 @@ function renderCalendar(){
     else{day=nextCount++;dateStr=fmtDate(new Date(y,m+1,day));isOther=true;}
     const isToday=!isOther&&new Date(y,m,day).toDateString()===today.toDateString();
     const evs=calData.filter(e=>e.date===dateStr);
-    const evsHtml=evs.slice(0,3).map(e=>`<div class="cal-event ${e.type||'yt'}">${e.title}</div>`).join('');
+    const evsHtml=evs.slice(0,3).map(e=>{
+      const st=e.status||'belum';
+      const stColor=st==='upload'?'#2d7a3e':st==='export'?'#b07c00':'var(--yt)';
+      const stBg=st==='upload'?'#e6f4ea':st==='export'?'#fff3cd':'#fde8e7';
+      return '<div class="cal-event" style="background:'+stBg+';color:'+stColor+';border-left:3px solid '+stColor+'" onclick="event.stopPropagation();cycleStatus_cal(\''+e.id+'\',\''+st+'\')">'+
+        '<span style="font-size:9px;margin-right:3px">'+(st==='upload'?'✅':st==='export'?'📤':'🔴')+'</span>'+e.title+'</div>';
+    }).join('');
     cells+=`<div class="cal-cell ${isOther?'other-month':''} ${isToday?'today':''}" onclick="openDayModal('${dateStr}')"><div class="cal-date">${day}</div><div class="cal-events">${evsHtml}</div></div>`;
   }
   document.getElementById('calCells').innerHTML=cells;
@@ -662,6 +669,8 @@ function openDayModal(dateStr){
         <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
           <button class="btn-sm" onclick="copyText(document.getElementById('card_${e.id}').textContent)">📋 Copy</button>
           ${hasAsli?`<button class="btn-sm" id="toggle_${e.id}" data-mode="bersih" onclick="toggleNarasi('${e.id}')">👁 Lihat Asli</button>`:''}
+          <button class="btn-sm" onclick="openEditCalModal('${e.id}')">✏️ Edit</button>
+          <button class="btn-sm" style="background:${(e.status||'belum')==='upload'?'#e6f4ea':(e.status||'belum')==='export'?'#fff3cd':'#fde8e7'};color:${(e.status||'belum')==='upload'?'var(--green)':(e.status||'belum')==='export'?'#b07c00':'var(--yt)'}" onclick="cycleStatus_cal('${e.id}','${e.status||'belum'}')" id="statusBtn_${e.id}">${(e.status||'belum')==='upload'?'✅ Uploaded':(e.status||'belum')==='export'?'📤 Exported':'🔴 Belum'}</button>
           <button class="btn-sm red" onclick="deleteCalContent('${e.id}')">Hapus</button>
         </div>
       </div>`;
@@ -690,6 +699,54 @@ async function saveAddContent(){
   const{data,error}=await db.from('calendar').insert([{title,type:addFmt,date,narasi:bersih,narasi_asli:raw!==bersih?raw:null}]).select();
   if(!error&&data){calData.push(data[0]);renderCalendar();document.getElementById('addModal').classList.remove('open');toast('Konten disimpan!');}
 }
+async function cycleStatus_cal(id,cur){
+  const next=cur==='belum'?'export':cur==='export'?'upload':'belum';
+  await db.from('calendar').update({status:next}).eq('id',id);
+  const i=calData.findIndex(x=>x.id===id);
+  if(i>-1)calData[i].status=next;
+  renderCalendar();
+  // Update button in modal if open
+  const btn=document.getElementById('statusBtn_'+id);
+  if(btn){
+    btn.textContent=next==='upload'?'✅ Uploaded':next==='export'?'📤 Exported':'🔴 Belum';
+    btn.style.background=next==='upload'?'#e6f4ea':next==='export'?'#fff3cd':'#fde8e7';
+    btn.style.color=next==='upload'?'var(--green)':next==='export'?'#b07c00':'var(--yt)';
+    btn.setAttribute('onclick',"cycleStatus_cal('"+id+"','"+next+"')");
+  }
+  toast(next==='upload'?'Marked as uploaded!':next==='export'?'Marked as exported!':'Reset to belum upload');
+}
+
+function openEditCalModal(id){
+  const e=calData.find(x=>x.id===id);
+  if(!e)return;
+  document.getElementById('editCalId').value=id;
+  document.getElementById('editCalTitle').value=e.title||'';
+  document.getElementById('editCalNarasi').value=e.narasi_asli||e.narasi||'';
+  selEditFmt(e.type||'yt');
+  document.getElementById('editCalModal').classList.add('open');
+}
+
+function selEditFmt(fmt){
+  window._editCalFmt=fmt;
+  document.getElementById('editFmtYT').className='format-btn'+(fmt==='yt'?' sel-yt':'');
+  document.getElementById('editFmtSH').className='format-btn'+(fmt==='short'?' sel-sh':'');
+}
+
+async function saveEditCal(){
+  const id=document.getElementById('editCalId').value;
+  const title=document.getElementById('editCalTitle').value.trim();
+  const raw=document.getElementById('editCalNarasi').value.trim();
+  if(!title){toast('Judul tidak boleh kosong!');return;}
+  const secs=doClean(raw);const bersih=secs.length>0?secs.join('\n\n'):raw;
+  await db.from('calendar').update({title,type:window._editCalFmt||'yt',narasi:bersih,narasi_asli:raw!==bersih?raw:null}).eq('id',id);
+  const i=calData.findIndex(x=>x.id===id);
+  if(i>-1){calData[i].title=title;calData[i].type=window._editCalFmt||'yt';calData[i].narasi=bersih;calData[i].narasi_asli=raw!==bersih?raw:null;}
+  renderCalendar();
+  document.getElementById('editCalModal').classList.remove('open');
+  openDayModal(selCalDate);
+  toast('Konten diperbarui!');
+}
+
 async function deleteCalContent(id){await db.from('calendar').delete().eq('id',id);calData=calData.filter(e=>e.id!==id);renderCalendar();openDayModal(selCalDate);toast('Konten dihapus!');}
 
 // ===== NARASI =====
@@ -763,9 +820,51 @@ function toggleAcc(id,header){const body=document.getElementById(id);const arrow
 async function deleteNarasi(id){await db.from('narasi').delete().eq('id',id);toast('Narasi dihapus!');loadNarasi();}
 
 // ===== IDEAS =====
+function openEditIdeaModal(id){
+  const idea=ideasData.find(x=>x.id===id);if(!idea)return;
+  document.getElementById('editIdeaId').value=id;
+  document.getElementById('editIdeaTitle').value=idea.title||'';
+  document.getElementById('editIdeaDesc').value=idea.description||'';
+  document.getElementById('editIdeaType').value=idea.type||'yt';
+  document.getElementById('editIdeaModal').classList.add('open');
+}
+async function saveEditIdea(){
+  const id=document.getElementById('editIdeaId').value;
+  const title=document.getElementById('editIdeaTitle').value.trim();
+  if(!title){toast('Judul tidak boleh kosong!');return;}
+  const updates={title,description:document.getElementById('editIdeaDesc').value.trim(),type:document.getElementById('editIdeaType').value};
+  await db.from('ideas').update(updates).eq('id',id);
+  const i=ideasData.findIndex(x=>x.id===id);
+  if(i>-1)ideasData[i]={...ideasData[i],...updates};
+  renderIdeas();
+  document.getElementById('editIdeaModal').classList.remove('open');
+  toast('Ide diperbarui!');
+}
+
+function openEditVaultModal(id){
+  const p=vaultData.find(x=>x.id===id);if(!p)return;
+  document.getElementById('editVaultId').value=id;
+  document.getElementById('editVaultName').value=p.name||'';
+  document.getElementById('editVaultType').value=p.type||'Lainnya';
+  document.getElementById('editVaultBody').value=p.body||'';
+  document.getElementById('editVaultModal').classList.add('open');
+}
+async function saveEditVault(){
+  const id=document.getElementById('editVaultId').value;
+  const name=document.getElementById('editVaultName').value.trim();
+  if(!name){toast('Nama tidak boleh kosong!');return;}
+  const updates={name,type:document.getElementById('editVaultType').value,body:document.getElementById('editVaultBody').value.trim()};
+  await db.from('prompts').update(updates).eq('id',id);
+  const i=vaultData.findIndex(x=>x.id===id);
+  if(i>-1)vaultData[i]={...vaultData[i],...updates};
+  renderVault();
+  document.getElementById('editVaultModal').classList.remove('open');
+  toast('Prompt diperbarui!');
+}
+
 async function loadIdeas(){const{data}=await db.from('ideas').select('*').order('created_at',{ascending:false});ideasData=data||[];renderIdeas();}
 function filterIdeas(f,btn){ideaFilter=f;document.querySelectorAll('#page-ideas .btn-sm').forEach(b=>{b.style.background='';b.style.color='';b.style.borderColor='';});btn.style.background='var(--text)';btn.style.color='white';btn.style.borderColor='var(--text)';renderIdeas();}
-function renderIdeas(){const search=(document.getElementById('ideaSearch')?.value||'').toLowerCase();let f=ideasData;if(ideaFilter!=='all')f=f.filter(i=>i.type===ideaFilter);if(search)f=f.filter(i=>i.title.toLowerCase().includes(search)||(i.description||'').toLowerCase().includes(search));document.getElementById('ideasGrid').innerHTML=f.length===0?'<p style="color:var(--muted);font-size:13px">Belum ada ide.</p>':f.map(idea=>`<div class="card"><div class="card-header"><div class="card-title">${idea.title}</div><span class="badge ${idea.status||'idea'}" style="cursor:pointer" onclick="cycleStatus('${idea.id}','${idea.status||'idea'}')">${statusLabel(idea.status)}</span></div>${idea.description?`<div class="card-desc">${idea.description}</div>`:''}<div class="card-meta"><span class="badge ${idea.type||'yt'}">${idea.type==='short'?'⚡ Shorts':'▶ YouTube'}</span><button class="btn-sm red" onclick="deleteIdea('${idea.id}')">Hapus</button></div></div>`).join('');}
+function renderIdeas(){const search=(document.getElementById('ideaSearch')?.value||'').toLowerCase();let f=ideasData;if(ideaFilter!=='all')f=f.filter(i=>i.type===ideaFilter);if(search)f=f.filter(i=>i.title.toLowerCase().includes(search)||(i.description||'').toLowerCase().includes(search));document.getElementById('ideasGrid').innerHTML=f.length===0?'<p style="color:var(--muted);font-size:13px">Belum ada ide.</p>':f.map(idea=>`<div class="card"><div class="card-header"><div class="card-title">${idea.title}</div><span class="badge ${idea.status||'idea'}" style="cursor:pointer" onclick="cycleStatus('${idea.id}','${idea.status||'idea'}')">${statusLabel(idea.status)}</span></div>${idea.description?`<div class="card-desc">${idea.description}</div>`:''}<div class="card-meta"><span class="badge ${idea.type||'yt'}">${idea.type==='short'?'⚡ Shorts':'▶ YouTube'}</span><button class="btn-sm" onclick="openEditIdeaModal('${idea.id}')">✏️ Edit</button><button class="btn-sm red" onclick="deleteIdea('${idea.id}')">Hapus</button></div></div>`).join('');}
 function statusLabel(s){return s==='draft'?'✏️ Draft':s==='done'?'✅ Selesai':'💡 Ide';}
 async function cycleStatus(id,cur){const next=cur==='idea'?'draft':cur==='draft'?'done':'idea';await db.from('ideas').update({status:next}).eq('id',id);const i=ideasData.findIndex(x=>x.id===id);if(i>-1)ideasData[i].status=next;renderIdeas();}
 async function deleteIdea(id){await db.from('ideas').delete().eq('id',id);ideasData=ideasData.filter(i=>i.id!==id);renderIdeas();toast('Ide dihapus!');}
@@ -783,7 +882,7 @@ async function saveCaption(){const title=document.getElementById('captionFormTit
 
 // ===== VAULT =====
 async function loadVault(){const{data}=await db.from('prompts').select('*').order('created_at',{ascending:false});vaultData=data||[];renderVault();}
-function renderVault(){document.getElementById('vaultGrid').innerHTML=vaultData.length===0?'<p style="color:var(--muted);font-size:13px">Belum ada prompt.</p>':vaultData.map(p=>`<div class="card"><div class="card-header"><div class="card-title">${p.name}</div><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--hover);color:var(--muted)">${p.type||'Lainnya'}</span></div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:12px;white-space:pre-wrap;max-height:100px;overflow-y:auto">${p.body||''}</div><div style="display:flex;gap:8px"><button class="btn-sm" onclick="copyText(this.dataset.t)" data-t="${(p.body||'').replace(/"/g,'&quot;')}">📋 Copy</button><button class="btn-sm red" onclick="deleteVault('${p.id}')">Hapus</button></div></div>`).join('');}
+function renderVault(){document.getElementById('vaultGrid').innerHTML=vaultData.length===0?'<p style="color:var(--muted);font-size:13px">Belum ada prompt.</p>':vaultData.map(p=>`<div class="card"><div class="card-header"><div class="card-title">${p.name}</div><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--hover);color:var(--muted)">${p.type||'Lainnya'}</span></div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:12px;white-space:pre-wrap;max-height:100px;overflow-y:auto">${p.body||''}</div><div style="display:flex;gap:8px"><button class="btn-sm" onclick="copyText(this.dataset.t)" data-t="${(p.body||'').replace(/"/g,'&quot;')}">📋 Copy</button><button class="btn-sm" onclick="openEditVaultModal('${p.id}')">✏️ Edit</button><button class="btn-sm red" onclick="deleteVault('${p.id}')">Hapus</button></div></div>`).join('');}
 function openVaultModal(){document.getElementById('vaultModal').classList.add('open');}
 async function saveVault(){const name=document.getElementById('vaultFormName').value.trim();if(!name){toast('Nama tidak boleh kosong!');return;}const{data,error}=await db.from('prompts').insert([{name,type:document.getElementById('vaultFormType').value,body:document.getElementById('vaultFormBody').value.trim()}]).select();if(!error&&data){vaultData.unshift(data[0]);renderVault();document.getElementById('vaultModal').classList.remove('open');toast('Prompt disimpan!');}}
 async function deleteVault(id){await db.from('prompts').delete().eq('id',id);vaultData=vaultData.filter(p=>p.id!==id);renderVault();toast('Prompt dihapus!');}
@@ -854,7 +953,21 @@ async function fetchYTData(){
       const ids=(pd.items||[]).filter(v=>v.snippet?.title!=='Deleted video'&&v.snippet?.title!=='Private video').map(v=>v.contentDetails?.videoId).filter(Boolean);
       if(ids.length>0){
         const vd=await ytFetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,contentDetails&id=${ids.join(',')}`);
-        const newItems=(vd.items||[]).filter(v=>!ytAllVideos.some(x=>x.id===v.id)&&v.snippet?.title!=='Deleted video'&&v.snippet?.title!=='Private video');
+        const newItems=(vd.items||[]).filter(v=>{
+          if(ytAllVideos.some(x=>x.id===v.id))return false;
+          if(v.snippet?.title==='Deleted video'||v.snippet?.title==='Private video')return false;
+          // Filter drafts: 0 views AND 0 likes AND 0 comments = likely draft/unlisted
+          const vw=parseInt(v.statistics?.viewCount||0);
+          const lk=parseInt(v.statistics?.likeCount||0);
+          const cm=parseInt(v.statistics?.commentCount||0);
+          if(vw===0&&lk===0&&cm===0){
+            // Check if it's a recently uploaded video (within 48h) - keep those
+            const pub=new Date(v.snippet?.publishedAt||0);
+            const ageHours=(Date.now()-pub.getTime())/3600000;
+            if(ageHours>48)return false; // Older 0-view videos = drafts
+          }
+          return true;
+        });
         ytAllVideos.push(...newItems);
       }
       pageToken=pd.nextPageToken||'';page++;if(!pageToken)break;
@@ -1048,6 +1161,45 @@ function renderCharts(){
   donutChartInst=new Chart(ctx2,{type:'doughnut',data:{labels:[`YouTube (${ytVids.length})`,`Shorts (${shVids.length})`],datasets:[{data:[ytV||1,shV||1],backgroundColor:['#e03b2e','#3b7be0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},color:'#8a8878',boxWidth:10,padding:8}}}}});
 }
 
+function buildUploadRecommendation(top6,perDaySlots,days){
+  // Indonesia YouTube peak hours (research-based)
+  const idPeak=[6,7,12,13,16,17,18,19,20,21];
+  // Combine channel data + Indonesia peak hours
+  // Score each hour: channel avg views (weighted 70%) + Indonesia peak (weighted 30%)
+  const allSlots=[];
+  const maxAvg=top6.length>0?top6[0].avg:1;
+  days.forEach(d=>{
+    for(let h=0;h<24;h++){
+      const slot=(perDaySlots[d]||[]).find(s=>s.hour===h);
+      const chScore=slot?(slot.avg/maxAvg)*70:0;
+      const idScore=idPeak.includes(h)?30:0;
+      const combined=chScore+idScore;
+      if(combined>0)allSlots.push({day:d,hour:h,score:combined,hasData:!!slot});
+    }
+  });
+  allSlots.sort((a,b)=>b.score-a.score);
+  const top6rec=allSlots.slice(0,6);
+  if(!top6rec.length)return '';
+
+  return '<div style="background:linear-gradient(135deg,#1a1a18,#2a2a26);border-radius:10px;padding:16px;margin-top:8px;color:white">'+
+    '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.6);margin-bottom:10px">REKOMENDASI 6 JAM UPLOAD OPTIMAL</div>'+
+    '<div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:10px">Gabungan data channel kamu + jam rame YouTube Indonesia</div>'+
+    '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px">'+
+    top6rec.map((s,i)=>{
+      const isChannelData=s.hasData;
+      const bg=i===0?'rgba(45,122,62,0.8)':i<3?'rgba(224,155,59,0.7)':'rgba(59,123,224,0.5)';
+      return '<div style="background:'+bg+';border-radius:8px;padding:8px 12px;text-align:center;min-width:80px">'+
+        '<div style="font-size:13px;font-weight:700">'+s.day+'</div>'+
+        '<div style="font-size:16px;font-weight:700">'+s.hour+':00</div>'+
+        '<div style="font-size:9px;opacity:.7;margin-top:2px">'+(i===0?'TERBAIK':i<3?'Bagus':'Oke')+'</div>'+
+        (isChannelData?'<div style="font-size:9px;opacity:.6">data channel</div>':'<div style="font-size:9px;opacity:.6">jam rame ID</div>')+
+        '</div>';
+    }).join('')+
+    '</div>'+
+    '<div style="font-size:11px;color:rgba(255,255,255,.5)">Distribusikan 6 Shorts kamu di jam-jam ini untuk reach maksimal setiap hari</div>'+
+    '</div>';
+}
+
 function renderHeatmap(){
   const days=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
   const heatData={};
@@ -1102,7 +1254,9 @@ function renderHeatmap(){
     '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px">TOP 3 JAM PER HARI (DATA CHANNEL KAMU)</div>'+
     '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">'+
     days.map(d=>'<div style="text-align:center"><div style="font-size:10px;font-weight:700;color:var(--muted);margin-bottom:4px">'+d+'</div>'+(perDaySlots[d]||[]).slice(0,3).map(s=>'<div style="font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 0;margin-bottom:2px">'+s.hour+':00</div>').join('')+'</div>').join('')+
-    '</div></div></div>';
+    '</div></div>'+
+    buildUploadRecommendation(top6,perDaySlots,days)+
+    '</div>';
   document.getElementById('heatmapGrid').innerHTML=html;
 }
 
@@ -1629,6 +1783,42 @@ loadCalendar();
       <div class="form-group"><label>Hasil Analisis AI</label><textarea id="journalContent" style="min-height:200px" placeholder="Paste hasil analisis dari ChatGPT/Gemini di sini..."></textarea></div>
       <div class="form-group"><label>Rencana Aksi Minggu Depan</label><textarea id="journalPlan" style="min-height:100px" placeholder="1. Upload 6 Shorts per hari&#10;2. Fokus topik geopolitik..."></textarea></div>
       <button class="btn-primary" onclick="saveJournalEntry()">Simpan Entry</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="editCalModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Edit Konten</div><button class="modal-close" onclick="document.getElementById('editCalModal').classList.remove('open')">x</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="editCalId">
+      <div class="form-group"><label>Judul</label><input type="text" id="editCalTitle" placeholder="Judul video..."></div>
+      <div class="form-group"><label>Format</label><div class="format-select"><button class="format-btn sel-yt" id="editFmtYT" onclick="selEditFmt('yt')">▶ YouTube</button><button class="format-btn" id="editFmtSH" onclick="selEditFmt('short')">⚡ Shorts</button></div></div>
+      <div class="form-group"><label>Narasi</label><textarea id="editCalNarasi" style="min-height:180px" placeholder="Narasi..."></textarea></div>
+      <button class="btn-primary" onclick="saveEditCal()">Simpan Perubahan</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="editIdeaModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Edit Ide</div><button class="modal-close" onclick="document.getElementById('editIdeaModal').classList.remove('open')">x</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="editIdeaId">
+      <div class="form-group"><label>Judul Ide</label><input type="text" id="editIdeaTitle" placeholder="Ide konten..."></div>
+      <div class="form-group"><label>Deskripsi</label><textarea id="editIdeaDesc" style="min-height:80px" placeholder="Ceritakan idenya..."></textarea></div>
+      <div class="form-group"><label>Format</label><select id="editIdeaType"><option value="yt">YouTube</option><option value="short">Shorts</option></select></div>
+      <button class="btn-primary" onclick="saveEditIdea()">Simpan Perubahan</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="editVaultModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Edit Prompt</div><button class="modal-close" onclick="document.getElementById('editVaultModal').classList.remove('open')">x</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="editVaultId">
+      <div class="form-group"><label>Nama Prompt</label><input type="text" id="editVaultName" placeholder="Nama prompt..."></div>
+      <div class="form-group"><label>Tipe</label><select id="editVaultType"><option>System Prompt</option><option>Template Narasi</option><option>Caption Template</option><option>Lainnya</option></select></div>
+      <div class="form-group"><label>Isi Prompt</label><textarea id="editVaultBody" style="min-height:160px" placeholder="Tulis prompt..."></textarea></div>
+      <button class="btn-primary" onclick="saveEditVault()">Simpan Perubahan</button>
     </div>
   </div>
 </div>
