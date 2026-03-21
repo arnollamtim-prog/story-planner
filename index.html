@@ -674,6 +674,7 @@ function openDayModal(dateStr){
           <button class="btn-sm" onclick="copyText(document.getElementById('card_${e.id}').textContent)">📋 Copy</button>
           ${hasAsli?`<button class="btn-sm" id="toggle_${e.id}" data-mode="bersih" onclick="toggleNarasi('${e.id}')">👁 Lihat Asli</button>`:''}
           <button class="btn-sm" onclick="openEditCalModal('${e.id}')">✏️ Edit</button>
+          <button class="btn-sm" onclick="openMoveCalModal('${e.id}')">📅 Pindah</button>
           <button class="btn-sm" style="background:${(e.status||'belum')==='upload'?'#e6f4ea':(e.status||'belum')==='export'?'#fff3cd':'#fde8e7'};color:${(e.status||'belum')==='upload'?'var(--green)':(e.status||'belum')==='export'?'#b07c00':'var(--yt)'}" onclick="cycleStatus_cal('${e.id}','${e.status||'belum'}')" id="statusBtn_${e.id}">${(e.status||'belum')==='upload'?'✅ Uploaded':(e.status||'belum')==='export'?'📤 Exported':'🔴 Belum'}</button>
           <button class="btn-sm red" onclick="deleteCalContent('${e.id}')">Hapus</button>
         </div>
@@ -734,6 +735,26 @@ function selEditFmt(fmt){
   window._editCalFmt=fmt;
   document.getElementById('editFmtYT').className='format-btn'+(fmt==='yt'?' sel-yt':'');
   document.getElementById('editFmtSH').className='format-btn'+(fmt==='short'?' sel-sh':'');
+}
+
+function openMoveCalModal(id){
+  const e=calData.find(x=>x.id===id);if(!e)return;
+  document.getElementById('moveCalId').value=id;
+  document.getElementById('moveCalTitle').textContent='"'+e.title+'"';
+  document.getElementById('moveCalDate').value=selCalDate||fmtDate(new Date());
+  document.getElementById('moveCalModal').classList.add('open');
+}
+async function saveMoveCalContent(){
+  const id=document.getElementById('moveCalId').value;
+  const newDate=document.getElementById('moveCalDate').value;
+  if(!newDate){toast('Pilih tanggal dulu!');return;}
+  await db.from('calendar').update({date:newDate}).eq('id',id);
+  const i=calData.findIndex(x=>x.id===id);
+  if(i>-1)calData[i].date=newDate;
+  renderCalendar();
+  document.getElementById('moveCalModal').classList.remove('open');
+  document.getElementById('calModal').classList.remove('open');
+  toast('Konten dipindah ke '+newDate+'!');
 }
 
 async function saveEditCal(){
@@ -1823,6 +1844,19 @@ loadCalendar();
       <div class="form-group"><label>Tipe</label><select id="editVaultType"><option>System Prompt</option><option>Template Narasi</option><option>Caption Template</option><option>Lainnya</option></select></div>
       <div class="form-group"><label>Isi Prompt</label><textarea id="editVaultBody" style="min-height:160px" placeholder="Tulis prompt..."></textarea></div>
       <button class="btn-primary" onclick="saveEditVault()">Simpan Perubahan</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="moveCalModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="width:400px">
+    <div class="modal-header">
+      <div><div class="modal-title">Pindah Konten</div><div class="modal-sub" id="moveCalTitle"></div></div>
+      <button class="modal-close" onclick="document.getElementById('moveCalModal').classList.remove('open')">x</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="moveCalId">
+      <div class="form-group"><label>Pindah ke Tanggal</label><input type="date" id="moveCalDate"></div>
+      <button class="btn-primary" onclick="saveMoveCalContent()">Pindahkan</button>
     </div>
   </div>
 </div>
