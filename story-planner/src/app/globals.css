@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --ink: #0f0e0d;
+  --cream: #f5f0e8;
+  --paper: #faf7f2;
+  --accent: #c84b2f;
+  --gold: #d4a017;
+  --muted: #8a8278;
+  --border: #e2ddd6;
+  --sidebar-w: 240px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+/* Utilities */
+.font-display { font-family: var(--font-display); }
+
+.btn-primary {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all;
+  background: var(--ink);
+  color: white;
+}
+.btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+.btn-ghost {
+  @apply inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all;
+  color: var(--muted);
+}
+.btn-ghost:hover { background: var(--cream); color: var(--ink); }
+
+.card {
+  @apply rounded-xl p-4;
+  background: white;
+  border: 1px solid var(--border);
+}
+
+.input-field {
+  @apply w-full rounded-lg px-3 py-2 text-sm outline-none transition-all;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+.input-field:focus { border-color: var(--ink); background: white; }
+
+.textarea-field {
+  @apply w-full rounded-lg px-3 py-2 text-sm outline-none transition-all resize-none;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+.textarea-field:focus { border-color: var(--ink); background: white; }
+
+.badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+}
+.badge-youtube { background: #fce8e4; color: #c84b2f; }
+.badge-shorts { background: #e4eefe; color: #2563eb; }
+.badge-ide { background: #f3f4f6; color: #6b7280; }
+.badge-draft { background: #fef3c7; color: #d97706; }
+.badge-produksi { background: #dbeafe; color: #2563eb; }
+.badge-selesai { background: #dcfce7; color: #16a34a; }
+
+.modal-overlay {
+  @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+  background: rgba(15, 14, 13, 0.5);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.15s ease-out;
+}
+.modal-box {
+  @apply w-full max-w-lg rounded-2xl p-6 max-h-[90vh] overflow-y-auto;
+  background: white;
+  animation: slideUp 0.2s ease-out;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
