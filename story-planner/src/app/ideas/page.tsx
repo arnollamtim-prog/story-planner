@@ -1,59 +1,38 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight, Plus, X, Youtube, Zap } from 'lucide-react'
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns'
-import { id } from 'date-fns/locale'
+import { Plus, X, Lightbulb, Youtube, Zap, Trash2 } from 'lucide-react'
 import AppLayout from '@/components/layout/AppLayout'
-import { ContentItem, ContentType, ContentStatus } from '@/lib/types'
-import { subscribeContent, addContent, updateContent, deleteContent } from '@/lib/db'
+import { IdeaItem, ContentType } from '@/lib/types'
+import { subscribeIdeas, addIdea, deleteIdea } from '@/lib/db'
 
-const DAYS = ['MIN', 'SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAB']
-const STATUS_OPTS: ContentStatus[] = ['ide', 'draft', 'produksi', 'selesai']
+const PRIORITY = {
+  rendah: { bg: 'rgba(167,243,208,0.3)', text: '#059669' },
+  sedang: { bg: 'rgba(251,191,36,0.12)', text: '#D97706' },
+  tinggi: { bg: 'rgba(239,68,68,0.08)',  text: '#EF4444' },
+}
 
-export default function KalenderPage() {
-  const [current, setCurrent]   = useState(new Date())
-  const [items, setItems]       = useState<ContentItem[]>([])
-  const [modal, setModal]       = useState<{ open: boolean; date?: string; item?: ContentItem }>({ open: false })
-  const [filter, setFilter]     = useState<'all' | ContentType>('all')
-  const [form, setForm]         = useState({
-    title: '', type: 'youtube' as ContentType,
-    status: 'ide' as ContentStatus, description: '', tags: ''
+export default function IdeasPage() {
+  const [items, setItems]   = useState<IdeaItem[]>([])
+  const [modal, setModal]   = useState(false)
+  const [filter, setFilter] = useState<'all' | ContentType>('all')
+  const [form, setForm]     = useState({
+    title: '', description: '',
+    type: 'youtube' as ContentType,
+    priority: 'sedang' as IdeaItem['priority'],
+    tags: '',
   })
 
-  useEffect(() => {
-    const unsub = subscribeContent(setItems)
-    return () => unsub()
-  }, [])
+  useEffect(() => { const u = subscribeIdeas(setItems); return () => u() }, [])
 
-  const days = eachDayOfInterval({
-    start: startOfWeek(startOfMonth(current), { weekStartsOn: 0 }),
-    end:   endOfWeek(endOfMonth(current),     { weekStartsOn: 0 }),
-  })
-
-  const openAdd  = (date: string) => {
-    setForm({ title: '', type: 'youtube', status: 'ide', description: '', tags: '' })
-    setModal({ open: true, date })
-  }
-  const openEdit = (item: ContentItem) => {
-    setForm({ title: item.title, type: item.type, status: item.status, description: item.description || '', tags: item.tags?.join(', ') || '' })
-    setModal({ open: true, item })
-  }
-  const closeModal = () => setModal({ open: false })
+  const filtered = filter === 'all' ? items : items.filter(i => i.type === filter)
 
   const save = async () => {
     if (!form.title.trim()) return
-    const now  = Date.now()
     const tags = form.tags.split(',').map(t => t.trim()).filter(Boolean)
-    if (modal.item) {
-      await updateContent(modal.item.id, { ...form, tags, updatedAt: now })
-    } else {
-      await addContent({ ...form, tags, date: modal.date!, createdAt: now, updatedAt: now })
-    }
-    closeModal()
+    await addIdea({ ...form, tags, createdAt: Date.now() })
+    setModal(false)
+    setForm({ title: '', description: '', type: 'youtube', priority: 'sedang', tags: '' })
   }
-
-  const filtered = (date: string) =>
-    items.filter(i => i.date === date && (filter === 'all' || i.type === filter))
 
   return (
     <AppLayout>
@@ -61,151 +40,171 @@ export default function KalenderPage() {
 
         {/* ── Header ── */}
         <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setCurrent(subMonths(current, 1))}
-              className="btn-ghost p-2"
-            >
-              <ChevronLeft size={16} />
-            </button>
+          <div>
             <h1
               className="text-2xl tracking-tight"
               style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--text)' }}
             >
-              {format(current, 'MMMM yyyy', { locale: id })}
+              Ideas Board
             </h1>
-            <button
-              onClick={() => setCurrent(addMonths(current, 1))}
-              className="btn-ghost p-2"
-            >
-              <ChevronRight size={16} />
-            </button>
+            <p className="text-sm mt-0.5" style={{ color: 'var(--text-2)' }}>
+              {items.length} ide tersimpan
+            </p>
           </div>
 
-          {/* Filter tabs */}
-          <div
-            className="flex items-center gap-1 p-1 rounded-xl"
-            style={{ background: 'var(--border)' }}
-          >
-            {(['all', 'youtube', 'shorts'] as const).map(f => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200"
-                style={
-                  filter === f
-                    ? { background: 'var(--card)', color: 'var(--text)', boxShadow: 'var(--shadow)' }
-                    : { color: 'var(--text-2)' }
-                }
-              >
-                {f === 'all' ? 'Semua' : f === 'youtube' ? 'YouTube' : 'Shorts'}
-              </button>
-            ))}
+          <div className="flex items-center gap-3">
+            {/* Filter tabs */}
+            <div
+              className="flex items-center gap-1 p-1 rounded-xl"
+              style={{ background: 'var(--border)' }}
+            >
+              {(['all', 'youtube', 'shorts'] as const).map(f => (
+                <button
+                  key={f}
+                  onClick={() => setFilter(f)}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200"
+                  style={
+                    filter === f
+                      ? { background: 'var(--card)', color: 'var(--text)', boxShadow: 'var(--shadow)' }
+                      : { color: 'var(--text-2)' }
+                  }
+                >
+                  {f === 'all' ? 'Semua' : f === 'youtube' ? 'YouTube' : 'Shorts'}
+                </button>
+              ))}
+            </div>
+            <button onClick={() => setModal(true)} className="btn-primary">
+              <Plus size={15} /> Tambah Ide
+            </button>
           </div>
         </div>
 
-        {/* ── Calendar grid ── */}
-        <div
-          className="rounded-2xl overflow-hidden"
-          style={{ background: 'var(--card)', border: '1px solid var(--border)' }}
-        >
-          {/* Day headers */}
-          <div className="grid grid-cols-7">
-            {DAYS.map(d => (
+        {/* ── Empty state ── */}
+        {filtered.length === 0 ? (
+          <div
+            className="rounded-2xl text-center py-20 transition-all"
+            style={{ background: 'var(--card)', border: '1px solid var(--border)' }}
+          >
+            <div
+              className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4"
+              style={{ background: 'rgba(59,130,246,0.08)' }}
+            >
+              <Lightbulb size={22} style={{ color: 'var(--primary)' }} />
+            </div>
+            <p
+              className="text-base mb-1"
+              style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--text)' }}
+            >
+              Belum ada ide
+            </p>
+            <p className="text-sm mb-5" style={{ color: 'var(--text-2)' }}>
+              Catat ide konten lo sebelum keburu lupa
+            </p>
+            <button onClick={() => setModal(true)} className="btn-primary mx-auto">
+              <Plus size={15} /> Catat Ide
+            </button>
+          </div>
+        ) : (
+          /* ── Cards grid ── */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filtered.map((item, idx) => (
               <div
-                key={d}
-                className="py-3 text-center text-[10px] font-semibold tracking-[1.5px]"
-                style={{ color: 'var(--text-3)', borderBottom: '1px solid var(--border)' }}
+                key={item.id}
+                className="group relative rounded-2xl p-5 transition-all duration-200"
+                style={{
+                  background: 'var(--card)',
+                  border: '1px solid var(--border)',
+                  animationDelay: `${idx * 0.05}s`,
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-4px)'
+                  ;(e.currentTarget as HTMLDivElement).style.boxShadow = 'var(--shadow-hover)'
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)'
+                  ;(e.currentTarget as HTMLDivElement).style.boxShadow = 'none'
+                }}
               >
-                {d}
+                {/* Top row: type badge + priority + delete */}
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium"
+                    style={
+                      item.type === 'youtube'
+                        ? { background: 'rgba(59,130,246,0.1)',  color: '#3B82F6' }
+                        : { background: 'rgba(34,211,238,0.12)', color: '#0891B2' }
+                    }
+                  >
+                    {item.type === 'youtube'
+                      ? <Youtube size={10} />
+                      : <Zap     size={10} />
+                    }
+                    {item.type === 'youtube' ? 'YouTube' : 'Shorts'}
+                  </span>
+
+                  <div className="flex items-center gap-1.5">
+                    <span
+                      className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
+                      style={{
+                        background: PRIORITY[item.priority].bg,
+                        color:      PRIORITY[item.priority].text,
+                      }}
+                    >
+                      {item.priority}
+                    </span>
+                    <button
+                      onClick={() => deleteIdea(item.id)}
+                      className="opacity-0 group-hover:opacity-100 p-1 rounded-lg transition-all duration-150 hover:scale-110"
+                      style={{ color: 'var(--text-3)', background: 'rgba(239,68,68,0.06)' }}
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Title */}
+                <h3
+                  className="text-sm font-medium mb-2 leading-snug"
+                  style={{ color: 'var(--text)' }}
+                >
+                  {item.title}
+                </h3>
+
+                {/* Description */}
+                {item.description && (
+                  <p
+                    className="text-xs leading-relaxed mb-3"
+                    style={{ color: 'var(--text-2)' }}
+                  >
+                    {item.description}
+                  </p>
+                )}
+
+                {/* Tags */}
+                {item.tags && item.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {item.tags.map(t => (
+                      <span
+                        key={t}
+                        className="px-2 py-0.5 rounded-full text-xs"
+                        style={{ background: 'rgba(59,130,246,0.06)', color: 'var(--text-2)' }}
+                      >
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
-
-          {/* Days */}
-          <div className="grid grid-cols-7">
-            {days.map((day, i) => {
-              const dateStr  = format(day, 'yyyy-MM-dd')
-              const dayItems = filtered(dateStr)
-              const isToday  = isSameDay(day, new Date())
-              const inMonth  = isSameMonth(day, current)
-
-              return (
-                <div
-                  key={i}
-                  className="min-h-[110px] p-2 group relative transition-colors duration-150"
-                  style={{
-                    borderRight:  (i + 1) % 7 !== 0 ? '1px solid var(--border)' : 'none',
-                    borderBottom: '1px solid var(--border)',
-                    background:   inMonth ? 'var(--card)' : 'var(--bg)',
-                  }}
-                >
-                  <div className="flex items-start justify-between mb-1">
-                    {/* Date number */}
-                    <span
-                      className={`text-sm w-7 h-7 flex items-center justify-center rounded-full font-medium transition-all
-                        ${!inMonth ? 'opacity-25' : ''}
-                        ${isToday ? 'animate-pulse-glow' : ''}
-                      `}
-                      style={
-                        isToday
-                          ? { background: 'var(--grad)', color: 'white', fontWeight: 700 }
-                          : { color: 'var(--text)' }
-                      }
-                    >
-                      {format(day, 'd')}
-                    </span>
-
-                    {/* Add button on hover */}
-                    {inMonth && (
-                      <button
-                        onClick={() => openAdd(dateStr)}
-                        className="opacity-0 group-hover:opacity-100 w-6 h-6 rounded-md flex items-center justify-center transition-all duration-200 hover:scale-110"
-                        style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--primary)' }}
-                      >
-                        <Plus size={12} />
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Events */}
-                  <div className="space-y-1">
-                    {dayItems.slice(0, 3).map(item => (
-                      <button
-                        key={item.id}
-                        onClick={() => openEdit(item)}
-                        className="w-full text-left px-2 py-1 rounded-md text-xs font-medium truncate transition-all duration-150 hover:scale-[1.02] hover:opacity-90"
-                        style={
-                          item.type === 'youtube'
-                            ? { background: 'rgba(59,130,246,0.1)',  color: '#3B82F6' }
-                            : { background: 'rgba(34,211,238,0.12)', color: '#0891B2' }
-                        }
-                      >
-                        {item.type === 'youtube'
-                          ? <Youtube size={10} className="inline mr-1" />
-                          : <Zap     size={10} className="inline mr-1" />
-                        }
-                        {item.title}
-                      </button>
-                    ))}
-                    {dayItems.length > 3 && (
-                      <p className="text-xs px-1" style={{ color: 'var(--text-3)' }}>
-                        +{dayItems.length - 3} lagi
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
+        )}
       </div>
 
       {/* ── Modal ── */}
-      {modal.open && (
+      {modal && (
         <div
           className="modal-overlay"
-          onClick={e => e.target === e.currentTarget && closeModal()}
+          onClick={e => e.target === e.currentTarget && setModal(false)}
         >
           <div className="modal-box">
             <div className="flex items-center justify-between mb-5">
@@ -213,9 +212,9 @@ export default function KalenderPage() {
                 className="text-lg"
                 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--text)' }}
               >
-                {modal.item ? 'Edit Konten' : 'Tambah Konten'}
+                Tambah Ide
               </h2>
-              <button onClick={closeModal} className="btn-ghost p-1.5">
+              <button onClick={() => setModal(false)} className="btn-ghost p-1.5">
                 <X size={16} />
               </button>
             </div>
@@ -223,13 +222,26 @@ export default function KalenderPage() {
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-2)' }}>
-                  Judul *
+                  Judul Ide *
                 </label>
                 <input
                   className="input-field"
-                  placeholder="Judul konten..."
+                  placeholder="Judul ide konten..."
                   value={form.title}
                   onChange={e => setForm(p => ({ ...p, title: e.target.value }))}
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-2)' }}>
+                  Deskripsi
+                </label>
+                <textarea
+                  className="textarea-field"
+                  rows={3}
+                  placeholder="Jelaskan ide ini..."
+                  value={form.description}
+                  onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
                 />
               </div>
 
@@ -249,33 +261,18 @@ export default function KalenderPage() {
                 </div>
                 <div>
                   <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-2)' }}>
-                    Status
+                    Prioritas
                   </label>
                   <select
                     className="input-field"
-                    value={form.status}
-                    onChange={e => setForm(p => ({ ...p, status: e.target.value as ContentStatus }))}
+                    value={form.priority}
+                    onChange={e => setForm(p => ({ ...p, priority: e.target.value as IdeaItem['priority'] }))}
                   >
-                    {STATUS_OPTS.map(s => (
-                      <option key={s} value={s}>
-                        {s.charAt(0).toUpperCase() + s.slice(1)}
-                      </option>
-                    ))}
+                    <option value="rendah">Rendah</option>
+                    <option value="sedang">Sedang</option>
+                    <option value="tinggi">Tinggi</option>
                   </select>
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-2)' }}>
-                  Deskripsi
-                </label>
-                <textarea
-                  className="textarea-field"
-                  rows={3}
-                  placeholder="Deskripsi singkat..."
-                  value={form.description}
-                  onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
-                />
               </div>
 
               <div>
@@ -290,18 +287,8 @@ export default function KalenderPage() {
                 />
               </div>
 
-              <div className="flex gap-2 pt-2">
-                {modal.item && (
-                  <button
-                    onClick={async () => { await deleteContent(modal.item!.id); closeModal() }}
-                    className="px-4 py-2 rounded-xl text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.97]"
-                    style={{ background: 'rgba(239,68,68,0.08)', color: '#EF4444' }}
-                  >
-                    Hapus
-                  </button>
-                )}
-                <div className="flex-1" />
-                <button onClick={closeModal} className="btn-ghost">Batal</button>
+              <div className="flex justify-end gap-2 pt-2">
+                <button onClick={() => setModal(false)} className="btn-ghost">Batal</button>
                 <button onClick={save} className="btn-primary">Simpan</button>
               </div>
             </div>
