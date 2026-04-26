@@ -3,12 +3,11 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import {
   LayoutDashboard,
-  BookOpen,
-  Calendar,
-  Users,
-  BarChart2,
-  Settings,
-  LogOut,
+  Lightbulb,
+  NotebookPen,
+  ScrollText,
+  Vault,
+  Captions,
   Layers,
 } from 'lucide-react'
 
@@ -16,18 +15,12 @@ const NAV = [
   {
     group: 'Menu',
     items: [
-      { label: 'Overview',   href: '/',           icon: LayoutDashboard },
-      { label: 'Stories',    href: '/stories',    icon: BookOpen,  badge: null },
-      { label: 'Calendar',   href: '/calendar',   icon: Calendar,  badge: null },
-      { label: 'Characters', href: '/characters', icon: Users,     badge: null },
-      { label: 'Analytics',  href: '/analytics',  icon: BarChart2, badge: 'New' },
-    ],
-  },
-  {
-    group: 'System',
-    items: [
-      { label: 'Settings', href: '/settings', icon: Settings },
-      { label: 'Logout',   href: '/logout',   icon: LogOut },
+      { label: 'Overview',     href: '/',             icon: LayoutDashboard, badge: null },
+      { label: 'Ideas',        href: '/ideas',        icon: Lightbulb,       badge: null },
+      { label: 'Narasi',       href: '/narasi',       icon: ScrollText,      badge: null },
+      { label: 'Jurnal',       href: '/jurnal',       icon: NotebookPen,     badge: null },
+      { label: 'Caption',      href: '/caption',      icon: Captions,        badge: null },
+      { label: 'Prompt Vault', href: '/prompt-vault', icon: Vault,           badge: 'New' },
     ],
   },
 ]
@@ -76,14 +69,17 @@ export default function Sidebar() {
 
             <ul className="space-y-0.5">
               {section.items.map(({ label, href, icon: Icon, badge }) => {
-                const active = pathname === href
+                const active =
+                  pathname === href ||
+                  (href !== '/' && pathname.startsWith(href))
+
                 return (
                   <li key={href}>
                     <Link
                       href={href}
                       className="group relative flex items-center gap-2.5 px-3 py-[9px] rounded-xl text-[13.5px] font-normal transition-all duration-200"
                       style={{
-                        color:      active ? 'white'    : '#94A3B8',
+                        color:      active ? 'white' : '#94A3B8',
                         background: active ? 'rgba(59,130,246,0.18)' : 'transparent',
                       }}
                       onMouseEnter={(e) => {
@@ -141,7 +137,6 @@ export default function Sidebar() {
             border: '1px solid rgba(255,255,255,0.06)',
           }}
         >
-          {/* Avatar */}
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-semibold text-white flex-shrink-0"
             style={{ background: 'var(--grad)' }}
