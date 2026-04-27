@@ -8,8 +8,16 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F0F2F8; height: 100vh; overflow: hidden; display: flex; }
 
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+.main ::-webkit-scrollbar-thumb { background: #d1d5db; }
+.main ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
 /* SIDEBAR */
-.sidebar { width: 220px; flex-shrink: 0; background: linear-gradient(160deg, #1a2240, #1e2d5a); color: white; display: flex; flex-direction: column; height: 100vh; }
+.sidebar { width: 220px; flex-shrink: 0; background: linear-gradient(160deg, #1a2240, #1e2d5a); color: white; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 .sidebar-logo { padding: 20px 16px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg,#4F6FE8,#7C9EFF); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 8px; }
 .logo-title { font-size: 14px; font-weight: 700; }
@@ -20,17 +28,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .nav-item:hover { background: rgba(255,255,255,0.08); color: white; }
 .nav-item.active { background: rgba(79,111,232,0.28); color: white; }
 .nav-icon { font-size: 15px; width: 20px; text-align: center; }
-.sidebar-progress { margin: 0 12px 12px; padding: 12px; background: rgba(79,111,232,0.2); border: 1px solid rgba(79,111,232,0.25); border-radius: 12px; }
-.progress-title { font-size: 12px; font-weight: 600; color: white; margin-bottom: 2px; }
-.progress-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 8px; }
-.progress-row { display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 5px; }
-.progress-bar { height: 5px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow: hidden; }
-.progress-fill { height: 100%; background: linear-gradient(90deg,#4F9EFF,#4FFFD4); border-radius: 99px; width: 23%; }
 .sidebar-user { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
 .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #4F6FE8; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; }
-.user-name { font-size: 13px; font-weight: 600; }
 .user-plan { font-size: 11px; color: rgba(255,255,255,0.4); }
-.user-dot { width: 8px; height: 8px; background: #4ADE80; border-radius: 50%; margin-left: auto; }
+.user-name { font-size: 13px; font-weight: 600; }
 
 /* MAIN */
 .main { flex: 1; display: flex; flex-direction: column; min-width: 0; height: 100vh; overflow: hidden; }
@@ -39,12 +40,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .page { display: none; flex: 1; flex-direction: column; height: 100%; overflow-y: auto; }
 .page.active { display: flex; }
 
-/* PAGE HEADER */
-.page-header { padding: 24px 28px 0; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-.page-title { font-size: 22px; font-weight: 800; color: #111827; }
-.page-sub { font-size: 13px; color: #9ca3af; margin-top: 2px; }
-.page-content { padding: 20px 28px 28px; flex: 1; }
-
 /* BUTTONS */
 .btn { padding: 8px 14px; border-radius: 9px; border: 1px solid #e5e7eb; background: white; font-size: 12px; font-weight: 500; color: #374151; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; }
 .btn:hover { background: #f9fafb; }
@@ -52,27 +47,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .btn-primary:hover { background: #1d4ed8; }
 .btn-danger { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
 .btn-danger:hover { background: #fee2e2; }
+.btn-sm { padding: 4px 8px; font-size: 11px; border-radius: 6px; }
 
 /* CARDS */
 .card { background: white; border-radius: 16px; border: 1px solid #f3f4f6; box-shadow: 0 1px 3px rgba(0,0,0,0.04); padding: 20px; }
 
 /* ===================== KALENDER ===================== */
-.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
 .cal-nav { display: flex; align-items: center; gap: 8px; }
 .cal-nav-btn { width: 28px; height: 28px; border-radius: 8px; border: 1px solid #e5e7eb; background: white; cursor: pointer; font-size: 14px; color: #6b7280; }
 .cal-nav-btn:hover { background: #f3f4f6; }
 .cal-title { font-size: 20px; font-weight: 800; color: #111827; }
 .cal-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.online-row { display: flex; align-items: center; gap: 6px; }
-.avatars { display: flex; }
-.av { width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; margin-left: -6px; }
-.av:first-child { margin-left: 0; }
-.online-text { font-size: 11px; color: #16a34a; font-weight: 600; }
-.cal-quote { font-size: 12px; color: #9ca3af; font-style: italic; margin-bottom: 10px; }
-.filter-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
-.tag-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-.filter-tag { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #6b7280; cursor: pointer; padding: 3px 8px; border-radius: 6px; }
-.filter-tag:hover { background: white; }
 .btn-today { padding: 4px 12px; background: #2563eb; color: white; border: none; border-radius: 7px; font-size: 11px; font-weight: 700; cursor: pointer; }
 .cal-grid-wrap { background: white; border-radius: 16px; border: 1px solid #f3f4f6; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
 .cal-day-headers { display: grid; grid-template-columns: repeat(7,1fr); border-bottom: 1px solid #f3f4f6; }
@@ -87,146 +73,77 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .day-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 3px; }
 .day-num.today { background: #2563eb; color: white; }
 .day-empty-num { font-size: 11px; color: #d1d5db; }
-.event-chip { font-size: 10px; font-weight: 600; padding: 2px 5px; border-radius: 5px; border: 1px solid; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.event-chip { font-size: 10px; font-weight: 600; padding: 2px 5px; border-radius: 5px; border: 1px solid; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
 .ev-time-small { font-size: 9px; opacity: 0.6; }
-.chip-blue{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
-.chip-red{background:#fef2f2;color:#b91c1c;border-color:#fecaca}
-.chip-teal{background:#f0fdfa;color:#0f766e;border-color:#99f6e4}
-.chip-orange{background:#fff7ed;color:#c2410c;border-color:#fed7aa}
-.chip-purple{background:#faf5ff;color:#7e22ce;border-color:#e9d5ff}
-.chip-green{background:#f0fdf4;color:#15803d;border-color:#bbf7d0}
+
+/* Platform colors */
+.chip-youtube { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+.chip-tiktok { background: #18181b; color: #fff; border-color: #3f3f46; }
+.chip-shorts { background: #faf5ff; color: #7e22ce; border-color: #e9d5ff; }
+
+/* STATUS colors */
+.status-draft { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.status-exported { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.status-uploaded { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
 
 /* EVENT MODAL */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 200; }
 .modal-overlay.hidden { display: none; }
-.modal { background: white; border-radius: 16px; padding: 24px; width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+.modal { background: white; border-radius: 16px; padding: 24px; width: 460px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); max-height: 90vh; overflow-y: auto; }
 .modal-title { font-size: 16px; font-weight: 800; color: #111827; margin-bottom: 16px; }
 .form-group { margin-bottom: 12px; }
 .form-label { font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px; display: block; }
-.form-input { width: 100%; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; outline: none; }
+.form-input { width: 100%; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit; }
 .form-input:focus { border-color: #3b82f6; }
+textarea.form-input { resize: vertical; min-height: 120px; }
 .modal-actions { display: flex; gap: 8px; margin-top: 16px; }
 .btn-cancel { flex: 1; padding: 9px; border: 1px solid #e5e7eb; border-radius: 9px; background: white; font-size: 13px; font-weight: 600; cursor: pointer; }
 .btn-save { flex: 1; padding: 9px; border: none; border-radius: 9px; background: #2563eb; color: white; font-size: 13px; font-weight: 700; cursor: pointer; }
 
-/* EVENT DETAIL MODAL */
-.detail-modal { background: white; border-radius: 16px; padding: 0; width: 460px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); overflow: hidden; max-height: 85vh; overflow-y: auto; }
-.detail-modal-header { padding: 16px 20px; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; }
-.detail-modal-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-.ev-title-row { display: flex; align-items: flex-start; gap: 10px; }
-.ev-icon-box { width: 42px; height: 42px; border-radius: 12px; background: #fef2f2; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-.ev-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
-.ev-name { font-size: 17px; font-weight: 800; color: #111827; }
-.ev-meta { display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: #6b7280; }
-.ev-meta-row { display: flex; align-items: flex-start; gap: 6px; }
-.checklist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.checklist-label { font-size: 13px; font-weight: 700; color: #374151; }
-.progress-thin { height: 4px; background: #f3f4f6; border-radius: 99px; overflow: hidden; margin-bottom: 8px; }
-.progress-thin-fill { height: 100%; background: #3b82f6; border-radius: 99px; transition: width 0.3s; }
-.check-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; cursor: pointer; }
-.check-item input { width: 15px; height: 15px; cursor: pointer; accent-color: #2563eb; }
-.check-item label { font-size: 12px; color: #374151; cursor: pointer; }
-.check-item.done label { text-decoration: line-through; color: #9ca3af; }
-.collab-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
-.collab-avatar { width: 30px; height: 30px; border-radius: 50%; background: #dbeafe; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-.shortcuts-box { background: #f9fafb; border-radius: 12px; padding: 12px; }
-.shortcut-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 11px; }
-.shortcut-key { background: white; border: 1px solid #e5e7eb; border-radius: 5px; padding: 2px 6px; font-family: monospace; font-size: 10px; }
-.shortcut-desc { color: #6b7280; }
+/* STATUS BADGE */
+.status-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; cursor: pointer; border: 1px solid; }
 
-/* ===================== NARASI & SCENE ===================== */
-.narasi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 20px; }
-.narasi-card { background: white; border-radius: 14px; border: 1px solid #f3f4f6; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); cursor: pointer; transition: all 0.15s; }
-.narasi-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
-.narasi-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-.narasi-title { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 6px; }
-.narasi-preview { font-size: 12px; color: #6b7280; line-height: 1.5; margin-bottom: 12px; }
-.narasi-footer { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: #9ca3af; }
-.narasi-tag { padding: 3px 8px; border-radius: 99px; font-size: 10px; font-weight: 600; }
-.scene-list { margin-top: 8px; }
-.scene-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f9fafb; align-items: flex-start; }
-.scene-num { width: 26px; height: 26px; border-radius: 50%; background: #eff6ff; color: #2563eb; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.scene-content { flex: 1; }
-.scene-title { font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 2px; }
-.scene-desc { font-size: 12px; color: #6b7280; }
-.scene-duration { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+/* DETAIL MODAL */
+.detail-modal { background: white; border-radius: 16px; width: 500px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); overflow: hidden; max-height: 85vh; display: flex; flex-direction: column; }
+.detail-modal-header { padding: 16px 20px; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.detail-modal-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; flex: 1; }
+
+/* NASKAH FULL VIEW */
+.naskah-full { background: #f9fafb; border-radius: 10px; padding: 14px; font-size: 13px; color: #374151; line-height: 1.7; white-space: pre-wrap; max-height: 300px; overflow-y: auto; border: 1px solid #f3f4f6; }
 
 /* ===================== IDEAS BOARD ===================== */
-.kanban { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; height: calc(100vh - 180px); }
-.kanban-col { display: flex; flex-direction: column; background: #f9fafb; border-radius: 14px; padding: 14px; gap: 10px; overflow-y: auto; }
-.kanban-col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; flex-shrink: 0; }
-.kanban-col-title { font-size: 13px; font-weight: 700; color: #374151; display: flex; align-items: center; gap: 6px; }
-.kanban-count { background: #e5e7eb; color: #6b7280; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 99px; }
-.idea-card { background: white; border-radius: 10px; border: 1px solid #f3f4f6; padding: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); cursor: pointer; transition: all 0.15s; }
-.idea-card:hover { box-shadow: 0 3px 8px rgba(0,0,0,0.08); }
-.idea-card-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
-.idea-card-title { font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 5px; line-height: 1.3; }
-.idea-card-desc { font-size: 11px; color: #6b7280; line-height: 1.4; margin-bottom: 8px; }
-.idea-card-footer { display: flex; align-items: center; justify-content: space-between; font-size: 10px; color: #9ca3af; }
-.idea-priority { padding: 2px 7px; border-radius: 99px; font-size: 10px; font-weight: 600; }
-.add-idea-btn { width: 100%; padding: 8px; border: 2px dashed #e5e7eb; border-radius: 10px; background: none; color: #9ca3af; font-size: 12px; cursor: pointer; transition: all 0.15s; }
-.add-idea-btn:hover { border-color: #3b82f6; color: #3b82f6; }
+.ideas-tabs { display: flex; gap: 6px; padding: 0 28px; margin-bottom: 16px; flex-wrap: wrap; }
+.ideas-tab { padding: 6px 14px; border-radius: 8px; border: 1.5px solid #e5e7eb; background: white; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; color: #6b7280; }
+.ideas-tab.active-yt { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
+.ideas-tab.active-tiktok { background: #18181b; color: white; border-color: #18181b; }
+.ideas-tab.active-shorts { background: #f3e8ff; color: #7e22ce; border-color: #d8b4fe; }
+.ideas-tab.active-all { background: #2563eb; color: white; border-color: #2563eb; }
 
-/* ===================== CAPTION DRAFT ===================== */
-.caption-layout { display: grid; grid-template-columns: 1fr 340px; gap: 20px; margin-top: 20px; height: calc(100vh - 180px); }
-.caption-list { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
-.caption-item { background: white; border-radius: 12px; border: 1px solid #f3f4f6; padding: 16px; cursor: pointer; transition: all 0.15s; }
-.caption-item:hover { border-color: #93c5fd; }
-.caption-item.selected { border-color: #3b82f6; background: #eff6ff; }
-.caption-platform { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #6b7280; margin-bottom: 4px; }
-.caption-title { font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 4px; }
-.caption-preview { font-size: 12px; color: #6b7280; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.caption-meta { font-size: 10px; color: #9ca3af; margin-top: 6px; }
-.caption-editor { background: white; border-radius: 14px; border: 1px solid #f3f4f6; padding: 20px; display: flex; flex-direction: column; overflow-y: auto; }
-.editor-label { font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 8px; }
-.editor-textarea { flex: 1; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px; font-size: 13px; line-height: 1.6; resize: none; outline: none; min-height: 200px; color: #374151; }
-.editor-textarea:focus { border-color: #3b82f6; }
-.char-count { font-size: 11px; color: #9ca3af; text-align: right; margin-top: 6px; }
-.hashtag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-.hashtag { padding: 4px 10px; background: #eff6ff; color: #2563eb; border-radius: 99px; font-size: 11px; font-weight: 600; cursor: pointer; }
-.hashtag:hover { background: #dbeafe; }
+.ideas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+.idea-card { background: white; border-radius: 12px; border: 1px solid #f3f4f6; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: all 0.15s; position: relative; }
+.idea-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.idea-card-platform { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.idea-card-title { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 5px; line-height: 1.4; }
+.idea-card-desc { font-size: 11px; color: #6b7280; line-height: 1.4; margin-bottom: 10px; }
+.idea-card-actions { display: flex; gap: 5px; justify-content: flex-end; }
+.idea-card-pinned { position: absolute; top: 10px; right: 10px; font-size: 14px; }
 
 /* ===================== PROMPT VAULT ===================== */
-.prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 20px; }
-.prompt-card { background: white; border-radius: 12px; border: 1px solid #f3f4f6; padding: 16px; cursor: pointer; transition: all 0.15s; }
+.prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.prompt-card { background: white; border-radius: 12px; border: 1px solid #f3f4f6; padding: 16px; transition: all 0.15s; }
 .prompt-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: #c7d2fe; }
 .prompt-category { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
 .prompt-title { font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px; }
-.prompt-text { font-size: 11px; color: #6b7280; line-height: 1.5; margin-bottom: 10px; background: #f9fafb; padding: 8px 10px; border-radius: 8px; border-left: 3px solid #e5e7eb; }
-.prompt-footer { display: flex; align-items: center; justify-content: space-between; }
-.prompt-uses { font-size: 11px; color: #9ca3af; }
+.prompt-text { font-size: 11px; color: #6b7280; line-height: 1.5; margin-bottom: 10px; background: #f9fafb; padding: 8px 10px; border-radius: 8px; border-left: 3px solid #e5e7eb; cursor: pointer; }
+.prompt-text:hover { background: #f3f4f6; }
+.prompt-text-full { display: none; }
+.prompt-footer { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
 .prompt-copy { padding: 5px 10px; border: 1px solid #e5e7eb; border-radius: 7px; background: white; font-size: 11px; font-weight: 600; cursor: pointer; color: #374151; }
 .prompt-copy:hover { background: #f9fafb; }
 .prompt-copy.copied { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
 
-/* ===================== YT ANALYTICS ===================== */
-.analytics-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 20px; }
-.analytics-card { background: white; border-radius: 14px; border: 1px solid #f3f4f6; padding: 18px; }
-.analytics-label { font-size: 12px; color: #6b7280; margin-bottom: 4px; }
-.analytics-value { font-size: 26px; font-weight: 800; color: #111827; }
-.analytics-change { font-size: 11px; font-weight: 600; margin-top: 4px; }
-.analytics-up { color: #16a34a; }
-.analytics-down { color: #dc2626; }
-.bar-chart { background: white; border-radius: 14px; border: 1px solid #f3f4f6; padding: 20px; margin-bottom: 20px; }
-.bar-chart-title { font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 16px; }
-.bars { display: flex; align-items: flex-end; gap: 8px; height: 120px; }
-.bar-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.bar { width: 100%; border-radius: 6px 6px 0 0; background: linear-gradient(180deg, #3b82f6, #1d4ed8); transition: height 0.3s; cursor: pointer; min-height: 4px; }
-.bar:hover { background: linear-gradient(180deg, #60a5fa, #3b82f6); }
-.bar-label { font-size: 10px; color: #9ca3af; }
-.bar-val { font-size: 10px; font-weight: 600; color: #374151; }
-.top-videos { background: white; border-radius: 14px; border: 1px solid #f3f4f6; padding: 20px; }
-.top-video-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f9fafb; }
-.top-video-item:last-child { border-bottom: none; }
-.video-thumb { width: 60px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-.video-info { flex: 1; }
-.video-title { font-size: 13px; font-weight: 600; color: #111827; }
-.video-stats { font-size: 11px; color: #6b7280; margin-top: 2px; }
-.video-views { font-size: 13px; font-weight: 700; color: #2563eb; }
-
-/* ===================== JURNAL ANALISIS ===================== */
-.jurnal-layout { display: grid; grid-template-columns: 1fr 320px; gap: 20px; margin-top: 20px; }
-.jurnal-list { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; max-height: calc(100vh - 200px); }
+/* JURNAL */
+.jurnal-list { display: flex; flex-direction: column; gap: 12px; }
 .jurnal-entry { background: white; border-radius: 14px; border: 1px solid #f3f4f6; padding: 18px; cursor: pointer; transition: all 0.15s; }
 .jurnal-entry:hover { border-color: #93c5fd; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
 .jurnal-date { font-size: 11px; color: #9ca3af; margin-bottom: 6px; }
@@ -234,13 +151,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .jurnal-content { font-size: 13px; color: #6b7280; line-height: 1.6; margin-bottom: 10px; }
 .jurnal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .jurnal-tag { padding: 3px 9px; border-radius: 99px; font-size: 10px; font-weight: 600; background: #f3f4f6; color: #6b7280; }
-.jurnal-sidebar { display: flex; flex-direction: column; gap: 14px; }
-.insight-card { background: white; border-radius: 14px; border: 1px solid #f3f4f6; padding: 16px; }
-.insight-title { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 10px; }
-.insight-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; }
-.insight-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.insight-text { color: #374151; flex: 1; }
-.insight-val { font-weight: 700; color: #111827; }
 </style>
 </head>
 <body>
@@ -255,25 +165,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <nav class="sidebar-nav">
     <div class="nav-section-label">Menu</div>
     <button class="nav-item active" onclick="showPage('kalender',this)"><span class="nav-icon">📅</span> Kalender</button>
-    <button class="nav-item" onclick="showPage('narasi',this)"><span class="nav-icon">📝</span> Narasi &amp; Scene</button>
     <button class="nav-item" onclick="showPage('ideas',this)"><span class="nav-icon">💡</span> Ideas Board</button>
-    <button class="nav-item" onclick="showPage('caption',this)"><span class="nav-icon">💬</span> Caption Draft</button>
     <div class="nav-section-label">Asset</div>
     <button class="nav-item" onclick="showPage('prompt',this)"><span class="nav-icon">🗂️</span> Prompt Vault</button>
-    <div class="nav-section-label">Analytik</div>
-    <button class="nav-item" onclick="showPage('analytics',this)"><span class="nav-icon">📊</span> YT Analytics</button>
+    <div class="nav-section-label">Lainnya</div>
     <button class="nav-item" onclick="showPage('jurnal',this)"><span class="nav-icon">📖</span> Jurnal Analisis</button>
   </nav>
-  <div class="sidebar-progress">
-    <div class="progress-title">Konsistensi adalah kunci sukses konten! ✨</div>
-    <div class="progress-sub">Tetap semangat, kamu bisa!</div>
-    <div class="progress-row"><span>7/30 hari</span><span>23%</span></div>
-    <div class="progress-bar"><div class="progress-fill"></div></div>
-  </div>
   <div class="sidebar-user">
-    <div class="user-avatar">S</div>
-    <div><div class="user-name">Lembab</div><div class="user-plan">Creator Plan</div></div>
-    <div class="user-dot"></div>
+    <div class="user-avatar">✦</div>
+    <div><div class="user-name">Creator</div><div class="user-plan">Story Planner</div></div>
   </div>
 </div>
 
@@ -289,32 +189,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
         <button class="cal-nav-btn" onclick="nextMonth()">›</button>
       </div>
       <div class="cal-actions">
-        <div class="online-row">
-          <div class="avatars">
-            <div class="av" style="background:#60a5fa"></div>
-            <div class="av" style="background:#f472b6"></div>
-            <div class="av" style="background:#fb923c"></div>
-          </div>
-          <span class="online-text">● 3 online</span>
-        </div>
-        <button class="btn">🔴 YouTube</button>
-        <button class="btn">✂️ Shorts</button>
-        <button class="btn">↓ Export Narasi</button>
-        <button class="btn btn-primary" onclick="openAddModal()">+ Tambah ▾</button>
+        <button class="btn-today" onclick="goToday()">Hari Ini</button>
+        <button class="btn" onclick="openAddModal()">+ Naskah Baru</button>
       </div>
     </div>
-    <div class="cal-quote">"Rencanakan hari ini, ciptakan cerita yang berkesan." ✍️</div>
-    <div class="filter-row">
-      <button class="btn-today" onclick="goToday()">Hari Ini</button>
-      <div style="margin-left:auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-        <span class="filter-tag"><span class="tag-dot" style="background:#60a5fa"></span>Edukasi</span>
-        <span class="filter-tag"><span class="tag-dot" style="background:#f87171"></span>Review</span>
-        <span class="filter-tag"><span class="tag-dot" style="background:#2dd4bf"></span>Inspirasi</span>
-        <span class="filter-tag"><span class="tag-dot" style="background:#22d3ee"></span>Upload</span>
-        <span class="filter-tag"><span class="tag-dot" style="background:#fb923c"></span>Analisa</span>
-        <button class="btn" style="padding:4px 10px;font-size:11px;">Filter</button>
-      </div>
-    </div>
+    <div style="font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:10px;">📌 Klik tanggal untuk tambah atau lihat naskah</div>
     <div class="cal-grid-wrap">
       <div class="cal-day-headers">
         <div class="cal-day-header">MIN</div><div class="cal-day-header">SEN</div><div class="cal-day-header">SEL</div>
@@ -322,610 +201,239 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
       </div>
       <div class="cal-cells" id="cal-cells"></div>
     </div>
-    <!-- Bottom summary -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px;">
-      <div style="background:white;border-radius:14px;border:1px solid #f3f4f6;padding:16px;">
-        <div style="font-size:18px;margin-bottom:4px;">🔴</div>
-        <div style="font-size:22px;font-weight:800;color:#111827;">12</div>
-        <div style="font-size:11px;color:#6b7280;">Video Plan</div>
-        <div style="font-size:10px;color:#16a34a;font-weight:600;margin-top:4px;">+20% bulan lalu</div>
-      </div>
-      <div style="background:white;border-radius:14px;border:1px solid #f3f4f6;padding:16px;">
-        <div style="font-size:18px;margin-bottom:4px;">✂️</div>
-        <div style="font-size:22px;font-weight:800;color:#111827;">8</div>
-        <div style="font-size:11px;color:#6b7280;">Shorts Plan</div>
-        <div style="font-size:10px;color:#16a34a;font-weight:600;margin-top:4px;">+14% bulan lalu</div>
-      </div>
-      <div style="background:white;border-radius:14px;border:1px solid #f3f4f6;padding:16px;">
-        <div style="font-size:18px;margin-bottom:4px;">📅</div>
-        <div style="font-size:22px;font-weight:800;color:#111827;">20</div>
-        <div style="font-size:11px;color:#6b7280;">Total Plan</div>
-        <div style="font-size:10px;color:#16a34a;font-weight:600;margin-top:4px;">+18% bulan lalu</div>
-      </div>
-      <div style="background:white;border-radius:14px;border:1px solid #f3f4f6;padding:16px;">
-        <div style="font-size:18px;margin-bottom:4px;">🎯</div>
-        <div style="font-size:22px;font-weight:800;color:#111827;">75%</div>
-        <div style="font-size:11px;color:#6b7280;">Target Konsistensi</div>
-        <div style="font-size:10px;color:#16a34a;font-weight:600;margin-top:4px;">+10% bulan lalu</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== NARASI & SCENE PAGE ===== -->
-  <div class="page" id="page-narasi" style="overflow-y:auto;">
-    <div class="page-header">
-      <div><div class="page-title">📝 Narasi &amp; Scene</div><div class="page-sub">Kelola script dan breakdown scene kontenmu</div></div>
-      <button class="btn btn-primary" onclick="addNarasi()">+ Narasi Baru</button>
-    </div>
-    <div class="page-content">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-        <div>
-          <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:12px;">📋 Daftar Narasi</div>
-          <div class="narasi-grid" style="grid-template-columns:1fr;">
-            <div class="narasi-card" onclick="openNarasi(0)">
-              <div class="narasi-type" style="color:#dc2626;">🎯 Review</div>
-              <div class="narasi-title">Review iPhone 16 Pro — Jujur dari Pengguna Biasa</div>
-              <div class="narasi-preview">Opening: "Gue udah pake ini 3 bulan, dan ada hal yang gak ada review lain yang bahas..."</div>
-              <div class="narasi-footer">
-                <span class="narasi-tag" style="background:#fef2f2;color:#dc2626;">5 scene</span>
-                <span>2 Apr 2026</span>
-              </div>
-            </div>
-            <div class="narasi-card" onclick="openNarasi(1)">
-              <div class="narasi-type" style="color:#0f766e;">✨ Edukasi</div>
-              <div class="narasi-title">5 Tools AI yang Bikin Konten 10x Lebih Cepat</div>
-              <div class="narasi-preview">Hook: "Kalau kamu masih edit manual, kamu udah ketinggalan 2 tahun..."</div>
-              <div class="narasi-footer">
-                <span class="narasi-tag" style="background:#f0fdfa;color:#0f766e;">7 scene</span>
-                <span>5 Apr 2026</span>
-              </div>
-            </div>
-            <div class="narasi-card" onclick="openNarasi(2)">
-              <div class="narasi-type" style="color:#7e22ce;">🎬 Behind the Scene</div>
-              <div class="narasi-title">Setup Studio YouTube Budget 2 Juta — Worth It?</div>
-              <div class="narasi-preview">Intro: "Banyak yang nanya setup gue, oke gue jelasin dari awal..."</div>
-              <div class="narasi-footer">
-                <span class="narasi-tag" style="background:#faf5ff;color:#7e22ce;">4 scene</span>
-                <span>10 Apr 2026</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:12px;">🎬 Scene Breakdown — Review iPhone 16 Pro</div>
-          <div class="card">
-            <div class="scene-list">
-              <div class="scene-item">
-                <div class="scene-num">1</div>
-                <div class="scene-content">
-                  <div class="scene-title">Opening Hook</div>
-                  <div class="scene-desc">"Gue udah pake ini 3 bulan, dan ada hal yang gak ada review lain yang bahas..."</div>
-                  <div class="scene-duration">⏱ 0:00 – 0:15</div>
-                </div>
-              </div>
-              <div class="scene-item">
-                <div class="scene-num">2</div>
-                <div class="scene-content">
-                  <div class="scene-title">Unboxing &amp; First Impression</div>
-                  <div class="scene-desc">Tampilkan box, desain, dan feel pertama pegang device</div>
-                  <div class="scene-duration">⏱ 0:15 – 1:30</div>
-                </div>
-              </div>
-              <div class="scene-item">
-                <div class="scene-num">3</div>
-                <div class="scene-content">
-                  <div class="scene-title">Kamera — Tes Real World</div>
-                  <div class="scene-desc">Foto & video di kondisi cahaya berbeda, bandingkan dengan HP lama</div>
-                  <div class="scene-duration">⏱ 1:30 – 4:00</div>
-                </div>
-              </div>
-              <div class="scene-item">
-                <div class="scene-num">4</div>
-                <div class="scene-content">
-                  <div class="scene-title">Performa &amp; Baterai</div>
-                  <div class="scene-desc">Gaming test, multitasking, dan battery drain test 24 jam</div>
-                  <div class="scene-duration">⏱ 4:00 – 6:30</div>
-                </div>
-              </div>
-              <div class="scene-item">
-                <div class="scene-num">5</div>
-                <div class="scene-content">
-                  <div class="scene-title">Verdict &amp; CTA</div>
-                  <div class="scene-desc">Kesimpulan jujur, untuk siapa worth it, dan ajak subscribe</div>
-                  <div class="scene-duration">⏱ 6:30 – 7:00</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- ===== IDEAS BOARD PAGE ===== -->
-  <div class="page" id="page-ideas" style="overflow-y:hidden;">
-    <div class="page-header" style="padding-bottom:16px;">
-      <div><div class="page-title">💡 Ideas Board</div><div class="page-sub">Kelola ide konten dari brainstorm sampai siap rekam</div></div>
-      <button class="btn btn-primary" onclick="addIdea()">+ Ide Baru</button>
+  <div class="page" id="page-ideas" style="overflow-y:auto;">
+    <div style="padding:24px 28px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div><div style="font-size:22px;font-weight:800;color:#111827;">💡 Ideas Board</div><div style="font-size:13px;color:#9ca3af;margin-top:2px;">Kumpulkan dan kelola ide kontenmu</div></div>
+      <button class="btn btn-primary" onclick="openIdeaModal()">+ Ide Baru</button>
     </div>
-    <div style="padding:0 28px 20px;overflow-y:auto;flex:1;">
-      <div class="kanban">
-        <div class="kanban-col">
-          <div class="kanban-col-header">
-            <span class="kanban-col-title">💭 Brainstorm <span class="kanban-count">3</span></span>
-          </div>
-          <div class="idea-card">
-            <div class="idea-card-tag" style="color:#7e22ce;">Shorts</div>
-            <div class="idea-card-title">POV: Ngedit video sambil dengerin lo-fi</div>
-            <div class="idea-card-desc">Konten relatable buat kreator, bisa viral di Shorts</div>
-            <div class="idea-card-footer">
-              <span class="idea-priority" style="background:#faf5ff;color:#7e22ce;">Low</span>
-              <span>2 Apr</span>
-            </div>
-          </div>
-          <div class="idea-card">
-            <div class="idea-card-tag" style="color:#c2410c;">Tutorial</div>
-            <div class="idea-card-title">Cara bikin thumbnail yang klik rate 10%+</div>
-            <div class="idea-card-desc">Tutorial Canva + psikologi warna untuk thumbnail</div>
-            <div class="idea-card-footer">
-              <span class="idea-priority" style="background:#fff7ed;color:#c2410c;">Medium</span>
-              <span>3 Apr</span>
-            </div>
-          </div>
-          <div class="idea-card">
-            <div class="idea-card-tag" style="color:#1d4ed8;">Edukasi</div>
-            <div class="idea-card-title">Algorithm YouTube 2026 — Yang Beneran Kerja</div>
-            <div class="idea-card-desc">Hasil eksperimen 30 hari posting konsisten</div>
-            <div class="idea-card-footer">
-              <span class="idea-priority" style="background:#eff6ff;color:#1d4ed8;">High</span>
-              <span>4 Apr</span>
-            </div>
-          </div>
-          <button class="add-idea-btn" onclick="addIdea()">+ Tambah Ide</button>
-        </div>
-        <div class="kanban-col">
-          <div class="kanban-col-header">
-            <span class="kanban-col-title">📋 Riset <span class="kanban-count">2</span></span>
-          </div>
-          <div class="idea-card">
-            <div class="idea-card-tag" style="color:#0f766e;">Review</div>
-            <div class="idea-card-title">Review MacBook Air M3 vs M2 — Worth Upgrade?</div>
-            <div class="idea-card-desc">Benchmark, harga, dan value for money untuk kreator</div>
-            <div class="idea-card-footer">
-              <span class="idea-priority" style="background:#f0fdfa;color:#0f766e;">High</span>
-              <span>5 Apr</span>
-            </div>
-          </div>
-          <div class="idea-card">
-            <div class="idea-card-tag" style="color:#c2410c;">Analisa</div>
-            <div class="idea-card-title">Kenapa video gue yang ini viral padahal yang itu nggak</div>
-            <div class="idea-card-desc">Analisa pattern dari 50 video terakhir</div>
-            <div class="idea-card-footer">
-              <span class="idea-priority" style="background:#fff7ed;color:#c2410c;">Medium</span>
-              <span>6 Apr</span>
-            </div>
-          </div>
-          <button class="add-idea-btn">+ Tambah Ide</button>
-        </div>
-        <div class="kanban-col">
-          <div class="kanban-col-header">
-            <span class="kanban-col-title">✍️ Scripting <span class="kanban-count">2</span></span>
-          </div>
-          <div class="idea-card">
-            <div class="idea-card-tag" style="color:#dc2626;">Review</div>
-            <div class="idea-card-title">Review iPhone 16 Pro — Jujur dari Pengguna Biasa</div>
-            <div class="idea-card-desc">Script 70% selesai, tinggal bagian verdict</div>
-            <div class="idea-card-footer">
-              <span class="idea-priority" style="background:#fef2f2;color:#dc2626;">Urgent</span>
-              <span>8 Apr</span>
-            </div>
-          </div>
-          <div class="idea-card">
-            <div class="idea-card-tag" style="color:#1d4ed8;">Edukasi</div>
-            <div class="idea-card-title">5 Tools AI yang Bikin Konten 10x Lebih Cepat</div>
-            <div class="idea-card-desc">Outline selesai, mulai nulis narasi detail</div>
-            <div class="idea-card-footer">
-              <span class="idea-priority" style="background:#eff6ff;color:#1d4ed8;">High</span>
-              <span>9 Apr</span>
-            </div>
-          </div>
-          <button class="add-idea-btn">+ Tambah Ide</button>
-        </div>
-        <div class="kanban-col">
-          <div class="kanban-col-header">
-            <span class="kanban-col-title">✅ Siap Rekam <span class="kanban-count">2</span></span>
-          </div>
-          <div class="idea-card" style="border-left:3px solid #16a34a;">
-            <div class="idea-card-tag" style="color:#15803d;">Upload</div>
-            <div class="idea-card-title">Setup Studio YouTube Budget 2 Juta</div>
-            <div class="idea-card-desc">Script, shot list, dan props sudah siap semua</div>
-            <div class="idea-card-footer">
-              <span class="idea-priority" style="background:#f0fdf4;color:#15803d;">Ready ✓</span>
-              <span>12 Apr</span>
-            </div>
-          </div>
-          <div class="idea-card" style="border-left:3px solid #16a34a;">
-            <div class="idea-card-tag" style="color:#0f766e;">Q&A</div>
-            <div class="idea-card-title">Q&A Subscriber — 20 Pertanyaan Terbaik</div>
-            <div class="idea-card-desc">Pertanyaan sudah dikurasi, jawaban sudah disiapkan</div>
-            <div class="idea-card-footer">
-              <span class="idea-priority" style="background:#f0fdf4;color:#15803d;">Ready ✓</span>
-              <span>13 Apr</span>
-            </div>
-          </div>
-          <button class="add-idea-btn">+ Tambah Ide</button>
-        </div>
-      </div>
+    <div class="ideas-tabs" style="margin-top:16px;">
+      <button class="ideas-tab active-all" onclick="filterIdeas('all',this)" id="tab-all">Semua</button>
+      <button class="ideas-tab" style="border-color:#fecaca;color:#b91c1c;" onclick="filterIdeas('YouTube',this)" id="tab-YouTube">🔴 YouTube</button>
+      <button class="ideas-tab" style="color:#18181b;" onclick="filterIdeas('TikTok',this)" id="tab-TikTok">⚫ TikTok</button>
+      <button class="ideas-tab" style="border-color:#d8b4fe;color:#7e22ce;" onclick="filterIdeas('Shorts',this)" id="tab-Shorts">🟣 Shorts</button>
     </div>
-  </div>
-
-  <!-- ===== CAPTION DRAFT PAGE ===== -->
-  <div class="page" id="page-caption" style="overflow-y:auto;">
-    <div class="page-header">
-      <div><div class="page-title">💬 Caption Draft</div><div class="page-sub">Tulis dan kelola caption untuk semua platform</div></div>
-      <button class="btn btn-primary" onclick="addCaption()">+ Caption Baru</button>
-    </div>
-    <div class="page-content">
-      <div class="caption-layout">
-        <div class="caption-list" id="caption-list">
-          <div class="caption-item selected" onclick="selectCaption(this,0)">
-            <div class="caption-platform">🔴 YouTube</div>
-            <div class="caption-title">Review iPhone 16 Pro — Jujur!</div>
-            <div class="caption-preview">Gue udah pake ini 3 bulan dan ini yang beneran gue rasain...</div>
-            <div class="caption-meta">720 karakter · 8 hashtag · 2 Apr 2026</div>
-          </div>
-          <div class="caption-item" onclick="selectCaption(this,1)">
-            <div class="caption-platform">✂️ Shorts</div>
-            <div class="caption-title">5 AI Tools untuk Kreator 🔥</div>
-            <div class="caption-preview">Tools ini yang bikin workflow gue 10x lebih cepat...</div>
-            <div class="caption-meta">280 karakter · 5 hashtag · 5 Apr 2026</div>
-          </div>
-          <div class="caption-item" onclick="selectCaption(this,2)">
-            <div class="caption-platform">📸 Instagram</div>
-            <div class="caption-title">Behind the Scene Studio Setup</div>
-            <div class="caption-preview">Banyak yang nanya soal setup gue, ini dia lengkapnya...</div>
-            <div class="caption-meta">450 karakter · 12 hashtag · 10 Apr 2026</div>
-          </div>
-          <div class="caption-item" onclick="selectCaption(this,3)">
-            <div class="caption-platform">🐦 Twitter/X</div>
-            <div class="caption-title">Thread: Algorithm YouTube 2026</div>
-            <div class="caption-preview">Gue udah eksperimen 30 hari dan ini hasilnya (thread)...</div>
-            <div class="caption-meta">280 karakter · 3 hashtag · 15 Apr 2026</div>
-          </div>
-        </div>
-        <div class="caption-editor">
-          <div class="editor-label">✏️ Edit Caption</div>
-          <textarea class="editor-textarea" id="caption-textarea" oninput="updateCharCount(this)">Gue udah pake iPhone 16 Pro selama 3 bulan, dan ini yang beneran gue rasain — bukan cuma review 1 minggu doang.
-
-Kamera-nya? Gila sih, terutama buat konten kreator. Tapi ada beberapa hal yang bikin gue agak kecewa juga.
-
-Tonton sampai habis karena ada yang gak bahas di review manapun 👀
-
-⏱ Timestamp:
-0:00 Opening
-1:30 Unboxing
-3:00 Kamera Test
-6:00 Verdict</textarea>
-          <div class="char-count" id="char-count">720 / 5000 karakter</div>
-          <div style="margin-top:12px;">
-            <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:6px;">Hashtag</div>
-            <div class="hashtag-row">
-              <span class="hashtag">#review</span>
-              <span class="hashtag">#iphone16pro</span>
-              <span class="hashtag">#teknologi</span>
-              <span class="hashtag">#kreator</span>
-              <span class="hashtag">#youtube</span>
-              <span class="hashtag">#gadget</span>
-              <span class="hashtag">#unboxing</span>
-              <span class="hashtag">#indonesia</span>
-            </div>
-          </div>
-          <div style="display:flex;gap:8px;margin-top:16px;">
-            <button class="btn btn-primary" style="flex:1;">💾 Simpan Draft</button>
-            <button class="btn" onclick="copyCaption()">📋 Copy</button>
-          </div>
-        </div>
-      </div>
+    <div style="padding:0 28px 28px;">
+      <div class="ideas-grid" id="ideas-grid"></div>
     </div>
   </div>
 
   <!-- ===== PROMPT VAULT PAGE ===== -->
   <div class="page" id="page-prompt" style="overflow-y:auto;">
-    <div class="page-header">
-      <div><div class="page-title">🗂️ Prompt Vault</div><div class="page-sub">Koleksi prompt AI terbaik untuk produksi konten</div></div>
-      <button class="btn btn-primary" onclick="addPrompt()">+ Prompt Baru</button>
+    <div style="padding:24px 28px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div><div style="font-size:22px;font-weight:800;color:#111827;">🗂️ Prompt Vault</div><div style="font-size:13px;color:#9ca3af;margin-top:2px;">Koleksi prompt AI terbaik untuk produksi konten</div></div>
+      <button class="btn btn-primary" onclick="openPromptModal()">+ Prompt Baru</button>
     </div>
-    <div class="page-content">
-      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
-        <button class="btn btn-primary" onclick="filterPrompt('all',this)">Semua</button>
-        <button class="btn" onclick="filterPrompt('script',this)">📝 Script</button>
-        <button class="btn" onclick="filterPrompt('thumbnail',this)">🖼️ Thumbnail</button>
-        <button class="btn" onclick="filterPrompt('caption',this)">💬 Caption</button>
-        <button class="btn" onclick="filterPrompt('riset',this)">🔍 Riset</button>
-        <button class="btn" onclick="filterPrompt('hook',this)">🎣 Hook</button>
-      </div>
-      <div class="prompt-grid" id="prompt-grid">
-        <div class="prompt-card" data-cat="script">
-          <div class="prompt-category" style="color:#2563eb;">📝 Script</div>
-          <div class="prompt-title">Hook Pembuka Yang Bikin Penonton Tetap Nonton</div>
-          <div class="prompt-text">"Buatkan 5 variasi opening hook untuk video YouTube tentang [topik]. Hook harus membuat penonton penasaran dalam 3 detik pertama, gunakan teknik pattern interrupt dan open loop."</div>
-          <div class="prompt-footer">
-            <span class="prompt-uses">Dipakai 24x</span>
-            <button class="prompt-copy" onclick="copyPrompt(this)">📋 Copy</button>
-          </div>
-        </div>
-        <div class="prompt-card" data-cat="thumbnail">
-          <div class="prompt-category" style="color:#dc2626;">🖼️ Thumbnail</div>
-          <div class="prompt-title">Deskripsi Thumbnail yang Click-bait (Positif)</div>
-          <div class="prompt-text">"Deskripsikan visual thumbnail YouTube untuk video [judul]. Sertakan: ekspresi wajah, teks overlay, warna dominan, dan elemen yang membuat orang penasaran. Target CTR 8%+."</div>
-          <div class="prompt-footer">
-            <span class="prompt-uses">Dipakai 18x</span>
-            <button class="prompt-copy" onclick="copyPrompt(this)">📋 Copy</button>
-          </div>
-        </div>
-        <div class="prompt-card" data-cat="caption">
-          <div class="prompt-category" style="color:#0f766e;">💬 Caption</div>
-          <div class="prompt-title">Caption YouTube yang Mendorong Engagement</div>
-          <div class="prompt-text">"Tulis caption YouTube untuk video [judul] yang mendorong penonton untuk like, comment, dan subscribe. Sertakan timestamp, CTA yang natural, dan 8-10 hashtag relevan. Tone: friendly tapi informatif."</div>
-          <div class="prompt-footer">
-            <span class="prompt-uses">Dipakai 31x</span>
-            <button class="prompt-copy" onclick="copyPrompt(this)">📋 Copy</button>
-          </div>
-        </div>
-        <div class="prompt-card" data-cat="riset">
-          <div class="prompt-category" style="color:#7e22ce;">🔍 Riset</div>
-          <div class="prompt-title">Analisa Kompetitor di Niche</div>
-          <div class="prompt-text">"Analisa channel YouTube [nama channel] dengan framework: konten pillar mereka, format yang paling banyak ditonton, gap yang bisa diisi, dan strategi yang bisa diadaptasi untuk channel [niche saya]."</div>
-          <div class="prompt-footer">
-            <span class="prompt-uses">Dipakai 12x</span>
-            <button class="prompt-copy" onclick="copyPrompt(this)">📋 Copy</button>
-          </div>
-        </div>
-        <div class="prompt-card" data-cat="hook">
-          <div class="prompt-category" style="color:#c2410c;">🎣 Hook</div>
-          <div class="prompt-title">Hook untuk Konten Shorts/Reels</div>
-          <div class="prompt-text">"Buat 10 variasi hook 1 kalimat untuk Shorts tentang [topik]. Hook harus bisa diucapkan dalam 2 detik, membuat penonton langsung penasaran, dan tidak boleh ada kata 'hai' atau salam pembuka."</div>
-          <div class="prompt-footer">
-            <span class="prompt-uses">Dipakai 42x</span>
-            <button class="prompt-copy" onclick="copyPrompt(this)">📋 Copy</button>
-          </div>
-        </div>
-        <div class="prompt-card" data-cat="script">
-          <div class="prompt-category" style="color:#2563eb;">📝 Script</div>
-          <div class="prompt-title">Struktur Video Edukasi 7-10 Menit</div>
-          <div class="prompt-text">"Buat outline script video edukasi tentang [topik] dengan durasi 7-10 menit. Gunakan struktur: hook (30 detik), problem agitation (1 menit), konten inti 5 poin (5 menit), kesimpulan + CTA (1 menit)."</div>
-          <div class="prompt-footer">
-            <span class="prompt-uses">Dipakai 19x</span>
-            <button class="prompt-copy" onclick="copyPrompt(this)">📋 Copy</button>
-          </div>
-        </div>
-      </div>
+    <div style="padding:16px 28px 0;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="filterPrompt('all',this)" id="pf-all">Semua</button>
+      <button class="btn" onclick="filterPrompt('Script',this)" id="pf-Script">📝 Script</button>
+      <button class="btn" onclick="filterPrompt('Thumbnail',this)" id="pf-Thumbnail">🖼️ Thumbnail</button>
+      <button class="btn" onclick="filterPrompt('Caption',this)" id="pf-Caption">💬 Caption</button>
+      <button class="btn" onclick="filterPrompt('Riset',this)" id="pf-Riset">🔍 Riset</button>
+      <button class="btn" onclick="filterPrompt('Hook',this)" id="pf-Hook">🎣 Hook</button>
+    </div>
+    <div style="padding:16px 28px 28px;">
+      <div class="prompt-grid" id="prompt-grid"></div>
     </div>
   </div>
 
-  <!-- ===== YT ANALYTICS PAGE ===== -->
-  <div class="page" id="page-analytics" style="overflow-y:auto;">
-    <div class="page-header">
-      <div><div class="page-title">📊 YT Analytics</div><div class="page-sub">Performa channel bulan April 2026</div></div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn">Bulan Ini</button>
-        <button class="btn btn-primary">↓ Export</button>
-      </div>
-    </div>
-    <div class="page-content">
-      <div class="analytics-grid">
-        <div class="analytics-card">
-          <div class="analytics-label">👁️ Total Views</div>
-          <div class="analytics-value">84.2K</div>
-          <div class="analytics-change analytics-up">↑ +23% vs bulan lalu</div>
-        </div>
-        <div class="analytics-card">
-          <div class="analytics-label">👥 Subscriber Baru</div>
-          <div class="analytics-value">1,240</div>
-          <div class="analytics-change analytics-up">↑ +18% vs bulan lalu</div>
-        </div>
-        <div class="analytics-card">
-          <div class="analytics-label">⏱️ Watch Time</div>
-          <div class="analytics-value">3,820 jam</div>
-          <div class="analytics-change analytics-up">↑ +31% vs bulan lalu</div>
-        </div>
-        <div class="analytics-card">
-          <div class="analytics-label">👆 CTR Rata-rata</div>
-          <div class="analytics-value">7.4%</div>
-          <div class="analytics-change analytics-down">↓ -0.3% vs bulan lalu</div>
-        </div>
-      </div>
-      <div class="bar-chart">
-        <div class="bar-chart-title">📈 Views per Minggu</div>
-        <div class="bars" id="bar-chart">
-          <div class="bar-item"><div class="bar-val">18K</div><div class="bar" style="height:60px;"></div><div class="bar-label">Mgg 1</div></div>
-          <div class="bar-item"><div class="bar-val">22K</div><div class="bar" style="height:74px;"></div><div class="bar-label">Mgg 2</div></div>
-          <div class="bar-item"><div class="bar-val">19K</div><div class="bar" style="height:64px;"></div><div class="bar-label">Mgg 3</div></div>
-          <div class="bar-item"><div class="bar-val">25K</div><div class="bar" style="height:84px;"></div><div class="bar-label">Mgg 4</div></div>
-        </div>
-      </div>
-      <div class="top-videos">
-        <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:12px;">🏆 Top Videos Bulan Ini</div>
-        <div class="top-video-item">
-          <div class="video-thumb" style="background:#fef2f2;">🎯</div>
-          <div class="video-info">
-            <div class="video-title">Review iPhone 16 Pro — Jujur dari Pengguna Biasa</div>
-            <div class="video-stats">CTR 9.2% · Avg watch time 6:42</div>
-          </div>
-          <div class="video-views">32.4K</div>
-        </div>
-        <div class="top-video-item">
-          <div class="video-thumb" style="background:#f0fdfa;">💡</div>
-          <div class="video-info">
-            <div class="video-title">5 AI Tools yang Bikin Konten 10x Lebih Cepat</div>
-            <div class="video-stats">CTR 8.1% · Avg watch time 5:18</div>
-          </div>
-          <div class="video-views">21.8K</div>
-        </div>
-        <div class="top-video-item">
-          <div class="video-thumb" style="background:#eff6ff;">📚</div>
-          <div class="video-info">
-            <div class="video-title">Algorithm YouTube 2026 — Yang Beneran Kerja</div>
-            <div class="video-stats">CTR 7.8% · Avg watch time 7:05</div>
-          </div>
-          <div class="video-views">18.2K</div>
-        </div>
-        <div class="top-video-item">
-          <div class="video-thumb" style="background:#faf5ff;">🎬</div>
-          <div class="video-info">
-            <div class="video-title">Setup Studio YouTube Budget 2 Juta</div>
-            <div class="video-stats">CTR 6.9% · Avg watch time 4:55</div>
-          </div>
-          <div class="video-views">11.8K</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== JURNAL ANALISIS PAGE ===== -->
+  <!-- ===== JURNAL PAGE ===== -->
   <div class="page" id="page-jurnal" style="overflow-y:auto;">
-    <div class="page-header">
-      <div><div class="page-title">📖 Jurnal Analisis</div><div class="page-sub">Dokumentasi insight dan pembelajaran dari kontenmu</div></div>
-      <button class="btn btn-primary" onclick="addJurnal()">+ Entri Baru</button>
+    <div style="padding:24px 28px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div><div style="font-size:22px;font-weight:800;color:#111827;">📖 Jurnal Analisis</div><div style="font-size:13px;color:#9ca3af;margin-top:2px;">Dokumentasi insight dan pembelajaran dari kontenmu</div></div>
+      <button class="btn btn-primary" onclick="openJurnalModal()">+ Entri Baru</button>
     </div>
-    <div class="page-content">
-      <div class="jurnal-layout">
-        <div class="jurnal-list">
-          <div class="jurnal-entry">
-            <div class="jurnal-date">📅 26 April 2026</div>
-            <div class="jurnal-title">🎯 Kenapa Video Review iPhone Viral?</div>
-            <div class="jurnal-content">Setelah analisa mendalam, ada 3 faktor utama yang bikin video ini performanya jauh di atas rata-rata. Pertama, hook-nya langsung menyentuh pain point penonton ("gue udah pake 3 bulan, bukan review 1 minggu"). Kedua, thumbnail-nya pakai ekspresi genuine bukan fake surprise. Ketiga, strukturnya mengikuti storytelling arc yang natural...</div>
-            <div class="jurnal-tags">
-              <span class="jurnal-tag">viral</span>
-              <span class="jurnal-tag">review</span>
-              <span class="jurnal-tag">hook</span>
-              <span class="jurnal-tag">thumbnail</span>
-            </div>
-          </div>
-          <div class="jurnal-entry">
-            <div class="jurnal-date">📅 20 April 2026</div>
-            <div class="jurnal-title">💡 Eksperimen: Upload 3x Seminggu vs 1x</div>
-            <div class="jurnal-content">Hasil eksperimen 4 minggu: upload 3x seminggu justru menurunkan kualitas rata-rata video gue. Views per video turun 40% tapi total views channel naik 15%. Kesimpulan: untuk channel gue yang fokus di kualitas, 2x seminggu adalah sweet spot. Algorithm reward konsistensi, tapi penonton reward kualitas...</div>
-            <div class="jurnal-tags">
-              <span class="jurnal-tag">eksperimen</span>
-              <span class="jurnal-tag">konsistensi</span>
-              <span class="jurnal-tag">algorithm</span>
-            </div>
-          </div>
-          <div class="jurnal-entry">
-            <div class="jurnal-date">📅 15 April 2026</div>
-            <div class="jurnal-title">📊 CTR Drop — Root Cause Analysis</div>
-            <div class="jurnal-content">CTR turun dari 8.2% ke 7.4% bulan ini. Setelah analisa, penyebabnya: 3 video terakhir punya thumbnail dengan warna yang terlalu mirip satu sama lain. Penonton jadi "blind" karena visual yang monoton. Action: buat thumbnail guide dengan rotasi palet warna per video...</div>
-            <div class="jurnal-tags">
-              <span class="jurnal-tag">CTR</span>
-              <span class="jurnal-tag">thumbnail</span>
-              <span class="jurnal-tag">analisa</span>
-            </div>
-          </div>
-        </div>
-        <div class="jurnal-sidebar">
-          <div class="insight-card">
-            <div class="insight-title">🔥 Insight Bulan Ini</div>
-            <div class="insight-item"><div class="insight-dot" style="background:#16a34a;"></div><div class="insight-text">Hook 3 detik pertama</div><div class="insight-val">+40% retention</div></div>
-            <div class="insight-item"><div class="insight-dot" style="background:#2563eb;"></div><div class="insight-text">Thumbnail genuine</div><div class="insight-val">+28% CTR</div></div>
-            <div class="insight-item"><div class="insight-dot" style="background:#dc2626;"></div><div class="insight-text">Upload 3x/minggu</div><div class="insight-val">-40% per video</div></div>
-            <div class="insight-item"><div class="insight-dot" style="background:#7e22ce;"></div><div class="insight-text">Chapters di video</div><div class="insight-val">+15% watch time</div></div>
-          </div>
-          <div class="insight-card">
-            <div class="insight-title">📌 Action Items</div>
-            <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
-              <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;">
-                <input type="checkbox" checked style="accent-color:#2563eb;"> <span style="text-decoration:line-through;color:#9ca3af;">Buat thumbnail guide</span>
-              </label>
-              <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;">
-                <input type="checkbox" style="accent-color:#2563eb;"> <span>Tes 5 variasi hook di Shorts</span>
-              </label>
-              <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;">
-                <input type="checkbox" style="accent-color:#2563eb;"> <span>Analisa top 10 video kompetitor</span>
-              </label>
-              <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;">
-                <input type="checkbox" style="accent-color:#2563eb;"> <span>Setup A/B test thumbnail bulan depan</span>
-              </label>
-            </div>
-          </div>
-          <div class="insight-card">
-            <div class="insight-title">🎯 Target Bulan Depan</div>
-            <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;font-size:12px;color:#374151;">
-              <div>📈 Views: <strong>100K+</strong></div>
-              <div>👥 Subscribers: <strong>+1,500</strong></div>
-              <div>👆 CTR: <strong>8%+</strong></div>
-              <div>⏱️ Watch time: <strong>4,500 jam</strong></div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div style="padding:20px 28px 28px;">
+      <div class="jurnal-list" id="jurnal-list"></div>
     </div>
   </div>
 
 </div>
 
-<!-- MODAL TAMBAH EVENT -->
-<div class="modal-overlay hidden" id="add-modal">
+<!-- ===== MODAL TAMBAH/EDIT NASKAH ===== -->
+<div class="modal-overlay hidden" id="naskah-modal">
   <div class="modal">
-    <div class="modal-title">+ Tambah Event Baru</div>
-    <div class="form-group"><label class="form-label">Judul Event</label><input class="form-input" type="text" placeholder="Contoh: Review Produk" id="input-title"></div>
-    <div class="form-group"><label class="form-label">Tanggal (1-30)</label><input class="form-input" type="number" placeholder="15" min="1" max="30" id="input-day"></div>
-    <div class="form-group"><label class="form-label">Waktu</label><input class="form-input" type="time" value="10:00" id="input-time"></div>
-    <div class="form-group"><label class="form-label">Kategori</label>
-      <select class="form-input" id="input-cat">
-        <option value="blue">📚 Edukasi</option><option value="red">🎯 Review</option>
-        <option value="teal">✨ Inspirasi</option><option value="orange">📊 Analisa</option><option value="purple">🎬 Upload</option>
+    <div class="modal-title" id="naskah-modal-title">+ Naskah Baru</div>
+    <div class="form-group"><label class="form-label">Judul Naskah</label><input class="form-input" type="text" placeholder="Contoh: Review iPhone 16 Pro" id="inp-naskah-title"></div>
+    <div class="form-group"><label class="form-label">Platform</label>
+      <select class="form-input" id="inp-naskah-platform">
+        <option value="YouTube">🔴 YouTube</option>
+        <option value="TikTok">⚫ TikTok</option>
+        <option value="Shorts">🟣 Shorts</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Tanggal</label><input class="form-input" type="date" id="inp-naskah-date"></div>
+    <div class="form-group"><label class="form-label">Naskah / Script</label><textarea class="form-input" placeholder="Tulis naskah kontenmu di sini..." id="inp-naskah-script" style="min-height:160px;"></textarea></div>
+    <div class="form-group"><label class="form-label">Status</label>
+      <select class="form-input" id="inp-naskah-status">
+        <option value="Draft">📝 Draft</option>
+        <option value="Exported">📤 Exported</option>
+        <option value="Uploaded">✅ Uploaded</option>
       </select>
     </div>
     <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeAddModal()">Batal</button>
-      <button class="btn-save" onclick="saveEvent()">Simpan</button>
+      <button class="btn-cancel" onclick="closeNaskahModal()">Batal</button>
+      <button class="btn-save" onclick="saveNaskah()">Simpan</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL DETAIL EVENT -->
+<!-- ===== MODAL DETAIL NASKAH ===== -->
 <div class="modal-overlay hidden" id="detail-modal">
   <div class="detail-modal">
     <div class="detail-modal-header">
-      <span style="font-size:13px;font-weight:700;color:#374151;">Detail Event</span>
-      <button onclick="closeDetailModal()" style="background:none;border:none;font-size:20px;color:#9ca3af;cursor:pointer;">×</button>
+      <span style="font-size:13px;font-weight:700;color:#374151;" id="detail-modal-header-title">Detail Naskah</span>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <button onclick="copyNaskah()" class="btn btn-sm">📋 Copy</button>
+        <button onclick="editNaskahFromDetail()" class="btn btn-sm">✏️ Edit</button>
+        <button onclick="deleteNaskah()" class="btn btn-sm btn-danger">🗑️</button>
+        <button onclick="closeDetailModal()" style="background:none;border:none;font-size:20px;color:#9ca3af;cursor:pointer;margin-left:4px;">×</button>
+      </div>
     </div>
     <div class="detail-modal-body" id="detail-modal-body"></div>
   </div>
 </div>
 
+<!-- ===== MODAL TAMBAH/EDIT IDE ===== -->
+<div class="modal-overlay hidden" id="idea-modal">
+  <div class="modal">
+    <div class="modal-title" id="idea-modal-title">+ Ide Baru</div>
+    <div class="form-group"><label class="form-label">Judul Ide</label><input class="form-input" type="text" placeholder="Contoh: POV bikin konten sambil lo-fi" id="inp-idea-title"></div>
+    <div class="form-group"><label class="form-label">Deskripsi</label><textarea class="form-input" placeholder="Ceritain ide kamu..." id="inp-idea-desc" style="min-height:80px;"></textarea></div>
+    <div class="form-group"><label class="form-label">Platform</label>
+      <select class="form-input" id="inp-idea-platform">
+        <option value="YouTube">🔴 YouTube</option>
+        <option value="TikTok">⚫ TikTok</option>
+        <option value="Shorts">🟣 Shorts</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeIdeaModal()">Batal</button>
+      <button class="btn-save" onclick="saveIdea()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL TAMBAH/EDIT PROMPT ===== -->
+<div class="modal-overlay hidden" id="prompt-modal">
+  <div class="modal">
+    <div class="modal-title" id="prompt-modal-title">+ Prompt Baru</div>
+    <div class="form-group"><label class="form-label">Judul Prompt</label><input class="form-input" type="text" placeholder="Contoh: Hook Pembuka YouTube" id="inp-prompt-title"></div>
+    <div class="form-group"><label class="form-label">Kategori</label>
+      <select class="form-input" id="inp-prompt-cat">
+        <option value="Script">📝 Script</option>
+        <option value="Thumbnail">🖼️ Thumbnail</option>
+        <option value="Caption">💬 Caption</option>
+        <option value="Riset">🔍 Riset</option>
+        <option value="Hook">🎣 Hook</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Isi Prompt</label><textarea class="form-input" placeholder="Tulis prompt AI kamu di sini..." id="inp-prompt-text" style="min-height:120px;"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closePromptModal()">Batal</button>
+      <button class="btn-save" onclick="savePrompt()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL PROMPT FULL VIEW ===== -->
+<div class="modal-overlay hidden" id="prompt-view-modal">
+  <div class="modal" style="width:500px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div class="modal-title" style="margin-bottom:0;" id="prompt-view-title"></div>
+      <button onclick="document.getElementById('prompt-view-modal').classList.add('hidden')" style="background:none;border:none;font-size:20px;color:#9ca3af;cursor:pointer;">×</button>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:8px;" id="prompt-view-cat"></div>
+    <div class="naskah-full" id="prompt-view-text" style="max-height:400px;font-size:13px;"></div>
+    <div style="display:flex;gap:8px;margin-top:14px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="copyPromptFull()">📋 Copy Prompt</button>
+      <button class="btn" onclick="document.getElementById('prompt-view-modal').classList.add('hidden')">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL JURNAL ===== -->
+<div class="modal-overlay hidden" id="jurnal-modal">
+  <div class="modal">
+    <div class="modal-title" id="jurnal-modal-title">+ Entri Jurnal</div>
+    <div class="form-group"><label class="form-label">Judul</label><input class="form-input" type="text" placeholder="Contoh: Kenapa video ini viral?" id="inp-jurnal-title"></div>
+    <div class="form-group"><label class="form-label">Isi Jurnal</label><textarea class="form-input" placeholder="Tulis analisis atau insight kamu..." id="inp-jurnal-content" style="min-height:140px;"></textarea></div>
+    <div class="form-group"><label class="form-label">Tags (pisah dengan koma)</label><input class="form-input" type="text" placeholder="viral, thumbnail, hook" id="inp-jurnal-tags"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeJurnalModal()">Batal</button>
+      <button class="btn-save" onclick="saveJurnal()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL PINDAH TANGGAL ===== -->
+<div class="modal-overlay hidden" id="move-modal">
+  <div class="modal" style="width:320px;">
+    <div class="modal-title">📅 Pindah Tanggal</div>
+    <div class="form-group"><label class="form-label">Tanggal Baru</label><input class="form-input" type="date" id="inp-move-date"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="document.getElementById('move-modal').classList.add('hidden')">Batal</button>
+      <button class="btn-save" onclick="confirmMove()">Pindah</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const MONTHS = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-const DAY_NAMES = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
 const TODAY = new Date();
 let curMonth = 3, curYear = 2026, selDay = null;
-const CAT_ICONS = {blue:"📚",red:"🎯",teal:"✨",orange:"📊",purple:"🎬",green:"📈"};
-const CAT_LABELS = {blue:"Edukasi",red:"Review",teal:"Inspirasi",orange:"Analisa",purple:"Upload",green:"Trend"};
-const CAT_COLORS = {blue:"#1d4ed8",red:"#b91c1c",teal:"#0f766e",orange:"#c2410c",purple:"#7e22ce",green:"#15803d"};
+let editingNaskahKey = null, editingNaskahIdx = null;
+let editingIdeaIdx = null;
+let editingPromptIdx = null;
+let editingJurnalIdx = null;
+let currentDetailKey = null, currentDetailIdx = null;
+let currentPromptViewIdx = null;
 
-let events = {
-  "2026-3-2":  [{label:"Ide Konten",time:"10:00",color:"blue",icon:"💡",desc:"Kumpulkan dan dokumentasikan ide konten terbaik untuk bulan ini.",tags:["#ide","#konten","#brainstorm"],checklist:[{t:"Buka notes ide lama",d:true},{t:"Riset tren terbaru",d:false},{t:"Pilih 3 ide terbaik",d:false}],collabs:["🧑","👩"]}],
-  "2026-3-3":  [{label:"Shorts Tips",time:"14:00",color:"orange",icon:"🎬",desc:"Rekam tips singkat untuk format Shorts YouTube.",tags:["#shorts","#tips"],checklist:[{t:"Tulis script",d:true},{t:"Setup kamera",d:false},{t:"Rekam & edit",d:false}],collabs:["🧑"]}],
-  "2026-3-6":  [{label:"Edukasi",time:"10:00",color:"blue",icon:"📚",desc:"Konten edukatif untuk subscriber.",tags:["#edukasi","#youtube"],checklist:[{t:"Riset topik",d:true},{t:"Buat outline",d:true},{t:"Rekam",d:false}],collabs:["🧑","👩","👨"]}],
-  "2026-3-9":  [{label:"Review Produk",time:"15:00",color:"red",icon:"🎯",desc:"Buat review jujur dan bandingkan kelebihan produk.",tags:["#review","#produk","#youtube"],checklist:[{t:"Riset produk",d:true},{t:"Tulis outline",d:false},{t:"Rekam video",d:false},{t:"Editing",d:false}],collabs:["🧑","👩"]}],
-  "2026-3-13": [{label:"Q&A",time:"13:00",color:"teal",icon:"💬",desc:"Jawab pertanyaan subscriber.",tags:["#qa","#komunitas"],checklist:[{t:"Kumpulkan pertanyaan",d:true},{t:"Siapkan jawaban",d:true},{t:"Rekam sesi",d:false}],collabs:["🧑","👩","👨"]}],
-  "2026-3-15": [{label:"Review Produk",time:"15:00",color:"red",icon:"🎯",desc:"Buat review jujur dan bandingkan kelebihan produk.",tags:["#review","#produk","#youtube"],checklist:[{t:"Riset produk",d:true},{t:"Tulis outline",d:true},{t:"Rekam video",d:false},{t:"Editing",d:false}],collabs:["🧑","👩","👨"]}],
-  "2026-3-17": [{label:"Behind the Scene",time:"16:00",color:"purple",icon:"🎬",desc:"Dokumentasi proses di balik layar.",tags:["#bts","#vlog"],checklist:[{t:"Siapkan B-roll",d:true},{t:"Rekam proses",d:false},{t:"Assembly footage",d:false}],collabs:["🧑"]}],
-  "2026-3-21": [{label:"Trend Check",time:"11:00",color:"green",icon:"📈",desc:"Cek tren terbaru YouTube dan Shorts.",tags:["#trend","#analisa"],checklist:[{t:"Cek Google Trends",d:false},{t:"Analisa kompetitor",d:false},{t:"Dokumentasi",d:false}],collabs:["🧑","👩"]}],
-  "2026-3-24": [{label:"Analisa Konten",time:"10:00",color:"orange",icon:"📊",desc:"Review performa konten bulan ini.",tags:["#analisa","#data"],checklist:[{t:"Export data YT",d:false},{t:"Analisa CTR",d:false},{t:"Buat laporan",d:false}],collabs:["🧑"]}],
-  "2026-3-26": [{label:"Upload Plan 🚀",time:"09:00",color:"blue",icon:"📤",desc:"Jadwalkan upload konten minggu ini.",tags:["#upload","#planning"],checklist:[{t:"Pilih konten",d:true},{t:"Buat thumbnail",d:false},{t:"Upload ke YT",d:false}],collabs:["🧑"]}],
-  "2026-3-28": [{label:"Inspirasi",time:"10:00",color:"teal",icon:"✨",desc:"Sesi eksplorasi dan mencari inspirasi.",tags:["#inspirasi","#ide"],checklist:[{t:"Tonton kreator lain",d:false},{t:"Catat ide spontan",d:false}],collabs:["🧑","👩"]}],
+// ===================== DATA =====================
+let naskahData = {
+  "2026-3-2": [{title:"Ide Konten April", platform:"YouTube", script:"Kumpulkan dan dokumentasikan ide konten terbaik untuk bulan ini.\n\nFokus pada topik yang relevan dan trend saat ini.", status:"Draft", time:"10:00"}],
+  "2026-3-9": [{title:"Review Produk Terbaru", platform:"YouTube", script:"Opening: Setelah gue pakai produk ini selama 2 minggu, ini yang beneran gue rasain...\n\nSection 1: Unboxing dan First Impression\nSection 2: Penggunaan harian\nSection 3: Verdict", status:"Exported", time:"15:00"}],
+  "2026-3-15": [{title:"Tips Shorts Viral", platform:"Shorts", script:"Hook: 3 hal yang bikin Shorts kamu gak ditonton orang...\n\n1. Detik pertama yang membosankan\n2. Gak ada pattern interrupt\n3. CTA yang terlalu agresif", status:"Uploaded", time:"11:00"}],
+  "2026-3-21": [{title:"Tutorial TikTok Kreator", platform:"TikTok", script:"Cara bikin konten TikTok yang bisa tembus FYP:\n\n1. Hook dalam 1 detik pertama\n2. Transisi yang smooth\n3. Audio trending", status:"Draft", time:"14:00"}],
 };
-let checkStates = {};
 
+let ideasData = [
+  {title:"POV: Ngedit video sambil dengerin lo-fi", desc:"Konten relatable buat kreator, bisa viral di Shorts", platform:"Shorts", pinned:true},
+  {title:"Cara bikin thumbnail yang klik rate 10%+", desc:"Tutorial Canva + psikologi warna untuk thumbnail", platform:"YouTube", pinned:false},
+  {title:"Algorithm YouTube 2026 — Yang Beneran Kerja", desc:"Hasil eksperimen 30 hari posting konsisten", platform:"YouTube", pinned:false},
+  {title:"Review MacBook Air M3 vs M2", desc:"Benchmark, harga, dan value for money untuk kreator", platform:"YouTube", pinned:false},
+  {title:"5 Tools AI buat kreator konten", desc:"Tools yang beneran kepake sehari-hari", platform:"TikTok", pinned:false},
+  {title:"Cara edit video 10x lebih cepat", desc:"Workflow editing yang efisien", platform:"Shorts", pinned:false},
+];
+
+let promptsData = [
+  {title:"Hook Pembuka Yang Bikin Penonton Tetap Nonton", cat:"Script", text:"Buatkan 5 variasi opening hook untuk video YouTube tentang [topik]. Hook harus membuat penonton penasaran dalam 3 detik pertama, gunakan teknik pattern interrupt dan open loop."},
+  {title:"Deskripsi Thumbnail yang Click-bait (Positif)", cat:"Thumbnail", text:"Deskripsikan visual thumbnail YouTube untuk video [judul]. Sertakan: ekspresi wajah, teks overlay, warna dominan, dan elemen yang membuat orang penasaran. Target CTR 8%+."},
+  {title:"Caption YouTube yang Mendorong Engagement", cat:"Caption", text:"Tulis caption YouTube untuk video [judul] yang mendorong penonton untuk like, comment, dan subscribe. Sertakan timestamp, CTA yang natural, dan 8-10 hashtag relevan. Tone: friendly tapi informatif."},
+  {title:"Analisa Kompetitor di Niche", cat:"Riset", text:"Analisa channel YouTube [nama channel] dengan framework: konten pillar mereka, format yang paling banyak ditonton, gap yang bisa diisi, dan strategi yang bisa diadaptasi untuk channel [niche saya]."},
+  {title:"Hook untuk Konten Shorts/Reels", cat:"Hook", text:"Buat 10 variasi hook 1 kalimat untuk Shorts tentang [topik]. Hook harus bisa diucapkan dalam 2 detik, membuat penonton langsung penasaran, dan tidak boleh ada kata 'hai' atau salam pembuka."},
+  {title:"Struktur Video Edukasi 7-10 Menit", cat:"Script", text:"Buat outline script video edukasi tentang [topik] dengan durasi 7-10 menit. Gunakan struktur: hook (30 detik), problem agitation (1 menit), konten inti 5 poin (5 menit), kesimpulan + CTA (1 menit)."},
+];
+
+let jurnalData = [
+  {title:"🎯 Kenapa Video Review iPhone Viral?", date:"26 April 2026", content:"Setelah analisa mendalam, ada 3 faktor utama yang bikin video ini performanya jauh di atas rata-rata. Hook-nya langsung menyentuh pain point penonton. Thumbnail-nya pakai ekspresi genuine. Strukturnya mengikuti storytelling arc yang natural.", tags:["viral","review","hook","thumbnail"]},
+  {title:"💡 Eksperimen: Upload 3x Seminggu vs 1x", date:"20 April 2026", content:"Hasil eksperimen 4 minggu: upload 3x seminggu justru menurunkan kualitas rata-rata video. Views per video turun 40% tapi total views channel naik 15%. Kesimpulan: 2x seminggu adalah sweet spot.", tags:["eksperimen","konsistensi","algorithm"]},
+];
+
+// ===================== NAVIGATION =====================
 function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   btn.classList.add('active');
+  if(name==='ideas') renderIdeas('all');
+  if(name==='prompt') renderPrompts('all');
+  if(name==='jurnal') renderJurnal();
 }
 
+// ===================== KALENDER =====================
 function eKey(y,m,d){ return y+"-"+m+"-"+d; }
 
 function renderCalendar(){
@@ -953,8 +461,10 @@ function renderCalendar(){
       cell.className="cal-cell"+(isSel?" selected":"");
       cell.onclick=()=>selectDay(day);
       let html='<div class="day-num'+(isToday?" today":"")+'">'+day+'</div>';
-      (events[key]||[]).forEach(ev=>{
-        html+='<div class="event-chip chip-'+ev.color+'">'+ev.icon+' '+ev.label+'<div class="ev-time-small">'+ev.time+'</div></div>';
+      (naskahData[key]||[]).forEach((ev,idx)=>{
+        const platClass = ev.platform==='YouTube'?'chip-youtube':ev.platform==='TikTok'?'chip-tiktok':'chip-shorts';
+        const platIcon = ev.platform==='YouTube'?'🔴':ev.platform==='TikTok'?'⚫':'🟣';
+        html+='<div class="event-chip '+platClass+'" onclick="event.stopPropagation();openDetailModal(\''+key+'\','+idx+')">'+platIcon+' '+ev.title+'</div>';
       });
       cell.innerHTML=html;
     }
@@ -966,146 +476,436 @@ function selectDay(day){
   selDay=day;
   renderCalendar();
   const key=eKey(curYear,curMonth,day);
-  const evList=events[key];
-  if(!evList||evList.length===0){
-    openAddModalForDay(day);
-    return;
+  const list=naskahData[key];
+  if(!list||list.length===0){
+    openAddModal(day);
+  } else if(list.length===1){
+    openDetailModal(key,0);
+  } else {
+    // show list - just open first for now
+    openDetailModal(key,0);
   }
-  openDetailModal(key,evList[0]);
-}
-
-function openDetailModal(key,ev){
-  if(!checkStates[key]) checkStates[key]=ev.checklist.map(c=>c.d);
-  const checks=checkStates[key];
-  const done=checks.filter(Boolean).length;
-  const pct=ev.checklist.length>0?(done/ev.checklist.length*100):0;
-  document.getElementById("detail-modal-body").innerHTML=`
-    <div class="ev-title-row">
-      <div class="ev-icon-box">${ev.icon}</div>
-      <div><div class="ev-badge" style="color:${CAT_COLORS[ev.color]||'#374151'}">${CAT_LABELS[ev.color]||'Event'}</div><div class="ev-name">${ev.label}</div></div>
-    </div>
-    <div class="ev-meta">
-      <div class="ev-meta-row">📅 <span>${DAY_NAMES[new Date(curYear,curMonth,selDay).getDay()]}, ${selDay} ${MONTHS[curMonth]} ${curYear}</span></div>
-      <div class="ev-meta-row">🕒 <span>${ev.time}</span></div>
-      <div class="ev-meta-row">🏷️ ${ev.tags.map(t=>'<span style="color:#3b82f6">'+t+'</span>').join(' ')}</div>
-      <div class="ev-meta-row">📄 <span>${ev.desc}</span></div>
-    </div>
-    <div>
-      <div class="checklist-header"><span class="checklist-label">Checklist</span><span style="font-size:11px;color:#9ca3af;">${done}/${ev.checklist.length}</span></div>
-      <div class="progress-thin"><div class="progress-thin-fill" style="width:${pct}%"></div></div>
-      ${ev.checklist.map((c,i)=>`<div class="check-item${checks[i]?' done':''}" id="dci-${i}"><input type="checkbox" ${checks[i]?'checked':''} onchange="toggleDetailCheck('${key}',${i})"><label>${c.t}</label></div>`).join('')}
-    </div>
-    <div>
-      <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:6px;">Kolaborator</div>
-      <div class="collab-row">${ev.collabs.map(c=>'<div class="collab-avatar">'+c+'</div>').join('')}</div>
-    </div>
-    <div style="display:flex;gap:8px;">
-      <button class="btn btn-primary" style="flex:1;">✏️ Edit Event</button>
-      <button class="btn btn-danger" onclick="deleteEvent('${key}')">🗑️ Hapus</button>
-    </div>
-    <div class="shortcuts-box">
-      <div style="font-size:12px;font-weight:700;color:#4b5563;margin-bottom:8px;">⌨️ Keyboard Shortcuts</div>
-      <div class="shortcut-row"><span class="shortcut-key">N</span><span class="shortcut-desc">Event baru</span></div>
-      <div class="shortcut-row"><span class="shortcut-key">T</span><span class="shortcut-desc">Hari ini</span></div>
-      <div class="shortcut-row"><span class="shortcut-key">← →</span><span class="shortcut-desc">Ganti bulan</span></div>
-      <div class="shortcut-row"><span class="shortcut-key">Esc</span><span class="shortcut-desc">Tutup</span></div>
-    </div>
-  `;
-  document.getElementById("detail-modal").classList.remove("hidden");
-}
-
-function toggleDetailCheck(key,i){
-  checkStates[key][i]=!checkStates[key][i];
-  const ev=events[key][0];
-  openDetailModal(key,ev);
-}
-
-function deleteEvent(key){
-  delete events[key];
-  closeDetailModal();
-  renderCalendar();
-}
-
-function closeDetailModal(){ document.getElementById("detail-modal").classList.add("hidden"); }
-function openAddModal(){ document.getElementById("add-modal").classList.remove("hidden"); document.getElementById("input-title").focus(); }
-function openAddModalForDay(day){ document.getElementById("input-day").value=day; openAddModal(); }
-function closeAddModal(){ document.getElementById("add-modal").classList.add("hidden"); }
-
-function saveEvent(){
-  const title=document.getElementById("input-title").value.trim();
-  const day=parseInt(document.getElementById("input-day").value);
-  const time=document.getElementById("input-time").value;
-  const cat=document.getElementById("input-cat").value;
-  if(!title||!day||day<1||day>31){alert("Isi judul dan tanggal dulu!");return;}
-  const key=eKey(curYear,curMonth,day);
-  if(!events[key])events[key]=[];
-  events[key].push({label:title,time:time,color:cat,icon:CAT_ICONS[cat],desc:"Event baru.",tags:["#"+CAT_LABELS[cat].toLowerCase()],checklist:[],collabs:["🧑"]});
-  closeAddModal();
-  selDay=day;
-  renderCalendar();
-  document.getElementById("input-title").value="";
-  document.getElementById("input-day").value="";
 }
 
 function prevMonth(){ curMonth--; if(curMonth<0){curMonth=11;curYear--;} selDay=null; renderCalendar(); }
 function nextMonth(){ curMonth++; if(curMonth>11){curMonth=0;curYear++;} selDay=null; renderCalendar(); }
 function goToday(){ curMonth=TODAY.getMonth(); curYear=TODAY.getFullYear(); selDay=TODAY.getDate(); renderCalendar(); }
 
-// Caption
-const captions = [
-  {text:"Gue udah pake iPhone 16 Pro selama 3 bulan, dan ini yang beneran gue rasain — bukan cuma review 1 minggu doang.\n\nKamera-nya? Gila sih, terutama buat konten kreator. Tapi ada beberapa hal yang bikin gue agak kecewa juga.\n\nTonton sampai habis karena ada yang gak bahas di review manapun 👀\n\n⏱ Timestamp:\n0:00 Opening\n1:30 Unboxing\n3:00 Kamera Test\n6:00 Verdict", tags:["#review","#iphone16pro","#teknologi","#kreator","#youtube","#gadget","#unboxing","#indonesia"]},
-  {text:"Tools AI ini yang bikin workflow gue 10x lebih cepat dalam bikin konten YouTube.\n\nGak perlu bayar mahal, beberapa bahkan gratis!\n\nSave video ini buat nanti ya 🔖", tags:["#aitools","#kreator","#productivity","#youtube","#shorts"]},
-  {text:"Banyak yang nanya soal setup studio gue, ini dia lengkapnya!\n\nTotal budget 2 juta rupiah bisa bikin studio yang proper. Yang penting tahu prioritasnya 💡", tags:["#studio","#youtuber","#setup","#kreator","#behindthescene","#indonesia","#tips","#vlog","#content","#youtube","#camera","#lighting"]},
-  {text:"Thread: Ini hasil eksperimen gue selama 30 hari tentang algorithm YouTube 2026.\n\n1/ Posting lebih sering belum tentu lebih baik...", tags:["#youtube","#algorithm","#tips"]},
-];
-function selectCaption(el,idx){
-  document.querySelectorAll('.caption-item').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
-  const ta=document.getElementById("caption-textarea");
-  ta.value=captions[idx].text;
-  updateCharCount(ta);
-  document.querySelector(".hashtag-row").innerHTML=captions[idx].tags.map(t=>'<span class="hashtag">'+t+'</span>').join('');
+// ===================== NASKAH MODAL =====================
+function openAddModal(day){
+  editingNaskahKey=null; editingNaskahIdx=null;
+  document.getElementById('naskah-modal-title').textContent='+ Naskah Baru';
+  document.getElementById('inp-naskah-title').value='';
+  document.getElementById('inp-naskah-script').value='';
+  document.getElementById('inp-naskah-status').value='Draft';
+  document.getElementById('inp-naskah-platform').value='YouTube';
+  if(day){
+    const d=new Date(curYear,curMonth,day);
+    document.getElementById('inp-naskah-date').value=d.toISOString().split('T')[0];
+  } else {
+    document.getElementById('inp-naskah-date').value='';
+  }
+  document.getElementById('naskah-modal').classList.remove('hidden');
+  document.getElementById('inp-naskah-title').focus();
 }
-function updateCharCount(el){ document.getElementById("char-count").textContent=el.value.length+" / 5000 karakter"; }
-function copyCaption(){ navigator.clipboard.writeText(document.getElementById("caption-textarea").value); alert("Caption berhasil dicopy!"); }
-function addCaption(){ alert("Fitur tambah caption baru akan segera hadir!"); }
 
-// Prompt
-function copyPrompt(btn){
-  const text=btn.closest('.prompt-card').querySelector('.prompt-text').textContent;
-  navigator.clipboard.writeText(text);
-  btn.textContent="✓ Copied!";
-  btn.classList.add('copied');
-  setTimeout(()=>{btn.textContent="📋 Copy";btn.classList.remove('copied');},2000);
+function closeNaskahModal(){ document.getElementById('naskah-modal').classList.add('hidden'); }
+
+function saveNaskah(){
+  const title=document.getElementById('inp-naskah-title').value.trim();
+  const dateVal=document.getElementById('inp-naskah-date').value;
+  const platform=document.getElementById('inp-naskah-platform').value;
+  const script=document.getElementById('inp-naskah-script').value.trim();
+  const status=document.getElementById('inp-naskah-status').value;
+  if(!title||!dateVal){alert('Isi judul dan tanggal dulu!');return;}
+  const d=new Date(dateVal);
+  const key=eKey(d.getFullYear(),d.getMonth(),d.getDate());
+  if(!naskahData[key])naskahData[key]=[];
+  const obj={title,platform,script,status,time:"10:00"};
+  if(editingNaskahKey!==null&&editingNaskahIdx!==null){
+    naskahData[editingNaskahKey][editingNaskahIdx]=obj;
+  } else {
+    naskahData[key].push(obj);
+    selDay=d.getDate(); curMonth=d.getMonth(); curYear=d.getFullYear();
+  }
+  closeNaskahModal();
+  closeDetailModal();
+  renderCalendar();
 }
-function filterPrompt(cat,btn){
-  document.querySelectorAll('#prompt-grid .btn, .page-content .btn').forEach(b=>b.classList.remove('btn-primary'));
-  btn.classList.add('btn-primary');
-  document.querySelectorAll('.prompt-card').forEach(card=>{
-    card.style.display=(cat==='all'||card.dataset.cat===cat)?'block':'none';
+
+// ===================== DETAIL MODAL =====================
+function openDetailModal(key,idx){
+  currentDetailKey=key; currentDetailIdx=idx;
+  const ev=naskahData[key][idx];
+  const platIcon=ev.platform==='YouTube'?'🔴':ev.platform==='TikTok'?'⚫':'🟣';
+  const statusClass='status-'+ev.status.toLowerCase();
+  document.getElementById('detail-modal-header-title').textContent=platIcon+' '+ev.platform;
+  document.getElementById('detail-modal-body').innerHTML=`
+    <div>
+      <div style="font-size:18px;font-weight:800;color:#111827;margin-bottom:6px;">${ev.title}</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;">
+        <span class="status-badge ${statusClass}" onclick="cycleStatus('${key}',${idx})" title="Klik untuk ganti status">${statusLabel(ev.status)}</span>
+        <span style="font-size:11px;color:#9ca3af;">${formatKeyDate(key)}</span>
+        <button class="btn btn-sm" onclick="openMoveModal('${key}',${idx})">📅 Pindah Tanggal</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:6px;">📄 Naskah</div>
+      <div class="naskah-full">${ev.script||'<span style="color:#9ca3af;font-style:italic;">Belum ada naskah.</span>'}</div>
+    </div>
+  `;
+  document.getElementById('detail-modal').classList.remove('hidden');
+}
+
+function statusLabel(s){
+  if(s==='Draft') return '📝 Draft';
+  if(s==='Exported') return '📤 Exported';
+  if(s==='Uploaded') return '✅ Uploaded';
+  return s;
+}
+
+function cycleStatus(key,idx){
+  const order=['Draft','Exported','Uploaded'];
+  const ev=naskahData[key][idx];
+  ev.status=order[(order.indexOf(ev.status)+1)%3];
+  renderCalendar();
+  openDetailModal(key,idx);
+}
+
+function formatKeyDate(key){
+  const parts=key.split('-');
+  return parts[2]+' '+MONTHS[parseInt(parts[1])]+' '+parts[0];
+}
+
+function closeDetailModal(){ document.getElementById('detail-modal').classList.add('hidden'); currentDetailKey=null; currentDetailIdx=null; }
+
+function editNaskahFromDetail(){
+  const key=currentDetailKey; const idx=currentDetailIdx;
+  const ev=naskahData[key][idx];
+  editingNaskahKey=key; editingNaskahIdx=idx;
+  document.getElementById('naskah-modal-title').textContent='✏️ Edit Naskah';
+  document.getElementById('inp-naskah-title').value=ev.title;
+  document.getElementById('inp-naskah-platform').value=ev.platform;
+  document.getElementById('inp-naskah-script').value=ev.script||'';
+  document.getElementById('inp-naskah-status').value=ev.status;
+  const parts=key.split('-');
+  const d=new Date(parseInt(parts[0]),parseInt(parts[1]),parseInt(parts[2]));
+  document.getElementById('inp-naskah-date').value=d.toISOString().split('T')[0];
+  closeDetailModal();
+  document.getElementById('naskah-modal').classList.remove('hidden');
+}
+
+function deleteNaskah(){
+  if(!confirm('Hapus naskah ini?'))return;
+  naskahData[currentDetailKey].splice(currentDetailIdx,1);
+  if(naskahData[currentDetailKey].length===0) delete naskahData[currentDetailKey];
+  closeDetailModal();
+  renderCalendar();
+}
+
+function copyNaskah(){
+  const ev=naskahData[currentDetailKey][currentDetailIdx];
+  navigator.clipboard.writeText(ev.title+'\n\n'+ev.script);
+  alert('Naskah berhasil dicopy!');
+}
+
+// Move date
+let movingKey=null, movingIdx=null;
+function openMoveModal(key,idx){
+  movingKey=key; movingIdx=idx;
+  const parts=key.split('-');
+  const d=new Date(parseInt(parts[0]),parseInt(parts[1]),parseInt(parts[2]));
+  document.getElementById('inp-move-date').value=d.toISOString().split('T')[0];
+  document.getElementById('move-modal').classList.remove('hidden');
+}
+
+function confirmMove(){
+  const dateVal=document.getElementById('inp-move-date').value;
+  if(!dateVal){alert('Pilih tanggal dulu!');return;}
+  const d=new Date(dateVal);
+  const newKey=eKey(d.getFullYear(),d.getMonth(),d.getDate());
+  const ev=naskahData[movingKey].splice(movingIdx,1)[0];
+  if(naskahData[movingKey].length===0) delete naskahData[movingKey];
+  if(!naskahData[newKey]) naskahData[newKey]=[];
+  naskahData[newKey].push(ev);
+  document.getElementById('move-modal').classList.add('hidden');
+  closeDetailModal();
+  curMonth=d.getMonth(); curYear=d.getFullYear(); selDay=d.getDate();
+  renderCalendar();
+}
+
+// ===================== IDEAS =====================
+let currentIdeaFilter='all';
+
+function renderIdeas(filter){
+  currentIdeaFilter=filter;
+  const grid=document.getElementById('ideas-grid');
+  const filtered=filter==='all'?ideasData:ideasData.filter(i=>i.platform===filter);
+  // Pinned first
+  const sorted=[...filtered.filter(i=>i.pinned),...filtered.filter(i=>!i.pinned)];
+  if(sorted.length===0){
+    grid.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada ide. Tambah ide baru! 💡</div>';
+    return;
+  }
+  grid.innerHTML=sorted.map((idea,i)=>{
+    const realIdx=ideasData.indexOf(idea);
+    const platColor=idea.platform==='YouTube'?'#b91c1c':idea.platform==='TikTok'?'#18181b':'#7e22ce';
+    const platIcon=idea.platform==='YouTube'?'🔴':idea.platform==='TikTok'?'⚫':'🟣';
+    return `<div class="idea-card">
+      ${idea.pinned?'<div class="idea-card-pinned">📌</div>':''}
+      <div class="idea-card-platform" style="color:${platColor};">${platIcon} ${idea.platform}</div>
+      <div class="idea-card-title">${idea.title}</div>
+      <div class="idea-card-desc">${idea.desc}</div>
+      <div class="idea-card-actions">
+        <button class="btn btn-sm" onclick="togglePin(${realIdx})" title="${idea.pinned?'Unpin':'Pin'}">${idea.pinned?'📌':'📍'}</button>
+        <button class="btn btn-sm" onclick="editIdea(${realIdx})">✏️</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteIdea(${realIdx})">🗑️</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterIdeas(filter,btn){
+  // Reset all tab styles
+  document.querySelectorAll('.ideas-tab').forEach(t=>{
+    t.classList.remove('active-all','active-yt','active-tiktok','active-shorts');
   });
+  if(filter==='all') btn.classList.add('active-all');
+  else if(filter==='YouTube') btn.classList.add('active-yt');
+  else if(filter==='TikTok') btn.classList.add('active-tiktok');
+  else if(filter==='Shorts') btn.classList.add('active-shorts');
+  renderIdeas(filter);
 }
-function addPrompt(){ alert("Fitur tambah prompt baru akan segera hadir!"); }
 
-// Others
-function addNarasi(){ alert("Fitur tambah narasi baru akan segera hadir!"); }
-function openNarasi(idx){ alert("Buka editor narasi #"+(idx+1)); }
-function addIdea(){ alert("Fitur tambah ide baru akan segera hadir!"); }
-function addJurnal(){ alert("Fitur tambah jurnal baru akan segera hadir!"); }
+function togglePin(idx){
+  ideasData[idx].pinned=!ideasData[idx].pinned;
+  renderIdeas(currentIdeaFilter);
+}
 
-// Keyboard shortcuts
+function openIdeaModal(idx=null){
+  editingIdeaIdx=idx;
+  document.getElementById('idea-modal-title').textContent=idx!==null?'✏️ Edit Ide':'+ Ide Baru';
+  if(idx!==null){
+    const idea=ideasData[idx];
+    document.getElementById('inp-idea-title').value=idea.title;
+    document.getElementById('inp-idea-desc').value=idea.desc;
+    document.getElementById('inp-idea-platform').value=idea.platform;
+  } else {
+    document.getElementById('inp-idea-title').value='';
+    document.getElementById('inp-idea-desc').value='';
+    document.getElementById('inp-idea-platform').value='YouTube';
+  }
+  document.getElementById('idea-modal').classList.remove('hidden');
+}
+
+function closeIdeaModal(){ document.getElementById('idea-modal').classList.add('hidden'); editingIdeaIdx=null; }
+
+function saveIdea(){
+  const title=document.getElementById('inp-idea-title').value.trim();
+  const desc=document.getElementById('inp-idea-desc').value.trim();
+  const platform=document.getElementById('inp-idea-platform').value;
+  if(!title){alert('Isi judul ide dulu!');return;}
+  const obj={title,desc,platform,pinned:false};
+  if(editingIdeaIdx!==null){
+    obj.pinned=ideasData[editingIdeaIdx].pinned;
+    ideasData[editingIdeaIdx]=obj;
+  } else {
+    ideasData.push(obj);
+  }
+  closeIdeaModal();
+  renderIdeas(currentIdeaFilter);
+}
+
+function editIdea(idx){ openIdeaModal(idx); }
+
+function deleteIdea(idx){
+  if(!confirm('Hapus ide ini?'))return;
+  ideasData.splice(idx,1);
+  renderIdeas(currentIdeaFilter);
+}
+
+// ===================== PROMPTS =====================
+let currentPromptFilter='all';
+
+function renderPrompts(filter){
+  currentPromptFilter=filter;
+  const grid=document.getElementById('prompt-grid');
+  const filtered=filter==='all'?promptsData:promptsData.filter(p=>p.cat===filter);
+  if(filtered.length===0){
+    grid.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada prompt di kategori ini.</div>';
+    return;
+  }
+  const catColors={Script:'#2563eb',Thumbnail:'#dc2626',Caption:'#0f766e',Riset:'#7e22ce',Hook:'#c2410c'};
+  const catIcons={Script:'📝',Thumbnail:'🖼️',Caption:'💬',Riset:'🔍',Hook:'🎣'};
+  grid.innerHTML=filtered.map((p)=>{
+    const realIdx=promptsData.indexOf(p);
+    const col=catColors[p.cat]||'#374151';
+    const ico=catIcons[p.cat]||'📄';
+    const preview=p.text.length>100?p.text.slice(0,100)+'...':p.text;
+    return `<div class="prompt-card">
+      <div class="prompt-category" style="color:${col};">${ico} ${p.cat}</div>
+      <div class="prompt-title">${p.title}</div>
+      <div class="prompt-text" onclick="viewPromptFull(${realIdx})" title="Klik untuk lihat full">${preview}</div>
+      <div class="prompt-footer">
+        <div style="display:flex;gap:5px;">
+          <button class="btn btn-sm" onclick="viewPromptFull(${realIdx})">👁️ Lihat</button>
+          <button class="btn btn-sm" onclick="editPrompt(${realIdx})">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="deletePrompt(${realIdx})">🗑️</button>
+        </div>
+        <button class="prompt-copy" onclick="copyPromptByIdx(${realIdx},this)">📋 Copy</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterPrompt(filter,btn){
+  document.querySelectorAll('#page-prompt .btn').forEach(b=>b.classList.remove('btn-primary'));
+  btn.classList.add('btn-primary');
+  renderPrompts(filter);
+}
+
+function viewPromptFull(idx){
+  currentPromptViewIdx=idx;
+  const p=promptsData[idx];
+  const catIcons={Script:'📝',Thumbnail:'🖼️',Caption:'💬',Riset:'🔍',Hook:'🎣'};
+  document.getElementById('prompt-view-title').textContent=p.title;
+  document.getElementById('prompt-view-cat').textContent=(catIcons[p.cat]||'')+ ' '+p.cat;
+  document.getElementById('prompt-view-text').textContent=p.text;
+  document.getElementById('prompt-view-modal').classList.remove('hidden');
+}
+
+function copyPromptFull(){
+  const p=promptsData[currentPromptViewIdx];
+  navigator.clipboard.writeText(p.text);
+  alert('Prompt berhasil dicopy!');
+}
+
+function copyPromptByIdx(idx,btn){
+  navigator.clipboard.writeText(promptsData[idx].text);
+  btn.textContent='✓ Copied!';
+  btn.classList.add('copied');
+  setTimeout(()=>{btn.textContent='📋 Copy';btn.classList.remove('copied');},2000);
+}
+
+function openPromptModal(idx=null){
+  editingPromptIdx=idx;
+  document.getElementById('prompt-modal-title').textContent=idx!==null?'✏️ Edit Prompt':'+ Prompt Baru';
+  if(idx!==null){
+    const p=promptsData[idx];
+    document.getElementById('inp-prompt-title').value=p.title;
+    document.getElementById('inp-prompt-cat').value=p.cat;
+    document.getElementById('inp-prompt-text').value=p.text;
+  } else {
+    document.getElementById('inp-prompt-title').value='';
+    document.getElementById('inp-prompt-cat').value='Script';
+    document.getElementById('inp-prompt-text').value='';
+  }
+  document.getElementById('prompt-modal').classList.remove('hidden');
+}
+
+function closePromptModal(){ document.getElementById('prompt-modal').classList.add('hidden'); editingPromptIdx=null; }
+
+function savePrompt(){
+  const title=document.getElementById('inp-prompt-title').value.trim();
+  const cat=document.getElementById('inp-prompt-cat').value;
+  const text=document.getElementById('inp-prompt-text').value.trim();
+  if(!title||!text){alert('Isi judul dan isi prompt!');return;}
+  const obj={title,cat,text};
+  if(editingPromptIdx!==null){
+    promptsData[editingPromptIdx]=obj;
+  } else {
+    promptsData.push(obj);
+  }
+  closePromptModal();
+  renderPrompts(currentPromptFilter);
+}
+
+function editPrompt(idx){ openPromptModal(idx); }
+
+function deletePrompt(idx){
+  if(!confirm('Hapus prompt ini?'))return;
+  promptsData.splice(idx,1);
+  renderPrompts(currentPromptFilter);
+}
+
+// ===================== JURNAL =====================
+function renderJurnal(){
+  const list=document.getElementById('jurnal-list');
+  if(jurnalData.length===0){
+    list.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada entri jurnal.</div>';
+    return;
+  }
+  list.innerHTML=jurnalData.map((j,idx)=>`
+    <div class="jurnal-entry">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div class="jurnal-date">📅 ${j.date}</div>
+        <div style="display:flex;gap:5px;">
+          <button class="btn btn-sm" onclick="editJurnal(${idx})">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteJurnal(${idx})">🗑️</button>
+        </div>
+      </div>
+      <div class="jurnal-title">${j.title}</div>
+      <div class="jurnal-content">${j.content}</div>
+      <div class="jurnal-tags">${j.tags.map(t=>'<span class="jurnal-tag">'+t+'</span>').join('')}</div>
+    </div>
+  `).join('');
+}
+
+function openJurnalModal(idx=null){
+  editingJurnalIdx=idx;
+  document.getElementById('jurnal-modal-title').textContent=idx!==null?'✏️ Edit Jurnal':'+ Entri Jurnal';
+  if(idx!==null){
+    const j=jurnalData[idx];
+    document.getElementById('inp-jurnal-title').value=j.title;
+    document.getElementById('inp-jurnal-content').value=j.content;
+    document.getElementById('inp-jurnal-tags').value=j.tags.join(', ');
+  } else {
+    document.getElementById('inp-jurnal-title').value='';
+    document.getElementById('inp-jurnal-content').value='';
+    document.getElementById('inp-jurnal-tags').value='';
+  }
+  document.getElementById('jurnal-modal').classList.remove('hidden');
+}
+
+function closeJurnalModal(){ document.getElementById('jurnal-modal').classList.add('hidden'); editingJurnalIdx=null; }
+
+function saveJurnal(){
+  const title=document.getElementById('inp-jurnal-title').value.trim();
+  const content=document.getElementById('inp-jurnal-content').value.trim();
+  const tagsRaw=document.getElementById('inp-jurnal-tags').value;
+  if(!title){alert('Isi judul jurnal!');return;}
+  const tags=tagsRaw.split(',').map(t=>t.trim()).filter(Boolean);
+  const now=new Date();
+  const date=now.getDate()+' '+MONTHS[now.getMonth()]+' '+now.getFullYear();
+  const obj={title,date,content,tags};
+  if(editingJurnalIdx!==null){
+    jurnalData[editingJurnalIdx]=obj;
+  } else {
+    jurnalData.unshift(obj);
+  }
+  closeJurnalModal();
+  renderJurnal();
+}
+
+function editJurnal(idx){ openJurnalModal(idx); }
+
+function deleteJurnal(idx){
+  if(!confirm('Hapus entri jurnal ini?'))return;
+  jurnalData.splice(idx,1);
+  renderJurnal();
+}
+
+// ===================== KEYBOARD =====================
 document.addEventListener("keydown",e=>{
-  if(document.activeElement.tagName==="INPUT"||document.activeElement.tagName==="TEXTAREA"||document.activeElement.tagName==="SELECT")return;
-  if(e.key==="n"||e.key==="N") openAddModal();
-  if(e.key==="t"||e.key==="T") goToday();
+  const tag=document.activeElement.tagName;
+  if(tag==="INPUT"||tag==="TEXTAREA"||tag==="SELECT")return;
   if(e.key==="ArrowRight") nextMonth();
   if(e.key==="ArrowLeft") prevMonth();
-  if(e.key==="Escape"){ closeAddModal(); closeDetailModal(); }
-});
+  if(e.key==="t"||e.key==="T") goToday();
+  if(e.key==="Escape"){
+    document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.add('hidden'));
 
-document.getElementById("add-modal").addEventListener("click",e=>{ if(e.target===document.getElementById("add-modal"))closeAddModal(); });
-document.getElementById("detail-modal").addEventListener("click",e=>{ if(e.target===document.getElementById("detail-modal"))closeDetailModal(); });
-
+// ===================== INIT =====================
 renderCalendar();
 </script>
 </body>
