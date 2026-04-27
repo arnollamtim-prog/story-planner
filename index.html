@@ -5,17 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Story Planner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; background: #ECEEF5; height: 100vh; overflow: hidden; display: flex; }
-
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #ECEEF5; height: 100vh; overflow: hidden; display: flex;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+}
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 99px; }
 
-/* ===== SIDEBAR ===== */
 .sidebar {
   width: 228px; flex-shrink: 0;
   background: linear-gradient(168deg, #141c38 0%, #1a2855 55%, #1e3068 100%);
@@ -30,14 +34,10 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #ECEEF5; height
   font-size: 20px; margin-bottom: 10px;
   box-shadow: 0 4px 14px rgba(91,126,248,0.45);
 }
-.logo-title { font-size: 15px; font-weight: 800; font-family: 'Syne', sans-serif; letter-spacing: -0.01em; }
+.logo-title { font-size: 15px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.02em; }
 .logo-sub { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
-
 .sidebar-nav { flex: 1; overflow-y: auto; padding: 14px 10px; }
-.nav-label {
-  font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-  color: rgba(255,255,255,0.25); padding: 8px 8px 4px;
-}
+.nav-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.25); padding: 8px 8px 4px; }
 .nav-item {
   display: flex; align-items: center; gap: 10px; padding: 9px 11px;
   border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600;
@@ -45,281 +45,148 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #ECEEF5; height
   border: none; background: none; width: 100%; text-align: left;
 }
 .nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); }
-.nav-item.active {
-  background: linear-gradient(90deg, rgba(91,126,248,0.35), rgba(91,126,248,0.12));
-  color: white; border-left: 3px solid #5B7EF8; padding-left: 8px;
-}
+.nav-item.active { background: linear-gradient(90deg, rgba(91,126,248,0.35), rgba(91,126,248,0.12)); color: white; border-left: 3px solid #5B7EF8; padding-left: 8px; }
 .nav-icon { width: 22px; text-align: center; display: flex; align-items: center; justify-content: center; }
+.sidebar-footer { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; gap: 10px; }
+.user-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #5B7EF8, #8BA6FF); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0; }
 
-.sidebar-footer {
-  padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.07);
-  display: flex; align-items: center; gap: 10px;
-}
-.user-avatar {
-  width: 34px; height: 34px; border-radius: 50%;
-  background: linear-gradient(135deg, #5B7EF8, #8BA6FF);
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 14px; flex-shrink: 0;
-}
-
-/* ===== MAIN ===== */
 .main { flex: 1; display: flex; flex-direction: column; min-width: 0; height: 100vh; overflow: hidden; }
 .page { display: none; flex: 1; flex-direction: column; height: 100%; overflow-y: auto; }
 .page.active { display: flex; }
-.page-header {
-  padding: 26px 28px 0; display: flex; align-items: center;
-  justify-content: space-between; flex-shrink: 0; margin-bottom: 18px;
-}
-.page-title { font-size: 22px; font-weight: 800; color: #0f1623; font-family: 'Syne', sans-serif; letter-spacing: -0.02em; }
-.page-sub { font-size: 12.5px; color: #9ca3af; margin-top: 3px; }
+.page-header { padding: 26px 28px 0; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; margin-bottom: 18px; }
+.page-title { font-size: 36px; font-weight: 700; color: #0f1623; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.02em; line-height: 1.1; }
+.page-sub { font-size: 15px; color: #94A3B8; margin-top: 6px; line-height: 1.7; font-weight: 400; }
 
-/* ===== BUTTONS ===== */
-.btn {
-  padding: 8px 14px; border-radius: 9px; border: 1.5px solid #e2e5ec;
-  background: white; font-size: 12px; font-weight: 600; color: #374151;
-  cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
+.btn { padding: 8px 14px; border-radius: 9px; border: 1.5px solid #e2e5ec; background: white; font-size: 12px; font-weight: 600; color: #374151; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
 .btn:hover { background: #f7f8fb; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-.btn-primary {
-  background: linear-gradient(135deg, #3B65F0, #5B7EF8);
-  color: white; border-color: transparent; font-weight: 700;
-  box-shadow: 0 3px 10px rgba(59,101,240,0.35);
-}
+.btn-primary { background: linear-gradient(135deg, #3B65F0, #5B7EF8); color: white; border-color: transparent; font-weight: 700; box-shadow: 0 3px 10px rgba(59,101,240,0.35); }
 .btn-primary:hover { background: linear-gradient(135deg, #2d54e0, #4a6de8); box-shadow: 0 4px 14px rgba(59,101,240,0.45); }
 .btn-danger { background: #fef2f2; color: #dc2626; border-color: #fecaca; box-shadow: none; }
 .btn-danger:hover { background: #fee2e2; }
 .btn-sm { padding: 5px 9px; font-size: 11px; border-radius: 7px; }
 
-/* ===== CALENDAR ===== */
-.cal-wrap { padding: 20px 26px; }
+/* ===== KALENDER — dark glassmorphism dari versi pendek ===== */
+.cal-wrap {
+  padding: 20px 26px;
+  background: radial-gradient(circle at top, #1e1b4b, #020617);
+  flex: 1; display: flex; flex-direction: column; min-height: 0;
+}
 .cal-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
 .cal-nav { display: flex; align-items: center; gap: 8px; }
-.cal-nav-btn {
-  width: 32px; height: 32px; border-radius: 9px; border: 1.5px solid #e2e5ec;
-  background: white; cursor: pointer; font-size: 16px; color: #6b7280;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06); transition: all 0.15s;
-}
-.cal-nav-btn:hover { background: #f0f3ff; border-color: #5B7EF8; color: #3B65F0; }
-.cal-month { font-size: 22px; font-weight: 800; color: #0f1623; font-family: 'Syne', sans-serif; letter-spacing: -0.02em; }
+.cal-nav-btn { width: 32px; height: 32px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.07); cursor: pointer; font-size: 16px; color: #e5e7eb; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.cal-nav-btn:hover { background: rgba(124,58,237,0.3); border-color: #7c3aed; color: white; }
+.cal-month { font-size: 36px; font-weight: 700; color: #e5e7eb; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.02em; line-height: 1.1; }
 .cal-actions { display: flex; gap: 8px; align-items: center; }
-.btn-today {
-  padding: 7px 16px; background: linear-gradient(135deg, #3B65F0, #5B7EF8);
-  color: white; border: none; border-radius: 9px; font-size: 12px; font-weight: 700;
-  cursor: pointer; box-shadow: 0 3px 10px rgba(59,101,240,0.3); transition: all 0.15s;
-}
-.btn-today:hover { box-shadow: 0 4px 14px rgba(59,101,240,0.45); }
-.cal-hint { font-size: 12px; color: #a0aec0; font-style: italic; margin-bottom: 12px; }
+.btn-today { padding: 7px 16px; background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; border: none; border-radius: 9px; font-size: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 3px 10px rgba(124,58,237,0.4); transition: all 0.15s; }
+.btn-today:hover { box-shadow: 0 4px 14px rgba(124,58,237,0.55); }
+.btn-naskah { padding: 7px 16px; background: rgba(124,58,237,0.2); color: #c4b5fd; border: 1px solid rgba(124,58,237,0.4); border-radius: 9px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+.btn-naskah:hover { background: rgba(124,58,237,0.35); }
+.cal-hint { font-size: 12px; color: #6b7280; font-style: italic; margin-bottom: 12px; }
 
-.cal-grid-wrap {
-  background: white; border-radius: 18px; border: 1.5px solid #e8eaf0;
-  overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-}
-.cal-headers { display: grid; grid-template-columns: repeat(7,1fr); background: #f8f9ff; border-bottom: 1.5px solid #eceef5; }
-.cal-hdr { font-size: 11px; font-weight: 700; color: #9ca3af; text-align: center; padding: 10px 4px; letter-spacing: 0.06em; }
-.cal-cells { display: grid; grid-template-columns: repeat(7,1fr); }
-.cal-cell { min-height: 92px; border-right: 1px solid #f1f3f8; border-bottom: 1px solid #f1f3f8; padding: 6px 5px; cursor: pointer; transition: background 0.12s; }
+.cal-grid-wrap { background: rgba(17,24,39,0.7); backdrop-filter: blur(20px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); flex: 1; display: flex; flex-direction: column; }
+.cal-headers { display: grid; grid-template-columns: repeat(7,1fr); background: rgba(2,6,23,0.6); border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+.cal-hdr { font-size: 11px; font-weight: 700; color: #6b7280; text-align: center; padding: 10px 4px; letter-spacing: 0.06em; }
+.cal-cells { display: grid; grid-template-columns: repeat(7,1fr); flex: 1; }
+.cal-cell { border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); padding: 8px 6px; cursor: pointer; transition: all 0.25s; background: rgba(255,255,255,0.02); position: relative; overflow: hidden; min-height: 80px; }
 .cal-cell:nth-child(7n) { border-right: none; }
-.cal-cell:hover { background: #f0f4ff; }
-.cal-cell.empty { background: #fafbfd; cursor: default; }
-.cal-cell.empty:hover { background: #fafbfd; }
-.day-num {
-  width: 26px; height: 26px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 4px;
-  transition: all 0.12s;
-}
-.day-num.today { background: linear-gradient(135deg, #3B65F0, #5B7EF8); color: white; box-shadow: 0 2px 8px rgba(59,101,240,0.35); }
-.day-ghost { font-size: 11px; color: #d8dae3; }
+.cal-cell:hover { background: rgba(124,58,237,0.15); box-shadow: inset 0 0 0 1px rgba(124,58,237,0.3); transform: translateY(-2px); }
+.cal-cell.empty { background: rgba(2,6,23,0.3); cursor: default; }
+.cal-cell.empty:hover { background: rgba(2,6,23,0.3); box-shadow: none; transform: none; }
+.day-num { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #9ca3af; margin-bottom: 4px; transition: all 0.12s; }
+.day-num.today { background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; box-shadow: 0 2px 8px rgba(124,58,237,0.5); }
+.day-ghost { font-size: 11px; color: #374151; }
 
-.ev-chip {
-  font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px;
-  margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  cursor: pointer; border: 1px solid; display: flex; align-items: center; gap: 4px;
-  transition: filter 0.12s;
-}
-.ev-chip:hover { filter: brightness(0.95); }
-.chip-draft    { background: #fffbeb; color: #92400e; border-color: #fde68a; }
-.chip-exported { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-.chip-uploaded { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+.ev-chip { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; border: 1px solid; display: flex; align-items: center; gap: 4px; transition: all 0.12s; }
+.ev-chip:hover { filter: brightness(1.2); }
+.chip-draft    { background: rgba(146,64,14,0.3); color: #fbbf24; border-color: rgba(251,191,36,0.3); }
+.chip-exported { background: rgba(29,78,216,0.3); color: #93c5fd; border-color: rgba(147,197,253,0.3); }
+.chip-uploaded { background: rgba(21,128,61,0.3); color: #86efac; border-color: rgba(134,239,172,0.3); }
 
 /* ===== STATUS ===== */
-.status-badge {
-  display: inline-flex; align-items: center; padding: 3px 10px;
-  border-radius: 7px; font-size: 11px; font-weight: 700; cursor: pointer;
-  border: 1.5px solid; user-select: none; gap: 4px; transition: all 0.15s;
-}
-.status-badge:hover { filter: brightness(0.96); }
+.status-badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 7px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1.5px solid; user-select: none; gap: 4px; transition: all 0.15s; }
 .s-draft    { background: #fffbeb; color: #92400e; border-color: #fde68a; }
 .s-exported { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
 .s-uploaded { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
 
 /* ===== MODALS ===== */
-.overlay {
-  position: fixed; inset: 0; background: rgba(10,15,35,0.5);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 300; padding: 20px; backdrop-filter: blur(2px);
-}
+.overlay { position: fixed; inset: 0; background: rgba(10,15,35,0.7); display: flex; align-items: center; justify-content: center; z-index: 300; padding: 20px; backdrop-filter: blur(4px); }
 .overlay.hidden { display: none; }
-.modal {
-  background: white; border-radius: 20px; padding: 26px; width: 100%;
-  max-width: 460px; box-shadow: 0 24px 80px rgba(0,0,0,0.22);
-  max-height: 90vh; overflow-y: auto; animation: modalIn 0.2s ease;
-}
+.modal { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 26px; width: 100%; max-width: 460px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; animation: modalIn 0.2s ease; }
 @keyframes modalIn { from { opacity:0; transform: scale(0.96) translateY(8px); } to { opacity:1; transform: none; } }
 .modal-sm { max-width: 340px; }
 .modal-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.modal-title { font-size: 17px; font-weight: 800; color: #0f1623; font-family: 'Syne', sans-serif; }
-.modal-close {
-  background: #f3f4f6; border: none; width: 30px; height: 30px;
-  border-radius: 8px; font-size: 18px; color: #9ca3af; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.15s;
-}
-.modal-close:hover { background: #e5e7eb; color: #374151; }
+.modal-title { font-size: 20px; font-weight: 700; color: #e5e7eb; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.02em; }
+.modal-close { background: rgba(255,255,255,0.08); border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 18px; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.modal-close:hover { background: rgba(255,255,255,0.15); color: #e5e7eb; }
 .form-group { margin-bottom: 14px; }
-.form-label { font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px; display: block; letter-spacing: 0.01em; }
-.form-input {
-  width: 100%; padding: 10px 13px; border: 1.5px solid #e2e5ec;
-  border-radius: 10px; font-size: 13px; outline: none; font-family: inherit;
-  color: #111827; background: #fafbfc; transition: all 0.15s;
-}
-.form-input:focus { border-color: #5B7EF8; background: white; box-shadow: 0 0 0 3px rgba(91,126,248,0.12); }
+.form-label { font-size: 12px; font-weight: 700; color: #9ca3af; margin-bottom: 6px; display: block; letter-spacing: 0.01em; }
+.form-input { width: 100%; padding: 10px 13px; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; font-size: 13px; outline: none; font-family: inherit; color: #e5e7eb; background: rgba(255,255,255,0.05); transition: all 0.15s; }
+.form-input:focus { border-color: #7c3aed; background: rgba(124,58,237,0.1); box-shadow: 0 0 0 3px rgba(124,58,237,0.15); }
+.form-input option { background: #1f2937; color: #e5e7eb; }
 textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 .modal-actions { display: flex; gap: 8px; margin-top: 20px; }
-.btn-cancel {
-  flex: 1; padding: 11px; border: 1.5px solid #e2e5ec; border-radius: 10px;
-  background: white; font-size: 13px; font-weight: 600; cursor: pointer; color: #374151;
-  transition: all 0.15s;
-}
-.btn-cancel:hover { background: #f7f8fb; }
-.btn-save {
-  flex: 2; padding: 11px; border: none; border-radius: 10px;
-  background: linear-gradient(135deg, #3B65F0, #5B7EF8); color: white;
-  font-size: 13px; font-weight: 800; cursor: pointer; font-family: inherit;
-  box-shadow: 0 3px 10px rgba(59,101,240,0.3); transition: all 0.15s;
-}
-.btn-save:hover { box-shadow: 0 5px 16px rgba(59,101,240,0.42); }
+.btn-cancel { flex: 1; padding: 11px; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; background: rgba(255,255,255,0.05); font-size: 13px; font-weight: 600; cursor: pointer; color: #9ca3af; transition: all 0.15s; }
+.btn-cancel:hover { background: rgba(255,255,255,0.1); color: #e5e7eb; }
+.btn-save { flex: 2; padding: 11px; border: none; border-radius: 10px; background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; font-size: 13px; font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: 0 3px 10px rgba(124,58,237,0.4); transition: all 0.15s; }
+.btn-save:hover { box-shadow: 0 5px 16px rgba(124,58,237,0.55); }
 
-/* SELECT with platform icons - custom option styling */
-select.form-input option { padding: 6px; }
-
-/* ===== DETAIL MODAL ===== */
-.detail-modal {
-  background: white; border-radius: 20px; width: 100%; max-width: 520px;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.22); overflow: hidden;
-  max-height: 88vh; display: flex; flex-direction: column;
-  animation: modalIn 0.2s ease;
-}
-.detail-hdr {
-  padding: 18px 22px; border-bottom: 1px solid #f1f3f8;
-  display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
-  background: #fafbff;
-}
+.detail-modal { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; width: 100%; max-width: 520px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); overflow: hidden; max-height: 88vh; display: flex; flex-direction: column; animation: modalIn 0.2s ease; }
+.detail-hdr { padding: 18px 22px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; background: rgba(2,6,23,0.5); }
 .detail-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
-.naskah-box {
-  background: #f8f9fc; border-radius: 12px; padding: 14px;
-  font-size: 13px; color: #374151; line-height: 1.75;
-  white-space: pre-wrap; border: 1.5px solid #eceef5;
-  max-height: 280px; overflow-y: auto;
-}
+.naskah-box { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px; font-size: 13px; color: #d1d5db; line-height: 1.75; white-space: pre-wrap; border: 1px solid rgba(255,255,255,0.07); max-height: 280px; overflow-y: auto; }
 
 /* ===== IDEAS BOARD ===== */
 .ideas-tabs { display: flex; gap: 7px; padding: 0 28px; margin-bottom: 16px; flex-wrap: wrap; }
-.itab {
-  padding: 7px 16px; border-radius: 9px; border: 1.5px solid #e2e5ec;
-  background: white; font-size: 12px; font-weight: 700; cursor: pointer;
-  transition: all 0.15s; color: #6b7280; display: flex; align-items: center; gap: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
+.itab { padding: 7px 16px; border-radius: 9px; border: 1.5px solid #e2e5ec; background: white; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; color: #6b7280; display: flex; align-items: center; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
 .itab-all.on { background: linear-gradient(135deg, #3B65F0, #5B7EF8); color: white; border-color: transparent; box-shadow: 0 3px 10px rgba(59,101,240,0.3); }
 .itab-yt.on  { background: #fff0f0; color: #b91c1c; border-color: #fca5a5; }
 .itab-tt.on  { background: #18181b; color: white; border-color: #18181b; }
 .itab-sh.on  { background: #fff0f0; color: #b91c1c; border-color: #fca5a5; }
-
 .ideas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; padding: 0 28px 28px; }
-.idea-card {
-  background: white; border-radius: 14px; border: 1.5px solid #eceef5;
-  padding: 15px; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  transition: all 0.18s; position: relative;
-}
+.idea-card { background: white; border-radius: 14px; border: 1.5px solid #eceef5; padding: 15px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); transition: all 0.18s; }
 .idea-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); border-color: #c7d2fe; transform: translateY(-1px); }
 .idea-plat { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 7px; }
-.idea-title { font-size: 13px; font-weight: 800; color: #0f1623; margin-bottom: 5px; line-height: 1.4; font-family: 'Syne', sans-serif; }
-.idea-desc { font-size: 11.5px; color: #6b7280; line-height: 1.45; margin-bottom: 11px; }
+.idea-title { font-size: 20px; font-weight: 600; color: #0f1623; margin-bottom: 6px; line-height: 1.35; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
+.idea-desc { font-size: 15px; color: #94A3B8; line-height: 1.7; margin-bottom: 11px; font-weight: 400; }
 .idea-actions { display: flex; gap: 5px; justify-content: flex-end; }
 
-/* ===== ICON BUTTONS ===== */
-.icon-btn {
-  width: 30px; height: 30px; border-radius: 8px; border: 1.5px solid #e2e5ec;
-  background: white; cursor: pointer; display: inline-flex; align-items: center;
-  justify-content: center; transition: all 0.15s; color: #6b7280;
-}
+.icon-btn { width: 30px; height: 30px; border-radius: 8px; border: 1.5px solid #e2e5ec; background: white; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s; color: #6b7280; }
 .icon-btn:hover { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
 .icon-btn.pin-active { background: #fef9c3; border-color: #fde68a; color: #854d0e; }
 .icon-btn.danger { color: #dc2626; }
 .icon-btn.danger:hover { background: #fef2f2; border-color: #fecaca; }
 
-/* ===== PLATFORM COLORS ===== */
-.plat-yt  { color: #DC2626; }
-.plat-tt  { color: #111111; }
-.plat-sh  { color: #DC2626; }
-
 /* ===== PROMPT VAULT ===== */
 .prompt-filters { display: flex; gap: 7px; padding: 0 28px; margin-bottom: 16px; flex-wrap: wrap; }
 .prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; padding: 0 28px 28px; }
-.prompt-card {
-  background: white; border-radius: 14px; border: 1.5px solid #eceef5;
-  padding: 16px; transition: all 0.15s;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-}
+.prompt-card { background: white; border-radius: 14px; border: 1.5px solid #eceef5; padding: 16px; transition: all 0.15s; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
 .prompt-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.09); border-color: #c7d2fe; transform: translateY(-1px); }
 .prompt-cat { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 7px; }
-.prompt-title { font-size: 14px; font-weight: 800; color: #0f1623; margin-bottom: 8px; font-family: 'Syne', sans-serif; }
-.prompt-preview {
-  font-size: 11.5px; color: #6b7280; line-height: 1.5; padding: 9px 11px;
-  border-radius: 8px; background: #f8f9fc; border-left: 3px solid #e2e5ec;
-  cursor: pointer; margin-bottom: 12px; transition: background 0.12s;
-}
+.prompt-title { font-size: 20px; font-weight: 600; color: #0f1623; margin-bottom: 8px; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; line-height: 1.3; }
+.prompt-preview { font-size: 15px; color: #94A3B8; line-height: 1.7; padding: 9px 11px; border-radius: 8px; background: #f8f9fc; border-left: 3px solid #e2e5ec; cursor: pointer; margin-bottom: 12px; transition: background 0.12s; font-weight: 400; }
 .prompt-preview:hover { background: #f0f3ff; border-left-color: #5B7EF8; }
 .prompt-footer { display: flex; align-items: center; justify-content: space-between; }
-.copy-btn {
-  padding: 5px 10px; border: 1.5px solid #e2e5ec; border-radius: 7px;
-  background: white; font-size: 11px; font-weight: 700; cursor: pointer; color: #374151; transition: all 0.15s;
-}
+.copy-btn { padding: 5px 10px; border: 1.5px solid #e2e5ec; border-radius: 7px; background: white; font-size: 11px; font-weight: 700; cursor: pointer; color: #374151; transition: all 0.15s; }
 .copy-btn:hover { background: #f7f8fb; }
 .copy-btn.copied { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
 
 /* ===== JURNAL ===== */
 .jurnal-list { display: flex; flex-direction: column; gap: 12px; padding: 0 28px 28px; }
-.jurnal-card {
-  background: white; border-radius: 14px; border: 1.5px solid #eceef5;
-  padding: 18px; transition: all 0.15s; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-}
+.jurnal-card { background: white; border-radius: 14px; border: 1.5px solid #eceef5; padding: 18px; transition: all 0.15s; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
 .jurnal-card:hover { border-color: #93c5fd; box-shadow: 0 4px 14px rgba(0,0,0,0.07); }
-.jurnal-date { font-size: 11px; color: #9ca3af; margin-bottom: 7px; font-weight: 600; }
-.jurnal-title { font-size: 15px; font-weight: 800; color: #0f1623; margin-bottom: 6px; font-family: 'Syne', sans-serif; }
-.jurnal-content { font-size: 13px; color: #6b7280; line-height: 1.65; margin-bottom: 11px; }
+.jurnal-date { font-size: 12px; color: #9ca3af; margin-bottom: 7px; font-weight: 500; letter-spacing: 0.02em; }
+.jurnal-title { font-size: 20px; font-weight: 600; color: #0f1623; margin-bottom: 8px; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; line-height: 1.3; }
+.jurnal-content { font-size: 15px; color: #94A3B8; line-height: 1.7; margin-bottom: 11px; font-weight: 400; }
 .jurnal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag { padding: 3px 10px; border-radius: 99px; font-size: 10px; font-weight: 700; background: #f0f3ff; color: #4B5FAF; }
+.tag { padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 500; background: #f0f3ff; color: #4B5FAF; letter-spacing: 0.02em; }
 
 /* ===== PROMPT FULL VIEW ===== */
-.pv-modal {
-  background: white; border-radius: 20px; width: 100%; max-width: 520px;
-  padding: 26px; box-shadow: 0 24px 80px rgba(0,0,0,0.22);
-  max-height: 88vh; overflow-y: auto; animation: modalIn 0.2s ease;
-}
-.pv-text {
-  background: #f8f9fc; border-radius: 12px; padding: 15px;
-  font-size: 13px; color: #374151; line-height: 1.75;
-  white-space: pre-wrap; border: 1.5px solid #eceef5;
-  max-height: 380px; overflow-y: auto; margin-bottom: 15px;
-}
+.pv-modal { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; width: 100%; max-width: 520px; padding: 26px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); max-height: 88vh; overflow-y: auto; animation: modalIn 0.2s ease; }
+.pv-text { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 15px; font-size: 13px; color: #d1d5db; line-height: 1.75; white-space: pre-wrap; border: 1px solid rgba(255,255,255,0.07); max-height: 380px; overflow-y: auto; margin-bottom: 15px; }
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="sidebar-logo">
     <div class="logo-icon">🎬</div>
@@ -329,26 +196,18 @@ select.form-input option { padding: 6px; }
   <nav class="sidebar-nav">
     <div class="nav-label">Menu</div>
     <button class="nav-item active" onclick="showPage('kalender',this)">
-      <span class="nav-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </span>Kalender
+      <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Kalender
     </button>
     <button class="nav-item" onclick="showPage('ideas',this)">
-      <span class="nav-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      </span>Ideas Board
+      <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>Ideas Board
     </button>
     <div class="nav-label">Asset</div>
     <button class="nav-item" onclick="showPage('prompt',this)">
-      <span class="nav-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-      </span>Prompt Vault
+      <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>Prompt Vault
     </button>
     <div class="nav-label">Lainnya</div>
     <button class="nav-item" onclick="showPage('jurnal',this)">
-      <span class="nav-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-      </span>Jurnal Analisis
+      <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>Jurnal Analisis
     </button>
   </nav>
   <div class="sidebar-footer">
@@ -360,7 +219,6 @@ select.form-input option { padding: 6px; }
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
   <!-- KALENDER -->
@@ -368,13 +226,13 @@ select.form-input option { padding: 6px; }
     <div class="cal-wrap">
       <div class="cal-top">
         <div class="cal-nav">
-          <button class="cal-nav-btn" onclick="prevMonth()">‹</button>
+          <button class="cal-nav-btn" onclick="prevMonth()">&#8249;</button>
           <div class="cal-month" id="cal-title"></div>
-          <button class="cal-nav-btn" onclick="nextMonth()">›</button>
+          <button class="cal-nav-btn" onclick="nextMonth()">&#8250;</button>
         </div>
         <div class="cal-actions">
           <button class="btn-today" onclick="goToday()">Hari Ini</button>
-          <button class="btn btn-primary" onclick="openNaskahModal()">+ Naskah Baru</button>
+          <button class="btn-naskah" onclick="openNaskahModal()">+ Naskah Baru</button>
         </div>
       </div>
       <div class="cal-hint">📌 Klik tanggal untuk tambah atau lihat naskah</div>
@@ -395,18 +253,15 @@ select.form-input option { padding: 6px; }
       <button class="btn btn-primary" onclick="openIdeaModal()">+ Ide Baru</button>
     </div>
     <div class="ideas-tabs">
-      <button class="itab itab-all on" id="itab-all" onclick="filterIdeas('all',this)">Semua</button>
-      <button class="itab itab-yt" id="itab-YouTube" onclick="filterIdeas('YouTube',this)">
-        <svg width="13" height="13" viewBox="0 0 24 24"><path fill="#DC2626" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8z"/><polygon fill="white" points="9.75,15.5 15.5,12 9.75,8.5"/></svg>
-        YouTube
+      <button class="itab itab-all on" onclick="filterIdeas('all',this)">Semua</button>
+      <button class="itab itab-yt" onclick="filterIdeas('YouTube',this)">
+        <svg width="13" height="13" viewBox="0 0 24 24"><path fill="#DC2626" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8z"/><polygon fill="white" points="9.75,15.5 15.5,12 9.75,8.5"/></svg>YouTube
       </button>
-      <button class="itab itab-tt" id="itab-TikTok" onclick="filterIdeas('TikTok',this)">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 3.3a4.9 4.9 0 0 1-3-1.9A4.9 4.9 0 0 1 15.5 0h-3.3v16.4a2.3 2.3 0 0 1-2.3 2 2.3 2.3 0 0 1-2.3-2.3 2.3 2.3 0 0 1 2.3-2.3c.2 0 .5 0 .7.1V10.5a5.7 5.7 0 0 0-.7 0A5.6 5.6 0 0 0 4.3 16a5.6 5.6 0 0 0 5.6 5.6 5.6 5.6 0 0 0 5.6-5.6V8.2a8.1 8.1 0 0 0 4.7 1.5V6.4a4.9 4.9 0 0 1-0.6-.1z"/></svg>
-        TikTok
+      <button class="itab itab-tt" onclick="filterIdeas('TikTok',this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 3.3a4.9 4.9 0 0 1-3-1.9A4.9 4.9 0 0 1 15.5 0h-3.3v16.4a2.3 2.3 0 0 1-2.3 2 2.3 2.3 0 0 1-2.3-2.3 2.3 2.3 0 0 1 2.3-2.3c.2 0 .5 0 .7.1V10.5a5.7 5.7 0 0 0-.7 0A5.6 5.6 0 0 0 4.3 16a5.6 5.6 0 0 0 5.6 5.6 5.6 5.6 0 0 0 5.6-5.6V8.2a8.1 8.1 0 0 0 4.7 1.5V6.4a4.9 4.9 0 0 1-0.6-.1z"/></svg>TikTok
       </button>
-      <button class="itab itab-sh" id="itab-Shorts" onclick="filterIdeas('Shorts',this)">
-        <svg width="13" height="13" viewBox="0 0 24 24"><path fill="#DC2626" d="M10 14.65v-5.3L15 12zm7.77-4.33c-1.8-1.8-4.44-2.15-6.64-1.12L9.48 7.55C12.6 5.67 16.71 6.12 19.3 8.7a8.26 8.26 0 0 1 0 11.67 8.26 8.26 0 0 1-11.67 0 8.26 8.26 0 0 1-1.73-9l1.63 1.63A6.18 6.18 0 0 0 8.83 19a6.17 6.17 0 0 0 8.72 0 6.17 6.17 0 0 0 .22-8.68z"/></svg>
-        Shorts
+      <button class="itab itab-sh" onclick="filterIdeas('Shorts',this)">
+        <svg width="13" height="13" viewBox="0 0 24 24"><path fill="#DC2626" d="M10 14.65v-5.3L15 12zm7.77-4.33c-1.8-1.8-4.44-2.15-6.64-1.12L9.48 7.55C12.6 5.67 16.71 6.12 19.3 8.7a8.26 8.26 0 0 1 0 11.67 8.26 8.26 0 0 1-11.67 0 8.26 8.26 0 0 1-1.73-9l1.63 1.63A6.18 6.18 0 0 0 8.83 19a6.17 6.17 0 0 0 8.72 0 6.17 6.17 0 0 0 .22-8.68z"/></svg>Shorts
       </button>
     </div>
     <div class="ideas-grid" id="ideas-grid"></div>
@@ -437,35 +292,20 @@ select.form-input option { padding: 6px; }
     </div>
     <div class="jurnal-list" id="jurnal-list"></div>
   </div>
-
 </div>
 
-<!-- ===== MODAL: NASKAH ===== -->
+<!-- MODAL: NASKAH -->
 <div class="overlay hidden" id="naskah-overlay">
   <div class="modal">
     <div class="modal-hdr">
       <div class="modal-title" id="naskah-modal-title">+ Naskah Baru</div>
-      <button class="modal-close" onclick="closeNaskahModal()">×</button>
+      <button class="modal-close" onclick="closeNaskahModal()">&#215;</button>
     </div>
     <div class="form-group"><label class="form-label">Judul Naskah *</label><input class="form-input" id="inp-n-title" placeholder="Contoh: Review iPhone 16 Pro"></div>
-    <div class="form-group">
-      <label class="form-label">Platform</label>
-      <select class="form-input" id="inp-n-platform">
-        <option value="YouTube">▶ YouTube</option>
-        <option value="TikTok">♪ TikTok</option>
-        <option value="Shorts">⚡ Shorts</option>
-      </select>
-    </div>
+    <div class="form-group"><label class="form-label">Platform</label><select class="form-input" id="inp-n-platform"><option value="YouTube">▶ YouTube</option><option value="TikTok">♪ TikTok</option><option value="Shorts">⚡ Shorts</option></select></div>
     <div class="form-group"><label class="form-label">Tanggal *</label><input class="form-input" type="date" id="inp-n-date"></div>
     <div class="form-group"><label class="form-label">Naskah / Script</label><textarea class="form-input" id="inp-n-script" placeholder="Tulis naskah kontenmu di sini..." style="min-height:150px;"></textarea></div>
-    <div class="form-group">
-      <label class="form-label">Status</label>
-      <select class="form-input" id="inp-n-status">
-        <option value="Draft">Draft</option>
-        <option value="Exported">Exported</option>
-        <option value="Uploaded">Uploaded</option>
-      </select>
-    </div>
+    <div class="form-group"><label class="form-label">Status</label><select class="form-input" id="inp-n-status"><option value="Draft">Draft</option><option value="Exported">Exported</option><option value="Uploaded">Uploaded</option></select></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeNaskahModal()">Batal</button>
       <button class="btn-save" onclick="saveNaskah()">Simpan Naskah</button>
@@ -473,458 +313,296 @@ select.form-input option { padding: 6px; }
   </div>
 </div>
 
-<!-- ===== MODAL: DETAIL NASKAH ===== -->
+<!-- MODAL: DETAIL NASKAH -->
 <div class="overlay hidden" id="detail-overlay">
   <div class="detail-modal">
     <div class="detail-hdr">
-      <span id="detail-plat" style="display:flex;align-items:center;gap:7px;font-size:13px;font-weight:800;color:#374151;font-family:'Syne',sans-serif;"></span>
+      <span id="detail-plat" style="display:flex;align-items:center;gap:7px;font-size:13px;font-weight:800;color:#e5e7eb;font-family:'Syne',sans-serif;"></span>
       <div style="display:flex;gap:6px;align-items:center;">
-        <button class="btn btn-sm" onclick="copyNaskah()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copy
+        <button class="btn btn-sm" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.12);color:#d1d5db;" onclick="copyNaskah()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
         </button>
-        <button class="btn btn-sm" onclick="editNaskahFromDetail()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          Edit
+        <button class="btn btn-sm" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.12);color:#d1d5db;" onclick="editNaskahFromDetail()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit
         </button>
-        <button class="btn btn-sm btn-danger" onclick="deleteNaskah()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
-        </button>
-        <button class="modal-close" onclick="closeDetailModal()">×</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteNaskah()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+        <button class="modal-close" onclick="closeDetailModal()">&#215;</button>
       </div>
     </div>
     <div class="detail-body" id="detail-body"></div>
   </div>
 </div>
 
-<!-- ===== MODAL: PINDAH TANGGAL ===== -->
+<!-- MODAL: PINDAH TANGGAL -->
 <div class="overlay hidden" id="move-overlay">
   <div class="modal modal-sm">
-    <div class="modal-hdr">
-      <div class="modal-title">Pindah Tanggal</div>
-      <button class="modal-close" onclick="closeMoveModal()">×</button>
-    </div>
+    <div class="modal-hdr"><div class="modal-title">Pindah Tanggal</div><button class="modal-close" onclick="closeMoveModal()">&#215;</button></div>
     <div class="form-group"><label class="form-label">Tanggal Baru</label><input class="form-input" type="date" id="inp-move-date"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeMoveModal()">Batal</button>
-      <button class="btn-save" onclick="confirmMove()">Pindah</button>
-    </div>
+    <div class="modal-actions"><button class="btn-cancel" onclick="closeMoveModal()">Batal</button><button class="btn-save" onclick="confirmMove()">Pindah</button></div>
   </div>
 </div>
 
-<!-- ===== MODAL: IDE ===== -->
+<!-- MODAL: IDE -->
 <div class="overlay hidden" id="idea-overlay">
   <div class="modal">
-    <div class="modal-hdr">
-      <div class="modal-title" id="idea-modal-title">+ Ide Baru</div>
-      <button class="modal-close" onclick="closeIdeaModal()">×</button>
-    </div>
+    <div class="modal-hdr"><div class="modal-title" id="idea-modal-title">+ Ide Baru</div><button class="modal-close" onclick="closeIdeaModal()">&#215;</button></div>
     <div class="form-group"><label class="form-label">Judul Ide *</label><input class="form-input" id="inp-i-title" placeholder="Contoh: POV bikin konten sambil lo-fi"></div>
     <div class="form-group"><label class="form-label">Deskripsi</label><textarea class="form-input" id="inp-i-desc" placeholder="Ceritain ide kamu..." style="min-height:80px;"></textarea></div>
-    <div class="form-group">
-      <label class="form-label">Platform</label>
-      <select class="form-input" id="inp-i-platform">
-        <option value="YouTube">▶ YouTube</option>
-        <option value="TikTok">♪ TikTok</option>
-        <option value="Shorts">⚡ Shorts</option>
-      </select>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeIdeaModal()">Batal</button>
-      <button class="btn-save" onclick="saveIdea()">Simpan Ide</button>
-    </div>
+    <div class="form-group"><label class="form-label">Platform</label><select class="form-input" id="inp-i-platform"><option value="YouTube">▶ YouTube</option><option value="TikTok">♪ TikTok</option><option value="Shorts">⚡ Shorts</option></select></div>
+    <div class="modal-actions"><button class="btn-cancel" onclick="closeIdeaModal()">Batal</button><button class="btn-save" onclick="saveIdea()">Simpan Ide</button></div>
   </div>
 </div>
 
-<!-- ===== MODAL: PROMPT ===== -->
+<!-- MODAL: PROMPT -->
 <div class="overlay hidden" id="prompt-overlay">
   <div class="modal">
-    <div class="modal-hdr">
-      <div class="modal-title" id="prompt-modal-title">+ Prompt Baru</div>
-      <button class="modal-close" onclick="closePromptModal()">×</button>
-    </div>
+    <div class="modal-hdr"><div class="modal-title" id="prompt-modal-title">+ Prompt Baru</div><button class="modal-close" onclick="closePromptModal()">&#215;</button></div>
     <div class="form-group"><label class="form-label">Judul Prompt *</label><input class="form-input" id="inp-p-title" placeholder="Contoh: Hook Pembuka YouTube"></div>
-    <div class="form-group"><label class="form-label">Kategori</label>
-      <select class="form-input" id="inp-p-cat">
-        <option value="Script">📝 Script</option>
-        <option value="Thumbnail">🖼️ Thumbnail</option>
-        <option value="Caption">💬 Caption</option>
-        <option value="Riset">🔍 Riset</option>
-        <option value="Hook">🎣 Hook</option>
-      </select>
-    </div>
+    <div class="form-group"><label class="form-label">Kategori</label><select class="form-input" id="inp-p-cat"><option value="Script">📝 Script</option><option value="Thumbnail">🖼️ Thumbnail</option><option value="Caption">💬 Caption</option><option value="Riset">🔍 Riset</option><option value="Hook">🎣 Hook</option></select></div>
     <div class="form-group"><label class="form-label">Isi Prompt *</label><textarea class="form-input" id="inp-p-text" placeholder="Tulis prompt AI kamu di sini..." style="min-height:130px;"></textarea></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closePromptModal()">Batal</button>
-      <button class="btn-save" onclick="savePrompt()">Simpan Prompt</button>
-    </div>
+    <div class="modal-actions"><button class="btn-cancel" onclick="closePromptModal()">Batal</button><button class="btn-save" onclick="savePrompt()">Simpan Prompt</button></div>
   </div>
 </div>
 
-<!-- ===== MODAL: PROMPT FULL VIEW ===== -->
+<!-- MODAL: PROMPT FULL VIEW -->
 <div class="overlay hidden" id="pv-overlay">
   <div class="pv-modal">
     <div class="modal-hdr">
-      <div>
-        <div class="modal-title" id="pv-title"></div>
-        <div id="pv-cat" style="font-size:11px;color:#9ca3af;margin-top:3px;"></div>
-      </div>
-      <button class="modal-close" onclick="closePVModal()">×</button>
+      <div><div class="modal-title" id="pv-title"></div><div id="pv-cat" style="font-size:11px;color:#6b7280;margin-top:3px;"></div></div>
+      <button class="modal-close" onclick="closePVModal()">&#215;</button>
     </div>
     <div class="pv-text" id="pv-text"></div>
     <div style="display:flex;gap:8px;">
-      <button class="btn btn-primary" style="flex:1;" onclick="copyPromptFull()">📋 Copy Prompt</button>
-      <button class="btn" onclick="closePVModal()">Tutup</button>
+      <button class="btn-save" style="flex:1;" onclick="copyPromptFull()">📋 Copy Prompt</button>
+      <button class="btn-cancel" style="flex:0 0 80px;" onclick="closePVModal()">Tutup</button>
     </div>
   </div>
 </div>
 
-<!-- ===== MODAL: JURNAL ===== -->
+<!-- MODAL: JURNAL -->
 <div class="overlay hidden" id="jurnal-overlay">
   <div class="modal">
-    <div class="modal-hdr">
-      <div class="modal-title" id="jurnal-modal-title">+ Entri Jurnal</div>
-      <button class="modal-close" onclick="closeJurnalModal()">×</button>
-    </div>
+    <div class="modal-hdr"><div class="modal-title" id="jurnal-modal-title">+ Entri Jurnal</div><button class="modal-close" onclick="closeJurnalModal()">&#215;</button></div>
     <div class="form-group"><label class="form-label">Judul *</label><input class="form-input" id="inp-j-title" placeholder="Contoh: Kenapa video ini viral?"></div>
     <div class="form-group"><label class="form-label">Isi Jurnal</label><textarea class="form-input" id="inp-j-content" placeholder="Tulis analisis atau insight kamu..." style="min-height:140px;"></textarea></div>
     <div class="form-group"><label class="form-label">Tags (pisah dengan koma)</label><input class="form-input" id="inp-j-tags" placeholder="viral, thumbnail, hook"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeJurnalModal()">Batal</button>
-      <button class="btn-save" onclick="saveJurnal()">Simpan Jurnal</button>
-    </div>
+    <div class="modal-actions"><button class="btn-cancel" onclick="closeJurnalModal()">Batal</button><button class="btn-save" onclick="saveJurnal()">Simpan Jurnal</button></div>
   </div>
 </div>
 
 <script>
-const MONTHS = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-const TODAY = new Date();
-let curMonth = TODAY.getMonth(), curYear = TODAY.getFullYear();
-let editNaskahKey = null, editNaskahIdx = null;
-let editIdeaIdx = null, editPromptIdx = null, editJurnalIdx = null;
-let detailKey = null, detailIdx = null;
-let pvIdx = null, moveKey = null, moveIdx = null;
-let ideaFilter = 'all', promptFilter = 'all';
+const MONTHS=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+const TODAY=new Date();
+let curMonth=TODAY.getMonth(),curYear=TODAY.getFullYear();
+let editNaskahKey=null,editNaskahIdx=null,editIdeaIdx=null,editPromptIdx=null,editJurnalIdx=null;
+let detailKey=null,detailIdx=null,pvIdx=null,moveKey=null,moveIdx=null;
+let ideaFilter='all',promptFilter='all';
+let naskahData={};
 
-let naskahData = {};
-let ideasData = [
-  {title:"POV: Ngedit video sambil dengerin lo-fi", desc:"Konten relatable buat kreator, bisa viral di Shorts", platform:"Shorts", pinned:true},
-  {title:"Cara bikin thumbnail click rate 10%+", desc:"Tutorial Canva + psikologi warna untuk thumbnail", platform:"YouTube", pinned:false},
-  {title:"Algorithm YouTube 2026 — Yang Beneran Kerja", desc:"Hasil eksperimen 30 hari posting konsisten", platform:"YouTube", pinned:false},
-  {title:"Review MacBook Air M3 vs M2", desc:"Benchmark, harga, dan value for money untuk kreator", platform:"YouTube", pinned:false},
-  {title:"5 Tools AI buat kreator konten", desc:"Tools yang beneran kepake sehari-hari", platform:"TikTok", pinned:false},
-  {title:"Cara edit video 10x lebih cepat", desc:"Workflow editing yang efisien", platform:"Shorts", pinned:false},
-];
-let promptsData = [
-  {title:"Hook Pembuka Yang Bikin Penonton Tetap Nonton", cat:"Hook", text:"Buatkan 5 variasi opening hook untuk video YouTube tentang [topik]. Hook harus membuat penonton penasaran dalam 3 detik pertama, gunakan teknik pattern interrupt dan open loop."},
-  {title:"Deskripsi Thumbnail yang Click-bait (Positif)", cat:"Thumbnail", text:"Deskripsikan visual thumbnail YouTube untuk video [judul]. Sertakan: ekspresi wajah, teks overlay, warna dominan, dan elemen yang membuat orang penasaran. Target CTR 8%+."},
-  {title:"Caption YouTube yang Mendorong Engagement", cat:"Caption", text:"Tulis caption YouTube untuk video [judul] yang mendorong penonton untuk like, comment, dan subscribe. Sertakan timestamp, CTA yang natural, dan 8-10 hashtag relevan."},
-  {title:"Analisa Kompetitor di Niche", cat:"Riset", text:"Analisa channel YouTube [nama channel] dengan framework: konten pillar mereka, format yang paling banyak ditonton, gap yang bisa diisi, dan strategi yang bisa diadaptasi."},
-  {title:"Hook untuk Konten Shorts/Reels", cat:"Hook", text:"Buat 10 variasi hook 1 kalimat untuk Shorts tentang [topik]. Hook harus bisa diucapkan dalam 2 detik, membuat penonton langsung penasaran, dan tidak boleh ada kata 'hai' atau salam pembuka."},
-  {title:"Struktur Video Edukasi 7-10 Menit", cat:"Script", text:"Buat outline script video edukasi tentang [topik] dengan durasi 7-10 menit. Gunakan struktur: hook (30 detik), problem agitation (1 menit), konten inti 5 poin (5 menit), kesimpulan + CTA (1 menit)."},
-];
-let jurnalData = [
-  {title:"🎯 Kenapa Video Review iPhone Viral?", date:"26 April 2026", content:"Setelah analisa mendalam, ada 3 faktor utama yang bikin video ini performanya jauh di atas rata-rata. Hook-nya langsung menyentuh pain point. Thumbnail-nya pakai ekspresi genuine.", tags:["viral","review","hook","thumbnail"]},
-  {title:"💡 Eksperimen: Upload 3x vs 1x Seminggu", date:"20 April 2026", content:"Hasil eksperimen 4 minggu: upload 3x seminggu justru menurunkan kualitas rata-rata video. Views per video turun 40% tapi total views channel naik 15%. Sweet spot: 2x seminggu.", tags:["eksperimen","konsistensi","algorithm"]},
+let ideasData=[
+  {title:"POV: Ngedit video sambil dengerin lo-fi",desc:"Konten relatable buat kreator, bisa viral di Shorts",platform:"Shorts",pinned:true},
+  {title:"Cara bikin thumbnail click rate 10%+",desc:"Tutorial Canva + psikologi warna untuk thumbnail",platform:"YouTube",pinned:false},
+  {title:"Algorithm YouTube 2026 — Yang Beneran Kerja",desc:"Hasil eksperimen 30 hari posting konsisten",platform:"YouTube",pinned:false},
+  {title:"Review MacBook Air M3 vs M2",desc:"Benchmark, harga, dan value for money untuk kreator",platform:"YouTube",pinned:false},
+  {title:"5 Tools AI buat kreator konten",desc:"Tools yang beneran kepake sehari-hari",platform:"TikTok",pinned:false},
+  {title:"Cara edit video 10x lebih cepat",desc:"Workflow editing yang efisien",platform:"Shorts",pinned:false},
 ];
 
-// ===== SVG PLATFORM LOGOS =====
-function platSVG(platform, size=14) {
-  if (platform === 'YouTube') return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="flex-shrink:0;"><path fill="#DC2626" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8z"/><polygon fill="white" points="9.75,15.5 15.5,12 9.75,8.5"/></svg>`;
-  if (platform === 'TikTok') return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="flex-shrink:0;"><path fill="#111111" d="M19.6 3.3a4.9 4.9 0 0 1-3-1.9A4.9 4.9 0 0 1 15.5 0h-3.3v16.4a2.3 2.3 0 0 1-2.3 2 2.3 2.3 0 0 1-2.3-2.3 2.3 2.3 0 0 1 2.3-2.3c.2 0 .5 0 .7.1V10.5a5.7 5.7 0 0 0-.7 0A5.6 5.6 0 0 0 4.3 16a5.6 5.6 0 0 0 5.6 5.6 5.6 5.6 0 0 0 5.6-5.6V8.2a8.1 8.1 0 0 0 4.7 1.5V6.4a4.9 4.9 0 0 1-0.6-.1z"/></svg>`;
-  if (platform === 'Shorts') return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="flex-shrink:0;"><path fill="#DC2626" d="M10 14.65v-5.3L15 12zm7.77-4.33c-1.8-1.8-4.44-2.15-6.64-1.12L9.48 7.55C12.6 5.67 16.71 6.12 19.3 8.7a8.26 8.26 0 0 1 0 11.67 8.26 8.26 0 0 1-11.67 0 8.26 8.26 0 0 1-1.73-9l1.63 1.63A6.18 6.18 0 0 0 8.83 19a6.17 6.17 0 0 0 8.72 0 6.17 6.17 0 0 0 .22-8.68z"/></svg>`;
-  return '';
+let promptsData=[
+  {title:"Hook Pembuka Yang Bikin Penonton Tetap Nonton",cat:"Hook",text:"Buatkan 5 variasi opening hook untuk video YouTube tentang [topik]. Hook harus membuat penonton penasaran dalam 3 detik pertama, gunakan teknik pattern interrupt dan open loop."},
+  {title:"Deskripsi Thumbnail yang Click-bait (Positif)",cat:"Thumbnail",text:"Deskripsikan visual thumbnail YouTube untuk video [judul]. Sertakan: ekspresi wajah, teks overlay, warna dominan, dan elemen yang membuat orang penasaran. Target CTR 8%+."},
+  {title:"Caption YouTube yang Mendorong Engagement",cat:"Caption",text:"Tulis caption YouTube untuk video [judul] yang mendorong penonton untuk like, comment, dan subscribe. Sertakan timestamp, CTA yang natural, dan 8-10 hashtag relevan."},
+  {title:"Analisa Kompetitor di Niche",cat:"Riset",text:"Analisa channel YouTube [nama channel] dengan framework: konten pillar mereka, format yang paling banyak ditonton, gap yang bisa diisi, dan strategi yang bisa diadaptasi."},
+  {title:"Hook untuk Konten Shorts/Reels",cat:"Hook",text:"Buat 10 variasi hook 1 kalimat untuk Shorts tentang [topik]. Hook harus bisa diucapkan dalam 2 detik, membuat penonton langsung penasaran, dan tidak boleh ada kata 'hai' atau salam pembuka."},
+  {title:"Struktur Video Edukasi 7-10 Menit",cat:"Script",text:"Buat outline script video edukasi tentang [topik] dengan durasi 7-10 menit. Gunakan struktur: hook (30 detik), problem agitation (1 menit), konten inti 5 poin (5 menit), kesimpulan + CTA (1 menit)."},
+];
+
+let jurnalData=[
+  {title:"🎯 Kenapa Video Review iPhone Viral?",date:"26 April 2026",content:"Setelah analisa mendalam, ada 3 faktor utama yang bikin video ini performanya jauh di atas rata-rata. Hook-nya langsung menyentuh pain point. Thumbnail-nya pakai ekspresi genuine.",tags:["viral","review","hook","thumbnail"]},
+  {title:"💡 Eksperimen: Upload 3x vs 1x Seminggu",date:"20 April 2026",content:"Hasil eksperimen 4 minggu: upload 3x seminggu justru menurunkan kualitas rata-rata video. Views per video turun 40% tapi total views channel naik 15%. Sweet spot: 2x seminggu.",tags:["eksperimen","konsistensi","algorithm"]},
+];
+
+function platSVG(p,s=14){
+  if(p==='YouTube')return`<svg width="${s}" height="${s}" viewBox="0 0 24 24" style="flex-shrink:0;"><path fill="#DC2626" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8z"/><polygon fill="white" points="9.75,15.5 15.5,12 9.75,8.5"/></svg>`;
+  if(p==='TikTok')return`<svg width="${s}" height="${s}" viewBox="0 0 24 24" style="flex-shrink:0;"><path fill="#e5e7eb" d="M19.6 3.3a4.9 4.9 0 0 1-3-1.9A4.9 4.9 0 0 1 15.5 0h-3.3v16.4a2.3 2.3 0 0 1-2.3 2 2.3 2.3 0 0 1-2.3-2.3 2.3 2.3 0 0 1 2.3-2.3c.2 0 .5 0 .7.1V10.5a5.7 5.7 0 0 0-.7 0A5.6 5.6 0 0 0 4.3 16a5.6 5.6 0 0 0 5.6 5.6 5.6 5.6 0 0 0 5.6-5.6V8.2a8.1 8.1 0 0 0 4.7 1.5V6.4a4.9 4.9 0 0 1-0.6-.1z"/></svg>`;
+  if(p==='Shorts')return`<svg width="${s}" height="${s}" viewBox="0 0 24 24" style="flex-shrink:0;"><path fill="#DC2626" d="M10 14.65v-5.3L15 12zm7.77-4.33c-1.8-1.8-4.44-2.15-6.64-1.12L9.48 7.55C12.6 5.67 16.71 6.12 19.3 8.7a8.26 8.26 0 0 1 0 11.67 8.26 8.26 0 0 1-11.67 0 8.26 8.26 0 0 1-1.73-9l1.63 1.63A6.18 6.18 0 0 0 8.83 19a6.17 6.17 0 0 0 8.72 0 6.17 6.17 0 0 0 .22-8.68z"/></svg>`;
+  return'';
 }
-
-function platLabel(p) {
-  if (p === 'YouTube') return '<span style="color:#DC2626;font-weight:800;">YouTube</span>';
-  if (p === 'TikTok')  return '<span style="color:#111;font-weight:800;">TikTok</span>';
-  if (p === 'Shorts')  return '<span style="color:#DC2626;font-weight:800;">Shorts</span>';
+function platLabel(p){
+  if(p==='YouTube')return'<span style="color:#f87171;font-weight:800;">YouTube</span>';
+  if(p==='TikTok')return'<span style="color:#d1d5db;font-weight:800;">TikTok</span>';
+  if(p==='Shorts')return'<span style="color:#f87171;font-weight:800;">Shorts</span>';
   return p;
 }
-
-// ===== NAV =====
-function showPage(name, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
+function showPage(name,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
   btn.classList.add('active');
-  if (name === 'ideas') renderIdeas();
-  if (name === 'prompt') renderPrompts();
-  if (name === 'jurnal') renderJurnal();
-  if (name === 'kalender') renderCalendar();
+  if(name==='ideas')renderIdeas();
+  if(name==='prompt')renderPrompts();
+  if(name==='jurnal')renderJurnal();
+  if(name==='kalender')renderCalendar();
 }
+function eKey(y,m,d){return y+'-'+m+'-'+d;}
+function fmtKey(key){const[y,m,d]=key.split('-');return d+' '+MONTHS[parseInt(m)]+' '+y;}
+function statusClass(s){return s==='Draft'?'s-draft':s==='Exported'?'s-exported':'s-uploaded';}
+function statusLabel(s){return s==='Draft'?'📝 Draft':s==='Exported'?'📤 Exported':'✅ Uploaded';}
 
-// ===== HELPERS =====
-function eKey(y, m, d) { return y + '-' + m + '-' + d; }
-function fmtKey(key) {
-  const [y, m, d] = key.split('-');
-  return d + ' ' + MONTHS[parseInt(m)] + ' ' + y;
-}
-function statusClass(s) { return s === 'Draft' ? 's-draft' : s === 'Exported' ? 's-exported' : 's-uploaded'; }
-function statusLabel(s) { return s === 'Draft' ? '📝 Draft' : s === 'Exported' ? '📤 Exported' : '✅ Uploaded'; }
-
-// ===== CALENDAR =====
-function renderCalendar() {
-  document.getElementById('cal-title').textContent = MONTHS[curMonth] + ' ' + curYear;
-  const first = new Date(curYear, curMonth, 1).getDay();
-  const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
-  const prevDays = new Date(curYear, curMonth, 0).getDate();
-  const cells = document.getElementById('cal-cells');
-  cells.innerHTML = '';
-  let total = first + daysInMonth;
-  if (total % 7 !== 0) total += 7 - (total % 7);
-  for (let i = 0; i < total; i++) {
-    const cell = document.createElement('div');
-    if (i < first) {
-      cell.className = 'cal-cell empty';
-      cell.innerHTML = '<span class="day-ghost">' + (prevDays - first + i + 1) + '</span>';
-    } else if (i >= first + daysInMonth) {
-      cell.className = 'cal-cell empty';
-      cell.innerHTML = '<span class="day-ghost">' + (i - first - daysInMonth + 1) + '</span>';
-    } else {
-      const day = i - first + 1;
-      const key = eKey(curYear, curMonth, day);
-      const isToday = day === TODAY.getDate() && curMonth === TODAY.getMonth() && curYear === TODAY.getFullYear();
-      cell.className = 'cal-cell';
-      const dayNumClass = 'day-num' + (isToday ? ' today' : '');
-      let html = '<div class="' + dayNumClass + '">' + day + '</div>';
-      (naskahData[key] || []).forEach((ev, idx) => {
-        const chipClass = ev.status === 'Draft' ? 'chip-draft' : ev.status === 'Exported' ? 'chip-exported' : 'chip-uploaded';
-        html += `<div class="ev-chip ${chipClass}" onclick="event.stopPropagation();openDetailModal('${key}',${idx})">${platSVG(ev.platform, 9)} ${ev.title}</div>`;
+function renderCalendar(){
+  document.getElementById('cal-title').textContent=MONTHS[curMonth]+' '+curYear;
+  const first=new Date(curYear,curMonth,1).getDay();
+  const daysInMonth=new Date(curYear,curMonth+1,0).getDate();
+  const prevDays=new Date(curYear,curMonth,0).getDate();
+  const cells=document.getElementById('cal-cells');
+  cells.innerHTML='';
+  let total=first+daysInMonth;
+  if(total%7!==0)total+=7-(total%7);
+  for(let i=0;i<total;i++){
+    const cell=document.createElement('div');
+    if(i<first){
+      cell.className='cal-cell empty';
+      cell.innerHTML='<span class="day-ghost">'+(prevDays-first+i+1)+'</span>';
+    }else if(i>=first+daysInMonth){
+      cell.className='cal-cell empty';
+      cell.innerHTML='<span class="day-ghost">'+(i-first-daysInMonth+1)+'</span>';
+    }else{
+      const day=i-first+1;
+      const key=eKey(curYear,curMonth,day);
+      const isToday=day===TODAY.getDate()&&curMonth===TODAY.getMonth()&&curYear===TODAY.getFullYear();
+      cell.className='cal-cell';
+      const dnc='day-num'+(isToday?' today':'');
+      let html='<div class="'+dnc+'">'+day+'</div>';
+      (naskahData[key]||[]).forEach((ev,idx)=>{
+        const cc=ev.status==='Draft'?'chip-draft':ev.status==='Exported'?'chip-exported':'chip-uploaded';
+        html+=`<div class="ev-chip ${cc}" onclick="event.stopPropagation();openDetailModal('${key}',${idx})">${platSVG(ev.platform,9)} ${ev.title}</div>`;
       });
-      cell.innerHTML = html;
-      cell.onclick = () => cellClick(day, key);
+      cell.innerHTML=html;
+      cell.onclick=()=>cellClick(day,key);
     }
     cells.appendChild(cell);
   }
 }
+function cellClick(day,key){const list=naskahData[key];if(!list||list.length===0)openNaskahModal(null,day);else openDetailModal(key,0);}
+function prevMonth(){curMonth--;if(curMonth<0){curMonth=11;curYear--;}renderCalendar();}
+function nextMonth(){curMonth++;if(curMonth>11){curMonth=0;curYear++;}renderCalendar();}
+function goToday(){curMonth=TODAY.getMonth();curYear=TODAY.getFullYear();renderCalendar();}
 
-function cellClick(day, key) {
-  const list = naskahData[key];
-  if (!list || list.length === 0) openNaskahModal(null, day);
-  else openDetailModal(key, 0);
+function openNaskahModal(idx=null,day=null){
+  editNaskahKey=null;editNaskahIdx=null;
+  document.getElementById('naskah-modal-title').textContent='+ Naskah Baru';
+  document.getElementById('inp-n-title').value='';
+  document.getElementById('inp-n-script').value='';
+  document.getElementById('inp-n-status').value='Draft';
+  document.getElementById('inp-n-platform').value='YouTube';
+  if(day){const dt=new Date(curYear,curMonth,day);document.getElementById('inp-n-date').value=dt.toISOString().split('T')[0];}
+  else document.getElementById('inp-n-date').value='';
+  show('naskah-overlay');setTimeout(()=>document.getElementById('inp-n-title').focus(),50);
+}
+function closeNaskahModal(){hide('naskah-overlay');}
+function saveNaskah(){
+  const title=v('inp-n-title'),dateVal=v('inp-n-date'),platform=v('inp-n-platform'),script=v('inp-n-script'),status=v('inp-n-status');
+  if(!title){alert('Isi judul naskah dulu!');return;}
+  if(!dateVal){alert('Pilih tanggal dulu!');return;}
+  const dt=new Date(dateVal);
+  const key=eKey(dt.getFullYear(),dt.getMonth(),dt.getDate());
+  const obj={title,platform,script,status};
+  if(editNaskahKey!==null&&editNaskahIdx!==null){
+    if(editNaskahKey!==key){naskahData[editNaskahKey].splice(editNaskahIdx,1);if(naskahData[editNaskahKey].length===0)delete naskahData[editNaskahKey];if(!naskahData[key])naskahData[key]=[];naskahData[key].push(obj);}
+    else naskahData[editNaskahKey][editNaskahIdx]=obj;
+  }else{if(!naskahData[key])naskahData[key]=[];naskahData[key].push(obj);curMonth=dt.getMonth();curYear=dt.getFullYear();}
+  closeNaskahModal();closeDetailModal();renderCalendar();
 }
 
-function prevMonth() { curMonth--; if (curMonth < 0) { curMonth = 11; curYear--; } renderCalendar(); }
-function nextMonth() { curMonth++; if (curMonth > 11) { curMonth = 0; curYear++; } renderCalendar(); }
-function goToday() { curMonth = TODAY.getMonth(); curYear = TODAY.getFullYear(); renderCalendar(); }
-
-// ===== NASKAH MODAL =====
-function openNaskahModal(idx=null, day=null) {
-  editNaskahKey = null; editNaskahIdx = null;
-  document.getElementById('naskah-modal-title').textContent = '+ Naskah Baru';
-  document.getElementById('inp-n-title').value = '';
-  document.getElementById('inp-n-script').value = '';
-  document.getElementById('inp-n-status').value = 'Draft';
-  document.getElementById('inp-n-platform').value = 'YouTube';
-  if (day) {
-    const dt = new Date(curYear, curMonth, day);
-    document.getElementById('inp-n-date').value = dt.toISOString().split('T')[0];
-  } else {
-    document.getElementById('inp-n-date').value = '';
-  }
-  show('naskah-overlay');
-  setTimeout(() => document.getElementById('inp-n-title').focus(), 50);
-}
-
-function closeNaskahModal() { hide('naskah-overlay'); }
-
-function saveNaskah() {
-  const title = v('inp-n-title'), dateVal = v('inp-n-date'), platform = v('inp-n-platform'), script = v('inp-n-script'), status = v('inp-n-status');
-  if (!title) { alert('Isi judul naskah dulu!'); return; }
-  if (!dateVal) { alert('Pilih tanggal dulu!'); return; }
-  const dt = new Date(dateVal);
-  const key = eKey(dt.getFullYear(), dt.getMonth(), dt.getDate());
-  const obj = { title, platform, script, status };
-  if (editNaskahKey !== null && editNaskahIdx !== null) {
-    if (editNaskahKey !== key) {
-      naskahData[editNaskahKey].splice(editNaskahIdx, 1);
-      if (naskahData[editNaskahKey].length === 0) delete naskahData[editNaskahKey];
-      if (!naskahData[key]) naskahData[key] = [];
-      naskahData[key].push(obj);
-    } else {
-      naskahData[editNaskahKey][editNaskahIdx] = obj;
-    }
-  } else {
-    if (!naskahData[key]) naskahData[key] = [];
-    naskahData[key].push(obj);
-    curMonth = dt.getMonth(); curYear = dt.getFullYear();
-  }
-  closeNaskahModal(); closeDetailModal(); renderCalendar();
-}
-
-// ===== DETAIL MODAL =====
-function openDetailModal(key, idx) {
-  detailKey = key; detailIdx = idx;
-  const ev = naskahData[key][idx];
-  document.getElementById('detail-plat').innerHTML = platSVG(ev.platform, 16) + ' ' + platLabel(ev.platform);
-  document.getElementById('detail-body').innerHTML = `
+function openDetailModal(key,idx){
+  detailKey=key;detailIdx=idx;
+  const ev=naskahData[key][idx];
+  document.getElementById('detail-plat').innerHTML=platSVG(ev.platform,16)+' '+platLabel(ev.platform);
+  document.getElementById('detail-body').innerHTML=`
     <div>
-      <div style="font-size:18px;font-weight:800;color:#0f1623;margin-bottom:10px;font-family:'Syne',sans-serif;line-height:1.3;">${ev.title}</div>
+      <div style="font-size:18px;font-weight:800;color:#e5e7eb;margin-bottom:10px;font-family:'Syne',sans-serif;line-height:1.3;">${ev.title}</div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <span class="status-badge ${statusClass(ev.status)}" onclick="cycleStatus('${key}',${idx})" title="Klik untuk ganti status">${statusLabel(ev.status)}</span>
-        <span style="font-size:11px;color:#9ca3af;font-weight:600;">${fmtKey(key)}</span>
-        <button class="btn btn-sm" onclick="openMoveModal('${key}',${idx})">📅 Pindah</button>
+        <span style="font-size:11px;color:#6b7280;font-weight:600;">${fmtKey(key)}</span>
+        <button class="btn btn-sm" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.12);color:#d1d5db;" onclick="openMoveModal('${key}',${idx})">📅 Pindah</button>
       </div>
     </div>
     <div>
-      <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:7px;text-transform:uppercase;letter-spacing:0.06em;">📄 Naskah</div>
-      <div class="naskah-box">${ev.script ? ev.script : '<span style="color:#9ca3af;font-style:italic;">Belum ada naskah.</span>'}</div>
-    </div>
-  `;
+      <div style="font-size:12px;font-weight:700;color:#9ca3af;margin-bottom:7px;text-transform:uppercase;letter-spacing:0.06em;">📄 Naskah</div>
+      <div class="naskah-box">${ev.script?ev.script:'<span style="color:#6b7280;font-style:italic;">Belum ada naskah.</span>'}</div>
+    </div>`;
   show('detail-overlay');
 }
+function closeDetailModal(){hide('detail-overlay');detailKey=null;detailIdx=null;}
+function cycleStatus(key,idx){const order=['Draft','Exported','Uploaded'];const ev=naskahData[key][idx];ev.status=order[(order.indexOf(ev.status)+1)%3];renderCalendar();openDetailModal(key,idx);}
+function editNaskahFromDetail(){
+  if(!detailKey)return;
+  const key=detailKey,idx=detailIdx;const ev=naskahData[key][idx];
+  editNaskahKey=key;editNaskahIdx=idx;
+  document.getElementById('naskah-modal-title').textContent='✏️ Edit Naskah';
+  document.getElementById('inp-n-title').value=ev.title;
+  document.getElementById('inp-n-platform').value=ev.platform;
+  document.getElementById('inp-n-script').value=ev.script||'';
+  document.getElementById('inp-n-status').value=ev.status;
+  const[y,m,d]=key.split('-');const dt=new Date(parseInt(y),parseInt(m),parseInt(d));
+  document.getElementById('inp-n-date').value=dt.toISOString().split('T')[0];
+  closeDetailModal();show('naskah-overlay');
+}
+function deleteNaskah(){if(!confirm('Hapus naskah ini?'))return;naskahData[detailKey].splice(detailIdx,1);if(naskahData[detailKey].length===0)delete naskahData[detailKey];closeDetailModal();renderCalendar();}
+function copyNaskah(){const ev=naskahData[detailKey][detailIdx];navigator.clipboard.writeText(ev.title+'\n\n'+(ev.script||'')).then(()=>alert('Naskah berhasil dicopy! ✓'));}
 
-function closeDetailModal() { hide('detail-overlay'); detailKey = null; detailIdx = null; }
-
-function cycleStatus(key, idx) {
-  const order = ['Draft','Exported','Uploaded'];
-  const ev = naskahData[key][idx];
-  ev.status = order[(order.indexOf(ev.status) + 1) % 3];
-  renderCalendar(); openDetailModal(key, idx);
+function openMoveModal(key,idx){moveKey=key;moveIdx=idx;const[y,m,d]=key.split('-');const dt=new Date(parseInt(y),parseInt(m),parseInt(d));document.getElementById('inp-move-date').value=dt.toISOString().split('T')[0];show('move-overlay');}
+function closeMoveModal(){hide('move-overlay');}
+function confirmMove(){
+  const dateVal=v('inp-move-date');if(!dateVal){alert('Pilih tanggal dulu!');return;}
+  const dt=new Date(dateVal);const newKey=eKey(dt.getFullYear(),dt.getMonth(),dt.getDate());
+  const ev=naskahData[moveKey].splice(moveIdx,1)[0];if(naskahData[moveKey].length===0)delete naskahData[moveKey];
+  if(!naskahData[newKey])naskahData[newKey]=[];naskahData[newKey].push(ev);
+  closeMoveModal();closeDetailModal();curMonth=dt.getMonth();curYear=dt.getFullYear();renderCalendar();
 }
 
-function editNaskahFromDetail() {
-  if (!detailKey) return;
-  const key = detailKey, idx = detailIdx;
-  const ev = naskahData[key][idx];
-  editNaskahKey = key; editNaskahIdx = idx;
-  document.getElementById('naskah-modal-title').textContent = '✏️ Edit Naskah';
-  document.getElementById('inp-n-title').value = ev.title;
-  document.getElementById('inp-n-platform').value = ev.platform;
-  document.getElementById('inp-n-script').value = ev.script || '';
-  document.getElementById('inp-n-status').value = ev.status;
-  const [y, m, d] = key.split('-');
-  const dt = new Date(parseInt(y), parseInt(m), parseInt(d));
-  document.getElementById('inp-n-date').value = dt.toISOString().split('T')[0];
-  closeDetailModal();
-  show('naskah-overlay');
-}
-
-function deleteNaskah() {
-  if (!confirm('Hapus naskah ini?')) return;
-  naskahData[detailKey].splice(detailIdx, 1);
-  if (naskahData[detailKey].length === 0) delete naskahData[detailKey];
-  closeDetailModal(); renderCalendar();
-}
-
-function copyNaskah() {
-  const ev = naskahData[detailKey][detailIdx];
-  navigator.clipboard.writeText(ev.title + '\n\n' + (ev.script || '')).then(() => alert('Naskah berhasil dicopy! ✓'));
-}
-
-// ===== MOVE DATE =====
-function openMoveModal(key, idx) {
-  moveKey = key; moveIdx = idx;
-  const [y, m, d] = key.split('-');
-  const dt = new Date(parseInt(y), parseInt(m), parseInt(d));
-  document.getElementById('inp-move-date').value = dt.toISOString().split('T')[0];
-  show('move-overlay');
-}
-function closeMoveModal() { hide('move-overlay'); }
-function confirmMove() {
-  const dateVal = v('inp-move-date');
-  if (!dateVal) { alert('Pilih tanggal dulu!'); return; }
-  const dt = new Date(dateVal);
-  const newKey = eKey(dt.getFullYear(), dt.getMonth(), dt.getDate());
-  const ev = naskahData[moveKey].splice(moveIdx, 1)[0];
-  if (naskahData[moveKey].length === 0) delete naskahData[moveKey];
-  if (!naskahData[newKey]) naskahData[newKey] = [];
-  naskahData[newKey].push(ev);
-  closeMoveModal(); closeDetailModal();
-  curMonth = dt.getMonth(); curYear = dt.getFullYear();
-  renderCalendar();
-}
-
-// ===== IDEAS =====
-function renderIdeas() {
-  const grid = document.getElementById('ideas-grid');
-  let filtered = ideaFilter === 'all' ? [...ideasData] : ideasData.filter(i => i.platform === ideaFilter);
-  filtered.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
-  if (filtered.length === 0) {
-    grid.innerHTML = '<div style="color:#9ca3af;font-size:13px;padding:20px 0;grid-column:1/-1;">Belum ada ide. Klik "+ Ide Baru" untuk tambah! 💡</div>';
-    return;
-  }
-  const platColor = {YouTube:'#DC2626', TikTok:'#111111', Shorts:'#DC2626'};
-  grid.innerHTML = filtered.map(idea => {
-    const realIdx = ideasData.indexOf(idea);
-    const col = platColor[idea.platform] || '#374151';
-    return `<div class="idea-card">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
-        ${platSVG(idea.platform, 14)}
-        <span class="idea-plat" style="color:${col};">${idea.platform}</span>
-        ${idea.pinned ? '<span style="font-size:11px;margin-left:auto;color:#b45309;">📌 Pinned</span>' : ''}
-      </div>
-      <div class="idea-title">${idea.title}</div>
-      <div class="idea-desc">${idea.desc || ''}</div>
+function renderIdeas(){
+  const grid=document.getElementById('ideas-grid');
+  let filtered=ideaFilter==='all'?[...ideasData]:ideasData.filter(i=>i.platform===ideaFilter);
+  filtered.sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0));
+  if(filtered.length===0){grid.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:20px 0;grid-column:1/-1;">Belum ada ide. Klik "+ Ide Baru" untuk tambah! 💡</div>';return;}
+  const platColor={YouTube:'#DC2626',TikTok:'#111111',Shorts:'#DC2626'};
+  grid.innerHTML=filtered.map(idea=>{
+    const realIdx=ideasData.indexOf(idea);const col=platColor[idea.platform]||'#374151';
+    return`<div class="idea-card">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">${platSVG(idea.platform,14)}<span class="idea-plat" style="color:${col};">${idea.platform}</span>${idea.pinned?'<span style="font-size:11px;margin-left:auto;color:#b45309;">📌 Pinned</span>':''}</div>
+      <div class="idea-title">${idea.title}</div><div class="idea-desc">${idea.desc||''}</div>
       <div class="idea-actions">
-        <button class="icon-btn ${idea.pinned ? 'pin-active' : ''}" onclick="togglePin(${realIdx})" title="${idea.pinned ? 'Unpin' : 'Pin'}">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>
-        </button>
-        <button class="icon-btn" onclick="openIdeaModal(${realIdx})" title="Edit">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        </button>
-        <button class="icon-btn danger" onclick="deleteIdea(${realIdx})" title="Hapus">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-        </button>
+        <button class="icon-btn ${idea.pinned?'pin-active':''}" onclick="togglePin(${realIdx})" title="${idea.pinned?'Unpin':'Pin'}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></button>
+        <button class="icon-btn" onclick="openIdeaModal(${realIdx})" title="Edit"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="icon-btn danger" onclick="deleteIdea(${realIdx})" title="Hapus"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
       </div>
     </div>`;
   }).join('');
 }
-
-function filterIdeas(filter, btn) {
-  ideaFilter = filter;
-  document.querySelectorAll('.itab').forEach(t => t.classList.remove('on'));
-  btn.classList.add('on');
-  renderIdeas();
+function filterIdeas(f,btn){ideaFilter=f;document.querySelectorAll('.itab').forEach(t=>t.classList.remove('on'));btn.classList.add('on');renderIdeas();}
+function togglePin(idx){ideasData[idx].pinned=!ideasData[idx].pinned;renderIdeas();}
+function openIdeaModal(idx=null){
+  editIdeaIdx=idx;
+  document.getElementById('idea-modal-title').textContent=idx!==null?'✏️ Edit Ide':'+ Ide Baru';
+  if(idx!==null){const idea=ideasData[idx];document.getElementById('inp-i-title').value=idea.title;document.getElementById('inp-i-desc').value=idea.desc||'';document.getElementById('inp-i-platform').value=idea.platform;}
+  else{document.getElementById('inp-i-title').value='';document.getElementById('inp-i-desc').value='';document.getElementById('inp-i-platform').value='YouTube';}
+  show('idea-overlay');setTimeout(()=>document.getElementById('inp-i-title').focus(),50);
 }
+function closeIdeaModal(){hide('idea-overlay');editIdeaIdx=null;}
+function saveIdea(){const title=v('inp-i-title');if(!title){alert('Isi judul ide dulu!');return;}const obj={title,desc:v('inp-i-desc'),platform:v('inp-i-platform'),pinned:false};if(editIdeaIdx!==null){obj.pinned=ideasData[editIdeaIdx].pinned;ideasData[editIdeaIdx]=obj;}else ideasData.push(obj);closeIdeaModal();renderIdeas();}
+function deleteIdea(idx){if(!confirm('Hapus ide ini?'))return;ideasData.splice(idx,1);renderIdeas();}
 
-function togglePin(idx) { ideasData[idx].pinned = !ideasData[idx].pinned; renderIdeas(); }
-
-function openIdeaModal(idx=null) {
-  editIdeaIdx = idx;
-  document.getElementById('idea-modal-title').textContent = idx !== null ? '✏️ Edit Ide' : '+ Ide Baru';
-  if (idx !== null) {
-    const idea = ideasData[idx];
-    document.getElementById('inp-i-title').value = idea.title;
-    document.getElementById('inp-i-desc').value = idea.desc || '';
-    document.getElementById('inp-i-platform').value = idea.platform;
-  } else {
-    document.getElementById('inp-i-title').value = '';
-    document.getElementById('inp-i-desc').value = '';
-    document.getElementById('inp-i-platform').value = 'YouTube';
-  }
-  show('idea-overlay');
-  setTimeout(() => document.getElementById('inp-i-title').focus(), 50);
-}
-function closeIdeaModal() { hide('idea-overlay'); editIdeaIdx = null; }
-function saveIdea() {
-  const title = v('inp-i-title');
-  if (!title) { alert('Isi judul ide dulu!'); return; }
-  const obj = { title, desc: v('inp-i-desc'), platform: v('inp-i-platform'), pinned: false };
-  if (editIdeaIdx !== null) { obj.pinned = ideasData[editIdeaIdx].pinned; ideasData[editIdeaIdx] = obj; }
-  else ideasData.push(obj);
-  closeIdeaModal(); renderIdeas();
-}
-function deleteIdea(idx) { if (!confirm('Hapus ide ini?')) return; ideasData.splice(idx, 1); renderIdeas(); }
-
-// ===== PROMPTS =====
-function renderPrompts() {
-  const grid = document.getElementById('prompt-grid');
-  const filtered = promptFilter === 'all' ? [...promptsData] : promptsData.filter(p => p.cat === promptFilter);
-  if (filtered.length === 0) {
-    grid.innerHTML = '<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada prompt di kategori ini.</div>';
-    return;
-  }
-  const catColor = {Script:'#2563eb', Thumbnail:'#dc2626', Caption:'#0f766e', Riset:'#7e22ce', Hook:'#c2410c'};
-  const catIcon = {Script:'📝', Thumbnail:'🖼️', Caption:'💬', Riset:'🔍', Hook:'🎣'};
-  grid.innerHTML = filtered.map(p => {
-    const realIdx = promptsData.indexOf(p);
-    const col = catColor[p.cat] || '#374151';
-    const ico = catIcon[p.cat] || '📄';
-    const preview = p.text.length > 110 ? p.text.slice(0, 110) + '…' : p.text;
-    return `<div class="prompt-card">
+function renderPrompts(){
+  const grid=document.getElementById('prompt-grid');
+  const filtered=promptFilter==='all'?[...promptsData]:promptsData.filter(p=>p.cat===promptFilter);
+  if(filtered.length===0){grid.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada prompt di kategori ini.</div>';return;}
+  const catColor={Script:'#2563eb',Thumbnail:'#dc2626',Caption:'#0f766e',Riset:'#7e22ce',Hook:'#c2410c'};
+  const catIcon={Script:'📝',Thumbnail:'🖼️',Caption:'💬',Riset:'🔍',Hook:'🎣'};
+  grid.innerHTML=filtered.map(p=>{
+    const realIdx=promptsData.indexOf(p);const col=catColor[p.cat]||'#374151';const ico=catIcon[p.cat]||'📄';
+    const preview=p.text.length>110?p.text.slice(0,110)+'…':p.text;
+    return`<div class="prompt-card">
       <div class="prompt-cat" style="color:${col};">${ico} ${p.cat}</div>
       <div class="prompt-title">${p.title}</div>
       <div class="prompt-preview" onclick="openPVModal(${realIdx})" title="Klik untuk lihat full">${preview}</div>
@@ -939,130 +617,66 @@ function renderPrompts() {
     </div>`;
   }).join('');
 }
+function filterPrompt(f,btn){promptFilter=f;document.querySelectorAll('.prompt-filters .btn').forEach(b=>b.classList.remove('btn-primary'));btn.classList.add('btn-primary');renderPrompts();}
+function openPVModal(idx){pvIdx=idx;const p=promptsData[idx];const catIcon={Script:'📝',Thumbnail:'🖼️',Caption:'💬',Riset:'🔍',Hook:'🎣'};document.getElementById('pv-title').textContent=p.title;document.getElementById('pv-cat').textContent=(catIcon[p.cat]||'')+' '+p.cat;document.getElementById('pv-text').textContent=p.text;show('pv-overlay');}
+function closePVModal(){hide('pv-overlay');pvIdx=null;}
+function copyPromptFull(){navigator.clipboard.writeText(promptsData[pvIdx].text).then(()=>alert('Prompt berhasil dicopy! ✓'));}
+function copyPromptByIdx(idx){navigator.clipboard.writeText(promptsData[idx].text).then(()=>{const btn=document.getElementById('cpbtn-'+idx);if(btn){btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 Copy';btn.classList.remove('copied');},2000);}});}
+function openPromptModal(idx=null){
+  editPromptIdx=idx;
+  document.getElementById('prompt-modal-title').textContent=idx!==null?'✏️ Edit Prompt':'+ Prompt Baru';
+  if(idx!==null){const p=promptsData[idx];document.getElementById('inp-p-title').value=p.title;document.getElementById('inp-p-cat').value=p.cat;document.getElementById('inp-p-text').value=p.text;}
+  else{document.getElementById('inp-p-title').value='';document.getElementById('inp-p-cat').value='Script';document.getElementById('inp-p-text').value='';}
+  show('prompt-overlay');setTimeout(()=>document.getElementById('inp-p-title').focus(),50);
+}
+function closePromptModal(){hide('prompt-overlay');editPromptIdx=null;}
+function savePrompt(){const title=v('inp-p-title'),text=v('inp-p-text');if(!title||!text){alert('Isi judul dan isi prompt!');return;}const obj={title,cat:v('inp-p-cat'),text};if(editPromptIdx!==null)promptsData[editPromptIdx]=obj;else promptsData.push(obj);closePromptModal();renderPrompts();}
+function deletePrompt(idx){if(!confirm('Hapus prompt ini?'))return;promptsData.splice(idx,1);renderPrompts();}
 
-function filterPrompt(filter, btn) {
-  promptFilter = filter;
-  document.querySelectorAll('.prompt-filters .btn').forEach(b => b.classList.remove('btn-primary'));
-  btn.classList.add('btn-primary');
-  renderPrompts();
-}
-
-function openPVModal(idx) {
-  pvIdx = idx;
-  const p = promptsData[idx];
-  const catIcon = {Script:'📝', Thumbnail:'🖼️', Caption:'💬', Riset:'🔍', Hook:'🎣'};
-  document.getElementById('pv-title').textContent = p.title;
-  document.getElementById('pv-cat').textContent = (catIcon[p.cat] || '') + ' ' + p.cat;
-  document.getElementById('pv-text').textContent = p.text;
-  show('pv-overlay');
-}
-function closePVModal() { hide('pv-overlay'); pvIdx = null; }
-function copyPromptFull() {
-  navigator.clipboard.writeText(promptsData[pvIdx].text).then(() => alert('Prompt berhasil dicopy! ✓'));
-}
-function copyPromptByIdx(idx) {
-  navigator.clipboard.writeText(promptsData[idx].text).then(() => {
-    const btn = document.getElementById('cpbtn-' + idx);
-    if (btn) { btn.textContent = '✓ Copied!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 2000); }
-  });
-}
-
-function openPromptModal(idx=null) {
-  editPromptIdx = idx;
-  document.getElementById('prompt-modal-title').textContent = idx !== null ? '✏️ Edit Prompt' : '+ Prompt Baru';
-  if (idx !== null) {
-    const p = promptsData[idx];
-    document.getElementById('inp-p-title').value = p.title;
-    document.getElementById('inp-p-cat').value = p.cat;
-    document.getElementById('inp-p-text').value = p.text;
-  } else {
-    document.getElementById('inp-p-title').value = '';
-    document.getElementById('inp-p-cat').value = 'Script';
-    document.getElementById('inp-p-text').value = '';
-  }
-  show('prompt-overlay');
-  setTimeout(() => document.getElementById('inp-p-title').focus(), 50);
-}
-function closePromptModal() { hide('prompt-overlay'); editPromptIdx = null; }
-function savePrompt() {
-  const title = v('inp-p-title'), text = v('inp-p-text');
-  if (!title || !text) { alert('Isi judul dan isi prompt!'); return; }
-  const obj = { title, cat: v('inp-p-cat'), text };
-  if (editPromptIdx !== null) promptsData[editPromptIdx] = obj;
-  else promptsData.push(obj);
-  closePromptModal(); renderPrompts();
-}
-function deletePrompt(idx) { if (!confirm('Hapus prompt ini?')) return; promptsData.splice(idx, 1); renderPrompts(); }
-
-// ===== JURNAL =====
-function renderJurnal() {
-  const list = document.getElementById('jurnal-list');
-  if (jurnalData.length === 0) {
-    list.innerHTML = '<div style="color:#9ca3af;font-size:13px;">Belum ada entri jurnal. Klik "+ Entri Baru"! 📖</div>';
-    return;
-  }
-  list.innerHTML = jurnalData.map((j, idx) => `
+function renderJurnal(){
+  const list=document.getElementById('jurnal-list');
+  if(jurnalData.length===0){list.innerHTML='<div style="color:#9ca3af;font-size:13px;">Belum ada entri jurnal. Klik "+ Entri Baru"! 📖</div>';return;}
+  list.innerHTML=jurnalData.map((j,idx)=>`
     <div class="jurnal-card">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;">
         <div class="jurnal-date">📅 ${j.date}</div>
-        <div style="display:flex;gap:5px;">
-          <button class="btn btn-sm" onclick="openJurnalModal(${idx})">✏️</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteJurnal(${idx})">🗑️</button>
-        </div>
+        <div style="display:flex;gap:5px;"><button class="btn btn-sm" onclick="openJurnalModal(${idx})">✏️</button><button class="btn btn-sm btn-danger" onclick="deleteJurnal(${idx})">🗑️</button></div>
       </div>
       <div class="jurnal-title">${j.title}</div>
       <div class="jurnal-content">${j.content}</div>
-      <div class="jurnal-tags">${j.tags.map(t => '<span class="tag">' + t + '</span>').join('')}</div>
-    </div>
-  `).join('');
+      <div class="jurnal-tags">${j.tags.map(t=>'<span class="tag">'+t+'</span>').join('')}</div>
+    </div>`).join('');
 }
-
-function openJurnalModal(idx=null) {
-  editJurnalIdx = idx;
-  document.getElementById('jurnal-modal-title').textContent = idx !== null ? '✏️ Edit Jurnal' : '+ Entri Jurnal';
-  if (idx !== null) {
-    const j = jurnalData[idx];
-    document.getElementById('inp-j-title').value = j.title;
-    document.getElementById('inp-j-content').value = j.content;
-    document.getElementById('inp-j-tags').value = j.tags.join(', ');
-  } else {
-    document.getElementById('inp-j-title').value = '';
-    document.getElementById('inp-j-content').value = '';
-    document.getElementById('inp-j-tags').value = '';
-  }
-  show('jurnal-overlay');
-  setTimeout(() => document.getElementById('inp-j-title').focus(), 50);
+function openJurnalModal(idx=null){
+  editJurnalIdx=idx;
+  document.getElementById('jurnal-modal-title').textContent=idx!==null?'✏️ Edit Jurnal':'+ Entri Jurnal';
+  if(idx!==null){const j=jurnalData[idx];document.getElementById('inp-j-title').value=j.title;document.getElementById('inp-j-content').value=j.content;document.getElementById('inp-j-tags').value=j.tags.join(', ');}
+  else{document.getElementById('inp-j-title').value='';document.getElementById('inp-j-content').value='';document.getElementById('inp-j-tags').value='';}
+  show('jurnal-overlay');setTimeout(()=>document.getElementById('inp-j-title').focus(),50);
 }
-function closeJurnalModal() { hide('jurnal-overlay'); editJurnalIdx = null; }
-function saveJurnal() {
-  const title = v('inp-j-title');
-  if (!title) { alert('Isi judul jurnal!'); return; }
-  const now = new Date();
-  const date = now.getDate() + ' ' + MONTHS[now.getMonth()] + ' ' + now.getFullYear();
-  const tags = v('inp-j-tags').split(',').map(t => t.trim()).filter(Boolean);
-  const obj = { title, date, content: v('inp-j-content'), tags };
-  if (editJurnalIdx !== null) jurnalData[editJurnalIdx] = obj;
-  else jurnalData.unshift(obj);
-  closeJurnalModal(); renderJurnal();
+function closeJurnalModal(){hide('jurnal-overlay');editJurnalIdx=null;}
+function saveJurnal(){
+  const title=v('inp-j-title');if(!title){alert('Isi judul jurnal!');return;}
+  const now=new Date();const date=now.getDate()+' '+MONTHS[now.getMonth()]+' '+now.getFullYear();
+  const tags=v('inp-j-tags').split(',').map(t=>t.trim()).filter(Boolean);
+  const obj={title,date,content:v('inp-j-content'),tags};
+  if(editJurnalIdx!==null)jurnalData[editJurnalIdx]=obj;else jurnalData.unshift(obj);
+  closeJurnalModal();renderJurnal();
 }
-function deleteJurnal(idx) { if (!confirm('Hapus entri jurnal ini?')) return; jurnalData.splice(idx, 1); renderJurnal(); }
+function deleteJurnal(idx){if(!confirm('Hapus entri jurnal ini?'))return;jurnalData.splice(idx,1);renderJurnal();}
 
-// ===== UTILS =====
-function show(id) { document.getElementById(id).classList.remove('hidden'); }
-function hide(id) { document.getElementById(id).classList.add('hidden'); }
-function v(id) { return document.getElementById(id).value.trim(); }
+function show(id){document.getElementById(id).classList.remove('hidden');}
+function hide(id){document.getElementById(id).classList.add('hidden');}
+function v(id){return document.getElementById(id).value.trim();}
 
-document.querySelectorAll('.overlay').forEach(ov => {
-  ov.addEventListener('click', e => { if (e.target === ov) ov.classList.add('hidden'); });
-});
-
-document.addEventListener('keydown', e => {
-  const tag = document.activeElement.tagName;
-  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-  if (e.key === 'ArrowRight') nextMonth();
-  if (e.key === 'ArrowLeft') prevMonth();
-  if (e.key === 't' || e.key === 'T') goToday();
-  if (e.key === 'Escape') document.querySelectorAll('.overlay').forEach(m => m.classList.add('hidden'));
+document.querySelectorAll('.overlay').forEach(ov=>{ov.addEventListener('click',e=>{if(e.target===ov)ov.classList.add('hidden');});});
+document.addEventListener('keydown',e=>{
+  const tag=document.activeElement.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight')nextMonth();
+  if(e.key==='ArrowLeft')prevMonth();
+  if(e.key==='t'||e.key==='T')goToday();
+  if(e.key==='Escape')document.querySelectorAll('.overlay').forEach(m=>m.classList.add('hidden'));
 });
 
 renderCalendar();
