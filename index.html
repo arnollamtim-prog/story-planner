@@ -8,149 +8,147 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F0F2F8; height: 100vh; overflow: hidden; display: flex; }
 
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
-.main ::-webkit-scrollbar-thumb { background: #d1d5db; }
-.main ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+.main-scroll::-webkit-scrollbar-thumb { background: #d1d5db; }
 
 /* SIDEBAR */
-.sidebar { width: 220px; flex-shrink: 0; background: linear-gradient(160deg, #1a2240, #1e2d5a); color: white; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+.sidebar { width: 220px; flex-shrink: 0; background: linear-gradient(160deg, #1a2240, #1e2d5a); color: white; display: flex; flex-direction: column; height: 100vh; }
 .sidebar-logo { padding: 20px 16px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg,#4F6FE8,#7C9EFF); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 8px; }
 .logo-title { font-size: 14px; font-weight: 700; }
 .logo-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
 .sidebar-nav { flex: 1; overflow-y: auto; padding: 12px; }
-.nav-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 8px 8px 4px; }
+.nav-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 8px 8px 4px; }
 .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 9px; cursor: pointer; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); transition: all 0.15s; margin-bottom: 2px; border: none; background: none; width: 100%; text-align: left; }
 .nav-item:hover { background: rgba(255,255,255,0.08); color: white; }
 .nav-item.active { background: rgba(79,111,232,0.28); color: white; }
 .nav-icon { font-size: 15px; width: 20px; text-align: center; }
-.sidebar-user { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
+.sidebar-footer { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
 .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #4F6FE8; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; }
-.user-plan { font-size: 11px; color: rgba(255,255,255,0.4); }
-.user-name { font-size: 13px; font-weight: 600; }
 
 /* MAIN */
 .main { flex: 1; display: flex; flex-direction: column; min-width: 0; height: 100vh; overflow: hidden; }
-
-/* PAGE */
 .page { display: none; flex: 1; flex-direction: column; height: 100%; overflow-y: auto; }
 .page.active { display: flex; }
+.page-header { padding: 24px 28px 0; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; margin-bottom: 16px; }
+.page-title { font-size: 22px; font-weight: 800; color: #111827; }
+.page-sub { font-size: 13px; color: #9ca3af; margin-top: 2px; }
 
 /* BUTTONS */
 .btn { padding: 8px 14px; border-radius: 9px; border: 1px solid #e5e7eb; background: white; font-size: 12px; font-weight: 500; color: #374151; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; }
 .btn:hover { background: #f9fafb; }
 .btn-primary { background: #2563eb; color: white; border-color: #2563eb; font-weight: 600; }
-.btn-primary:hover { background: #1d4ed8; }
+.btn-primary:hover { background: #1d4ed8; border-color: #1d4ed8; }
 .btn-danger { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
 .btn-danger:hover { background: #fee2e2; }
 .btn-sm { padding: 4px 8px; font-size: 11px; border-radius: 6px; }
 
-/* CARDS */
-.card { background: white; border-radius: 16px; border: 1px solid #f3f4f6; box-shadow: 0 1px 3px rgba(0,0,0,0.04); padding: 20px; }
-
-/* ===================== KALENDER ===================== */
-.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+/* ===== KALENDER ===== */
+.cal-wrap { padding: 20px 24px; }
+.cal-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
 .cal-nav { display: flex; align-items: center; gap: 8px; }
-.cal-nav-btn { width: 28px; height: 28px; border-radius: 8px; border: 1px solid #e5e7eb; background: white; cursor: pointer; font-size: 14px; color: #6b7280; }
+.cal-nav-btn { width: 30px; height: 30px; border-radius: 8px; border: 1px solid #e5e7eb; background: white; cursor: pointer; font-size: 16px; color: #6b7280; display: flex; align-items: center; justify-content: center; }
 .cal-nav-btn:hover { background: #f3f4f6; }
-.cal-title { font-size: 20px; font-weight: 800; color: #111827; }
-.cal-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.btn-today { padding: 4px 12px; background: #2563eb; color: white; border: none; border-radius: 7px; font-size: 11px; font-weight: 700; cursor: pointer; }
-.cal-grid-wrap { background: white; border-radius: 16px; border: 1px solid #f3f4f6; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-.cal-day-headers { display: grid; grid-template-columns: repeat(7,1fr); border-bottom: 1px solid #f3f4f6; }
-.cal-day-header { font-size: 11px; font-weight: 700; color: #9ca3af; text-align: center; padding: 8px 4px; }
+.cal-month { font-size: 20px; font-weight: 800; color: #111827; }
+.cal-actions { display: flex; gap: 8px; align-items: center; }
+.btn-today { padding: 6px 14px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.btn-today:hover { background: #1d4ed8; }
+.cal-hint { font-size: 12px; color: #9ca3af; font-style: italic; margin-bottom: 10px; }
+.cal-grid-wrap { background: white; border-radius: 16px; border: 1px solid #e5e7eb; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+.cal-headers { display: grid; grid-template-columns: repeat(7,1fr); border-bottom: 1px solid #f3f4f6; }
+.cal-hdr { font-size: 11px; font-weight: 700; color: #9ca3af; text-align: center; padding: 8px 4px; }
 .cal-cells { display: grid; grid-template-columns: repeat(7,1fr); }
-.cal-cell { min-height: 90px; border-right: 1px solid #f3f4f6; border-bottom: 1px solid #f3f4f6; padding: 6px; cursor: pointer; transition: background 0.12s; }
+.cal-cell { min-height: 90px; border-right: 1px solid #f3f4f6; border-bottom: 1px solid #f3f4f6; padding: 6px; cursor: pointer; transition: background 0.1s; }
 .cal-cell:nth-child(7n) { border-right: none; }
 .cal-cell:hover { background: #eff6ff; }
-.cal-cell.selected { box-shadow: inset 0 0 0 2px #3b82f6; background: #eff6ff; }
 .cal-cell.empty { background: #fafafa; cursor: default; }
 .cal-cell.empty:hover { background: #fafafa; }
 .day-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 3px; }
 .day-num.today { background: #2563eb; color: white; }
-.day-empty-num { font-size: 11px; color: #d1d5db; }
-.event-chip { font-size: 10px; font-weight: 600; padding: 2px 5px; border-radius: 5px; border: 1px solid; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
-.ev-time-small { font-size: 9px; opacity: 0.6; }
+.day-ghost { font-size: 11px; color: #d1d5db; }
+.ev-chip { font-size: 10px; font-weight: 600; padding: 2px 5px; border-radius: 5px; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; border: 1px solid; }
+.chip-yt { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+.chip-tt { background: #18181b; color: #fff; border-color: #3f3f46; }
+.chip-sh { background: #faf5ff; color: #7e22ce; border-color: #e9d5ff; }
 
-/* Platform colors */
-.chip-youtube { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
-.chip-tiktok { background: #18181b; color: #fff; border-color: #3f3f46; }
-.chip-shorts { background: #faf5ff; color: #7e22ce; border-color: #e9d5ff; }
+/* STATUS */
+.status-badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1px solid; user-select: none; }
+.s-draft { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+.s-exported { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.s-uploaded { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
 
-/* STATUS colors */
-.status-draft { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
-.status-exported { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-.status-uploaded { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
-
-/* EVENT MODAL */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 200; }
-.modal-overlay.hidden { display: none; }
-.modal { background: white; border-radius: 16px; padding: 24px; width: 460px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); max-height: 90vh; overflow-y: auto; }
-.modal-title { font-size: 16px; font-weight: 800; color: #111827; margin-bottom: 16px; }
-.form-group { margin-bottom: 12px; }
-.form-label { font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px; display: block; }
-.form-input { width: 100%; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit; }
-.form-input:focus { border-color: #3b82f6; }
-textarea.form-input { resize: vertical; min-height: 120px; }
-.modal-actions { display: flex; gap: 8px; margin-top: 16px; }
-.btn-cancel { flex: 1; padding: 9px; border: 1px solid #e5e7eb; border-radius: 9px; background: white; font-size: 13px; font-weight: 600; cursor: pointer; }
-.btn-save { flex: 1; padding: 9px; border: none; border-radius: 9px; background: #2563eb; color: white; font-size: 13px; font-weight: 700; cursor: pointer; }
-
-/* STATUS BADGE */
-.status-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; cursor: pointer; border: 1px solid; }
+/* MODALS */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 300; padding: 20px; }
+.overlay.hidden { display: none; }
+.modal { background: white; border-radius: 18px; padding: 24px; width: 100%; max-width: 460px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
+.modal-lg { max-width: 520px; }
+.modal-sm { max-width: 340px; }
+.modal-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.modal-title { font-size: 16px; font-weight: 800; color: #111827; }
+.modal-close { background: none; border: none; font-size: 22px; color: #9ca3af; cursor: pointer; line-height: 1; }
+.modal-close:hover { color: #374151; }
+.form-group { margin-bottom: 13px; }
+.form-label { font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 5px; display: block; }
+.form-input { width: 100%; padding: 9px 12px; border: 1px solid #e5e7eb; border-radius: 9px; font-size: 13px; outline: none; font-family: inherit; color: #111827; }
+.form-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.6; }
+.modal-actions { display: flex; gap: 8px; margin-top: 18px; }
+.btn-cancel { flex: 1; padding: 10px; border: 1px solid #e5e7eb; border-radius: 9px; background: white; font-size: 13px; font-weight: 600; cursor: pointer; color: #374151; }
+.btn-cancel:hover { background: #f9fafb; }
+.btn-save { flex: 2; padding: 10px; border: none; border-radius: 9px; background: #2563eb; color: white; font-size: 13px; font-weight: 700; cursor: pointer; }
+.btn-save:hover { background: #1d4ed8; }
 
 /* DETAIL MODAL */
-.detail-modal { background: white; border-radius: 16px; width: 500px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); overflow: hidden; max-height: 85vh; display: flex; flex-direction: column; }
-.detail-modal-header { padding: 16px 20px; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-.detail-modal-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; flex: 1; }
+.detail-modal { background: white; border-radius: 18px; width: 100%; max-width: 520px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; max-height: 88vh; display: flex; flex-direction: column; }
+.detail-hdr { padding: 16px 20px; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.detail-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+.naskah-box { background: #f9fafb; border-radius: 10px; padding: 14px; font-size: 13px; color: #374151; line-height: 1.7; white-space: pre-wrap; border: 1px solid #f3f4f6; max-height: 280px; overflow-y: auto; }
 
-/* NASKAH FULL VIEW */
-.naskah-full { background: #f9fafb; border-radius: 10px; padding: 14px; font-size: 13px; color: #374151; line-height: 1.7; white-space: pre-wrap; max-height: 300px; overflow-y: auto; border: 1px solid #f3f4f6; }
-
-/* ===================== IDEAS BOARD ===================== */
+/* IDEAS BOARD */
 .ideas-tabs { display: flex; gap: 6px; padding: 0 28px; margin-bottom: 16px; flex-wrap: wrap; }
-.ideas-tab { padding: 6px 14px; border-radius: 8px; border: 1.5px solid #e5e7eb; background: white; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; color: #6b7280; }
-.ideas-tab.active-yt { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
-.ideas-tab.active-tiktok { background: #18181b; color: white; border-color: #18181b; }
-.ideas-tab.active-shorts { background: #f3e8ff; color: #7e22ce; border-color: #d8b4fe; }
-.ideas-tab.active-all { background: #2563eb; color: white; border-color: #2563eb; }
-
-.ideas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+.itab { padding: 6px 16px; border-radius: 8px; border: 2px solid #e5e7eb; background: white; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; color: #6b7280; }
+.itab-all.on { background: #2563eb; color: white; border-color: #2563eb; }
+.itab-yt.on { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
+.itab-tt.on { background: #18181b; color: white; border-color: #18181b; }
+.itab-sh.on { background: #f3e8ff; color: #7e22ce; border-color: #c4b5fd; }
+.ideas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; padding: 0 28px 28px; }
 .idea-card { background: white; border-radius: 12px; border: 1px solid #f3f4f6; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: all 0.15s; position: relative; }
-.idea-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.idea-card-platform { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-.idea-card-title { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 5px; line-height: 1.4; }
-.idea-card-desc { font-size: 11px; color: #6b7280; line-height: 1.4; margin-bottom: 10px; }
-.idea-card-actions { display: flex; gap: 5px; justify-content: flex-end; }
-.idea-card-pinned { position: absolute; top: 10px; right: 10px; font-size: 14px; }
+.idea-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.09); border-color: #e0e7ff; }
+.idea-plat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.idea-title { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 5px; line-height: 1.4; }
+.idea-desc { font-size: 11px; color: #6b7280; line-height: 1.4; margin-bottom: 10px; }
+.idea-actions { display: flex; gap: 5px; justify-content: flex-end; }
+.pin-badge { position: absolute; top: 10px; right: 10px; font-size: 13px; }
 
-/* ===================== PROMPT VAULT ===================== */
-.prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+/* PROMPT VAULT */
+.prompt-filters { display: flex; gap: 7px; padding: 0 28px; margin-bottom: 16px; flex-wrap: wrap; }
+.prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; padding: 0 28px 28px; }
 .prompt-card { background: white; border-radius: 12px; border: 1px solid #f3f4f6; padding: 16px; transition: all 0.15s; }
-.prompt-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: #c7d2fe; }
-.prompt-category { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-.prompt-title { font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px; }
-.prompt-text { font-size: 11px; color: #6b7280; line-height: 1.5; margin-bottom: 10px; background: #f9fafb; padding: 8px 10px; border-radius: 8px; border-left: 3px solid #e5e7eb; cursor: pointer; }
-.prompt-text:hover { background: #f3f4f6; }
-.prompt-text-full { display: none; }
-.prompt-footer { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
-.prompt-copy { padding: 5px 10px; border: 1px solid #e5e7eb; border-radius: 7px; background: white; font-size: 11px; font-weight: 600; cursor: pointer; color: #374151; }
-.prompt-copy:hover { background: #f9fafb; }
-.prompt-copy.copied { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+.prompt-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.08); border-color: #c7d2fe; }
+.prompt-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.prompt-title { font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px; }
+.prompt-preview { font-size: 11px; color: #6b7280; line-height: 1.5; padding: 8px 10px; border-radius: 8px; background: #f9fafb; border-left: 3px solid #e5e7eb; cursor: pointer; margin-bottom: 10px; }
+.prompt-preview:hover { background: #f3f4f6; }
+.prompt-footer { display: flex; align-items: center; justify-content: space-between; }
+.copy-btn { padding: 5px 10px; border: 1px solid #e5e7eb; border-radius: 7px; background: white; font-size: 11px; font-weight: 600; cursor: pointer; color: #374151; }
+.copy-btn:hover { background: #f9fafb; }
+.copy-btn.copied { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
 
 /* JURNAL */
-.jurnal-list { display: flex; flex-direction: column; gap: 12px; }
-.jurnal-entry { background: white; border-radius: 14px; border: 1px solid #f3f4f6; padding: 18px; cursor: pointer; transition: all 0.15s; }
-.jurnal-entry:hover { border-color: #93c5fd; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.jurnal-list { display: flex; flex-direction: column; gap: 12px; padding: 0 28px 28px; }
+.jurnal-card { background: white; border-radius: 14px; border: 1px solid #f3f4f6; padding: 18px; transition: all 0.15s; }
+.jurnal-card:hover { border-color: #93c5fd; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
 .jurnal-date { font-size: 11px; color: #9ca3af; margin-bottom: 6px; }
 .jurnal-title { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 6px; }
 .jurnal-content { font-size: 13px; color: #6b7280; line-height: 1.6; margin-bottom: 10px; }
 .jurnal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.jurnal-tag { padding: 3px 9px; border-radius: 99px; font-size: 10px; font-weight: 600; background: #f3f4f6; color: #6b7280; }
+.tag { padding: 3px 9px; border-radius: 99px; font-size: 10px; font-weight: 600; background: #f3f4f6; color: #6b7280; }
+
+/* PROMPT FULL VIEW */
+.pv-modal { background: white; border-radius: 18px; width: 100%; max-width: 520px; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); max-height: 88vh; overflow-y: auto; }
+.pv-text { background: #f9fafb; border-radius: 10px; padding: 14px; font-size: 13px; color: #374151; line-height: 1.7; white-space: pre-wrap; border: 1px solid #f3f4f6; max-height: 380px; overflow-y: auto; margin-bottom: 14px; }
 </style>
 </head>
 <body>
@@ -160,114 +158,113 @@ textarea.form-input { resize: vertical; min-height: 120px; }
   <div class="sidebar-logo">
     <div class="logo-icon">🎬</div>
     <div class="logo-title">Story Planner</div>
-    <div class="logo-sub">YouTube &amp; Shorts</div>
+    <div class="logo-sub">Content Creator Tools</div>
   </div>
   <nav class="sidebar-nav">
-    <div class="nav-section-label">Menu</div>
-    <button class="nav-item active" onclick="showPage('kalender',this)"><span class="nav-icon">📅</span> Kalender</button>
-    <button class="nav-item" onclick="showPage('ideas',this)"><span class="nav-icon">💡</span> Ideas Board</button>
-    <div class="nav-section-label">Asset</div>
-    <button class="nav-item" onclick="showPage('prompt',this)"><span class="nav-icon">🗂️</span> Prompt Vault</button>
-    <div class="nav-section-label">Lainnya</div>
-    <button class="nav-item" onclick="showPage('jurnal',this)"><span class="nav-icon">📖</span> Jurnal Analisis</button>
+    <div class="nav-label">Menu</div>
+    <button class="nav-item active" onclick="showPage('kalender',this)"><span class="nav-icon">📅</span>Kalender</button>
+    <button class="nav-item" onclick="showPage('ideas',this)"><span class="nav-icon">💡</span>Ideas Board</button>
+    <div class="nav-label">Asset</div>
+    <button class="nav-item" onclick="showPage('prompt',this)"><span class="nav-icon">🗂️</span>Prompt Vault</button>
+    <div class="nav-label">Lainnya</div>
+    <button class="nav-item" onclick="showPage('jurnal',this)"><span class="nav-icon">📖</span>Jurnal Analisis</button>
   </nav>
-  <div class="sidebar-user">
+  <div class="sidebar-footer">
     <div class="user-avatar">✦</div>
-    <div><div class="user-name">Creator</div><div class="user-plan">Story Planner</div></div>
+    <div><div style="font-size:13px;font-weight:600;color:white;">Creator</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Story Planner</div></div>
   </div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
-  <!-- ===== KALENDER PAGE ===== -->
-  <div class="page active" id="page-kalender" style="padding:20px 24px;overflow-y:auto;">
-    <div class="cal-header">
-      <div class="cal-nav">
-        <button class="cal-nav-btn" onclick="prevMonth()">‹</button>
-        <div class="cal-title" id="cal-title">April 2026</div>
-        <button class="cal-nav-btn" onclick="nextMonth()">›</button>
+  <!-- KALENDER -->
+  <div class="page active" id="page-kalender">
+    <div class="cal-wrap">
+      <div class="cal-top">
+        <div class="cal-nav">
+          <button class="cal-nav-btn" onclick="prevMonth()">‹</button>
+          <div class="cal-month" id="cal-title"></div>
+          <button class="cal-nav-btn" onclick="nextMonth()">›</button>
+        </div>
+        <div class="cal-actions">
+          <button class="btn-today" onclick="goToday()">Hari Ini</button>
+          <button class="btn btn-primary" onclick="openNaskahModal()">+ Naskah Baru</button>
+        </div>
       </div>
-      <div class="cal-actions">
-        <button class="btn-today" onclick="goToday()">Hari Ini</button>
-        <button class="btn" onclick="openAddModal()">+ Naskah Baru</button>
+      <div class="cal-hint">📌 Klik tanggal untuk tambah atau lihat naskah</div>
+      <div class="cal-grid-wrap">
+        <div class="cal-headers">
+          <div class="cal-hdr">MIN</div><div class="cal-hdr">SEN</div><div class="cal-hdr">SEL</div>
+          <div class="cal-hdr">RAB</div><div class="cal-hdr">KAM</div><div class="cal-hdr">JUM</div><div class="cal-hdr">SAB</div>
+        </div>
+        <div class="cal-cells" id="cal-cells"></div>
       </div>
-    </div>
-    <div style="font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:10px;">📌 Klik tanggal untuk tambah atau lihat naskah</div>
-    <div class="cal-grid-wrap">
-      <div class="cal-day-headers">
-        <div class="cal-day-header">MIN</div><div class="cal-day-header">SEN</div><div class="cal-day-header">SEL</div>
-        <div class="cal-day-header">RAB</div><div class="cal-day-header">KAM</div><div class="cal-day-header">JUM</div><div class="cal-day-header">SAB</div>
-      </div>
-      <div class="cal-cells" id="cal-cells"></div>
     </div>
   </div>
 
-  <!-- ===== IDEAS BOARD PAGE ===== -->
-  <div class="page" id="page-ideas" style="overflow-y:auto;">
-    <div style="padding:24px 28px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-      <div><div style="font-size:22px;font-weight:800;color:#111827;">💡 Ideas Board</div><div style="font-size:13px;color:#9ca3af;margin-top:2px;">Kumpulkan dan kelola ide kontenmu</div></div>
+  <!-- IDEAS BOARD -->
+  <div class="page" id="page-ideas">
+    <div class="page-header">
+      <div><div class="page-title">💡 Ideas Board</div><div class="page-sub">Kumpulkan dan kelola ide kontenmu</div></div>
       <button class="btn btn-primary" onclick="openIdeaModal()">+ Ide Baru</button>
     </div>
-    <div class="ideas-tabs" style="margin-top:16px;">
-      <button class="ideas-tab active-all" onclick="filterIdeas('all',this)" id="tab-all">Semua</button>
-      <button class="ideas-tab" style="border-color:#fecaca;color:#b91c1c;" onclick="filterIdeas('YouTube',this)" id="tab-YouTube">🔴 YouTube</button>
-      <button class="ideas-tab" style="color:#18181b;" onclick="filterIdeas('TikTok',this)" id="tab-TikTok">⚫ TikTok</button>
-      <button class="ideas-tab" style="border-color:#d8b4fe;color:#7e22ce;" onclick="filterIdeas('Shorts',this)" id="tab-Shorts">🟣 Shorts</button>
+    <div class="ideas-tabs">
+      <button class="itab itab-all on" id="itab-all" onclick="filterIdeas('all',this)">Semua</button>
+      <button class="itab itab-yt" id="itab-YouTube" onclick="filterIdeas('YouTube',this)">🔴 YouTube</button>
+      <button class="itab itab-tt" id="itab-TikTok" onclick="filterIdeas('TikTok',this)">⚫ TikTok</button>
+      <button class="itab itab-sh" id="itab-Shorts" onclick="filterIdeas('Shorts',this)">🟣 Shorts</button>
     </div>
-    <div style="padding:0 28px 28px;">
-      <div class="ideas-grid" id="ideas-grid"></div>
-    </div>
+    <div class="ideas-grid" id="ideas-grid"></div>
   </div>
 
-  <!-- ===== PROMPT VAULT PAGE ===== -->
-  <div class="page" id="page-prompt" style="overflow-y:auto;">
-    <div style="padding:24px 28px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-      <div><div style="font-size:22px;font-weight:800;color:#111827;">🗂️ Prompt Vault</div><div style="font-size:13px;color:#9ca3af;margin-top:2px;">Koleksi prompt AI terbaik untuk produksi konten</div></div>
+  <!-- PROMPT VAULT -->
+  <div class="page" id="page-prompt">
+    <div class="page-header">
+      <div><div class="page-title">🗂️ Prompt Vault</div><div class="page-sub">Koleksi prompt AI terbaik untuk produksi konten</div></div>
       <button class="btn btn-primary" onclick="openPromptModal()">+ Prompt Baru</button>
     </div>
-    <div style="padding:16px 28px 0;display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn btn-primary" onclick="filterPrompt('all',this)" id="pf-all">Semua</button>
-      <button class="btn" onclick="filterPrompt('Script',this)" id="pf-Script">📝 Script</button>
-      <button class="btn" onclick="filterPrompt('Thumbnail',this)" id="pf-Thumbnail">🖼️ Thumbnail</button>
-      <button class="btn" onclick="filterPrompt('Caption',this)" id="pf-Caption">💬 Caption</button>
-      <button class="btn" onclick="filterPrompt('Riset',this)" id="pf-Riset">🔍 Riset</button>
-      <button class="btn" onclick="filterPrompt('Hook',this)" id="pf-Hook">🎣 Hook</button>
+    <div class="prompt-filters" id="prompt-filters">
+      <button class="btn btn-primary" onclick="filterPrompt('all',this)">Semua</button>
+      <button class="btn" onclick="filterPrompt('Script',this)">📝 Script</button>
+      <button class="btn" onclick="filterPrompt('Thumbnail',this)">🖼️ Thumbnail</button>
+      <button class="btn" onclick="filterPrompt('Caption',this)">💬 Caption</button>
+      <button class="btn" onclick="filterPrompt('Riset',this)">🔍 Riset</button>
+      <button class="btn" onclick="filterPrompt('Hook',this)">🎣 Hook</button>
     </div>
-    <div style="padding:16px 28px 28px;">
-      <div class="prompt-grid" id="prompt-grid"></div>
-    </div>
+    <div class="prompt-grid" id="prompt-grid"></div>
   </div>
 
-  <!-- ===== JURNAL PAGE ===== -->
-  <div class="page" id="page-jurnal" style="overflow-y:auto;">
-    <div style="padding:24px 28px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-      <div><div style="font-size:22px;font-weight:800;color:#111827;">📖 Jurnal Analisis</div><div style="font-size:13px;color:#9ca3af;margin-top:2px;">Dokumentasi insight dan pembelajaran dari kontenmu</div></div>
+  <!-- JURNAL -->
+  <div class="page" id="page-jurnal">
+    <div class="page-header">
+      <div><div class="page-title">📖 Jurnal Analisis</div><div class="page-sub">Dokumentasi insight dan pembelajaran dari kontenmu</div></div>
       <button class="btn btn-primary" onclick="openJurnalModal()">+ Entri Baru</button>
     </div>
-    <div style="padding:20px 28px 28px;">
-      <div class="jurnal-list" id="jurnal-list"></div>
-    </div>
+    <div class="jurnal-list" id="jurnal-list"></div>
   </div>
 
 </div>
 
-<!-- ===== MODAL TAMBAH/EDIT NASKAH ===== -->
-<div class="modal-overlay hidden" id="naskah-modal">
+<!-- ===== MODAL: NASKAH ===== -->
+<div class="overlay hidden" id="naskah-overlay">
   <div class="modal">
-    <div class="modal-title" id="naskah-modal-title">+ Naskah Baru</div>
-    <div class="form-group"><label class="form-label">Judul Naskah</label><input class="form-input" type="text" placeholder="Contoh: Review iPhone 16 Pro" id="inp-naskah-title"></div>
+    <div class="modal-hdr">
+      <div class="modal-title" id="naskah-modal-title">+ Naskah Baru</div>
+      <button class="modal-close" onclick="closeNaskahModal()">×</button>
+    </div>
+    <div class="form-group"><label class="form-label">Judul Naskah *</label><input class="form-input" id="inp-n-title" placeholder="Contoh: Review iPhone 16 Pro"></div>
     <div class="form-group"><label class="form-label">Platform</label>
-      <select class="form-input" id="inp-naskah-platform">
+      <select class="form-input" id="inp-n-platform">
         <option value="YouTube">🔴 YouTube</option>
         <option value="TikTok">⚫ TikTok</option>
         <option value="Shorts">🟣 Shorts</option>
       </select>
     </div>
-    <div class="form-group"><label class="form-label">Tanggal</label><input class="form-input" type="date" id="inp-naskah-date"></div>
-    <div class="form-group"><label class="form-label">Naskah / Script</label><textarea class="form-input" placeholder="Tulis naskah kontenmu di sini..." id="inp-naskah-script" style="min-height:160px;"></textarea></div>
+    <div class="form-group"><label class="form-label">Tanggal *</label><input class="form-input" type="date" id="inp-n-date"></div>
+    <div class="form-group"><label class="form-label">Naskah / Script</label><textarea class="form-input" id="inp-n-script" placeholder="Tulis naskah kontenmu di sini..." style="min-height:150px;"></textarea></div>
     <div class="form-group"><label class="form-label">Status</label>
-      <select class="form-input" id="inp-naskah-status">
+      <select class="form-input" id="inp-n-status">
         <option value="Draft">📝 Draft</option>
         <option value="Exported">📤 Exported</option>
         <option value="Uploaded">✅ Uploaded</option>
@@ -275,35 +272,53 @@ textarea.form-input { resize: vertical; min-height: 120px; }
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeNaskahModal()">Batal</button>
-      <button class="btn-save" onclick="saveNaskah()">Simpan</button>
+      <button class="btn-save" onclick="saveNaskah()">Simpan Naskah</button>
     </div>
   </div>
 </div>
 
-<!-- ===== MODAL DETAIL NASKAH ===== -->
-<div class="modal-overlay hidden" id="detail-modal">
+<!-- ===== MODAL: DETAIL NASKAH ===== -->
+<div class="overlay hidden" id="detail-overlay">
   <div class="detail-modal">
-    <div class="detail-modal-header">
-      <span style="font-size:13px;font-weight:700;color:#374151;" id="detail-modal-header-title">Detail Naskah</span>
+    <div class="detail-hdr">
+      <span id="detail-plat" style="font-size:13px;font-weight:700;color:#374151;"></span>
       <div style="display:flex;gap:6px;align-items:center;">
-        <button onclick="copyNaskah()" class="btn btn-sm">📋 Copy</button>
-        <button onclick="editNaskahFromDetail()" class="btn btn-sm">✏️ Edit</button>
-        <button onclick="deleteNaskah()" class="btn btn-sm btn-danger">🗑️</button>
-        <button onclick="closeDetailModal()" style="background:none;border:none;font-size:20px;color:#9ca3af;cursor:pointer;margin-left:4px;">×</button>
+        <button class="btn btn-sm" onclick="copyNaskah()">📋 Copy</button>
+        <button class="btn btn-sm" onclick="editNaskahFromDetail()">✏️ Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteNaskah()">🗑️</button>
+        <button class="modal-close" onclick="closeDetailModal()">×</button>
       </div>
     </div>
-    <div class="detail-modal-body" id="detail-modal-body"></div>
+    <div class="detail-body" id="detail-body"></div>
   </div>
 </div>
 
-<!-- ===== MODAL TAMBAH/EDIT IDE ===== -->
-<div class="modal-overlay hidden" id="idea-modal">
+<!-- ===== MODAL: PINDAH TANGGAL ===== -->
+<div class="overlay hidden" id="move-overlay">
+  <div class="modal modal-sm">
+    <div class="modal-hdr">
+      <div class="modal-title">📅 Pindah Tanggal</div>
+      <button class="modal-close" onclick="closeMoveModal()">×</button>
+    </div>
+    <div class="form-group"><label class="form-label">Tanggal Baru</label><input class="form-input" type="date" id="inp-move-date"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeMoveModal()">Batal</button>
+      <button class="btn-save" onclick="confirmMove()">Pindah</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: IDE ===== -->
+<div class="overlay hidden" id="idea-overlay">
   <div class="modal">
-    <div class="modal-title" id="idea-modal-title">+ Ide Baru</div>
-    <div class="form-group"><label class="form-label">Judul Ide</label><input class="form-input" type="text" placeholder="Contoh: POV bikin konten sambil lo-fi" id="inp-idea-title"></div>
-    <div class="form-group"><label class="form-label">Deskripsi</label><textarea class="form-input" placeholder="Ceritain ide kamu..." id="inp-idea-desc" style="min-height:80px;"></textarea></div>
+    <div class="modal-hdr">
+      <div class="modal-title" id="idea-modal-title">+ Ide Baru</div>
+      <button class="modal-close" onclick="closeIdeaModal()">×</button>
+    </div>
+    <div class="form-group"><label class="form-label">Judul Ide *</label><input class="form-input" id="inp-i-title" placeholder="Contoh: POV bikin konten sambil lo-fi"></div>
+    <div class="form-group"><label class="form-label">Deskripsi</label><textarea class="form-input" id="inp-i-desc" placeholder="Ceritain ide kamu..." style="min-height:80px;"></textarea></div>
     <div class="form-group"><label class="form-label">Platform</label>
-      <select class="form-input" id="inp-idea-platform">
+      <select class="form-input" id="inp-i-platform">
         <option value="YouTube">🔴 YouTube</option>
         <option value="TikTok">⚫ TikTok</option>
         <option value="Shorts">🟣 Shorts</option>
@@ -311,18 +326,21 @@ textarea.form-input { resize: vertical; min-height: 120px; }
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeIdeaModal()">Batal</button>
-      <button class="btn-save" onclick="saveIdea()">Simpan</button>
+      <button class="btn-save" onclick="saveIdea()">Simpan Ide</button>
     </div>
   </div>
 </div>
 
-<!-- ===== MODAL TAMBAH/EDIT PROMPT ===== -->
-<div class="modal-overlay hidden" id="prompt-modal">
+<!-- ===== MODAL: PROMPT ===== -->
+<div class="overlay hidden" id="prompt-overlay">
   <div class="modal">
-    <div class="modal-title" id="prompt-modal-title">+ Prompt Baru</div>
-    <div class="form-group"><label class="form-label">Judul Prompt</label><input class="form-input" type="text" placeholder="Contoh: Hook Pembuka YouTube" id="inp-prompt-title"></div>
+    <div class="modal-hdr">
+      <div class="modal-title" id="prompt-modal-title">+ Prompt Baru</div>
+      <button class="modal-close" onclick="closePromptModal()">×</button>
+    </div>
+    <div class="form-group"><label class="form-label">Judul Prompt *</label><input class="form-input" id="inp-p-title" placeholder="Contoh: Hook Pembuka YouTube"></div>
     <div class="form-group"><label class="form-label">Kategori</label>
-      <select class="form-input" id="inp-prompt-cat">
+      <select class="form-input" id="inp-p-cat">
         <option value="Script">📝 Script</option>
         <option value="Thumbnail">🖼️ Thumbnail</option>
         <option value="Caption">💬 Caption</option>
@@ -330,78 +348,71 @@ textarea.form-input { resize: vertical; min-height: 120px; }
         <option value="Hook">🎣 Hook</option>
       </select>
     </div>
-    <div class="form-group"><label class="form-label">Isi Prompt</label><textarea class="form-input" placeholder="Tulis prompt AI kamu di sini..." id="inp-prompt-text" style="min-height:120px;"></textarea></div>
+    <div class="form-group"><label class="form-label">Isi Prompt *</label><textarea class="form-input" id="inp-p-text" placeholder="Tulis prompt AI kamu di sini..." style="min-height:130px;"></textarea></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closePromptModal()">Batal</button>
-      <button class="btn-save" onclick="savePrompt()">Simpan</button>
+      <button class="btn-save" onclick="savePrompt()">Simpan Prompt</button>
     </div>
   </div>
 </div>
 
-<!-- ===== MODAL PROMPT FULL VIEW ===== -->
-<div class="modal-overlay hidden" id="prompt-view-modal">
-  <div class="modal" style="width:500px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <div class="modal-title" style="margin-bottom:0;" id="prompt-view-title"></div>
-      <button onclick="document.getElementById('prompt-view-modal').classList.add('hidden')" style="background:none;border:none;font-size:20px;color:#9ca3af;cursor:pointer;">×</button>
+<!-- ===== MODAL: PROMPT FULL VIEW ===== -->
+<div class="overlay hidden" id="pv-overlay">
+  <div class="pv-modal">
+    <div class="modal-hdr">
+      <div>
+        <div class="modal-title" id="pv-title"></div>
+        <div id="pv-cat" style="font-size:11px;color:#9ca3af;margin-top:3px;"></div>
+      </div>
+      <button class="modal-close" onclick="closePVModal()">×</button>
     </div>
-    <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:8px;" id="prompt-view-cat"></div>
-    <div class="naskah-full" id="prompt-view-text" style="max-height:400px;font-size:13px;"></div>
-    <div style="display:flex;gap:8px;margin-top:14px;">
+    <div class="pv-text" id="pv-text"></div>
+    <div style="display:flex;gap:8px;">
       <button class="btn btn-primary" style="flex:1;" onclick="copyPromptFull()">📋 Copy Prompt</button>
-      <button class="btn" onclick="document.getElementById('prompt-view-modal').classList.add('hidden')">Tutup</button>
+      <button class="btn" onclick="closePVModal()">Tutup</button>
     </div>
   </div>
 </div>
 
-<!-- ===== MODAL JURNAL ===== -->
-<div class="modal-overlay hidden" id="jurnal-modal">
+<!-- ===== MODAL: JURNAL ===== -->
+<div class="overlay hidden" id="jurnal-overlay">
   <div class="modal">
-    <div class="modal-title" id="jurnal-modal-title">+ Entri Jurnal</div>
-    <div class="form-group"><label class="form-label">Judul</label><input class="form-input" type="text" placeholder="Contoh: Kenapa video ini viral?" id="inp-jurnal-title"></div>
-    <div class="form-group"><label class="form-label">Isi Jurnal</label><textarea class="form-input" placeholder="Tulis analisis atau insight kamu..." id="inp-jurnal-content" style="min-height:140px;"></textarea></div>
-    <div class="form-group"><label class="form-label">Tags (pisah dengan koma)</label><input class="form-input" type="text" placeholder="viral, thumbnail, hook" id="inp-jurnal-tags"></div>
+    <div class="modal-hdr">
+      <div class="modal-title" id="jurnal-modal-title">+ Entri Jurnal</div>
+      <button class="modal-close" onclick="closeJurnalModal()">×</button>
+    </div>
+    <div class="form-group"><label class="form-label">Judul *</label><input class="form-input" id="inp-j-title" placeholder="Contoh: Kenapa video ini viral?"></div>
+    <div class="form-group"><label class="form-label">Isi Jurnal</label><textarea class="form-input" id="inp-j-content" placeholder="Tulis analisis atau insight kamu..." style="min-height:140px;"></textarea></div>
+    <div class="form-group"><label class="form-label">Tags (pisah dengan koma)</label><input class="form-input" id="inp-j-tags" placeholder="viral, thumbnail, hook"></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeJurnalModal()">Batal</button>
-      <button class="btn-save" onclick="saveJurnal()">Simpan</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== MODAL PINDAH TANGGAL ===== -->
-<div class="modal-overlay hidden" id="move-modal">
-  <div class="modal" style="width:320px;">
-    <div class="modal-title">📅 Pindah Tanggal</div>
-    <div class="form-group"><label class="form-label">Tanggal Baru</label><input class="form-input" type="date" id="inp-move-date"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="document.getElementById('move-modal').classList.add('hidden')">Batal</button>
-      <button class="btn-save" onclick="confirmMove()">Pindah</button>
+      <button class="btn-save" onclick="saveJurnal()">Simpan Jurnal</button>
     </div>
   </div>
 </div>
 
 <script>
+// ===================== CONSTANTS =====================
 const MONTHS = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 const TODAY = new Date();
-let curMonth = 3, curYear = 2026, selDay = null;
-let editingNaskahKey = null, editingNaskahIdx = null;
-let editingIdeaIdx = null;
-let editingPromptIdx = null;
-let editingJurnalIdx = null;
-let currentDetailKey = null, currentDetailIdx = null;
-let currentPromptViewIdx = null;
+
+// ===================== STATE =====================
+let curMonth = TODAY.getMonth();
+let curYear = TODAY.getFullYear();
+let editNaskahKey = null, editNaskahIdx = null;
+let editIdeaIdx = null, editPromptIdx = null, editJurnalIdx = null;
+let detailKey = null, detailIdx = null;
+let pvIdx = null;
+let moveKey = null, moveIdx = null;
+let ideaFilter = 'all';
+let promptFilter = 'all';
 
 // ===================== DATA =====================
-let naskahData = {
-  "2026-3-2": [{title:"Ide Konten April", platform:"YouTube", script:"Kumpulkan dan dokumentasikan ide konten terbaik untuk bulan ini.\n\nFokus pada topik yang relevan dan trend saat ini.", status:"Draft", time:"10:00"}],
-  "2026-3-9": [{title:"Review Produk Terbaru", platform:"YouTube", script:"Opening: Setelah gue pakai produk ini selama 2 minggu, ini yang beneran gue rasain...\n\nSection 1: Unboxing dan First Impression\nSection 2: Penggunaan harian\nSection 3: Verdict", status:"Exported", time:"15:00"}],
-  "2026-3-15": [{title:"Tips Shorts Viral", platform:"Shorts", script:"Hook: 3 hal yang bikin Shorts kamu gak ditonton orang...\n\n1. Detik pertama yang membosankan\n2. Gak ada pattern interrupt\n3. CTA yang terlalu agresif", status:"Uploaded", time:"11:00"}],
-  "2026-3-21": [{title:"Tutorial TikTok Kreator", platform:"TikTok", script:"Cara bikin konten TikTok yang bisa tembus FYP:\n\n1. Hook dalam 1 detik pertama\n2. Transisi yang smooth\n3. Audio trending", status:"Draft", time:"14:00"}],
-};
+let naskahData = {};
 
 let ideasData = [
   {title:"POV: Ngedit video sambil dengerin lo-fi", desc:"Konten relatable buat kreator, bisa viral di Shorts", platform:"Shorts", pinned:true},
-  {title:"Cara bikin thumbnail yang klik rate 10%+", desc:"Tutorial Canva + psikologi warna untuk thumbnail", platform:"YouTube", pinned:false},
+  {title:"Cara bikin thumbnail click rate 10%+", desc:"Tutorial Canva + psikologi warna untuk thumbnail", platform:"YouTube", pinned:false},
   {title:"Algorithm YouTube 2026 — Yang Beneran Kerja", desc:"Hasil eksperimen 30 hari posting konsisten", platform:"YouTube", pinned:false},
   {title:"Review MacBook Air M3 vs M2", desc:"Benchmark, harga, dan value for money untuk kreator", platform:"YouTube", pinned:false},
   {title:"5 Tools AI buat kreator konten", desc:"Tools yang beneran kepake sehari-hari", platform:"TikTok", pinned:false},
@@ -409,124 +420,151 @@ let ideasData = [
 ];
 
 let promptsData = [
-  {title:"Hook Pembuka Yang Bikin Penonton Tetap Nonton", cat:"Script", text:"Buatkan 5 variasi opening hook untuk video YouTube tentang [topik]. Hook harus membuat penonton penasaran dalam 3 detik pertama, gunakan teknik pattern interrupt dan open loop."},
+  {title:"Hook Pembuka Yang Bikin Penonton Tetap Nonton", cat:"Hook", text:"Buatkan 5 variasi opening hook untuk video YouTube tentang [topik]. Hook harus membuat penonton penasaran dalam 3 detik pertama, gunakan teknik pattern interrupt dan open loop."},
   {title:"Deskripsi Thumbnail yang Click-bait (Positif)", cat:"Thumbnail", text:"Deskripsikan visual thumbnail YouTube untuk video [judul]. Sertakan: ekspresi wajah, teks overlay, warna dominan, dan elemen yang membuat orang penasaran. Target CTR 8%+."},
-  {title:"Caption YouTube yang Mendorong Engagement", cat:"Caption", text:"Tulis caption YouTube untuk video [judul] yang mendorong penonton untuk like, comment, dan subscribe. Sertakan timestamp, CTA yang natural, dan 8-10 hashtag relevan. Tone: friendly tapi informatif."},
-  {title:"Analisa Kompetitor di Niche", cat:"Riset", text:"Analisa channel YouTube [nama channel] dengan framework: konten pillar mereka, format yang paling banyak ditonton, gap yang bisa diisi, dan strategi yang bisa diadaptasi untuk channel [niche saya]."},
+  {title:"Caption YouTube yang Mendorong Engagement", cat:"Caption", text:"Tulis caption YouTube untuk video [judul] yang mendorong penonton untuk like, comment, dan subscribe. Sertakan timestamp, CTA yang natural, dan 8-10 hashtag relevan."},
+  {title:"Analisa Kompetitor di Niche", cat:"Riset", text:"Analisa channel YouTube [nama channel] dengan framework: konten pillar mereka, format yang paling banyak ditonton, gap yang bisa diisi, dan strategi yang bisa diadaptasi."},
   {title:"Hook untuk Konten Shorts/Reels", cat:"Hook", text:"Buat 10 variasi hook 1 kalimat untuk Shorts tentang [topik]. Hook harus bisa diucapkan dalam 2 detik, membuat penonton langsung penasaran, dan tidak boleh ada kata 'hai' atau salam pembuka."},
   {title:"Struktur Video Edukasi 7-10 Menit", cat:"Script", text:"Buat outline script video edukasi tentang [topik] dengan durasi 7-10 menit. Gunakan struktur: hook (30 detik), problem agitation (1 menit), konten inti 5 poin (5 menit), kesimpulan + CTA (1 menit)."},
 ];
 
 let jurnalData = [
-  {title:"🎯 Kenapa Video Review iPhone Viral?", date:"26 April 2026", content:"Setelah analisa mendalam, ada 3 faktor utama yang bikin video ini performanya jauh di atas rata-rata. Hook-nya langsung menyentuh pain point penonton. Thumbnail-nya pakai ekspresi genuine. Strukturnya mengikuti storytelling arc yang natural.", tags:["viral","review","hook","thumbnail"]},
-  {title:"💡 Eksperimen: Upload 3x Seminggu vs 1x", date:"20 April 2026", content:"Hasil eksperimen 4 minggu: upload 3x seminggu justru menurunkan kualitas rata-rata video. Views per video turun 40% tapi total views channel naik 15%. Kesimpulan: 2x seminggu adalah sweet spot.", tags:["eksperimen","konsistensi","algorithm"]},
+  {title:"🎯 Kenapa Video Review iPhone Viral?", date:"26 April 2026", content:"Setelah analisa mendalam, ada 3 faktor utama yang bikin video ini performanya jauh di atas rata-rata. Hook-nya langsung menyentuh pain point. Thumbnail-nya pakai ekspresi genuine.", tags:["viral","review","hook","thumbnail"]},
+  {title:"💡 Eksperimen: Upload 3x vs 1x Seminggu", date:"20 April 2026", content:"Hasil eksperimen 4 minggu: upload 3x seminggu justru menurunkan kualitas rata-rata video. Views per video turun 40% tapi total views channel naik 15%. Sweet spot: 2x seminggu.", tags:["eksperimen","konsistensi","algorithm"]},
 ];
 
 // ===================== NAVIGATION =====================
 function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('page-' + name).classList.add('active');
   btn.classList.add('active');
-  if(name==='ideas') renderIdeas('all');
-  if(name==='prompt') renderPrompts('all');
-  if(name==='jurnal') renderJurnal();
+  if (name === 'ideas') renderIdeas();
+  if (name === 'prompt') renderPrompts();
+  if (name === 'jurnal') renderJurnal();
+  if (name === 'kalender') renderCalendar();
 }
 
-// ===================== KALENDER =====================
-function eKey(y,m,d){ return y+"-"+m+"-"+d; }
+// ===================== HELPERS =====================
+function eKey(y, m, d) { return y + '-' + m + '-' + d; }
+function fmtKey(key) {
+  const [y, m, d] = key.split('-');
+  return d + ' ' + MONTHS[parseInt(m)] + ' ' + y;
+}
+function platIcon(p) { return p === 'YouTube' ? '🔴' : p === 'TikTok' ? '⚫' : '🟣'; }
+function platChipClass(p) { return p === 'YouTube' ? 'chip-yt' : p === 'TikTok' ? 'chip-tt' : 'chip-sh'; }
+function statusClass(s) { return s === 'Draft' ? 's-draft' : s === 'Exported' ? 's-exported' : 's-uploaded'; }
+function statusLabel(s) { return s === 'Draft' ? '📝 Draft' : s === 'Exported' ? '📤 Exported' : '✅ Uploaded'; }
 
-function renderCalendar(){
-  document.getElementById("cal-title").textContent = MONTHS[curMonth]+" "+curYear;
-  const firstDay = new Date(curYear,curMonth,1).getDay();
-  const daysInMonth = new Date(curYear,curMonth+1,0).getDate();
-  const prevDays = new Date(curYear,curMonth,0).getDate();
-  const cells = document.getElementById("cal-cells");
-  cells.innerHTML="";
-  let total = firstDay+daysInMonth;
-  if(total%7!==0) total+=7-(total%7);
-  for(let i=0;i<total;i++){
-    const cell=document.createElement("div");
-    if(i<firstDay){
-      cell.className="cal-cell empty";
-      cell.innerHTML='<span class="day-empty-num">'+(prevDays-firstDay+i+1)+'</span>';
-    } else if(i>=firstDay+daysInMonth){
-      cell.className="cal-cell empty";
-      cell.innerHTML='<span class="day-empty-num">'+(i-firstDay-daysInMonth+1)+'</span>';
+// ===================== KALENDER =====================
+function renderCalendar() {
+  document.getElementById('cal-title').textContent = MONTHS[curMonth] + ' ' + curYear;
+  const first = new Date(curYear, curMonth, 1).getDay();
+  const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
+  const prevDays = new Date(curYear, curMonth, 0).getDate();
+  const cells = document.getElementById('cal-cells');
+  cells.innerHTML = '';
+
+  let total = first + daysInMonth;
+  if (total % 7 !== 0) total += 7 - (total % 7);
+
+  for (let i = 0; i < total; i++) {
+    const cell = document.createElement('div');
+    if (i < first) {
+      cell.className = 'cal-cell empty';
+      cell.innerHTML = '<span class="day-ghost">' + (prevDays - first + i + 1) + '</span>';
+    } else if (i >= first + daysInMonth) {
+      cell.className = 'cal-cell empty';
+      cell.innerHTML = '<span class="day-ghost">' + (i - first - daysInMonth + 1) + '</span>';
     } else {
-      const day=i-firstDay+1;
-      const key=eKey(curYear,curMonth,day);
-      const isToday=day===TODAY.getDate()&&curMonth===TODAY.getMonth()&&curYear===TODAY.getFullYear();
-      const isSel=selDay===day;
-      cell.className="cal-cell"+(isSel?" selected":"");
-      cell.onclick=()=>selectDay(day);
-      let html='<div class="day-num'+(isToday?" today":"")+'">'+day+'</div>';
-      (naskahData[key]||[]).forEach((ev,idx)=>{
-        const platClass = ev.platform==='YouTube'?'chip-youtube':ev.platform==='TikTok'?'chip-tiktok':'chip-shorts';
-        const platIcon = ev.platform==='YouTube'?'🔴':ev.platform==='TikTok'?'⚫':'🟣';
-        html+='<div class="event-chip '+platClass+'" onclick="event.stopPropagation();openDetailModal(\''+key+'\','+idx+')">'+platIcon+' '+ev.title+'</div>';
+      const day = i - first + 1;
+      const key = eKey(curYear, curMonth, day);
+      const isToday = day === TODAY.getDate() && curMonth === TODAY.getMonth() && curYear === TODAY.getFullYear();
+      cell.className = 'cal-cell';
+      const dayNumClass = 'day-num' + (isToday ? ' today' : '');
+      let html = '<div class="' + dayNumClass + '">' + day + '</div>';
+      (naskahData[key] || []).forEach((ev, idx) => {
+        html += '<div class="ev-chip ' + platChipClass(ev.platform) + '" onclick="event.stopPropagation();openDetailModal(\'' + key + '\',' + idx + ')">' + platIcon(ev.platform) + ' ' + ev.title + '</div>';
       });
-      cell.innerHTML=html;
+      cell.innerHTML = html;
+      cell.onclick = () => cellClick(day, key);
     }
     cells.appendChild(cell);
   }
 }
 
-function selectDay(day){
-  selDay=day;
-  renderCalendar();
-  const key=eKey(curYear,curMonth,day);
-  const list=naskahData[key];
-  if(!list||list.length===0){
-    openAddModal(day);
-  } else if(list.length===1){
-    openDetailModal(key,0);
+function cellClick(day, key) {
+  const list = naskahData[key];
+  if (!list || list.length === 0) {
+    openNaskahModal(null, day);
   } else {
-    // show list - just open first for now
-    openDetailModal(key,0);
+    openDetailModal(key, 0);
   }
 }
 
-function prevMonth(){ curMonth--; if(curMonth<0){curMonth=11;curYear--;} selDay=null; renderCalendar(); }
-function nextMonth(){ curMonth++; if(curMonth>11){curMonth=0;curYear++;} selDay=null; renderCalendar(); }
-function goToday(){ curMonth=TODAY.getMonth(); curYear=TODAY.getFullYear(); selDay=TODAY.getDate(); renderCalendar(); }
+function prevMonth() { curMonth--; if (curMonth < 0) { curMonth = 11; curYear--; } renderCalendar(); }
+function nextMonth() { curMonth++; if (curMonth > 11) { curMonth = 0; curYear++; } renderCalendar(); }
+function goToday() { curMonth = TODAY.getMonth(); curYear = TODAY.getFullYear(); renderCalendar(); }
 
 // ===================== NASKAH MODAL =====================
-function openAddModal(day){
-  editingNaskahKey=null; editingNaskahIdx=null;
-  document.getElementById('naskah-modal-title').textContent='+ Naskah Baru';
-  document.getElementById('inp-naskah-title').value='';
-  document.getElementById('inp-naskah-script').value='';
-  document.getElementById('inp-naskah-status').value='Draft';
-  document.getElementById('inp-naskah-platform').value='YouTube';
-  if(day){
-    const d=new Date(curYear,curMonth,day);
-    document.getElementById('inp-naskah-date').value=d.toISOString().split('T')[0];
+function openNaskahModal(idx=null, day=null) {
+  editNaskahKey = null; editNaskahIdx = null;
+  if (idx !== null && detailKey !== null) {
+    // editing existing
+    editNaskahKey = detailKey; editNaskahIdx = detailIdx;
+    const ev = naskahData[detailKey][detailIdx];
+    document.getElementById('naskah-modal-title').textContent = '✏️ Edit Naskah';
+    document.getElementById('inp-n-title').value = ev.title;
+    document.getElementById('inp-n-platform').value = ev.platform;
+    document.getElementById('inp-n-script').value = ev.script || '';
+    document.getElementById('inp-n-status').value = ev.status;
+    const [y, m, d] = detailKey.split('-');
+    const dt = new Date(parseInt(y), parseInt(m), parseInt(d));
+    document.getElementById('inp-n-date').value = dt.toISOString().split('T')[0];
   } else {
-    document.getElementById('inp-naskah-date').value='';
+    document.getElementById('naskah-modal-title').textContent = '+ Naskah Baru';
+    document.getElementById('inp-n-title').value = '';
+    document.getElementById('inp-n-script').value = '';
+    document.getElementById('inp-n-status').value = 'Draft';
+    document.getElementById('inp-n-platform').value = 'YouTube';
+    if (day) {
+      const dt = new Date(curYear, curMonth, day);
+      document.getElementById('inp-n-date').value = dt.toISOString().split('T')[0];
+    } else {
+      document.getElementById('inp-n-date').value = '';
+    }
   }
-  document.getElementById('naskah-modal').classList.remove('hidden');
-  document.getElementById('inp-naskah-title').focus();
+  show('naskah-overlay');
+  setTimeout(() => document.getElementById('inp-n-title').focus(), 50);
 }
 
-function closeNaskahModal(){ document.getElementById('naskah-modal').classList.add('hidden'); }
+function closeNaskahModal() { hide('naskah-overlay'); }
 
-function saveNaskah(){
-  const title=document.getElementById('inp-naskah-title').value.trim();
-  const dateVal=document.getElementById('inp-naskah-date').value;
-  const platform=document.getElementById('inp-naskah-platform').value;
-  const script=document.getElementById('inp-naskah-script').value.trim();
-  const status=document.getElementById('inp-naskah-status').value;
-  if(!title||!dateVal){alert('Isi judul dan tanggal dulu!');return;}
-  const d=new Date(dateVal);
-  const key=eKey(d.getFullYear(),d.getMonth(),d.getDate());
-  if(!naskahData[key])naskahData[key]=[];
-  const obj={title,platform,script,status,time:"10:00"};
-  if(editingNaskahKey!==null&&editingNaskahIdx!==null){
-    naskahData[editingNaskahKey][editingNaskahIdx]=obj;
+function saveNaskah() {
+  const title = v('inp-n-title');
+  const dateVal = v('inp-n-date');
+  const platform = v('inp-n-platform');
+  const script = v('inp-n-script');
+  const status = v('inp-n-status');
+  if (!title) { alert('Isi judul naskah dulu!'); return; }
+  if (!dateVal) { alert('Pilih tanggal dulu!'); return; }
+  const dt = new Date(dateVal);
+  const key = eKey(dt.getFullYear(), dt.getMonth(), dt.getDate());
+  const obj = { title, platform, script, status };
+  if (editNaskahKey !== null && editNaskahIdx !== null) {
+    // If date changed, move
+    if (editNaskahKey !== key) {
+      naskahData[editNaskahKey].splice(editNaskahIdx, 1);
+      if (naskahData[editNaskahKey].length === 0) delete naskahData[editNaskahKey];
+      if (!naskahData[key]) naskahData[key] = [];
+      naskahData[key].push(obj);
+    } else {
+      naskahData[editNaskahKey][editNaskahIdx] = obj;
+    }
   } else {
+    if (!naskahData[key]) naskahData[key] = [];
     naskahData[key].push(obj);
-    selDay=d.getDate(); curMonth=d.getMonth(); curYear=d.getFullYear();
+    curMonth = dt.getMonth(); curYear = dt.getFullYear();
   }
   closeNaskahModal();
   closeDetailModal();
@@ -534,376 +572,333 @@ function saveNaskah(){
 }
 
 // ===================== DETAIL MODAL =====================
-function openDetailModal(key,idx){
-  currentDetailKey=key; currentDetailIdx=idx;
-  const ev=naskahData[key][idx];
-  const platIcon=ev.platform==='YouTube'?'🔴':ev.platform==='TikTok'?'⚫':'🟣';
-  const statusClass='status-'+ev.status.toLowerCase();
-  document.getElementById('detail-modal-header-title').textContent=platIcon+' '+ev.platform;
-  document.getElementById('detail-modal-body').innerHTML=`
+function openDetailModal(key, idx) {
+  detailKey = key; detailIdx = idx;
+  const ev = naskahData[key][idx];
+  document.getElementById('detail-plat').textContent = platIcon(ev.platform) + ' ' + ev.platform;
+  document.getElementById('detail-body').innerHTML = `
     <div>
-      <div style="font-size:18px;font-weight:800;color:#111827;margin-bottom:6px;">${ev.title}</div>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;">
-        <span class="status-badge ${statusClass}" onclick="cycleStatus('${key}',${idx})" title="Klik untuk ganti status">${statusLabel(ev.status)}</span>
-        <span style="font-size:11px;color:#9ca3af;">${formatKeyDate(key)}</span>
+      <div style="font-size:18px;font-weight:800;color:#111827;margin-bottom:8px;">${ev.title}</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <span class="status-badge ${statusClass(ev.status)}" onclick="cycleStatus('${key}',${idx})" title="Klik untuk ganti status">${statusLabel(ev.status)}</span>
+        <span style="font-size:11px;color:#9ca3af;">${fmtKey(key)}</span>
         <button class="btn btn-sm" onclick="openMoveModal('${key}',${idx})">📅 Pindah Tanggal</button>
       </div>
     </div>
     <div>
       <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:6px;">📄 Naskah</div>
-      <div class="naskah-full">${ev.script||'<span style="color:#9ca3af;font-style:italic;">Belum ada naskah.</span>'}</div>
+      <div class="naskah-box">${ev.script ? ev.script : '<span style="color:#9ca3af;font-style:italic;">Belum ada naskah.</span>'}</div>
     </div>
   `;
-  document.getElementById('detail-modal').classList.remove('hidden');
+  show('detail-overlay');
 }
 
-function statusLabel(s){
-  if(s==='Draft') return '📝 Draft';
-  if(s==='Exported') return '📤 Exported';
-  if(s==='Uploaded') return '✅ Uploaded';
-  return s;
-}
+function closeDetailModal() { hide('detail-overlay'); detailKey = null; detailIdx = null; }
 
-function cycleStatus(key,idx){
-  const order=['Draft','Exported','Uploaded'];
-  const ev=naskahData[key][idx];
-  ev.status=order[(order.indexOf(ev.status)+1)%3];
+function cycleStatus(key, idx) {
+  const order = ['Draft','Exported','Uploaded'];
+  const ev = naskahData[key][idx];
+  ev.status = order[(order.indexOf(ev.status) + 1) % 3];
   renderCalendar();
-  openDetailModal(key,idx);
+  openDetailModal(key, idx);
 }
 
-function formatKeyDate(key){
-  const parts=key.split('-');
-  return parts[2]+' '+MONTHS[parseInt(parts[1])]+' '+parts[0];
-}
-
-function closeDetailModal(){ document.getElementById('detail-modal').classList.add('hidden'); currentDetailKey=null; currentDetailIdx=null; }
-
-function editNaskahFromDetail(){
-  const key=currentDetailKey; const idx=currentDetailIdx;
-  const ev=naskahData[key][idx];
-  editingNaskahKey=key; editingNaskahIdx=idx;
-  document.getElementById('naskah-modal-title').textContent='✏️ Edit Naskah';
-  document.getElementById('inp-naskah-title').value=ev.title;
-  document.getElementById('inp-naskah-platform').value=ev.platform;
-  document.getElementById('inp-naskah-script').value=ev.script||'';
-  document.getElementById('inp-naskah-status').value=ev.status;
-  const parts=key.split('-');
-  const d=new Date(parseInt(parts[0]),parseInt(parts[1]),parseInt(parts[2]));
-  document.getElementById('inp-naskah-date').value=d.toISOString().split('T')[0];
+function editNaskahFromDetail() {
+  openNaskahModal('edit');
   closeDetailModal();
-  document.getElementById('naskah-modal').classList.remove('hidden');
+  // re-show naskah modal (already opened in openNaskahModal)
+  // need to re-trigger with edit context
+  const ev = naskahData[detailKey !== null ? detailKey : editNaskahKey]?.[detailIdx !== null ? detailIdx : editNaskahIdx];
+  // Since closeDetailModal nulls out detailKey, grab before
 }
 
-function deleteNaskah(){
-  if(!confirm('Hapus naskah ini?'))return;
-  naskahData[currentDetailKey].splice(currentDetailIdx,1);
-  if(naskahData[currentDetailKey].length===0) delete naskahData[currentDetailKey];
+// Fix: edit from detail
+document.addEventListener('DOMContentLoaded', () => {});
+
+function editNaskahFromDetail() {
+  if (!detailKey) return;
+  const key = detailKey, idx = detailIdx;
+  const ev = naskahData[key][idx];
+  editNaskahKey = key; editNaskahIdx = idx;
+  document.getElementById('naskah-modal-title').textContent = '✏️ Edit Naskah';
+  document.getElementById('inp-n-title').value = ev.title;
+  document.getElementById('inp-n-platform').value = ev.platform;
+  document.getElementById('inp-n-script').value = ev.script || '';
+  document.getElementById('inp-n-status').value = ev.status;
+  const [y, m, d] = key.split('-');
+  const dt = new Date(parseInt(y), parseInt(m), parseInt(d));
+  document.getElementById('inp-n-date').value = dt.toISOString().split('T')[0];
+  closeDetailModal();
+  show('naskah-overlay');
+}
+
+function deleteNaskah() {
+  if (!confirm('Hapus naskah ini?')) return;
+  naskahData[detailKey].splice(detailIdx, 1);
+  if (naskahData[detailKey].length === 0) delete naskahData[detailKey];
   closeDetailModal();
   renderCalendar();
 }
 
-function copyNaskah(){
-  const ev=naskahData[currentDetailKey][currentDetailIdx];
-  navigator.clipboard.writeText(ev.title+'\n\n'+ev.script);
-  alert('Naskah berhasil dicopy!');
+function copyNaskah() {
+  const ev = naskahData[detailKey][detailIdx];
+  navigator.clipboard.writeText(ev.title + '\n\n' + (ev.script || '')).then(() => {
+    alert('Naskah berhasil dicopy! ✓');
+  });
 }
 
-// Move date
-let movingKey=null, movingIdx=null;
-function openMoveModal(key,idx){
-  movingKey=key; movingIdx=idx;
-  const parts=key.split('-');
-  const d=new Date(parseInt(parts[0]),parseInt(parts[1]),parseInt(parts[2]));
-  document.getElementById('inp-move-date').value=d.toISOString().split('T')[0];
-  document.getElementById('move-modal').classList.remove('hidden');
+// ===================== MOVE DATE =====================
+function openMoveModal(key, idx) {
+  moveKey = key; moveIdx = idx;
+  const [y, m, d] = key.split('-');
+  const dt = new Date(parseInt(y), parseInt(m), parseInt(d));
+  document.getElementById('inp-move-date').value = dt.toISOString().split('T')[0];
+  show('move-overlay');
 }
-
-function confirmMove(){
-  const dateVal=document.getElementById('inp-move-date').value;
-  if(!dateVal){alert('Pilih tanggal dulu!');return;}
-  const d=new Date(dateVal);
-  const newKey=eKey(d.getFullYear(),d.getMonth(),d.getDate());
-  const ev=naskahData[movingKey].splice(movingIdx,1)[0];
-  if(naskahData[movingKey].length===0) delete naskahData[movingKey];
-  if(!naskahData[newKey]) naskahData[newKey]=[];
+function closeMoveModal() { hide('move-overlay'); }
+function confirmMove() {
+  const dateVal = v('inp-move-date');
+  if (!dateVal) { alert('Pilih tanggal dulu!'); return; }
+  const dt = new Date(dateVal);
+  const newKey = eKey(dt.getFullYear(), dt.getMonth(), dt.getDate());
+  const ev = naskahData[moveKey].splice(moveIdx, 1)[0];
+  if (naskahData[moveKey].length === 0) delete naskahData[moveKey];
+  if (!naskahData[newKey]) naskahData[newKey] = [];
   naskahData[newKey].push(ev);
-  document.getElementById('move-modal').classList.add('hidden');
+  closeMoveModal();
   closeDetailModal();
-  curMonth=d.getMonth(); curYear=d.getFullYear(); selDay=d.getDate();
+  curMonth = dt.getMonth(); curYear = dt.getFullYear();
   renderCalendar();
 }
 
 // ===================== IDEAS =====================
-let currentIdeaFilter='all';
-
-function renderIdeas(filter){
-  currentIdeaFilter=filter;
-  const grid=document.getElementById('ideas-grid');
-  const filtered=filter==='all'?ideasData:ideasData.filter(i=>i.platform===filter);
+function renderIdeas() {
+  const grid = document.getElementById('ideas-grid');
+  let filtered = ideaFilter === 'all' ? [...ideasData] : ideasData.filter(i => i.platform === ideaFilter);
   // Pinned first
-  const sorted=[...filtered.filter(i=>i.pinned),...filtered.filter(i=>!i.pinned)];
-  if(sorted.length===0){
-    grid.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada ide. Tambah ide baru! 💡</div>';
+  filtered.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="color:#9ca3af;font-size:13px;padding:20px 0;grid-column:1/-1;">Belum ada ide. Klik "+ Ide Baru" untuk tambah! 💡</div>';
     return;
   }
-  grid.innerHTML=sorted.map((idea,i)=>{
-    const realIdx=ideasData.indexOf(idea);
-    const platColor=idea.platform==='YouTube'?'#b91c1c':idea.platform==='TikTok'?'#18181b':'#7e22ce';
-    const platIcon=idea.platform==='YouTube'?'🔴':idea.platform==='TikTok'?'⚫':'🟣';
+  const platColor = {YouTube:'#b91c1c', TikTok:'#18181b', Shorts:'#7e22ce'};
+  grid.innerHTML = filtered.map(idea => {
+    const realIdx = ideasData.indexOf(idea);
+    const col = platColor[idea.platform] || '#374151';
+    const ico = platIcon(idea.platform);
     return `<div class="idea-card">
-      ${idea.pinned?'<div class="idea-card-pinned">📌</div>':''}
-      <div class="idea-card-platform" style="color:${platColor};">${platIcon} ${idea.platform}</div>
-      <div class="idea-card-title">${idea.title}</div>
-      <div class="idea-card-desc">${idea.desc}</div>
-      <div class="idea-card-actions">
-        <button class="btn btn-sm" onclick="togglePin(${realIdx})" title="${idea.pinned?'Unpin':'Pin'}">${idea.pinned?'📌':'📍'}</button>
-        <button class="btn btn-sm" onclick="editIdea(${realIdx})">✏️</button>
+      ${idea.pinned ? '<div class="pin-badge">📌</div>' : ''}
+      <div class="idea-plat" style="color:${col};">${ico} ${idea.platform}</div>
+      <div class="idea-title">${idea.title}</div>
+      <div class="idea-desc">${idea.desc || ''}</div>
+      <div class="idea-actions">
+        <button class="btn btn-sm" onclick="togglePin(${realIdx})" title="${idea.pinned ? 'Unpin' : 'Pin'}">${idea.pinned ? '📌' : '📍'}</button>
+        <button class="btn btn-sm" onclick="openIdeaModal(${realIdx})">✏️</button>
         <button class="btn btn-sm btn-danger" onclick="deleteIdea(${realIdx})">🗑️</button>
       </div>
     </div>`;
   }).join('');
 }
 
-function filterIdeas(filter,btn){
-  // Reset all tab styles
-  document.querySelectorAll('.ideas-tab').forEach(t=>{
-    t.classList.remove('active-all','active-yt','active-tiktok','active-shorts');
+function filterIdeas(filter, btn) {
+  ideaFilter = filter;
+  document.querySelectorAll('.itab').forEach(t => {
+    t.classList.remove('on');
   });
-  if(filter==='all') btn.classList.add('active-all');
-  else if(filter==='YouTube') btn.classList.add('active-yt');
-  else if(filter==='TikTok') btn.classList.add('active-tiktok');
-  else if(filter==='Shorts') btn.classList.add('active-shorts');
-  renderIdeas(filter);
+  btn.classList.add('on');
+  renderIdeas();
 }
 
-function togglePin(idx){
-  ideasData[idx].pinned=!ideasData[idx].pinned;
-  renderIdeas(currentIdeaFilter);
-}
+function togglePin(idx) { ideasData[idx].pinned = !ideasData[idx].pinned; renderIdeas(); }
 
-function openIdeaModal(idx=null){
-  editingIdeaIdx=idx;
-  document.getElementById('idea-modal-title').textContent=idx!==null?'✏️ Edit Ide':'+ Ide Baru';
-  if(idx!==null){
-    const idea=ideasData[idx];
-    document.getElementById('inp-idea-title').value=idea.title;
-    document.getElementById('inp-idea-desc').value=idea.desc;
-    document.getElementById('inp-idea-platform').value=idea.platform;
+function openIdeaModal(idx=null) {
+  editIdeaIdx = idx;
+  document.getElementById('idea-modal-title').textContent = idx !== null ? '✏️ Edit Ide' : '+ Ide Baru';
+  if (idx !== null) {
+    const idea = ideasData[idx];
+    document.getElementById('inp-i-title').value = idea.title;
+    document.getElementById('inp-i-desc').value = idea.desc || '';
+    document.getElementById('inp-i-platform').value = idea.platform;
   } else {
-    document.getElementById('inp-idea-title').value='';
-    document.getElementById('inp-idea-desc').value='';
-    document.getElementById('inp-idea-platform').value='YouTube';
+    document.getElementById('inp-i-title').value = '';
+    document.getElementById('inp-i-desc').value = '';
+    document.getElementById('inp-i-platform').value = 'YouTube';
   }
-  document.getElementById('idea-modal').classList.remove('hidden');
+  show('idea-overlay');
+  setTimeout(() => document.getElementById('inp-i-title').focus(), 50);
 }
-
-function closeIdeaModal(){ document.getElementById('idea-modal').classList.add('hidden'); editingIdeaIdx=null; }
-
-function saveIdea(){
-  const title=document.getElementById('inp-idea-title').value.trim();
-  const desc=document.getElementById('inp-idea-desc').value.trim();
-  const platform=document.getElementById('inp-idea-platform').value;
-  if(!title){alert('Isi judul ide dulu!');return;}
-  const obj={title,desc,platform,pinned:false};
-  if(editingIdeaIdx!==null){
-    obj.pinned=ideasData[editingIdeaIdx].pinned;
-    ideasData[editingIdeaIdx]=obj;
-  } else {
-    ideasData.push(obj);
-  }
+function closeIdeaModal() { hide('idea-overlay'); editIdeaIdx = null; }
+function saveIdea() {
+  const title = v('inp-i-title');
+  if (!title) { alert('Isi judul ide dulu!'); return; }
+  const obj = { title, desc: v('inp-i-desc'), platform: v('inp-i-platform'), pinned: false };
+  if (editIdeaIdx !== null) { obj.pinned = ideasData[editIdeaIdx].pinned; ideasData[editIdeaIdx] = obj; }
+  else ideasData.push(obj);
   closeIdeaModal();
-  renderIdeas(currentIdeaFilter);
+  renderIdeas();
 }
-
-function editIdea(idx){ openIdeaModal(idx); }
-
-function deleteIdea(idx){
-  if(!confirm('Hapus ide ini?'))return;
-  ideasData.splice(idx,1);
-  renderIdeas(currentIdeaFilter);
-}
+function deleteIdea(idx) { if (!confirm('Hapus ide ini?')) return; ideasData.splice(idx, 1); renderIdeas(); }
 
 // ===================== PROMPTS =====================
-let currentPromptFilter='all';
-
-function renderPrompts(filter){
-  currentPromptFilter=filter;
-  const grid=document.getElementById('prompt-grid');
-  const filtered=filter==='all'?promptsData:promptsData.filter(p=>p.cat===filter);
-  if(filtered.length===0){
-    grid.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada prompt di kategori ini.</div>';
+function renderPrompts() {
+  const grid = document.getElementById('prompt-grid');
+  const filtered = promptFilter === 'all' ? [...promptsData] : promptsData.filter(p => p.cat === promptFilter);
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada prompt di kategori ini.</div>';
     return;
   }
-  const catColors={Script:'#2563eb',Thumbnail:'#dc2626',Caption:'#0f766e',Riset:'#7e22ce',Hook:'#c2410c'};
-  const catIcons={Script:'📝',Thumbnail:'🖼️',Caption:'💬',Riset:'🔍',Hook:'🎣'};
-  grid.innerHTML=filtered.map((p)=>{
-    const realIdx=promptsData.indexOf(p);
-    const col=catColors[p.cat]||'#374151';
-    const ico=catIcons[p.cat]||'📄';
-    const preview=p.text.length>100?p.text.slice(0,100)+'...':p.text;
+  const catColor = {Script:'#2563eb', Thumbnail:'#dc2626', Caption:'#0f766e', Riset:'#7e22ce', Hook:'#c2410c'};
+  const catIcon = {Script:'📝', Thumbnail:'🖼️', Caption:'💬', Riset:'🔍', Hook:'🎣'};
+  grid.innerHTML = filtered.map(p => {
+    const realIdx = promptsData.indexOf(p);
+    const col = catColor[p.cat] || '#374151';
+    const ico = catIcon[p.cat] || '📄';
+    const preview = p.text.length > 110 ? p.text.slice(0, 110) + '…' : p.text;
     return `<div class="prompt-card">
-      <div class="prompt-category" style="color:${col};">${ico} ${p.cat}</div>
+      <div class="prompt-cat" style="color:${col};">${ico} ${p.cat}</div>
       <div class="prompt-title">${p.title}</div>
-      <div class="prompt-text" onclick="viewPromptFull(${realIdx})" title="Klik untuk lihat full">${preview}</div>
+      <div class="prompt-preview" onclick="openPVModal(${realIdx})" title="Klik untuk lihat full">${preview}</div>
       <div class="prompt-footer">
         <div style="display:flex;gap:5px;">
-          <button class="btn btn-sm" onclick="viewPromptFull(${realIdx})">👁️ Lihat</button>
-          <button class="btn btn-sm" onclick="editPrompt(${realIdx})">✏️</button>
+          <button class="btn btn-sm" onclick="openPVModal(${realIdx})">👁️ Lihat</button>
+          <button class="btn btn-sm" onclick="openPromptModal(${realIdx})">✏️</button>
           <button class="btn btn-sm btn-danger" onclick="deletePrompt(${realIdx})">🗑️</button>
         </div>
-        <button class="prompt-copy" onclick="copyPromptByIdx(${realIdx},this)">📋 Copy</button>
+        <button class="copy-btn" id="cpbtn-${realIdx}" onclick="copyPromptByIdx(${realIdx})">📋 Copy</button>
       </div>
     </div>`;
   }).join('');
 }
 
-function filterPrompt(filter,btn){
-  document.querySelectorAll('#page-prompt .btn').forEach(b=>b.classList.remove('btn-primary'));
+function filterPrompt(filter, btn) {
+  promptFilter = filter;
+  document.querySelectorAll('.prompt-filters .btn').forEach(b => b.classList.remove('btn-primary'));
   btn.classList.add('btn-primary');
-  renderPrompts(filter);
+  renderPrompts();
 }
 
-function viewPromptFull(idx){
-  currentPromptViewIdx=idx;
-  const p=promptsData[idx];
-  const catIcons={Script:'📝',Thumbnail:'🖼️',Caption:'💬',Riset:'🔍',Hook:'🎣'};
-  document.getElementById('prompt-view-title').textContent=p.title;
-  document.getElementById('prompt-view-cat').textContent=(catIcons[p.cat]||'')+ ' '+p.cat;
-  document.getElementById('prompt-view-text').textContent=p.text;
-  document.getElementById('prompt-view-modal').classList.remove('hidden');
+function openPVModal(idx) {
+  pvIdx = idx;
+  const p = promptsData[idx];
+  const catIcon = {Script:'📝', Thumbnail:'🖼️', Caption:'💬', Riset:'🔍', Hook:'🎣'};
+  document.getElementById('pv-title').textContent = p.title;
+  document.getElementById('pv-cat').textContent = (catIcon[p.cat] || '') + ' ' + p.cat;
+  document.getElementById('pv-text').textContent = p.text;
+  show('pv-overlay');
+}
+function closePVModal() { hide('pv-overlay'); pvIdx = null; }
+function copyPromptFull() {
+  navigator.clipboard.writeText(promptsData[pvIdx].text).then(() => alert('Prompt berhasil dicopy! ✓'));
+}
+function copyPromptByIdx(idx) {
+  navigator.clipboard.writeText(promptsData[idx].text).then(() => {
+    const btn = document.getElementById('cpbtn-' + idx);
+    if (btn) { btn.textContent = '✓ Copied!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 2000); }
+  });
 }
 
-function copyPromptFull(){
-  const p=promptsData[currentPromptViewIdx];
-  navigator.clipboard.writeText(p.text);
-  alert('Prompt berhasil dicopy!');
-}
-
-function copyPromptByIdx(idx,btn){
-  navigator.clipboard.writeText(promptsData[idx].text);
-  btn.textContent='✓ Copied!';
-  btn.classList.add('copied');
-  setTimeout(()=>{btn.textContent='📋 Copy';btn.classList.remove('copied');},2000);
-}
-
-function openPromptModal(idx=null){
-  editingPromptIdx=idx;
-  document.getElementById('prompt-modal-title').textContent=idx!==null?'✏️ Edit Prompt':'+ Prompt Baru';
-  if(idx!==null){
-    const p=promptsData[idx];
-    document.getElementById('inp-prompt-title').value=p.title;
-    document.getElementById('inp-prompt-cat').value=p.cat;
-    document.getElementById('inp-prompt-text').value=p.text;
+function openPromptModal(idx=null) {
+  editPromptIdx = idx;
+  document.getElementById('prompt-modal-title').textContent = idx !== null ? '✏️ Edit Prompt' : '+ Prompt Baru';
+  if (idx !== null) {
+    const p = promptsData[idx];
+    document.getElementById('inp-p-title').value = p.title;
+    document.getElementById('inp-p-cat').value = p.cat;
+    document.getElementById('inp-p-text').value = p.text;
   } else {
-    document.getElementById('inp-prompt-title').value='';
-    document.getElementById('inp-prompt-cat').value='Script';
-    document.getElementById('inp-prompt-text').value='';
+    document.getElementById('inp-p-title').value = '';
+    document.getElementById('inp-p-cat').value = 'Script';
+    document.getElementById('inp-p-text').value = '';
   }
-  document.getElementById('prompt-modal').classList.remove('hidden');
+  show('prompt-overlay');
+  setTimeout(() => document.getElementById('inp-p-title').focus(), 50);
 }
-
-function closePromptModal(){ document.getElementById('prompt-modal').classList.add('hidden'); editingPromptIdx=null; }
-
-function savePrompt(){
-  const title=document.getElementById('inp-prompt-title').value.trim();
-  const cat=document.getElementById('inp-prompt-cat').value;
-  const text=document.getElementById('inp-prompt-text').value.trim();
-  if(!title||!text){alert('Isi judul dan isi prompt!');return;}
-  const obj={title,cat,text};
-  if(editingPromptIdx!==null){
-    promptsData[editingPromptIdx]=obj;
-  } else {
-    promptsData.push(obj);
-  }
+function closePromptModal() { hide('prompt-overlay'); editPromptIdx = null; }
+function savePrompt() {
+  const title = v('inp-p-title');
+  const text = v('inp-p-text');
+  if (!title || !text) { alert('Isi judul dan isi prompt!'); return; }
+  const obj = { title, cat: v('inp-p-cat'), text };
+  if (editPromptIdx !== null) promptsData[editPromptIdx] = obj;
+  else promptsData.push(obj);
   closePromptModal();
-  renderPrompts(currentPromptFilter);
+  renderPrompts();
 }
-
-function editPrompt(idx){ openPromptModal(idx); }
-
-function deletePrompt(idx){
-  if(!confirm('Hapus prompt ini?'))return;
-  promptsData.splice(idx,1);
-  renderPrompts(currentPromptFilter);
-}
+function deletePrompt(idx) { if (!confirm('Hapus prompt ini?')) return; promptsData.splice(idx, 1); renderPrompts(); }
 
 // ===================== JURNAL =====================
-function renderJurnal(){
-  const list=document.getElementById('jurnal-list');
-  if(jurnalData.length===0){
-    list.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada entri jurnal.</div>';
+function renderJurnal() {
+  const list = document.getElementById('jurnal-list');
+  if (jurnalData.length === 0) {
+    list.innerHTML = '<div style="color:#9ca3af;font-size:13px;">Belum ada entri jurnal. Klik "+ Entri Baru"! 📖</div>';
     return;
   }
-  list.innerHTML=jurnalData.map((j,idx)=>`
-    <div class="jurnal-entry">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+  list.innerHTML = jurnalData.map((j, idx) => `
+    <div class="jurnal-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
         <div class="jurnal-date">📅 ${j.date}</div>
         <div style="display:flex;gap:5px;">
-          <button class="btn btn-sm" onclick="editJurnal(${idx})">✏️</button>
+          <button class="btn btn-sm" onclick="openJurnalModal(${idx})">✏️</button>
           <button class="btn btn-sm btn-danger" onclick="deleteJurnal(${idx})">🗑️</button>
         </div>
       </div>
       <div class="jurnal-title">${j.title}</div>
       <div class="jurnal-content">${j.content}</div>
-      <div class="jurnal-tags">${j.tags.map(t=>'<span class="jurnal-tag">'+t+'</span>').join('')}</div>
+      <div class="jurnal-tags">${j.tags.map(t => '<span class="tag">' + t + '</span>').join('')}</div>
     </div>
   `).join('');
 }
 
-function openJurnalModal(idx=null){
-  editingJurnalIdx=idx;
-  document.getElementById('jurnal-modal-title').textContent=idx!==null?'✏️ Edit Jurnal':'+ Entri Jurnal';
-  if(idx!==null){
-    const j=jurnalData[idx];
-    document.getElementById('inp-jurnal-title').value=j.title;
-    document.getElementById('inp-jurnal-content').value=j.content;
-    document.getElementById('inp-jurnal-tags').value=j.tags.join(', ');
+function openJurnalModal(idx=null) {
+  editJurnalIdx = idx;
+  document.getElementById('jurnal-modal-title').textContent = idx !== null ? '✏️ Edit Jurnal' : '+ Entri Jurnal';
+  if (idx !== null) {
+    const j = jurnalData[idx];
+    document.getElementById('inp-j-title').value = j.title;
+    document.getElementById('inp-j-content').value = j.content;
+    document.getElementById('inp-j-tags').value = j.tags.join(', ');
   } else {
-    document.getElementById('inp-jurnal-title').value='';
-    document.getElementById('inp-jurnal-content').value='';
-    document.getElementById('inp-jurnal-tags').value='';
+    document.getElementById('inp-j-title').value = '';
+    document.getElementById('inp-j-content').value = '';
+    document.getElementById('inp-j-tags').value = '';
   }
-  document.getElementById('jurnal-modal').classList.remove('hidden');
+  show('jurnal-overlay');
+  setTimeout(() => document.getElementById('inp-j-title').focus(), 50);
 }
-
-function closeJurnalModal(){ document.getElementById('jurnal-modal').classList.add('hidden'); editingJurnalIdx=null; }
-
-function saveJurnal(){
-  const title=document.getElementById('inp-jurnal-title').value.trim();
-  const content=document.getElementById('inp-jurnal-content').value.trim();
-  const tagsRaw=document.getElementById('inp-jurnal-tags').value;
-  if(!title){alert('Isi judul jurnal!');return;}
-  const tags=tagsRaw.split(',').map(t=>t.trim()).filter(Boolean);
-  const now=new Date();
-  const date=now.getDate()+' '+MONTHS[now.getMonth()]+' '+now.getFullYear();
-  const obj={title,date,content,tags};
-  if(editingJurnalIdx!==null){
-    jurnalData[editingJurnalIdx]=obj;
-  } else {
-    jurnalData.unshift(obj);
-  }
+function closeJurnalModal() { hide('jurnal-overlay'); editJurnalIdx = null; }
+function saveJurnal() {
+  const title = v('inp-j-title');
+  if (!title) { alert('Isi judul jurnal!'); return; }
+  const now = new Date();
+  const date = now.getDate() + ' ' + MONTHS[now.getMonth()] + ' ' + now.getFullYear();
+  const tags = v('inp-j-tags').split(',').map(t => t.trim()).filter(Boolean);
+  const obj = { title, date, content: v('inp-j-content'), tags };
+  if (editJurnalIdx !== null) jurnalData[editJurnalIdx] = obj;
+  else jurnalData.unshift(obj);
   closeJurnalModal();
   renderJurnal();
 }
+function deleteJurnal(idx) { if (!confirm('Hapus entri jurnal ini?')) return; jurnalData.splice(idx, 1); renderJurnal(); }
 
-function editJurnal(idx){ openJurnalModal(idx); }
+// ===================== UTILS =====================
+function show(id) { document.getElementById(id).classList.remove('hidden'); }
+function hide(id) { document.getElementById(id).classList.add('hidden'); }
+function v(id) { return document.getElementById(id).value.trim(); }
 
-function deleteJurnal(idx){
-  if(!confirm('Hapus entri jurnal ini?'))return;
-  jurnalData.splice(idx,1);
-  renderJurnal();
-}
+// Close overlay on backdrop click
+document.querySelectorAll('.overlay').forEach(ov => {
+  ov.addEventListener('click', e => { if (e.target === ov) ov.classList.add('hidden'); });
+});
 
-// ===================== KEYBOARD =====================
-document.addEventListener("keydown",e=>{
-  const tag=document.activeElement.tagName;
-  if(tag==="INPUT"||tag==="TEXTAREA"||tag==="SELECT")return;
-  if(e.key==="ArrowRight") nextMonth();
-  if(e.key==="ArrowLeft") prevMonth();
-  if(e.key==="t"||e.key==="T") goToday();
-  if(e.key==="Escape"){
-    document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.add('hidden'));
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  const tag = document.activeElement.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  if (e.key === 'ArrowRight') nextMonth();
+  if (e.key === 'ArrowLeft') prevMonth();
+  if (e.key === 't' || e.key === 'T') goToday();
+  if (e.key === 'Escape') document.querySelectorAll('.overlay').forEach(m => m.classList.add('hidden'));
+});
 
 // ===================== INIT =====================
 renderCalendar();
