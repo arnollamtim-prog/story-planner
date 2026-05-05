@@ -402,7 +402,7 @@ function platSVG(p, s=14) {
 }
 
 // Cache data lokal
-let naskahData  = {}; // { 'YYYY-M-D': [{id,title,platform,narasi,status},...] }
+let naskahData  = {};
 let ideasData   = [];
 let promptsData = [];
 let jurnalData  = [];
@@ -436,7 +436,7 @@ function setOffline() {
 }
 
 // =============================================
-// INIT — load semua data dari Supabase
+// INIT
 // =============================================
 async function init() {
   try {
@@ -447,7 +447,6 @@ async function init() {
       sb.from('journal').select('*').order('created_at', {ascending: false}),
     ]);
 
-    // Naskah: kelompokkan per tanggal
     naskahData = {};
     (calRes.data || []).forEach(row => {
       const key = row.date;
@@ -479,11 +478,6 @@ function fmtDate(iso) {
   const d = new Date(iso);
   return d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
 }
-function dateKey(dateStr) {
-  // dateStr = YYYY-MM-DD dari input date
-  const [y,m,d] = dateStr.split('-');
-  return dateStr; // simpan langsung format YYYY-MM-DD
-}
 function fmtKey(key) {
   const [y,m,d] = key.split('-');
   return d + ' ' + MONTHS[parseInt(m)-1] + ' ' + y;
@@ -497,9 +491,9 @@ function showPage(name, btn) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   btn.classList.add('active');
-  if (name === 'ideas')   renderIdeas();
-  if (name === 'prompt')  renderPrompts();
-  if (name === 'jurnal')  renderJurnal();
+  if (name === 'ideas')    renderIdeas();
+  if (name === 'prompt')   renderPrompts();
+  if (name === 'jurnal')   renderJurnal();
   if (name === 'kalender') renderCalendar();
 }
 
@@ -559,7 +553,6 @@ function openNaskahModal(id = null, dateKeyVal = null) {
   editNaskahId = id;
   document.getElementById('naskah-modal-title').textContent = id ? '✏️ Edit Naskah' : '+ Naskah Baru';
   if (id) {
-    // cari data
     let ev = null;
     for (const key in naskahData) {
       ev = naskahData[key].find(n => n.id === id);
@@ -597,13 +590,11 @@ async function saveNaskah() {
 
   try {
     if (editNaskahId) {
-      // UPDATE
       const { error } = await sb.from('calendar').update({
         title, platform, narasi: script, status, date: dateVal
       }).eq('id', editNaskahId);
       if (error) throw error;
 
-      // update cache
       for (const key in naskahData) {
         const idx = naskahData[key].findIndex(n => n.id === editNaskahId);
         if (idx !== -1) {
@@ -615,7 +606,6 @@ async function saveNaskah() {
       if (!naskahData[dateVal]) naskahData[dateVal] = [];
       naskahData[dateVal].push({ id: editNaskahId, title, platform, script, status });
     } else {
-      // INSERT
       const { data, error } = await sb.from('calendar').insert({
         title, platform, narasi: script, status, date: dateVal, type: platform
       }).select().single();
@@ -624,7 +614,6 @@ async function saveNaskah() {
       if (!naskahData[dateVal]) naskahData[dateVal] = [];
       naskahData[dateVal].push({ id: data.id, title, platform, script, status });
 
-      // navigate ke bulan yang disimpan
       const [y, m] = dateVal.split('-');
       curMonth = parseInt(m) - 1; curYear = parseInt(y);
     }
@@ -669,9 +658,11 @@ async function cycleStatus(key, id) {
   renderCalendar(); openDetailModal(key, id);
 }
 
+// ✅ BUG FIX: simpan id ke variabel lokal sebelum closeDetailModal() mereset detailId
 function editNaskahFromDetail() {
+  const id = detailId;
   closeDetailModal();
-  openNaskahModal(detailId);
+  openNaskahModal(id);
 }
 
 async function deleteNaskah() {
@@ -705,7 +696,6 @@ async function confirmMove() {
   const { error } = await sb.from('calendar').update({ date: newDate }).eq('id', moveId);
   if (error) { setOffline(); alert('Gagal pindah: ' + error.message); return; }
 
-  // update cache
   const ev = (naskahData[moveKey] || []).find(n => n.id === moveId);
   if (ev) {
     naskahData[moveKey] = naskahData[moveKey].filter(n => n.id !== moveId);
