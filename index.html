@@ -2,8 +2,26 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Story Planner</title>
+
+<!-- PWA Meta Tags -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Story Planner">
+<meta name="theme-color" content="#141c38">
+<meta name="description" content="Content Creator Tools - Kalender, Ideas, Prompt Vault & Jurnal">
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="./manifest.json">
+
+<!-- Apple Touch Icons -->
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="./icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="./icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -11,18 +29,98 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background: #ECEEF5; height: 100vh; overflow: hidden; display: flex;
+  background: #ECEEF5; height: 100dvh; overflow: hidden; display: flex;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   line-height: 1.6;
 }
+
+/* ===================== MOBILE LAYOUT ===================== */
+@media (max-width: 680px) {
+  body { flex-direction: column; }
+  .sidebar { display: none; } /* Sidebar disembunyikan di mobile */
+  .main { flex: 1; height: 100dvh; padding-bottom: env(safe-area-inset-bottom); }
+  .bottom-nav { display: flex; }
+  .page { padding-bottom: 70px; }
+  .page-header { padding: 18px 16px 0; }
+  .page-title { font-size: 26px; }
+  .ideas-grid, .prompt-grid { padding: 0 16px 16px; }
+  .ideas-tabs, .prompt-filters { padding: 0 16px; }
+  .jurnal-list { padding: 0 16px 16px; }
+  .cal-wrap { padding: 14px 12px; }
+  .cal-month { font-size: 26px; }
+  .cal-cell { min-height: 56px; padding: 5px 3px; }
+  .ev-chip { font-size: 9px; padding: 1px 4px; }
+  .modal { padding: 20px 18px; border-radius: 16px 16px 0 0; margin-top: auto; max-height: 88dvh; }
+  .overlay { align-items: flex-end; padding: 0; }
+  .detail-modal { border-radius: 16px 16px 0 0; max-height: 88dvh; }
+  .pv-modal { border-radius: 16px 16px 0 0; max-height: 88dvh; padding: 20px 18px; margin-top: auto; }
+}
+
+/* BOTTOM NAV (mobile only) */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #141c38;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+}
+.bn-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 10px 4px 8px; cursor: pointer; border: none; background: none;
+  color: rgba(255,255,255,0.4); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.02em; transition: all 0.15s; gap: 3px; font-family: inherit;
+}
+.bn-item.active { color: #5B7EF8; }
+.bn-icon { font-size: 20px; line-height: 1; }
+
+/* PWA Install Banner */
+#install-banner {
+  display: none;
+  position: fixed; bottom: 76px; left: 12px; right: 12px;
+  background: linear-gradient(135deg, #1e3068, #1a2855);
+  border: 1px solid rgba(91,126,248,0.4);
+  border-radius: 14px; padding: 14px 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  z-index: 200; animation: slideUp 0.3s ease;
+}
+@keyframes slideUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: none; } }
+.install-content { display: flex; align-items: center; gap: 12px; }
+.install-icon { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #5B7EF8, #8BA6FF); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.install-text { flex: 1; }
+.install-title { font-size: 13px; font-weight: 800; color: #e5e7eb; }
+.install-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.install-btns { display: flex; gap: 8px; margin-top: 10px; }
+.btn-install { flex: 1; padding: 9px; background: linear-gradient(135deg, #5B7EF8, #8BA6FF); color: white; border: none; border-radius: 9px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: inherit; }
+.btn-dismiss { padding: 9px 14px; background: rgba(255,255,255,0.08); color: #9ca3af; border: none; border-radius: 9px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+/* iOS Install Guide */
+#ios-guide {
+  display: none;
+  position: fixed; bottom: 76px; left: 12px; right: 12px;
+  background: #111827; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; padding: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  z-index: 200; animation: slideUp 0.3s ease;
+}
+.ios-step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.ios-num { width: 22px; height: 22px; border-radius: 50%; background: #5B7EF8; color: white; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.ios-step-text { font-size: 12px; color: #d1d5db; line-height: 1.5; }
+.ios-arrow { text-align: center; font-size: 28px; margin: 6px 0 0; animation: bounce 1.2s infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 99px; }
+
+/* ===================== SIDEBAR (desktop) ===================== */
 .sidebar {
   width: 228px; flex-shrink: 0;
   background: linear-gradient(168deg, #141c38 0%, #1a2855 55%, #1e3068 100%);
-  color: white; display: flex; flex-direction: column; height: 100vh;
+  color: white; display: flex; flex-direction: column; height: 100dvh;
   box-shadow: 4px 0 24px rgba(0,0,0,0.18);
 }
 .sidebar-logo { padding: 22px 18px 18px; border-bottom: 1px solid rgba(255,255,255,0.07); }
@@ -31,7 +129,7 @@ body {
 .logo-sub { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
 .sidebar-nav { flex: 1; overflow-y: auto; padding: 14px 10px; }
 .nav-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.25); padding: 8px 8px 4px; }
-.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); transition: all 0.18s; margin-bottom: 2px; border: none; background: none; width: 100%; text-align: left; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); transition: all 0.18s; margin-bottom: 2px; border: none; background: none; width: 100%; text-align: left; font-family: inherit; }
 .nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); }
 .nav-item.active { background: linear-gradient(90deg, rgba(91,126,248,0.35), rgba(91,126,248,0.12)); color: white; border-left: 3px solid #5B7EF8; padding-left: 8px; }
 .nav-icon { width: 22px; text-align: center; display: flex; align-items: center; justify-content: center; }
@@ -42,14 +140,16 @@ body {
 .sync-dot.syncing { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; animation: pulse 1s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-.main { flex: 1; display: flex; flex-direction: column; min-width: 0; height: 100vh; overflow: hidden; }
+/* ===================== MAIN ===================== */
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; height: 100dvh; overflow: hidden; }
 .page { display: none; flex: 1; flex-direction: column; height: 100%; overflow-y: auto; }
 .page.active { display: flex; }
 .page-header { padding: 26px 28px 0; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; margin-bottom: 18px; }
 .page-title { font-size: 36px; font-weight: 700; color: #0f1623; letter-spacing: -0.02em; line-height: 1.1; }
 .page-sub { font-size: 15px; color: #94A3B8; margin-top: 6px; line-height: 1.7; font-weight: 400; }
 
-.btn { padding: 8px 14px; border-radius: 9px; border: 1.5px solid #e2e5ec; background: white; font-size: 12px; font-weight: 600; color: #374151; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+/* ===================== BUTTONS ===================== */
+.btn { padding: 8px 14px; border-radius: 9px; border: 1.5px solid #e2e5ec; background: white; font-size: 12px; font-weight: 600; color: #374151; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); font-family: inherit; }
 .btn:hover { background: #f7f8fb; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
 .btn-primary { background: linear-gradient(135deg, #3B65F0, #5B7EF8); color: white; border-color: transparent; font-weight: 700; box-shadow: 0 3px 10px rgba(59,101,240,0.35); }
 .btn-primary:hover { background: linear-gradient(135deg, #2d54e0, #4a6de8); }
@@ -74,8 +174,8 @@ body {
 .cal-nav-btn:hover { background: rgba(124,58,237,0.3); border-color: #7c3aed; color: white; }
 .cal-month { font-size: 36px; font-weight: 700; color: #e5e7eb; letter-spacing: -0.02em; line-height: 1.1; }
 .cal-actions { display: flex; gap: 8px; align-items: center; }
-.btn-today { padding: 7px 16px; background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; border: none; border-radius: 9px; font-size: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 3px 10px rgba(124,58,237,0.4); transition: all 0.15s; }
-.btn-naskah { padding: 7px 16px; background: rgba(124,58,237,0.2); color: #c4b5fd; border: 1px solid rgba(124,58,237,0.4); border-radius: 9px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+.btn-today { padding: 7px 16px; background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; border: none; border-radius: 9px; font-size: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 3px 10px rgba(124,58,237,0.4); transition: all 0.15s; font-family: inherit; }
+.btn-naskah { padding: 7px 16px; background: rgba(124,58,237,0.2); color: #c4b5fd; border: 1px solid rgba(124,58,237,0.4); border-radius: 9px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; font-family: inherit; }
 .btn-naskah:hover { background: rgba(124,58,237,0.35); }
 .cal-hint { font-size: 12px; color: #6b7280; font-style: italic; margin-bottom: 12px; }
 .cal-grid-wrap { background: rgba(17,24,39,0.7); backdrop-filter: blur(20px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); flex: 1; display: flex; flex-direction: column; }
@@ -105,7 +205,7 @@ body {
 /* MODALS */
 .overlay { position: fixed; inset: 0; background: rgba(10,15,35,0.7); display: flex; align-items: center; justify-content: center; z-index: 300; padding: 20px; backdrop-filter: blur(4px); }
 .overlay.hidden { display: none; }
-.modal { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 26px; width: 100%; max-width: 460px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; animation: modalIn 0.2s ease; }
+.modal { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 26px; width: 100%; max-width: 460px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); max-height: 90dvh; overflow-y: auto; animation: modalIn 0.2s ease; }
 @keyframes modalIn { from { opacity:0; transform: scale(0.96) translateY(8px); } to { opacity:1; transform: none; } }
 .modal-sm { max-width: 340px; }
 .modal-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
@@ -119,20 +219,20 @@ body {
 .form-input option { background: #1f2937; color: #e5e7eb; }
 textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 .modal-actions { display: flex; gap: 8px; margin-top: 20px; }
-.btn-cancel { flex: 1; padding: 11px; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; background: rgba(255,255,255,0.05); font-size: 13px; font-weight: 600; cursor: pointer; color: #9ca3af; transition: all 0.15s; }
+.btn-cancel { flex: 1; padding: 11px; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; background: rgba(255,255,255,0.05); font-size: 13px; font-weight: 600; cursor: pointer; color: #9ca3af; transition: all 0.15s; font-family: inherit; }
 .btn-cancel:hover { background: rgba(255,255,255,0.1); color: #e5e7eb; }
 .btn-save { flex: 2; padding: 11px; border: none; border-radius: 10px; background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; font-size: 13px; font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: 0 3px 10px rgba(124,58,237,0.4); transition: all 0.15s; }
 .btn-save:hover { box-shadow: 0 5px 16px rgba(124,58,237,0.55); }
 .btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
 
-.detail-modal { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; width: 100%; max-width: 520px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); overflow: hidden; max-height: 88vh; display: flex; flex-direction: column; animation: modalIn 0.2s ease; }
+.detail-modal { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; width: 100%; max-width: 520px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); overflow: hidden; max-height: 88dvh; display: flex; flex-direction: column; animation: modalIn 0.2s ease; }
 .detail-hdr { padding: 18px 22px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; background: rgba(2,6,23,0.5); }
 .detail-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
 .naskah-box { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px; font-size: 13px; color: #d1d5db; line-height: 1.75; white-space: pre-wrap; border: 1px solid rgba(255,255,255,0.07); max-height: 280px; overflow-y: auto; }
 
 /* IDEAS */
 .ideas-tabs { display: flex; gap: 7px; padding: 0 28px; margin-bottom: 16px; flex-wrap: wrap; }
-.itab { padding: 7px 16px; border-radius: 9px; border: 1.5px solid #e2e5ec; background: white; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; color: #6b7280; display: flex; align-items: center; gap: 6px; }
+.itab { padding: 7px 16px; border-radius: 9px; border: 1.5px solid #e2e5ec; background: white; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; color: #6b7280; display: flex; align-items: center; gap: 6px; font-family: inherit; }
 .itab-all.on { background: linear-gradient(135deg, #3B65F0, #5B7EF8); color: white; border-color: transparent; }
 .itab-yt.on  { background: #fff0f0; color: #b91c1c; border-color: #fca5a5; }
 .itab-tt.on  { background: #18181b; color: white; border-color: #18181b; }
@@ -158,7 +258,7 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 .prompt-preview { font-size: 15px; color: #94A3B8; line-height: 1.7; padding: 9px 11px; border-radius: 8px; background: #f8f9fc; border-left: 3px solid #e2e5ec; cursor: pointer; margin-bottom: 12px; }
 .prompt-preview:hover { background: #f0f3ff; border-left-color: #5B7EF8; }
 .prompt-footer { display: flex; align-items: center; justify-content: space-between; }
-.copy-btn { padding: 5px 10px; border: 1.5px solid #e2e5ec; border-radius: 7px; background: white; font-size: 11px; font-weight: 700; cursor: pointer; color: #374151; }
+.copy-btn { padding: 5px 10px; border: 1.5px solid #e2e5ec; border-radius: 7px; background: white; font-size: 11px; font-weight: 700; cursor: pointer; color: #374151; font-family: inherit; }
 .copy-btn.copied { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
 
 /* JURNAL */
@@ -172,8 +272,13 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 .tag { padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 500; background: #f0f3ff; color: #4B5FAF; }
 
 /* PROMPT FULL VIEW */
-.pv-modal { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; width: 100%; max-width: 520px; padding: 26px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); max-height: 88vh; overflow-y: auto; animation: modalIn 0.2s ease; }
+.pv-modal { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; width: 100%; max-width: 520px; padding: 26px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); max-height: 88dvh; overflow-y: auto; animation: modalIn 0.2s ease; }
 .pv-text { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 15px; font-size: 13px; color: #d1d5db; line-height: 1.75; white-space: pre-wrap; border: 1px solid rgba(255,255,255,0.07); max-height: 380px; overflow-y: auto; margin-bottom: 15px; }
+
+/* Mobile modal slide-up animation */
+@media (max-width: 680px) {
+  @keyframes modalIn { from { opacity:0; transform: translateY(40px); } to { opacity:1; transform: none; } }
+}
 </style>
 </head>
 <body>
@@ -184,6 +289,40 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
   <div class="spinner"></div>
   <div class="loading-text">Story Planner</div>
   <div class="loading-sub">Memuat data dari cloud...</div>
+</div>
+
+<!-- PWA Install Banner (Android/Desktop) -->
+<div id="install-banner">
+  <div class="install-content">
+    <div class="install-icon">🎬</div>
+    <div class="install-text">
+      <div class="install-title">Install Story Planner</div>
+      <div class="install-sub">Akses lebih cepat dari home screen HP kamu</div>
+    </div>
+  </div>
+  <div class="install-btns">
+    <button class="btn-install" onclick="doInstall()">📲 Install Sekarang</button>
+    <button class="btn-dismiss" onclick="dismissInstall()">Nanti</button>
+  </div>
+</div>
+
+<!-- iOS Install Guide -->
+<div id="ios-guide">
+  <div style="font-size:14px;font-weight:800;color:#e5e7eb;margin-bottom:12px;">📲 Cara Install di iPhone/iPad</div>
+  <div class="ios-step">
+    <div class="ios-num">1</div>
+    <div class="ios-step-text">Tap tombol <strong style="color:#5B7EF8;">Share</strong> (kotak dengan panah ke atas) di toolbar Safari</div>
+  </div>
+  <div class="ios-step">
+    <div class="ios-num">2</div>
+    <div class="ios-step-text">Scroll ke bawah, pilih <strong style="color:#5B7EF8;">"Add to Home Screen"</strong></div>
+  </div>
+  <div class="ios-step">
+    <div class="ios-num">3</div>
+    <div class="ios-step-text">Tap <strong style="color:#5B7EF8;">"Add"</strong> — Story Planner langsung muncul di home screen!</div>
+  </div>
+  <button class="btn-dismiss" style="width:100%;margin-top:8px;" onclick="dismissIOS()">Oke, Mengerti!</button>
+  <div class="ios-arrow">↓</div>
 </div>
 
 <div class="sidebar">
@@ -231,7 +370,7 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
         </div>
         <div class="cal-actions">
           <button class="btn-today" onclick="goToday()">Hari Ini</button>
-          <button class="btn-naskah" onclick="openNaskahModal()">+ Naskah Baru</button>
+          <button class="btn-naskah" onclick="openNaskahModal()">+ Naskah</button>
         </div>
       </div>
       <div class="cal-hint">📌 Klik tanggal untuk tambah atau lihat naskah</div>
@@ -263,7 +402,7 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
   <!-- PROMPT VAULT -->
   <div class="page" id="page-prompt">
     <div class="page-header">
-      <div><div class="page-title">Prompt Vault</div><div class="page-sub">Koleksi prompt AI terbaik untuk produksi konten</div></div>
+      <div><div class="page-title">Prompt Vault</div><div class="page-sub">Koleksi prompt AI terbaik</div></div>
       <button class="btn btn-primary" onclick="openPromptModal()">+ Prompt Baru</button>
     </div>
     <div class="prompt-filters">
@@ -280,12 +419,28 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
   <!-- JURNAL -->
   <div class="page" id="page-jurnal">
     <div class="page-header">
-      <div><div class="page-title">Jurnal Analisis</div><div class="page-sub">Dokumentasi insight dan pembelajaran dari kontenmu</div></div>
+      <div><div class="page-title">Jurnal Analisis</div><div class="page-sub">Insight dan pembelajaran dari kontenmu</div></div>
       <button class="btn btn-primary" onclick="openJurnalModal()">+ Entri Baru</button>
     </div>
     <div class="jurnal-list" id="jurnal-list"></div>
   </div>
 </div>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottom-nav">
+  <button class="bn-item active" id="bn-kalender" onclick="showPage('kalender',document.querySelector('.nav-item'));switchBN('kalender')">
+    <span class="bn-icon">📅</span>Kalender
+  </button>
+  <button class="bn-item" id="bn-ideas" onclick="showPage('ideas',document.querySelectorAll('.nav-item')[1]);switchBN('ideas')">
+    <span class="bn-icon">💡</span>Ideas
+  </button>
+  <button class="bn-item" id="bn-prompt" onclick="showPage('prompt',document.querySelectorAll('.nav-item')[2]);switchBN('prompt')">
+    <span class="bn-icon">📄</span>Prompt
+  </button>
+  <button class="bn-item" id="bn-jurnal" onclick="showPage('jurnal',document.querySelectorAll('.nav-item')[3]);switchBN('jurnal')">
+    <span class="bn-icon">📖</span>Jurnal
+  </button>
+</nav>
 
 <!-- MODAL: NASKAH -->
 <div class="overlay hidden" id="naskah-overlay">
@@ -381,6 +536,61 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 
 <script>
 // =============================================
+// SERVICE WORKER REGISTRATION
+// =============================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW error:', err));
+  });
+}
+
+// =============================================
+// PWA INSTALL PROMPT
+// =============================================
+let deferredPrompt = null;
+const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (!isStandalone && !localStorage.getItem('pwa-dismissed')) {
+    setTimeout(() => {
+      document.getElementById('install-banner').style.display = 'block';
+    }, 3000);
+  }
+});
+
+function doInstall() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(choice => {
+    if (choice.outcome === 'accepted') console.log('PWA installed');
+    deferredPrompt = null;
+    dismissInstall();
+  });
+}
+
+function dismissInstall() {
+  document.getElementById('install-banner').style.display = 'none';
+  localStorage.setItem('pwa-dismissed', '1');
+}
+
+function dismissIOS() {
+  document.getElementById('ios-guide').style.display = 'none';
+  localStorage.setItem('ios-guide-dismissed', '1');
+}
+
+// Show iOS guide on Safari iOS (not standalone)
+if (isIOS && !isStandalone && !localStorage.getItem('ios-guide-dismissed')) {
+  setTimeout(() => {
+    document.getElementById('ios-guide').style.display = 'block';
+  }, 2000);
+}
+
+// =============================================
 // SUPABASE CONFIG
 // =============================================
 const SUPABASE_URL = 'https://vxgggmsdhxqrexuwllgs.supabase.co';
@@ -401,13 +611,11 @@ function platSVG(p, s=14) {
   return '▶';
 }
 
-// Cache data lokal
 let naskahData  = {};
 let ideasData   = [];
 let promptsData = [];
 let jurnalData  = [];
 
-// Edit state
 let editNaskahId = null, editIdeaId = null, editPromptId = null, editJurnalId = null;
 let detailKey = null, detailId = null, pvId = null;
 let moveKey = null, moveId = null;
@@ -417,22 +625,16 @@ let ideaFilter = 'all', promptFilter = 'all';
 // SYNC UI
 // =============================================
 function setSyncing() {
-  const dot = document.getElementById('sync-dot');
-  const lbl = document.getElementById('sync-label');
-  dot.className = 'sync-dot syncing';
-  lbl.textContent = 'Menyimpan...';
+  document.getElementById('sync-dot').className = 'sync-dot syncing';
+  document.getElementById('sync-label').textContent = 'Menyimpan...';
 }
 function setSynced() {
-  const dot = document.getElementById('sync-dot');
-  const lbl = document.getElementById('sync-label');
-  dot.className = 'sync-dot';
-  lbl.textContent = 'Tersinkron ☁️';
+  document.getElementById('sync-dot').className = 'sync-dot';
+  document.getElementById('sync-label').textContent = 'Tersinkron ☁️';
 }
 function setOffline() {
-  const dot = document.getElementById('sync-dot');
-  const lbl = document.getElementById('sync-label');
-  dot.className = 'sync-dot offline';
-  lbl.textContent = 'Gagal konek';
+  document.getElementById('sync-dot').className = 'sync-dot offline';
+  document.getElementById('sync-label').textContent = 'Gagal konek';
 }
 
 // =============================================
@@ -451,13 +653,7 @@ async function init() {
     (calRes.data || []).forEach(row => {
       const key = row.date;
       if (!naskahData[key]) naskahData[key] = [];
-      naskahData[key].push({
-        id: row.id,
-        title: row.title,
-        platform: row.platform || 'YouTube',
-        script: row.narasi || '',
-        status: row.status || 'Draft',
-      });
+      naskahData[key].push({ id: row.id, title: row.title, platform: row.platform || 'YouTube', script: row.narasi || '', status: row.status || 'Draft' });
     });
 
     ideasData   = (ideasRes.data   || []).map(r => ({ id: r.id, title: r.title, desc: r.description || '', platform: r.type || 'YouTube', pinned: r.status === 'pinned' }));
@@ -490,11 +686,16 @@ function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
   if (name === 'ideas')    renderIdeas();
   if (name === 'prompt')   renderPrompts();
   if (name === 'jurnal')   renderJurnal();
   if (name === 'kalender') renderCalendar();
+}
+
+function switchBN(name) {
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('bn-' + name).classList.add('active');
 }
 
 // =============================================
@@ -587,41 +788,26 @@ async function saveNaskah() {
   const btn = document.getElementById('btn-save-naskah');
   btn.disabled = true; btn.textContent = 'Menyimpan...';
   setSyncing();
-
   try {
     if (editNaskahId) {
-      const { error } = await sb.from('calendar').update({
-        title, platform, narasi: script, status, date: dateVal
-      }).eq('id', editNaskahId);
+      const { error } = await sb.from('calendar').update({ title, platform, narasi: script, status, date: dateVal }).eq('id', editNaskahId);
       if (error) throw error;
-
       for (const key in naskahData) {
         const idx = naskahData[key].findIndex(n => n.id === editNaskahId);
-        if (idx !== -1) {
-          naskahData[key].splice(idx, 1);
-          if (naskahData[key].length === 0) delete naskahData[key];
-          break;
-        }
+        if (idx !== -1) { naskahData[key].splice(idx, 1); if (naskahData[key].length === 0) delete naskahData[key]; break; }
       }
       if (!naskahData[dateVal]) naskahData[dateVal] = [];
       naskahData[dateVal].push({ id: editNaskahId, title, platform, script, status });
     } else {
-      const { data, error } = await sb.from('calendar').insert({
-        title, platform, narasi: script, status, date: dateVal, type: platform
-      }).select().single();
+      const { data, error } = await sb.from('calendar').insert({ title, platform, narasi: script, status, date: dateVal, type: platform }).select().single();
       if (error) throw error;
-
       if (!naskahData[dateVal]) naskahData[dateVal] = [];
       naskahData[dateVal].push({ id: data.id, title, platform, script, status });
-
       const [y, m] = dateVal.split('-');
       curMonth = parseInt(m) - 1; curYear = parseInt(y);
     }
-    setSynced();
-    closeNaskahModal(); closeDetailModal(); renderCalendar();
-  } catch(e) {
-    setOffline(); alert('Gagal menyimpan: ' + e.message);
-  }
+    setSynced(); closeNaskahModal(); closeDetailModal(); renderCalendar();
+  } catch(e) { setOffline(); alert('Gagal menyimpan: ' + e.message); }
   btn.disabled = false; btn.textContent = 'Simpan Naskah';
 }
 
@@ -658,7 +844,6 @@ async function cycleStatus(key, id) {
   renderCalendar(); openDetailModal(key, id);
 }
 
-// ✅ BUG FIX: simpan id ke variabel lokal sebelum closeDetailModal() mereset detailId
 function editNaskahFromDetail() {
   const id = detailId;
   closeDetailModal();
@@ -695,7 +880,6 @@ async function confirmMove() {
   setSyncing();
   const { error } = await sb.from('calendar').update({ date: newDate }).eq('id', moveId);
   if (error) { setOffline(); alert('Gagal pindah: ' + error.message); return; }
-
   const ev = (naskahData[moveKey] || []).find(n => n.id === moveId);
   if (ev) {
     naskahData[moveKey] = naskahData[moveKey].filter(n => n.id !== moveId);
@@ -773,11 +957,8 @@ function openIdeaModal(id = null) {
 function closeIdeaModal() { hide('idea-overlay'); editIdeaId = null; }
 
 async function saveIdea() {
-  const title    = v('inp-i-title');
-  const desc     = v('inp-i-desc');
-  const platform = v('inp-i-platform');
+  const title = v('inp-i-title'), desc = v('inp-i-desc'), platform = v('inp-i-platform');
   if (!title) { alert('Isi judul ide dulu!'); return; }
-
   const btn = document.getElementById('btn-save-idea');
   btn.disabled = true; btn.textContent = 'Menyimpan...';
   setSyncing();
@@ -785,8 +966,7 @@ async function saveIdea() {
     if (editIdeaId) {
       const { error } = await sb.from('ideas').update({ title, description: desc, type: platform }).eq('id', editIdeaId);
       if (error) throw error;
-      const idea = ideasData.find(i => i.id === editIdeaId);
-      Object.assign(idea, { title, desc, platform });
+      Object.assign(ideasData.find(i => i.id === editIdeaId), { title, desc, platform });
     } else {
       const { data, error } = await sb.from('ideas').insert({ title, description: desc, type: platform, status: null }).select().single();
       if (error) throw error;
@@ -883,11 +1063,8 @@ function openPromptModal(id = null) {
 function closePromptModal() { hide('prompt-overlay'); editPromptId = null; }
 
 async function savePrompt() {
-  const title = v('inp-p-title');
-  const text  = v('inp-p-text');
-  const cat   = v('inp-p-cat');
+  const title = v('inp-p-title'), text = v('inp-p-text'), cat = v('inp-p-cat');
   if (!title || !text) { alert('Isi judul dan isi prompt!'); return; }
-
   const btn = document.getElementById('btn-save-prompt');
   btn.disabled = true; btn.textContent = 'Menyimpan...';
   setSyncing();
@@ -895,8 +1072,7 @@ async function savePrompt() {
     if (editPromptId) {
       const { error } = await sb.from('prompts').update({ name: title, type: cat, body: text }).eq('id', editPromptId);
       if (error) throw error;
-      const p = promptsData.find(x => x.id === editPromptId);
-      Object.assign(p, { title, cat, text });
+      Object.assign(promptsData.find(x => x.id === editPromptId), { title, cat, text });
     } else {
       const { data, error } = await sb.from('prompts').insert({ name: title, type: cat, body: text }).select().single();
       if (error) throw error;
@@ -956,11 +1132,9 @@ function openJurnalModal(id = null) {
 function closeJurnalModal() { hide('jurnal-overlay'); editJurnalId = null; }
 
 async function saveJurnal() {
-  const title   = v('inp-j-title');
-  const content = v('inp-j-content');
-  const tags    = v('inp-j-tags').split(',').map(t => t.trim()).filter(Boolean);
+  const title = v('inp-j-title'), content = v('inp-j-content');
+  const tags = v('inp-j-tags').split(',').map(t => t.trim()).filter(Boolean);
   if (!title) { alert('Isi judul jurnal!'); return; }
-
   const btn = document.getElementById('btn-save-jurnal');
   btn.disabled = true; btn.textContent = 'Menyimpan...';
   setSyncing();
@@ -968,8 +1142,7 @@ async function saveJurnal() {
     if (editJurnalId) {
       const { error } = await sb.from('journal').update({ title, content, tags }).eq('id', editJurnalId);
       if (error) throw error;
-      const j = jurnalData.find(x => x.id === editJurnalId);
-      Object.assign(j, { title, content, tags });
+      Object.assign(jurnalData.find(x => x.id === editJurnalId), { title, content, tags });
     } else {
       const { data, error } = await sb.from('journal').insert({ title, content, tags }).select().single();
       if (error) throw error;
@@ -994,7 +1167,7 @@ async function deleteJurnal(id) {
 // =============================================
 function show(id) { document.getElementById(id).classList.remove('hidden'); }
 function hide(id) { document.getElementById(id).classList.add('hidden'); }
-function v(id)    { return document.getElementById(id).value.trim(); }
+function v(id) { return document.getElementById(id).value.trim(); }
 
 document.querySelectorAll('.overlay').forEach(ov => {
   ov.addEventListener('click', e => { if (e.target === ov) ov.classList.add('hidden'); });
