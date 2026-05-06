@@ -14,13 +14,13 @@
 <meta name="description" content="Content Creator Tools - Kalender, Ideas, Prompt Vault & Jurnal">
 
 <!-- PWA Manifest -->
-<link rel="manifest" href="./manifest.json">
+<link rel="manifest" href="/manifest.json">
 
 <!-- Apple Touch Icons -->
-<link rel="apple-touch-icon" href="./icon-192.png">
-<link rel="apple-touch-icon" sizes="192x192" href="./icon-192.png">
-<link rel="apple-touch-icon" sizes="512x512" href="./icon-512.png">
-<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -540,7 +540,7 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 // =============================================
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
+    navigator.serviceWorker.register('/sw.js')
       .then(reg => console.log('SW registered:', reg.scope))
       .catch(err => console.log('SW error:', err));
   });
