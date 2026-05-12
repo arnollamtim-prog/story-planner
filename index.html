@@ -4,24 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Story Planner</title>
-
-<!-- PWA Meta Tags -->
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Story Planner">
 <meta name="theme-color" content="#141c38">
 <meta name="description" content="Content Creator Tools - Kalender, Ideas, Prompt Vault & Jurnal">
-
-<!-- PWA Manifest -->
 <link rel="manifest" href="/manifest.json">
-
-<!-- Apple Touch Icons -->
 <link rel="apple-touch-icon" href="/icon-192.png">
 <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -35,10 +28,9 @@ body {
   line-height: 1.6;
 }
 
-/* ===================== MOBILE LAYOUT ===================== */
 @media (max-width: 680px) {
   body { flex-direction: column; }
-  .sidebar { display: none; } /* Sidebar disembunyikan di mobile */
+  .sidebar { display: none; }
   .main { flex: 1; height: 100dvh; padding-bottom: env(safe-area-inset-bottom); }
   .bottom-nav { display: flex; }
   .page { padding-bottom: 70px; }
@@ -55,9 +47,9 @@ body {
   .overlay { align-items: flex-end; padding: 0; }
   .detail-modal { border-radius: 16px 16px 0 0; max-height: 88dvh; }
   .pv-modal { border-radius: 16px 16px 0 0; max-height: 88dvh; padding: 20px 18px; margin-top: auto; }
+  .day-modal { border-radius: 16px 16px 0 0; max-height: 88dvh; }
 }
 
-/* BOTTOM NAV (mobile only) */
 .bottom-nav {
   display: none;
   position: fixed;
@@ -77,7 +69,6 @@ body {
 .bn-item.active { color: #5B7EF8; }
 .bn-icon { font-size: 20px; line-height: 1; }
 
-/* PWA Install Banner */
 #install-banner {
   display: none;
   position: fixed; bottom: 76px; left: 12px; right: 12px;
@@ -97,7 +88,6 @@ body {
 .btn-install { flex: 1; padding: 9px; background: linear-gradient(135deg, #5B7EF8, #8BA6FF); color: white; border: none; border-radius: 9px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: inherit; }
 .btn-dismiss { padding: 9px 14px; background: rgba(255,255,255,0.08); color: #9ca3af; border: none; border-radius: 9px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; }
 
-/* iOS Install Guide */
 #ios-guide {
   display: none;
   position: fixed; bottom: 76px; left: 12px; right: 12px;
@@ -116,7 +106,7 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 99px; }
 
-/* ===================== SIDEBAR (desktop) ===================== */
+/* SIDEBAR */
 .sidebar {
   width: 228px; flex-shrink: 0;
   background: linear-gradient(168deg, #141c38 0%, #1a2855 55%, #1e3068 100%);
@@ -140,7 +130,7 @@ body {
 .sync-dot.syncing { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; animation: pulse 1s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-/* ===================== MAIN ===================== */
+/* MAIN */
 .main { flex: 1; display: flex; flex-direction: column; min-width: 0; height: 100dvh; overflow: hidden; }
 .page { display: none; flex: 1; flex-direction: column; height: 100%; overflow-y: auto; }
 .page.active { display: flex; }
@@ -148,7 +138,7 @@ body {
 .page-title { font-size: 36px; font-weight: 700; color: #0f1623; letter-spacing: -0.02em; line-height: 1.1; }
 .page-sub { font-size: 15px; color: #94A3B8; margin-top: 6px; line-height: 1.7; font-weight: 400; }
 
-/* ===================== BUTTONS ===================== */
+/* BUTTONS */
 .btn { padding: 8px 14px; border-radius: 9px; border: 1.5px solid #e2e5ec; background: white; font-size: 12px; font-weight: 600; color: #374151; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); font-family: inherit; }
 .btn:hover { background: #f7f8fb; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
 .btn-primary { background: linear-gradient(135deg, #3B65F0, #5B7EF8); color: white; border-color: transparent; font-weight: 700; box-shadow: 0 3px 10px rgba(59,101,240,0.35); }
@@ -178,11 +168,35 @@ body {
 .btn-naskah { padding: 7px 16px; background: rgba(124,58,237,0.2); color: #c4b5fd; border: 1px solid rgba(124,58,237,0.4); border-radius: 9px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; font-family: inherit; }
 .btn-naskah:hover { background: rgba(124,58,237,0.35); }
 .cal-hint { font-size: 12px; color: #6b7280; font-style: italic; margin-bottom: 12px; }
-.cal-grid-wrap { background: rgba(17,24,39,0.7); backdrop-filter: blur(20px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); flex: 1; display: flex; flex-direction: column; }
+
+/* ===== FIX: cal-grid-wrap overflow auto agar row terakhir tidak terpotong ===== */
+.cal-grid-wrap {
+  background: rgba(17,24,39,0.7);
+  backdrop-filter: blur(20px);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.05);
+  overflow: auto;          /* was hidden — ini yg bikin tanggal 24 kepotong */
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 .cal-headers { display: grid; grid-template-columns: repeat(7,1fr); background: rgba(2,6,23,0.6); border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
 .cal-hdr { font-size: 11px; font-weight: 700; color: #6b7280; text-align: center; padding: 10px 4px; letter-spacing: 0.06em; }
 .cal-cells { display: grid; grid-template-columns: repeat(7,1fr); flex: 1; }
-.cal-cell { border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); padding: 8px 6px; cursor: pointer; transition: all 0.25s; background: rgba(255,255,255,0.02); position: relative; overflow: hidden; min-height: 80px; }
+
+/* ===== FIX: cal-cell overflow hidden agar chip tidak meluber ke sel lain ===== */
+.cal-cell {
+  border-right: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  padding: 8px 6px;
+  cursor: pointer;
+  transition: all 0.25s;
+  background: rgba(255,255,255,0.02);
+  position: relative;
+  overflow: hidden;        /* chip tetap terpotong di dalam sel */
+  min-height: 80px;
+}
 .cal-cell:nth-child(7n) { border-right: none; }
 .cal-cell:hover { background: rgba(124,58,237,0.15); box-shadow: inset 0 0 0 1px rgba(124,58,237,0.3); transform: translateY(-2px); }
 .cal-cell.empty { background: rgba(2,6,23,0.3); cursor: default; }
@@ -190,11 +204,20 @@ body {
 .day-num { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #9ca3af; margin-bottom: 4px; }
 .day-num.today { background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; box-shadow: 0 2px 8px rgba(124,58,237,0.5); }
 .day-ghost { font-size: 11px; color: #374151; }
+
 .ev-chip { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; border: 1px solid; display: flex; align-items: center; gap: 4px; transition: all 0.12s; }
 .ev-chip:hover { filter: brightness(1.2); }
 .chip-Draft    { background: rgba(146,64,14,0.3); color: #fbbf24; border-color: rgba(251,191,36,0.3); }
 .chip-Exported { background: rgba(29,78,216,0.3); color: #93c5fd; border-color: rgba(147,197,253,0.3); }
 .chip-Uploaded { background: rgba(21,128,61,0.3); color: #86efac; border-color: rgba(134,239,172,0.3); }
+
+/* ===== CHIP "+N lagi" ===== */
+.more-chip {
+  font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px;
+  background: rgba(124,58,237,0.2); color: #c4b5fd;
+  border: 1px solid rgba(124,58,237,0.3);
+  margin-bottom: 2px; cursor: pointer; display: inline-block;
+}
 
 /* STATUS */
 .status-badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 7px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1.5px solid; user-select: none; gap: 4px; transition: all 0.15s; }
@@ -229,6 +252,108 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 .detail-hdr { padding: 18px 22px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; background: rgba(2,6,23,0.5); }
 .detail-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
 .naskah-box { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px; font-size: 13px; color: #d1d5db; line-height: 1.75; white-space: pre-wrap; border: 1px solid rgba(255,255,255,0.07); max-height: 280px; overflow-y: auto; }
+
+/* ===== DAY MODAL (BARU) ===== */
+.day-modal {
+  background: #111827;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  overflow: hidden;
+  max-height: 88dvh;
+  display: flex;
+  flex-direction: column;
+  animation: modalIn 0.2s ease;
+}
+.day-modal-hdr {
+  padding: 18px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  background: rgba(2,6,23,0.5);
+}
+.day-modal-body {
+  padding: 14px 16px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 60px;
+}
+.day-naskah-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.day-naskah-item:hover {
+  background: rgba(124,58,237,0.15);
+  border-color: rgba(124,58,237,0.35);
+  transform: translateX(2px);
+}
+.day-naskah-left {
+  flex: 1;
+  min-width: 0;
+}
+.day-naskah-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e5e7eb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+.day-naskah-meta {
+  font-size: 11px;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.day-modal-empty {
+  text-align: center;
+  padding: 32px 0;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.day-modal-empty .empty-icon { font-size: 32px; margin-bottom: 8px; }
+.day-modal-footer {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+  background: rgba(2,6,23,0.3);
+}
+.day-add-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 3px 12px rgba(124,58,237,0.4);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.day-add-btn:hover { box-shadow: 0 5px 18px rgba(124,58,237,0.55); transform: translateY(-1px); }
 
 /* IDEAS */
 .ideas-tabs { display: flex; gap: 7px; padding: 0 28px; margin-bottom: 16px; flex-wrap: wrap; }
@@ -275,7 +400,6 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 .pv-modal { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; width: 100%; max-width: 520px; padding: 26px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); max-height: 88dvh; overflow-y: auto; animation: modalIn 0.2s ease; }
 .pv-text { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 15px; font-size: 13px; color: #d1d5db; line-height: 1.75; white-space: pre-wrap; border: 1px solid rgba(255,255,255,0.07); max-height: 380px; overflow-y: auto; margin-bottom: 15px; }
 
-/* Mobile modal slide-up animation */
 @media (max-width: 680px) {
   @keyframes modalIn { from { opacity:0; transform: translateY(40px); } to { opacity:1; transform: none; } }
 }
@@ -283,7 +407,6 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 </head>
 <body>
 
-<!-- LOADING -->
 <div class="loading-screen" id="loading-screen">
   <div class="loading-logo">🎬</div>
   <div class="spinner"></div>
@@ -291,7 +414,6 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
   <div class="loading-sub">Memuat data dari cloud...</div>
 </div>
 
-<!-- PWA Install Banner (Android/Desktop) -->
 <div id="install-banner">
   <div class="install-content">
     <div class="install-icon">🎬</div>
@@ -306,7 +428,6 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
   </div>
 </div>
 
-<!-- iOS Install Guide -->
 <div id="ios-guide">
   <div style="font-size:14px;font-weight:800;color:#e5e7eb;margin-bottom:12px;">📲 Cara Install di iPhone/iPad</div>
   <div class="ios-step">
@@ -373,7 +494,7 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
           <button class="btn-naskah" onclick="openNaskahModal()">+ Naskah</button>
         </div>
       </div>
-      <div class="cal-hint">📌 Klik tanggal untuk tambah atau lihat naskah</div>
+      <div class="cal-hint">📌 Klik tanggal untuk lihat & tambah naskah</div>
       <div class="cal-grid-wrap">
         <div class="cal-headers">
           <div class="cal-hdr">MIN</div><div class="cal-hdr">SEN</div><div class="cal-hdr">SEL</div>
@@ -441,6 +562,25 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
     <span class="bn-icon">📖</span>Jurnal
   </button>
 </nav>
+
+<!-- ===== MODAL: DAY VIEW (BARU) ===== -->
+<div class="overlay hidden" id="day-overlay">
+  <div class="day-modal">
+    <div class="day-modal-hdr">
+      <div>
+        <div id="day-modal-date" style="font-size:17px;font-weight:800;color:#e5e7eb;letter-spacing:-0.01em;"></div>
+        <div id="day-modal-count" style="font-size:11px;color:#6b7280;margin-top:3px;"></div>
+      </div>
+      <button class="modal-close" onclick="closeDayModal()">&#215;</button>
+    </div>
+    <div class="day-modal-body" id="day-modal-body"></div>
+    <div class="day-modal-footer">
+      <button class="day-add-btn" id="day-add-btn">
+        <span style="font-size:18px;line-height:1;">+</span> Tambah Naskah
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL: NASKAH -->
 <div class="overlay hidden" id="naskah-overlay">
@@ -535,9 +675,6 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 </div>
 
 <script>
-// =============================================
-// SERVICE WORKER REGISTRATION
-// =============================================
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
@@ -546,222 +683,223 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// =============================================
-// PWA INSTALL PROMPT
-// =============================================
 let deferredPrompt = null;
 const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
 window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  if (!isStandalone && !localStorage.getItem('pwa-dismissed')) {
-    setTimeout(() => {
-      document.getElementById('install-banner').style.display = 'block';
-    }, 3000);
-  }
+  e.preventDefault(); deferredPrompt = e;
+  if (!isStandalone && !localStorage.getItem('pwa-dismissed'))
+    setTimeout(() => { document.getElementById('install-banner').style.display = 'block'; }, 3000);
 });
-
 function doInstall() {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(choice => {
-    if (choice.outcome === 'accepted') console.log('PWA installed');
-    deferredPrompt = null;
-    dismissInstall();
-  });
+  deferredPrompt.userChoice.then(c => { deferredPrompt = null; dismissInstall(); });
 }
+function dismissInstall() { document.getElementById('install-banner').style.display = 'none'; localStorage.setItem('pwa-dismissed','1'); }
+function dismissIOS()    { document.getElementById('ios-guide').style.display = 'none'; localStorage.setItem('ios-guide-dismissed','1'); }
+if (isIOS && !isStandalone && !localStorage.getItem('ios-guide-dismissed'))
+  setTimeout(() => { document.getElementById('ios-guide').style.display = 'block'; }, 2000);
 
-function dismissInstall() {
-  document.getElementById('install-banner').style.display = 'none';
-  localStorage.setItem('pwa-dismissed', '1');
-}
-
-function dismissIOS() {
-  document.getElementById('ios-guide').style.display = 'none';
-  localStorage.setItem('ios-guide-dismissed', '1');
-}
-
-// Show iOS guide on Safari iOS (not standalone)
-if (isIOS && !isStandalone && !localStorage.getItem('ios-guide-dismissed')) {
-  setTimeout(() => {
-    document.getElementById('ios-guide').style.display = 'block';
-  }, 2000);
-}
-
-// =============================================
-// SUPABASE CONFIG
-// =============================================
+// SUPABASE
 const SUPABASE_URL = 'https://vxgggmsdhxqrexuwllgs.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4Z2dnbXNkaHhxcmV4dXdsbGdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNjY4NTMsImV4cCI6MjA5Mjc0Mjg1M30.hbATv4AQkkgdDNUvBH_gUIjG_DpxsOFf0PGWT8P4VGY';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// =============================================
-// STATE
-// =============================================
 const MONTHS = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 const TODAY  = new Date();
 let curMonth = TODAY.getMonth(), curYear = TODAY.getFullYear();
 
 function platSVG(p, s=14) {
-  if (p === 'YouTube') return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" style="flex-shrink:0;vertical-align:middle;"><path fill="#DC2626" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8z"/><polygon fill="white" points="9.75,15.5 15.5,12 9.75,8.5"/></svg>`;
-  if (p === 'TikTok')  return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" style="flex-shrink:0;vertical-align:middle;"><path fill="#e5e7eb" d="M19.6 3.3a4.9 4.9 0 0 1-3-1.9A4.9 4.9 0 0 1 15.5 0h-3.3v16.4a2.3 2.3 0 0 1-2.3 2 2.3 2.3 0 0 1-2.3-2.3 2.3 2.3 0 0 1 2.3-2.3c.2 0 .5 0 .7.1V10.5a5.7 5.7 0 0 0-.7 0A5.6 5.6 0 0 0 4.3 16a5.6 5.6 0 0 0 5.6 5.6 5.6 5.6 0 0 0 5.6-5.6V8.2a8.1 8.1 0 0 0 4.7 1.5V6.4a4.9 4.9 0 0 1-0.6-.1z"/></svg>`;
-  if (p === 'Shorts')  return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" style="flex-shrink:0;vertical-align:middle;"><path fill="#DC2626" d="M10 14.65v-5.3L15 12zm7.77-4.33c-1.8-1.8-4.44-2.15-6.64-1.12L9.48 7.55C12.6 5.67 16.71 6.12 19.3 8.7a8.26 8.26 0 0 1 0 11.67 8.26 8.26 0 0 1-11.67 0 8.26 8.26 0 0 1-1.73-9l1.63 1.63A6.18 6.18 0 0 0 8.83 19a6.17 6.17 0 0 0 8.72 0 6.17 6.17 0 0 0 .22-8.68z"/></svg>`;
+  if (p==='YouTube') return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" style="flex-shrink:0;vertical-align:middle;"><path fill="#DC2626" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8z"/><polygon fill="white" points="9.75,15.5 15.5,12 9.75,8.5"/></svg>`;
+  if (p==='TikTok')  return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" style="flex-shrink:0;vertical-align:middle;"><path fill="#e5e7eb" d="M19.6 3.3a4.9 4.9 0 0 1-3-1.9A4.9 4.9 0 0 1 15.5 0h-3.3v16.4a2.3 2.3 0 0 1-2.3 2 2.3 2.3 0 0 1-2.3-2.3 2.3 2.3 0 0 1 2.3-2.3c.2 0 .5 0 .7.1V10.5a5.7 5.7 0 0 0-.7 0A5.6 5.6 0 0 0 4.3 16a5.6 5.6 0 0 0 5.6 5.6 5.6 5.6 0 0 0 5.6-5.6V8.2a8.1 8.1 0 0 0 4.7 1.5V6.4a4.9 4.9 0 0 1-0.6-.1z"/></svg>`;
+  if (p==='Shorts')  return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" style="flex-shrink:0;vertical-align:middle;"><path fill="#DC2626" d="M10 14.65v-5.3L15 12zm7.77-4.33c-1.8-1.8-4.44-2.15-6.64-1.12L9.48 7.55C12.6 5.67 16.71 6.12 19.3 8.7a8.26 8.26 0 0 1 0 11.67 8.26 8.26 0 0 1-11.67 0 8.26 8.26 0 0 1-1.73-9l1.63 1.63A6.18 6.18 0 0 0 8.83 19a6.17 6.17 0 0 0 8.72 0 6.17 6.17 0 0 0 .22-8.68z"/></svg>`;
   return '▶';
 }
 
-let naskahData  = {};
-let ideasData   = [];
-let promptsData = [];
-let jurnalData  = [];
+let naskahData={}, ideasData=[], promptsData=[], jurnalData=[];
+let editNaskahId=null, editIdeaId=null, editPromptId=null, editJurnalId=null;
+let detailKey=null, detailId=null, pvId=null;
+let moveKey=null, moveId=null;
+let ideaFilter='all', promptFilter='all';
 
-let editNaskahId = null, editIdeaId = null, editPromptId = null, editJurnalId = null;
-let detailKey = null, detailId = null, pvId = null;
-let moveKey = null, moveId = null;
-let ideaFilter = 'all', promptFilter = 'all';
+// Tanggal key yang sedang aktif di day modal
+let activeDayKey = null;
 
-// =============================================
-// SYNC UI
-// =============================================
-function setSyncing() {
-  document.getElementById('sync-dot').className = 'sync-dot syncing';
-  document.getElementById('sync-label').textContent = 'Menyimpan...';
-}
-function setSynced() {
-  document.getElementById('sync-dot').className = 'sync-dot';
-  document.getElementById('sync-label').textContent = 'Tersinkron ☁️';
-}
-function setOffline() {
-  document.getElementById('sync-dot').className = 'sync-dot offline';
-  document.getElementById('sync-label').textContent = 'Gagal konek';
-}
+function setSyncing() { document.getElementById('sync-dot').className='sync-dot syncing'; document.getElementById('sync-label').textContent='Menyimpan...'; }
+function setSynced()  { document.getElementById('sync-dot').className='sync-dot'; document.getElementById('sync-label').textContent='Tersinkron ☁️'; }
+function setOffline() { document.getElementById('sync-dot').className='sync-dot offline'; document.getElementById('sync-label').textContent='Gagal konek'; }
 
-// =============================================
-// INIT
-// =============================================
 async function init() {
   try {
-    const [calRes, ideasRes, promptsRes, journalRes] = await Promise.all([
-      sb.from('calendar').select('*').order('date', {ascending: true}),
-      sb.from('ideas').select('*').order('created_at', {ascending: true}),
-      sb.from('prompts').select('*').order('created_at', {ascending: true}),
-      sb.from('journal').select('*').order('created_at', {ascending: false}),
+    const [calRes,ideasRes,promptsRes,journalRes] = await Promise.all([
+      sb.from('calendar').select('*').order('date',{ascending:true}),
+      sb.from('ideas').select('*').order('created_at',{ascending:true}),
+      sb.from('prompts').select('*').order('created_at',{ascending:true}),
+      sb.from('journal').select('*').order('created_at',{ascending:false}),
     ]);
-
-    naskahData = {};
-    (calRes.data || []).forEach(row => {
-      const key = row.date;
-      if (!naskahData[key]) naskahData[key] = [];
-      naskahData[key].push({ id: row.id, title: row.title, platform: row.platform || 'YouTube', script: row.narasi || '', status: row.status || 'Draft' });
+    naskahData={};
+    (calRes.data||[]).forEach(row => {
+      if (!naskahData[row.date]) naskahData[row.date]=[];
+      naskahData[row.date].push({id:row.id,title:row.title,platform:row.platform||'YouTube',script:row.narasi||'',status:row.status||'Draft'});
     });
-
-    ideasData   = (ideasRes.data   || []).map(r => ({ id: r.id, title: r.title, desc: r.description || '', platform: r.type || 'YouTube', pinned: r.status === 'pinned' }));
-    promptsData = (promptsRes.data || []).map(r => ({ id: r.id, title: r.name || r.title || '', cat: r.type || 'Script', text: r.body || '' }));
-    jurnalData  = (journalRes.data || []).map(r => ({ id: r.id, title: r.title, date: fmtDate(r.created_at), content: r.content || '', tags: r.tags || [] }));
-
+    ideasData   = (ideasRes.data  ||[]).map(r=>({id:r.id,title:r.title,desc:r.description||'',platform:r.type||'YouTube',pinned:r.status==='pinned'}));
+    promptsData = (promptsRes.data||[]).map(r=>({id:r.id,title:r.name||r.title||'',cat:r.type||'Script',text:r.body||''}));
+    jurnalData  = (journalRes.data||[]).map(r=>({id:r.id,title:r.title,date:fmtDate(r.created_at),content:r.content||'',tags:r.tags||[]}));
     setSynced();
-  } catch(e) {
-    setOffline();
-    console.error(e);
-  }
+  } catch(e) { setOffline(); console.error(e); }
   document.getElementById('loading-screen').classList.add('hidden');
   renderCalendar();
 }
 
 function fmtDate(iso) {
   if (!iso) return '';
-  const d = new Date(iso);
-  return d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+  const d=new Date(iso);
+  return d.getDate()+' '+MONTHS[d.getMonth()]+' '+d.getFullYear();
 }
 function fmtKey(key) {
-  const [y,m,d] = key.split('-');
-  return d + ' ' + MONTHS[parseInt(m)-1] + ' ' + y;
+  const [y,m,d]=key.split('-');
+  return d+' '+MONTHS[parseInt(m)-1]+' '+y;
 }
 
-// =============================================
-// NAV
-// =============================================
-function showPage(name, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
+function showPage(name,btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
   if (btn) btn.classList.add('active');
-  if (name === 'ideas')    renderIdeas();
-  if (name === 'prompt')   renderPrompts();
-  if (name === 'jurnal')   renderJurnal();
-  if (name === 'kalender') renderCalendar();
+  if (name==='ideas')    renderIdeas();
+  if (name==='prompt')   renderPrompts();
+  if (name==='jurnal')   renderJurnal();
+  if (name==='kalender') renderCalendar();
 }
-
 function switchBN(name) {
-  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
-  document.getElementById('bn-' + name).classList.add('active');
+  document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('bn-'+name).classList.add('active');
 }
 
 // =============================================
 // KALENDER
 // =============================================
 function renderCalendar() {
-  document.getElementById('cal-title').textContent = MONTHS[curMonth] + ' ' + curYear;
-  const first = new Date(curYear, curMonth, 1).getDay();
-  const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
-  const prevDays = new Date(curYear, curMonth, 0).getDate();
+  document.getElementById('cal-title').textContent = MONTHS[curMonth]+' '+curYear;
+  const first = new Date(curYear,curMonth,1).getDay();
+  const daysInMonth = new Date(curYear,curMonth+1,0).getDate();
+  const prevDays = new Date(curYear,curMonth,0).getDate();
   const cells = document.getElementById('cal-cells');
-  cells.innerHTML = '';
-  let total = first + daysInMonth;
-  if (total % 7 !== 0) total += 7 - (total % 7);
+  cells.innerHTML='';
+  let total = first+daysInMonth;
+  if (total%7!==0) total+=7-(total%7);
 
-  for (let i = 0; i < total; i++) {
+  for (let i=0; i<total; i++) {
     const cell = document.createElement('div');
-    if (i < first) {
-      cell.className = 'cal-cell empty';
-      cell.innerHTML = '<span class="day-ghost">' + (prevDays - first + i + 1) + '</span>';
-    } else if (i >= first + daysInMonth) {
-      cell.className = 'cal-cell empty';
-      cell.innerHTML = '<span class="day-ghost">' + (i - first - daysInMonth + 1) + '</span>';
+    if (i<first) {
+      cell.className='cal-cell empty';
+      cell.innerHTML='<span class="day-ghost">'+(prevDays-first+i+1)+'</span>';
+    } else if (i>=first+daysInMonth) {
+      cell.className='cal-cell empty';
+      cell.innerHTML='<span class="day-ghost">'+(i-first-daysInMonth+1)+'</span>';
     } else {
-      const day = i - first + 1;
-      const mm = String(curMonth + 1).padStart(2, '0');
-      const dd = String(day).padStart(2, '0');
-      const key = curYear + '-' + mm + '-' + dd;
-      const isToday = day === TODAY.getDate() && curMonth === TODAY.getMonth() && curYear === TODAY.getFullYear();
-      cell.className = 'cal-cell';
-      let html = '<div class="day-num' + (isToday ? ' today' : '') + '">' + day + '</div>';
-      (naskahData[key] || []).forEach(ev => {
-        const cc = 'chip-' + (ev.status || 'Draft');
-        html += `<div class="ev-chip ${cc}" onclick="event.stopPropagation();openDetailModal('${key}','${ev.id}')">${platSVG(ev.platform,9)} ${ev.title}</div>`;
+      const day=i-first+1;
+      const mm=String(curMonth+1).padStart(2,'0');
+      const dd=String(day).padStart(2,'0');
+      const key=curYear+'-'+mm+'-'+dd;
+      const isToday=day===TODAY.getDate()&&curMonth===TODAY.getMonth()&&curYear===TODAY.getFullYear();
+      cell.className='cal-cell';
+
+      let html='<div class="day-num'+(isToday?' today':'')+'">'+ day +'</div>';
+
+      // ===== FIX: tampilkan max 2 chip, sisanya jadi badge "+N lagi" =====
+      const items = naskahData[key]||[];
+      const shown = items.slice(0,2);
+      shown.forEach(ev => {
+        const cc='chip-'+(ev.status||'Draft');
+        html+=`<div class="ev-chip ${cc}">${platSVG(ev.platform,9)} ${ev.title}</div>`;
       });
-      cell.innerHTML = html;
-      cell.onclick = () => cellClick(day, key);
+      if (items.length>2) {
+        html+=`<div class="more-chip">+${items.length-2} lagi</div>`;
+      }
+
+      cell.innerHTML=html;
+      // Klik sel → selalu buka day modal
+      cell.onclick=()=>openDayModal(key);
     }
     cells.appendChild(cell);
   }
 }
 
-function cellClick(day, key) {
-  const list = naskahData[key];
-  if (!list || list.length === 0) openNaskahModal(null, key);
-  else openDetailModal(key, list[0].id);
+function prevMonth() { curMonth--; if(curMonth<0){curMonth=11;curYear--;} renderCalendar(); }
+function nextMonth() { curMonth++; if(curMonth>11){curMonth=0;curYear++;} renderCalendar(); }
+function goToday()   { curMonth=TODAY.getMonth(); curYear=TODAY.getFullYear(); renderCalendar(); }
+
+// =============================================
+// DAY MODAL (BARU)
+// =============================================
+function openDayModal(key) {
+  activeDayKey = key;
+  const list = naskahData[key]||[];
+  const dayDate = fmtKey(key);
+
+  document.getElementById('day-modal-date').textContent = '📅 '+dayDate;
+  document.getElementById('day-modal-count').textContent =
+    list.length===0 ? 'Belum ada naskah' : list.length+' naskah';
+
+  const body = document.getElementById('day-modal-body');
+  if (list.length===0) {
+    body.innerHTML=`<div class="day-modal-empty">
+      <div class="empty-icon">📭</div>
+      <div style="font-weight:700;color:#6b7280;margin-bottom:4px;">Kosong nih</div>
+      <div>Belum ada naskah untuk tanggal ini.<br>Klik tombol di bawah untuk tambah!</div>
+    </div>`;
+  } else {
+    const statusColor = {Draft:'#fbbf24', Exported:'#93c5fd', Uploaded:'#86efac'};
+    const statusDot   = {Draft:'🟡', Exported:'🔵', Uploaded:'🟢'};
+    body.innerHTML = list.map(ev => `
+      <div class="day-naskah-item" onclick="openDetailFromDay('${key}','${ev.id}')">
+        <div style="flex-shrink:0;">${platSVG(ev.platform,20)}</div>
+        <div class="day-naskah-left">
+          <div class="day-naskah-title">${ev.title}</div>
+          <div class="day-naskah-meta">
+            <span>${ev.platform}</span>
+            <span style="color:rgba(255,255,255,0.15);">·</span>
+            <span style="color:${statusColor[ev.status]||'#fbbf24'};">${statusDot[ev.status]||'🟡'} ${ev.status}</span>
+          </div>
+        </div>
+        <span style="color:#4b5563;font-size:18px;">›</span>
+      </div>`).join('');
+  }
+
+  // Pasang handler tombol tambah
+  document.getElementById('day-add-btn').onclick = () => {
+    closeDayModal();
+    openNaskahModal(null, key);
+  };
+
+  show('day-overlay');
 }
-function prevMonth() { curMonth--; if (curMonth < 0) { curMonth = 11; curYear--; } renderCalendar(); }
-function nextMonth() { curMonth++; if (curMonth > 11) { curMonth = 0; curYear++; } renderCalendar(); }
-function goToday() { curMonth = TODAY.getMonth(); curYear = TODAY.getFullYear(); renderCalendar(); }
+
+function closeDayModal() { hide('day-overlay'); activeDayKey=null; }
+
+function openDetailFromDay(key, id) {
+  closeDayModal();
+  openDetailModal(key, id);
+}
 
 // =============================================
 // NASKAH CRUD
 // =============================================
-function openNaskahModal(id = null, dateKeyVal = null) {
-  editNaskahId = id;
+function openNaskahModal(id=null, dateKeyVal=null) {
+  editNaskahId=id;
   document.getElementById('naskah-modal-title').textContent = id ? '✏️ Edit Naskah' : '+ Naskah Baru';
   if (id) {
-    let ev = null;
+    let ev=null;
     for (const key in naskahData) {
-      ev = naskahData[key].find(n => n.id === id);
-      if (ev) { dateKeyVal = key; break; }
+      ev=naskahData[key].find(n=>n.id===id);
+      if (ev){dateKeyVal=key;break;}
     }
     document.getElementById('inp-n-title').value    = ev.title;
     document.getElementById('inp-n-platform').value = ev.platform;
-    document.getElementById('inp-n-script').value   = ev.script || '';
+    document.getElementById('inp-n-script').value   = ev.script||'';
     document.getElementById('inp-n-status').value   = ev.status;
     document.getElementById('inp-n-date').value     = dateKeyVal;
   } else {
@@ -769,54 +907,52 @@ function openNaskahModal(id = null, dateKeyVal = null) {
     document.getElementById('inp-n-script').value   = '';
     document.getElementById('inp-n-status').value   = 'Draft';
     document.getElementById('inp-n-platform').value = 'YouTube';
-    document.getElementById('inp-n-date').value     = dateKeyVal || '';
+    document.getElementById('inp-n-date').value     = dateKeyVal||'';
   }
   show('naskah-overlay');
-  setTimeout(() => document.getElementById('inp-n-title').focus(), 50);
+  setTimeout(()=>document.getElementById('inp-n-title').focus(),50);
 }
 function closeNaskahModal() { hide('naskah-overlay'); }
 
 async function saveNaskah() {
-  const title    = v('inp-n-title');
-  const dateVal  = v('inp-n-date');
-  const platform = v('inp-n-platform');
-  const script   = v('inp-n-script');
-  const status   = v('inp-n-status');
-  if (!title) { alert('Isi judul naskah dulu!'); return; }
+  const title=v('inp-n-title'), dateVal=v('inp-n-date'), platform=v('inp-n-platform'),
+        script=v('inp-n-script'), status=v('inp-n-status');
+  if (!title)   { alert('Isi judul naskah dulu!'); return; }
   if (!dateVal) { alert('Pilih tanggal dulu!'); return; }
-
-  const btn = document.getElementById('btn-save-naskah');
-  btn.disabled = true; btn.textContent = 'Menyimpan...';
+  const btn=document.getElementById('btn-save-naskah');
+  btn.disabled=true; btn.textContent='Menyimpan...';
   setSyncing();
   try {
     if (editNaskahId) {
-      const { error } = await sb.from('calendar').update({ title, platform, narasi: script, status, date: dateVal }).eq('id', editNaskahId);
+      const {error}=await sb.from('calendar').update({title,platform,narasi:script,status,date:dateVal}).eq('id',editNaskahId);
       if (error) throw error;
       for (const key in naskahData) {
-        const idx = naskahData[key].findIndex(n => n.id === editNaskahId);
-        if (idx !== -1) { naskahData[key].splice(idx, 1); if (naskahData[key].length === 0) delete naskahData[key]; break; }
+        const idx=naskahData[key].findIndex(n=>n.id===editNaskahId);
+        if (idx!==-1){naskahData[key].splice(idx,1);if(!naskahData[key].length)delete naskahData[key];break;}
       }
-      if (!naskahData[dateVal]) naskahData[dateVal] = [];
-      naskahData[dateVal].push({ id: editNaskahId, title, platform, script, status });
+      if (!naskahData[dateVal]) naskahData[dateVal]=[];
+      naskahData[dateVal].push({id:editNaskahId,title,platform,script,status});
     } else {
-      const { data, error } = await sb.from('calendar').insert({ title, platform, narasi: script, status, date: dateVal, type: platform }).select().single();
+      const {data,error}=await sb.from('calendar').insert({title,platform,narasi:script,status,date:dateVal,type:platform}).select().single();
       if (error) throw error;
-      if (!naskahData[dateVal]) naskahData[dateVal] = [];
-      naskahData[dateVal].push({ id: data.id, title, platform, script, status });
-      const [y, m] = dateVal.split('-');
-      curMonth = parseInt(m) - 1; curYear = parseInt(y);
+      if (!naskahData[dateVal]) naskahData[dateVal]=[];
+      naskahData[dateVal].push({id:data.id,title,platform,script,status});
+      const [y,m]=dateVal.split('-');
+      curMonth=parseInt(m)-1; curYear=parseInt(y);
     }
     setSynced(); closeNaskahModal(); closeDetailModal(); renderCalendar();
-  } catch(e) { setOffline(); alert('Gagal menyimpan: ' + e.message); }
-  btn.disabled = false; btn.textContent = 'Simpan Naskah';
+    // Kalau day modal masih relevan, refresh-in
+    if (activeDayKey) openDayModal(activeDayKey);
+  } catch(e) { setOffline(); alert('Gagal menyimpan: '+e.message); }
+  btn.disabled=false; btn.textContent='Simpan Naskah';
 }
 
 function openDetailModal(key, id) {
-  detailKey = key; detailId = id;
-  const ev = (naskahData[key] || []).find(n => n.id === id);
+  detailKey=key; detailId=id;
+  const ev=(naskahData[key]||[]).find(n=>n.id===id);
   if (!ev) return;
-  document.getElementById('detail-plat').textContent = '▶ ' + ev.platform;
-  document.getElementById('detail-body').innerHTML = `
+  document.getElementById('detail-plat').innerHTML = platSVG(ev.platform,14)+' '+ev.platform;
+  document.getElementById('detail-body').innerHTML=`
     <div>
       <div style="font-size:18px;font-weight:800;color:#e5e7eb;margin-bottom:10px;line-height:1.3;">${ev.title}</div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
@@ -827,178 +963,131 @@ function openDetailModal(key, id) {
     </div>
     <div>
       <div style="font-size:12px;font-weight:700;color:#9ca3af;margin-bottom:7px;text-transform:uppercase;letter-spacing:0.06em;">📄 Naskah</div>
-      <div class="naskah-box">${ev.script ? ev.script : '<span style="color:#6b7280;font-style:italic;">Belum ada naskah.</span>'}</div>
+      <div class="naskah-box">${ev.script?ev.script:'<span style="color:#6b7280;font-style:italic;">Belum ada naskah.</span>'}</div>
     </div>`;
   show('detail-overlay');
 }
-function closeDetailModal() { hide('detail-overlay'); detailKey = null; detailId = null; }
+function closeDetailModal() { hide('detail-overlay'); detailKey=null; detailId=null; }
 
-async function cycleStatus(key, id) {
-  const order = ['Draft', 'Exported', 'Uploaded'];
-  const ev = (naskahData[key] || []).find(n => n.id === id);
+async function cycleStatus(key,id) {
+  const order=['Draft','Exported','Uploaded'];
+  const ev=(naskahData[key]||[]).find(n=>n.id===id);
   if (!ev) return;
-  ev.status = order[(order.indexOf(ev.status) + 1) % 3];
+  ev.status=order[(order.indexOf(ev.status)+1)%3];
   setSyncing();
-  const { error } = await sb.from('calendar').update({ status: ev.status }).eq('id', id);
+  const {error}=await sb.from('calendar').update({status:ev.status}).eq('id',id);
   if (error) setOffline(); else setSynced();
-  renderCalendar(); openDetailModal(key, id);
+  renderCalendar(); openDetailModal(key,id);
 }
-
-function editNaskahFromDetail() {
-  const id = detailId;
-  closeDetailModal();
-  openNaskahModal(id);
-}
+function editNaskahFromDetail() { const id=detailId; closeDetailModal(); openNaskahModal(id); }
 
 async function deleteNaskah() {
   if (!confirm('Hapus naskah ini?')) return;
   setSyncing();
-  const { error } = await sb.from('calendar').delete().eq('id', detailId);
-  if (error) { setOffline(); alert('Gagal hapus: ' + error.message); return; }
+  const {error}=await sb.from('calendar').delete().eq('id',detailId);
+  if (error){setOffline();alert('Gagal hapus: '+error.message);return;}
   for (const key in naskahData) {
-    const idx = naskahData[key].findIndex(n => n.id === detailId);
-    if (idx !== -1) { naskahData[key].splice(idx, 1); if (naskahData[key].length === 0) delete naskahData[key]; break; }
+    const idx=naskahData[key].findIndex(n=>n.id===detailId);
+    if (idx!==-1){naskahData[key].splice(idx,1);if(!naskahData[key].length)delete naskahData[key];break;}
   }
   setSynced(); closeDetailModal(); renderCalendar();
 }
-
 function copyNaskah() {
-  const ev = (naskahData[detailKey] || []).find(n => n.id === detailId);
-  if (ev) navigator.clipboard.writeText(ev.title + '\n\n' + (ev.script || '')).then(() => alert('Naskah berhasil dicopy! ✓'));
+  const ev=(naskahData[detailKey]||[]).find(n=>n.id===detailId);
+  if (ev) navigator.clipboard.writeText(ev.title+'\n\n'+(ev.script||'')).then(()=>alert('Naskah berhasil dicopy! ✓'));
 }
-
-function openMoveModal(key, id) {
-  moveKey = key; moveId = id;
-  document.getElementById('inp-move-date').value = key;
-  show('move-overlay');
-}
+function openMoveModal(key,id) { moveKey=key; moveId=id; document.getElementById('inp-move-date').value=key; show('move-overlay'); }
 function closeMoveModal() { hide('move-overlay'); }
-
 async function confirmMove() {
-  const newDate = v('inp-move-date');
-  if (!newDate) { alert('Pilih tanggal dulu!'); return; }
+  const newDate=v('inp-move-date');
+  if (!newDate){alert('Pilih tanggal dulu!');return;}
   setSyncing();
-  const { error } = await sb.from('calendar').update({ date: newDate }).eq('id', moveId);
-  if (error) { setOffline(); alert('Gagal pindah: ' + error.message); return; }
-  const ev = (naskahData[moveKey] || []).find(n => n.id === moveId);
+  const {error}=await sb.from('calendar').update({date:newDate}).eq('id',moveId);
+  if (error){setOffline();alert('Gagal pindah: '+error.message);return;}
+  const ev=(naskahData[moveKey]||[]).find(n=>n.id===moveId);
   if (ev) {
-    naskahData[moveKey] = naskahData[moveKey].filter(n => n.id !== moveId);
-    if (naskahData[moveKey].length === 0) delete naskahData[moveKey];
-    if (!naskahData[newDate]) naskahData[newDate] = [];
+    naskahData[moveKey]=naskahData[moveKey].filter(n=>n.id!==moveId);
+    if (!naskahData[moveKey].length) delete naskahData[moveKey];
+    if (!naskahData[newDate]) naskahData[newDate]=[];
     naskahData[newDate].push(ev);
   }
-  const [y, m] = newDate.split('-');
-  curMonth = parseInt(m) - 1; curYear = parseInt(y);
+  const [y,m]=newDate.split('-');
+  curMonth=parseInt(m)-1; curYear=parseInt(y);
   setSynced(); closeMoveModal(); closeDetailModal(); renderCalendar();
 }
-
-function statusLabel(s) { return s === 'Draft' ? '📝 Draft' : s === 'Exported' ? '📤 Exported' : '✅ Uploaded'; }
+function statusLabel(s){return s==='Draft'?'📝 Draft':s==='Exported'?'📤 Exported':'✅ Uploaded';}
 
 // =============================================
 // IDEAS CRUD
 // =============================================
 function renderIdeas() {
-  const grid = document.getElementById('ideas-grid');
-  let filtered = ideaFilter === 'all' ? [...ideasData] : ideasData.filter(i => i.platform === ideaFilter);
-  filtered.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
-  if (filtered.length === 0) { grid.innerHTML = '<div style="color:#9ca3af;font-size:13px;padding:20px 0;grid-column:1/-1;">Belum ada ide. Klik "+ Ide Baru" 💡</div>'; return; }
-  const platColor = { YouTube: '#DC2626', TikTok: '#111111', Shorts: '#DC2626' };
-  grid.innerHTML = filtered.map(idea => {
-    const col = platColor[idea.platform] || '#374151';
+  const grid=document.getElementById('ideas-grid');
+  let filtered=ideaFilter==='all'?[...ideasData]:ideasData.filter(i=>i.platform===ideaFilter);
+  filtered.sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0));
+  if (!filtered.length){grid.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:20px 0;grid-column:1/-1;">Belum ada ide. Klik "+ Ide Baru" 💡</div>';return;}
+  const platColor={YouTube:'#DC2626',TikTok:'#111111',Shorts:'#DC2626'};
+  grid.innerHTML=filtered.map(idea=>{
+    const col=platColor[idea.platform]||'#374151';
     return `<div class="idea-card">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
         <span style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:${col};">${idea.platform}</span>
-        ${idea.pinned ? '<span style="font-size:11px;margin-left:auto;color:#b45309;">📌 Pinned</span>' : ''}
+        ${idea.pinned?'<span style="font-size:11px;margin-left:auto;color:#b45309;">📌 Pinned</span>':''}
       </div>
       <div class="idea-title">${idea.title}</div>
-      <div class="idea-desc">${idea.desc || ''}</div>
+      <div class="idea-desc">${idea.desc||''}</div>
       <div class="idea-actions">
-        <button class="icon-btn ${idea.pinned ? 'pin-active' : ''}" onclick="togglePin('${idea.id}')" title="${idea.pinned ? 'Unpin' : 'Pin'}">📌</button>
+        <button class="icon-btn ${idea.pinned?'pin-active':''}" onclick="togglePin('${idea.id}')" title="${idea.pinned?'Unpin':'Pin'}">📌</button>
         <button class="icon-btn" onclick="openIdeaModal('${idea.id}')">✏️</button>
         <button class="icon-btn danger" onclick="deleteIdea('${idea.id}')">🗑️</button>
       </div>
     </div>`;
   }).join('');
 }
-
-function filterIdeas(f, btn) {
-  ideaFilter = f;
-  document.querySelectorAll('.itab').forEach(t => t.classList.remove('on'));
-  btn.classList.add('on');
-  renderIdeas();
+function filterIdeas(f,btn){ideaFilter=f;document.querySelectorAll('.itab').forEach(t=>t.classList.remove('on'));btn.classList.add('on');renderIdeas();}
+async function togglePin(id){
+  const idea=ideasData.find(i=>i.id===id);if(!idea)return;
+  idea.pinned=!idea.pinned;setSyncing();
+  const {error}=await sb.from('ideas').update({status:idea.pinned?'pinned':null}).eq('id',id);
+  if(error)setOffline();else setSynced();renderIdeas();
 }
-
-async function togglePin(id) {
-  const idea = ideasData.find(i => i.id === id);
-  if (!idea) return;
-  idea.pinned = !idea.pinned;
-  setSyncing();
-  const { error } = await sb.from('ideas').update({ status: idea.pinned ? 'pinned' : null }).eq('id', id);
-  if (error) setOffline(); else setSynced();
-  renderIdeas();
+function openIdeaModal(id=null){
+  editIdeaId=id;
+  document.getElementById('idea-modal-title').textContent=id?'✏️ Edit Ide':'+ Ide Baru';
+  if(id){const idea=ideasData.find(i=>i.id===id);document.getElementById('inp-i-title').value=idea.title;document.getElementById('inp-i-desc').value=idea.desc||'';document.getElementById('inp-i-platform').value=idea.platform;}
+  else{document.getElementById('inp-i-title').value='';document.getElementById('inp-i-desc').value='';document.getElementById('inp-i-platform').value='YouTube';}
+  show('idea-overlay');setTimeout(()=>document.getElementById('inp-i-title').focus(),50);
 }
-
-function openIdeaModal(id = null) {
-  editIdeaId = id;
-  document.getElementById('idea-modal-title').textContent = id ? '✏️ Edit Ide' : '+ Ide Baru';
-  if (id) {
-    const idea = ideasData.find(i => i.id === id);
-    document.getElementById('inp-i-title').value    = idea.title;
-    document.getElementById('inp-i-desc').value     = idea.desc || '';
-    document.getElementById('inp-i-platform').value = idea.platform;
-  } else {
-    document.getElementById('inp-i-title').value    = '';
-    document.getElementById('inp-i-desc').value     = '';
-    document.getElementById('inp-i-platform').value = 'YouTube';
-  }
-  show('idea-overlay');
-  setTimeout(() => document.getElementById('inp-i-title').focus(), 50);
+function closeIdeaModal(){hide('idea-overlay');editIdeaId=null;}
+async function saveIdea(){
+  const title=v('inp-i-title'),desc=v('inp-i-desc'),platform=v('inp-i-platform');
+  if(!title){alert('Isi judul ide dulu!');return;}
+  const btn=document.getElementById('btn-save-idea');btn.disabled=true;btn.textContent='Menyimpan...';setSyncing();
+  try{
+    if(editIdeaId){const{error}=await sb.from('ideas').update({title,description:desc,type:platform}).eq('id',editIdeaId);if(error)throw error;Object.assign(ideasData.find(i=>i.id===editIdeaId),{title,desc,platform});}
+    else{const{data,error}=await sb.from('ideas').insert({title,description:desc,type:platform,status:null}).select().single();if(error)throw error;ideasData.push({id:data.id,title,desc,platform,pinned:false});}
+    setSynced();closeIdeaModal();renderIdeas();
+  }catch(e){setOffline();alert('Gagal simpan: '+e.message);}
+  btn.disabled=false;btn.textContent='Simpan Ide';
 }
-function closeIdeaModal() { hide('idea-overlay'); editIdeaId = null; }
-
-async function saveIdea() {
-  const title = v('inp-i-title'), desc = v('inp-i-desc'), platform = v('inp-i-platform');
-  if (!title) { alert('Isi judul ide dulu!'); return; }
-  const btn = document.getElementById('btn-save-idea');
-  btn.disabled = true; btn.textContent = 'Menyimpan...';
-  setSyncing();
-  try {
-    if (editIdeaId) {
-      const { error } = await sb.from('ideas').update({ title, description: desc, type: platform }).eq('id', editIdeaId);
-      if (error) throw error;
-      Object.assign(ideasData.find(i => i.id === editIdeaId), { title, desc, platform });
-    } else {
-      const { data, error } = await sb.from('ideas').insert({ title, description: desc, type: platform, status: null }).select().single();
-      if (error) throw error;
-      ideasData.push({ id: data.id, title, desc, platform, pinned: false });
-    }
-    setSynced(); closeIdeaModal(); renderIdeas();
-  } catch(e) { setOffline(); alert('Gagal simpan: ' + e.message); }
-  btn.disabled = false; btn.textContent = 'Simpan Ide';
-}
-
-async function deleteIdea(id) {
-  if (!confirm('Hapus ide ini?')) return;
-  setSyncing();
-  const { error } = await sb.from('ideas').delete().eq('id', id);
-  if (error) { setOffline(); alert('Gagal hapus: ' + error.message); return; }
-  ideasData = ideasData.filter(i => i.id !== id);
-  setSynced(); renderIdeas();
+async function deleteIdea(id){
+  if(!confirm('Hapus ide ini?'))return;setSyncing();
+  const{error}=await sb.from('ideas').delete().eq('id',id);
+  if(error){setOffline();alert('Gagal hapus: '+error.message);return;}
+  ideasData=ideasData.filter(i=>i.id!==id);setSynced();renderIdeas();
 }
 
 // =============================================
 // PROMPTS CRUD
 // =============================================
-function renderPrompts() {
-  const grid = document.getElementById('prompt-grid');
-  const filtered = promptFilter === 'all' ? [...promptsData] : promptsData.filter(p => p.cat === promptFilter);
-  if (filtered.length === 0) { grid.innerHTML = '<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada prompt di kategori ini.</div>'; return; }
-  const catColor = { Script: '#2563eb', Thumbnail: '#dc2626', Caption: '#0f766e', Riset: '#7e22ce', Hook: '#c2410c' };
-  const catIcon  = { Script: '📝', Thumbnail: '🖼️', Caption: '💬', Riset: '🔍', Hook: '🎣' };
-  grid.innerHTML = filtered.map(p => {
-    const col = catColor[p.cat] || '#374151';
-    const ico = catIcon[p.cat] || '📄';
-    const preview = p.text.length > 110 ? p.text.slice(0, 110) + '…' : p.text;
+function renderPrompts(){
+  const grid=document.getElementById('prompt-grid');
+  const filtered=promptFilter==='all'?[...promptsData]:promptsData.filter(p=>p.cat===promptFilter);
+  if(!filtered.length){grid.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:20px 0;">Belum ada prompt di kategori ini.</div>';return;}
+  const catColor={Script:'#2563eb',Thumbnail:'#dc2626',Caption:'#0f766e',Riset:'#7e22ce',Hook:'#c2410c'};
+  const catIcon={Script:'📝',Thumbnail:'🖼️',Caption:'💬',Riset:'🔍',Hook:'🎣'};
+  grid.innerHTML=filtered.map(p=>{
+    const col=catColor[p.cat]||'#374151',ico=catIcon[p.cat]||'📄';
+    const preview=p.text.length>110?p.text.slice(0,110)+'…':p.text;
     return `<div class="prompt-card">
       <div class="prompt-cat" style="color:${col};">${ico} ${p.cat}</div>
       <div class="prompt-title">${p.title}</div>
@@ -1014,174 +1103,96 @@ function renderPrompts() {
     </div>`;
   }).join('');
 }
-
-function filterPrompt(f, btn) {
-  promptFilter = f;
-  document.querySelectorAll('.prompt-filters .btn').forEach(b => b.classList.remove('btn-primary'));
-  btn.classList.add('btn-primary');
-  renderPrompts();
+function filterPrompt(f,btn){promptFilter=f;document.querySelectorAll('.prompt-filters .btn').forEach(b=>b.classList.remove('btn-primary'));btn.classList.add('btn-primary');renderPrompts();}
+function openPVModal(id){pvId=id;const p=promptsData.find(x=>x.id===id);const catIcon={Script:'📝',Thumbnail:'🖼️',Caption:'💬',Riset:'🔍',Hook:'🎣'};document.getElementById('pv-title').textContent=p.title;document.getElementById('pv-cat').textContent=(catIcon[p.cat]||'')+' '+p.cat;document.getElementById('pv-text').textContent=p.text;show('pv-overlay');}
+function closePVModal(){hide('pv-overlay');pvId=null;}
+function copyPromptFull(){const p=promptsData.find(x=>x.id===pvId);if(p)navigator.clipboard.writeText(p.text).then(()=>alert('Prompt berhasil dicopy! ✓'));}
+function copyPromptById(id){const p=promptsData.find(x=>x.id===id);if(p)navigator.clipboard.writeText(p.text).then(()=>{const btn=document.getElementById('cpbtn-'+id);if(btn){btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 Copy';btn.classList.remove('copied');},2000);}});}
+function openPromptModal(id=null){
+  editPromptId=id;document.getElementById('prompt-modal-title').textContent=id?'✏️ Edit Prompt':'+ Prompt Baru';
+  if(id){const p=promptsData.find(x=>x.id===id);document.getElementById('inp-p-title').value=p.title;document.getElementById('inp-p-cat').value=p.cat;document.getElementById('inp-p-text').value=p.text;}
+  else{document.getElementById('inp-p-title').value='';document.getElementById('inp-p-cat').value='Script';document.getElementById('inp-p-text').value='';}
+  show('prompt-overlay');setTimeout(()=>document.getElementById('inp-p-title').focus(),50);
 }
-
-function openPVModal(id) {
-  pvId = id;
-  const p = promptsData.find(x => x.id === id);
-  const catIcon = { Script: '📝', Thumbnail: '🖼️', Caption: '💬', Riset: '🔍', Hook: '🎣' };
-  document.getElementById('pv-title').textContent = p.title;
-  document.getElementById('pv-cat').textContent   = (catIcon[p.cat] || '') + ' ' + p.cat;
-  document.getElementById('pv-text').textContent  = p.text;
-  show('pv-overlay');
+function closePromptModal(){hide('prompt-overlay');editPromptId=null;}
+async function savePrompt(){
+  const title=v('inp-p-title'),text=v('inp-p-text'),cat=v('inp-p-cat');
+  if(!title||!text){alert('Isi judul dan isi prompt!');return;}
+  const btn=document.getElementById('btn-save-prompt');btn.disabled=true;btn.textContent='Menyimpan...';setSyncing();
+  try{
+    if(editPromptId){const{error}=await sb.from('prompts').update({name:title,type:cat,body:text}).eq('id',editPromptId);if(error)throw error;Object.assign(promptsData.find(x=>x.id===editPromptId),{title,cat,text});}
+    else{const{data,error}=await sb.from('prompts').insert({name:title,type:cat,body:text}).select().single();if(error)throw error;promptsData.push({id:data.id,title,cat,text});}
+    setSynced();closePromptModal();renderPrompts();
+  }catch(e){setOffline();alert('Gagal simpan: '+e.message);}
+  btn.disabled=false;btn.textContent='Simpan Prompt';
 }
-function closePVModal() { hide('pv-overlay'); pvId = null; }
-function copyPromptFull() {
-  const p = promptsData.find(x => x.id === pvId);
-  if (p) navigator.clipboard.writeText(p.text).then(() => alert('Prompt berhasil dicopy! ✓'));
-}
-function copyPromptById(id) {
-  const p = promptsData.find(x => x.id === id);
-  if (p) navigator.clipboard.writeText(p.text).then(() => {
-    const btn = document.getElementById('cpbtn-' + id);
-    if (btn) { btn.textContent = '✓ Copied!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 2000); }
-  });
-}
-
-function openPromptModal(id = null) {
-  editPromptId = id;
-  document.getElementById('prompt-modal-title').textContent = id ? '✏️ Edit Prompt' : '+ Prompt Baru';
-  if (id) {
-    const p = promptsData.find(x => x.id === id);
-    document.getElementById('inp-p-title').value = p.title;
-    document.getElementById('inp-p-cat').value   = p.cat;
-    document.getElementById('inp-p-text').value  = p.text;
-  } else {
-    document.getElementById('inp-p-title').value = '';
-    document.getElementById('inp-p-cat').value   = 'Script';
-    document.getElementById('inp-p-text').value  = '';
-  }
-  show('prompt-overlay');
-  setTimeout(() => document.getElementById('inp-p-title').focus(), 50);
-}
-function closePromptModal() { hide('prompt-overlay'); editPromptId = null; }
-
-async function savePrompt() {
-  const title = v('inp-p-title'), text = v('inp-p-text'), cat = v('inp-p-cat');
-  if (!title || !text) { alert('Isi judul dan isi prompt!'); return; }
-  const btn = document.getElementById('btn-save-prompt');
-  btn.disabled = true; btn.textContent = 'Menyimpan...';
-  setSyncing();
-  try {
-    if (editPromptId) {
-      const { error } = await sb.from('prompts').update({ name: title, type: cat, body: text }).eq('id', editPromptId);
-      if (error) throw error;
-      Object.assign(promptsData.find(x => x.id === editPromptId), { title, cat, text });
-    } else {
-      const { data, error } = await sb.from('prompts').insert({ name: title, type: cat, body: text }).select().single();
-      if (error) throw error;
-      promptsData.push({ id: data.id, title, cat, text });
-    }
-    setSynced(); closePromptModal(); renderPrompts();
-  } catch(e) { setOffline(); alert('Gagal simpan: ' + e.message); }
-  btn.disabled = false; btn.textContent = 'Simpan Prompt';
-}
-
-async function deletePrompt(id) {
-  if (!confirm('Hapus prompt ini?')) return;
-  setSyncing();
-  const { error } = await sb.from('prompts').delete().eq('id', id);
-  if (error) { setOffline(); alert('Gagal hapus: ' + error.message); return; }
-  promptsData = promptsData.filter(p => p.id !== id);
-  setSynced(); renderPrompts();
+async function deletePrompt(id){
+  if(!confirm('Hapus prompt ini?'))return;setSyncing();
+  const{error}=await sb.from('prompts').delete().eq('id',id);
+  if(error){setOffline();alert('Gagal hapus: '+error.message);return;}
+  promptsData=promptsData.filter(p=>p.id!==id);setSynced();renderPrompts();
 }
 
 // =============================================
 // JURNAL CRUD
 // =============================================
-function renderJurnal() {
-  const list = document.getElementById('jurnal-list');
-  if (jurnalData.length === 0) { list.innerHTML = '<div style="color:#9ca3af;font-size:13px;">Belum ada entri jurnal. Klik "+ Entri Baru"! 📖</div>'; return; }
-  list.innerHTML = jurnalData.map(j => `
+function renderJurnal(){
+  const list=document.getElementById('jurnal-list');
+  if(!jurnalData.length){list.innerHTML='<div style="color:#9ca3af;font-size:13px;">Belum ada entri jurnal. Klik "+ Entri Baru"! 📖</div>';return;}
+  list.innerHTML=jurnalData.map(j=>`
     <div class="jurnal-card">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;">
         <div class="jurnal-date">📅 ${j.date}</div>
-        <div style="display:flex;gap:5px;">
-          <button class="btn btn-sm" onclick="openJurnalModal('${j.id}')">✏️</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteJurnal('${j.id}')">🗑️</button>
-        </div>
+        <div style="display:flex;gap:5px;"><button class="btn btn-sm" onclick="openJurnalModal('${j.id}')">✏️</button><button class="btn btn-sm btn-danger" onclick="deleteJurnal('${j.id}')">🗑️</button></div>
       </div>
       <div class="jurnal-title">${j.title}</div>
       <div class="jurnal-content">${j.content}</div>
-      <div class="jurnal-tags">${(j.tags || []).map(t => '<span class="tag">' + t + '</span>').join('')}</div>
+      <div class="jurnal-tags">${(j.tags||[]).map(t=>'<span class="tag">'+t+'</span>').join('')}</div>
     </div>`).join('');
 }
-
-function openJurnalModal(id = null) {
-  editJurnalId = id;
-  document.getElementById('jurnal-modal-title').textContent = id ? '✏️ Edit Jurnal' : '+ Entri Jurnal';
-  if (id) {
-    const j = jurnalData.find(x => x.id === id);
-    document.getElementById('inp-j-title').value   = j.title;
-    document.getElementById('inp-j-content').value = j.content;
-    document.getElementById('inp-j-tags').value    = (j.tags || []).join(', ');
-  } else {
-    document.getElementById('inp-j-title').value   = '';
-    document.getElementById('inp-j-content').value = '';
-    document.getElementById('inp-j-tags').value    = '';
-  }
-  show('jurnal-overlay');
-  setTimeout(() => document.getElementById('inp-j-title').focus(), 50);
+function openJurnalModal(id=null){
+  editJurnalId=id;document.getElementById('jurnal-modal-title').textContent=id?'✏️ Edit Jurnal':'+ Entri Jurnal';
+  if(id){const j=jurnalData.find(x=>x.id===id);document.getElementById('inp-j-title').value=j.title;document.getElementById('inp-j-content').value=j.content;document.getElementById('inp-j-tags').value=(j.tags||[]).join(', ');}
+  else{document.getElementById('inp-j-title').value='';document.getElementById('inp-j-content').value='';document.getElementById('inp-j-tags').value='';}
+  show('jurnal-overlay');setTimeout(()=>document.getElementById('inp-j-title').focus(),50);
 }
-function closeJurnalModal() { hide('jurnal-overlay'); editJurnalId = null; }
-
-async function saveJurnal() {
-  const title = v('inp-j-title'), content = v('inp-j-content');
-  const tags = v('inp-j-tags').split(',').map(t => t.trim()).filter(Boolean);
-  if (!title) { alert('Isi judul jurnal!'); return; }
-  const btn = document.getElementById('btn-save-jurnal');
-  btn.disabled = true; btn.textContent = 'Menyimpan...';
-  setSyncing();
-  try {
-    if (editJurnalId) {
-      const { error } = await sb.from('journal').update({ title, content, tags }).eq('id', editJurnalId);
-      if (error) throw error;
-      Object.assign(jurnalData.find(x => x.id === editJurnalId), { title, content, tags });
-    } else {
-      const { data, error } = await sb.from('journal').insert({ title, content, tags }).select().single();
-      if (error) throw error;
-      jurnalData.unshift({ id: data.id, title, content, tags, date: fmtDate(data.created_at) });
-    }
-    setSynced(); closeJurnalModal(); renderJurnal();
-  } catch(e) { setOffline(); alert('Gagal simpan: ' + e.message); }
-  btn.disabled = false; btn.textContent = 'Simpan Jurnal';
+function closeJurnalModal(){hide('jurnal-overlay');editJurnalId=null;}
+async function saveJurnal(){
+  const title=v('inp-j-title'),content=v('inp-j-content');
+  const tags=v('inp-j-tags').split(',').map(t=>t.trim()).filter(Boolean);
+  if(!title){alert('Isi judul jurnal!');return;}
+  const btn=document.getElementById('btn-save-jurnal');btn.disabled=true;btn.textContent='Menyimpan...';setSyncing();
+  try{
+    if(editJurnalId){const{error}=await sb.from('journal').update({title,content,tags}).eq('id',editJurnalId);if(error)throw error;Object.assign(jurnalData.find(x=>x.id===editJurnalId),{title,content,tags});}
+    else{const{data,error}=await sb.from('journal').insert({title,content,tags}).select().single();if(error)throw error;jurnalData.unshift({id:data.id,title,content,tags,date:fmtDate(data.created_at)});}
+    setSynced();closeJurnalModal();renderJurnal();
+  }catch(e){setOffline();alert('Gagal simpan: '+e.message);}
+  btn.disabled=false;btn.textContent='Simpan Jurnal';
+}
+async function deleteJurnal(id){
+  if(!confirm('Hapus entri jurnal ini?'))return;setSyncing();
+  const{error}=await sb.from('journal').delete().eq('id',id);
+  if(error){setOffline();alert('Gagal hapus: '+error.message);return;}
+  jurnalData=jurnalData.filter(j=>j.id!==id);setSynced();renderJurnal();
 }
 
-async function deleteJurnal(id) {
-  if (!confirm('Hapus entri jurnal ini?')) return;
-  setSyncing();
-  const { error } = await sb.from('journal').delete().eq('id', id);
-  if (error) { setOffline(); alert('Gagal hapus: ' + error.message); return; }
-  jurnalData = jurnalData.filter(j => j.id !== id);
-  setSynced(); renderJurnal();
-}
-
-// =============================================
 // UTILS
-// =============================================
-function show(id) { document.getElementById(id).classList.remove('hidden'); }
-function hide(id) { document.getElementById(id).classList.add('hidden'); }
-function v(id) { return document.getElementById(id).value.trim(); }
+function show(id){document.getElementById(id).classList.remove('hidden');}
+function hide(id){document.getElementById(id).classList.add('hidden');}
+function v(id){return document.getElementById(id).value.trim();}
 
-document.querySelectorAll('.overlay').forEach(ov => {
-  ov.addEventListener('click', e => { if (e.target === ov) ov.classList.add('hidden'); });
+document.querySelectorAll('.overlay').forEach(ov=>{
+  ov.addEventListener('click',e=>{if(e.target===ov)ov.classList.add('hidden');});
 });
-document.addEventListener('keydown', e => {
-  const tag = document.activeElement.tagName;
-  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-  if (e.key === 'ArrowRight') nextMonth();
-  if (e.key === 'ArrowLeft')  prevMonth();
-  if (e.key === 't' || e.key === 'T') goToday();
-  if (e.key === 'Escape') document.querySelectorAll('.overlay').forEach(m => m.classList.add('hidden'));
+document.addEventListener('keydown',e=>{
+  const tag=document.activeElement.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight')nextMonth();
+  if(e.key==='ArrowLeft') prevMonth();
+  if(e.key==='t'||e.key==='T')goToday();
+  if(e.key==='Escape')document.querySelectorAll('.overlay').forEach(m=>m.classList.add('hidden'));
 });
 
-// START
 init();
 </script>
 </body>
