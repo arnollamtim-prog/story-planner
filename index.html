@@ -147,6 +147,17 @@ body {
 .btn-danger:hover { background: #fee2e2; }
 .btn-sm { padding: 5px 9px; font-size: 11px; border-radius: 7px; }
 
+/* OFFLINE TOAST */
+#offline-toast {
+  display: none;
+  position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+  background: #1f2937; border: 1px solid #ef4444; border-radius: 10px;
+  padding: 10px 18px; font-size: 12px; font-weight: 700; color: #fca5a5;
+  z-index: 999; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  white-space: nowrap;
+}
+#offline-toast.show { display: block; }
+
 /* LOADING */
 .loading-screen { position: fixed; inset: 0; background: #020617; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; z-index: 999; }
 .loading-screen.hidden { display: none; }
@@ -169,13 +180,12 @@ body {
 .btn-naskah:hover { background: rgba(124,58,237,0.35); }
 .cal-hint { font-size: 12px; color: #6b7280; font-style: italic; margin-bottom: 12px; }
 
-/* ===== FIX: cal-grid-wrap overflow auto agar row terakhir tidak terpotong ===== */
 .cal-grid-wrap {
   background: rgba(17,24,39,0.7);
   backdrop-filter: blur(20px);
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.05);
-  overflow: auto;          /* was hidden — ini yg bikin tanggal 24 kepotong */
+  overflow: auto;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   flex: 1;
   display: flex;
@@ -185,7 +195,6 @@ body {
 .cal-hdr { font-size: 11px; font-weight: 700; color: #6b7280; text-align: center; padding: 10px 4px; letter-spacing: 0.06em; }
 .cal-cells { display: grid; grid-template-columns: repeat(7,1fr); flex: 1; }
 
-/* ===== FIX: cal-cell overflow hidden agar chip tidak meluber ke sel lain ===== */
 .cal-cell {
   border-right: 1px solid rgba(255,255,255,0.04);
   border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -194,7 +203,7 @@ body {
   transition: all 0.25s;
   background: rgba(255,255,255,0.02);
   position: relative;
-  overflow: hidden;        /* chip tetap terpotong di dalam sel */
+  overflow: hidden;
   min-height: 80px;
 }
 .cal-cell:nth-child(7n) { border-right: none; }
@@ -211,7 +220,6 @@ body {
 .chip-Exported { background: rgba(29,78,216,0.3); color: #93c5fd; border-color: rgba(147,197,253,0.3); }
 .chip-Uploaded { background: rgba(21,128,61,0.3); color: #86efac; border-color: rgba(134,239,172,0.3); }
 
-/* ===== CHIP "+N lagi" ===== */
 .more-chip {
   font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px;
   background: rgba(124,58,237,0.2); color: #c4b5fd;
@@ -253,7 +261,6 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 .detail-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
 .naskah-box { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px; font-size: 13px; color: #d1d5db; line-height: 1.75; white-space: pre-wrap; border: 1px solid rgba(255,255,255,0.07); max-height: 280px; overflow-y: auto; }
 
-/* ===== DAY MODAL (BARU) ===== */
 .day-modal {
   background: #111827;
   border: 1px solid rgba(255,255,255,0.08);
@@ -301,57 +308,18 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
   border-color: rgba(124,58,237,0.35);
   transform: translateX(2px);
 }
-.day-naskah-left {
-  flex: 1;
-  min-width: 0;
-}
-.day-naskah-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: #e5e7eb;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 3px;
-}
-.day-naskah-meta {
-  font-size: 11px;
-  color: #6b7280;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.day-modal-empty {
-  text-align: center;
-  padding: 32px 0;
-  color: #4b5563;
-  font-size: 13px;
-  line-height: 1.8;
-}
+.day-naskah-left { flex: 1; min-width: 0; }
+.day-naskah-title { font-size: 13px; font-weight: 700; color: #e5e7eb; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
+.day-naskah-meta { font-size: 11px; color: #6b7280; display: flex; align-items: center; gap: 6px; }
+.day-modal-empty { text-align: center; padding: 32px 0; color: #4b5563; font-size: 13px; line-height: 1.8; }
 .day-modal-empty .empty-icon { font-size: 32px; margin-bottom: 8px; }
-.day-modal-footer {
-  padding: 14px 16px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  flex-shrink: 0;
-  background: rgba(2,6,23,0.3);
-}
+.day-modal-footer { padding: 14px 16px; border-top: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; background: rgba(2,6,23,0.3); }
 .day-add-btn {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
-  color: white;
-  font-size: 14px;
-  font-weight: 800;
-  cursor: pointer;
-  font-family: inherit;
-  box-shadow: 0 3px 12px rgba(124,58,237,0.4);
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  width: 100%; padding: 12px; border: none; border-radius: 12px;
+  background: linear-gradient(135deg, #7c3aed, #a855f7); color: white;
+  font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit;
+  box-shadow: 0 3px 12px rgba(124,58,237,0.4); transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .day-add-btn:hover { box-shadow: 0 5px 18px rgba(124,58,237,0.55); transform: translateY(-1px); }
 
@@ -407,11 +375,14 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
 </head>
 <body>
 
+<!-- OFFLINE TOAST -->
+<div id="offline-toast">⚠️ Offline — menampilkan data terakhir dari cache</div>
+
 <div class="loading-screen" id="loading-screen">
   <div class="loading-logo">🎬</div>
   <div class="spinner"></div>
   <div class="loading-text">Story Planner</div>
-  <div class="loading-sub">Memuat data dari cloud...</div>
+  <div class="loading-sub" id="loading-sub-text">Memuat data...</div>
 </div>
 
 <div id="install-banner">
@@ -563,7 +534,7 @@ textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.65; }
   </button>
 </nav>
 
-<!-- ===== MODAL: DAY VIEW (BARU) ===== -->
+<!-- DAY MODAL -->
 <div class="overlay hidden" id="day-overlay">
   <div class="day-modal">
     <div class="day-modal-hdr">
@@ -723,22 +694,101 @@ let editNaskahId=null, editIdeaId=null, editPromptId=null, editJurnalId=null;
 let detailKey=null, detailId=null, pvId=null;
 let moveKey=null, moveId=null;
 let ideaFilter='all', promptFilter='all';
-
-// Tanggal key yang sedang aktif di day modal
 let activeDayKey = null;
 
-function setSyncing() { document.getElementById('sync-dot').className='sync-dot syncing'; document.getElementById('sync-label').textContent='Menyimpan...'; }
-function setSynced()  { document.getElementById('sync-dot').className='sync-dot'; document.getElementById('sync-label').textContent='Tersinkron ☁️'; }
-function setOffline() { document.getElementById('sync-dot').className='sync-dot offline'; document.getElementById('sync-label').textContent='Gagal konek'; }
+// =============================================
+// CACHE (localStorage) — FIX UTAMA
+// =============================================
+const CACHE_KEY = 'sp_cache_v1';
 
-async function init() {
+function saveToCache() {
   try {
+    const payload = {
+      naskah: naskahData,
+      ideas: ideasData,
+      prompts: promptsData,
+      jurnal: jurnalData,
+      savedAt: Date.now()
+    };
+    localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
+  } catch(e) {
+    console.warn('Cache save gagal:', e);
+  }
+}
+
+function loadFromCache() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return false;
+    const payload = JSON.parse(raw);
+    naskahData  = payload.naskah  || {};
+    ideasData   = payload.ideas   || [];
+    promptsData = payload.prompts || [];
+    jurnalData  = payload.jurnal  || [];
+    return true;
+  } catch(e) {
+    console.warn('Cache load gagal:', e);
+    return false;
+  }
+}
+
+// =============================================
+// SYNC STATUS
+// =============================================
+function setSyncing() {
+  document.getElementById('sync-dot').className='sync-dot syncing';
+  document.getElementById('sync-label').textContent='Menyimpan...';
+}
+function setSynced() {
+  document.getElementById('sync-dot').className='sync-dot';
+  document.getElementById('sync-label').textContent='Tersinkron ☁️';
+  hideOfflineToast();
+}
+function setOffline() {
+  document.getElementById('sync-dot').className='sync-dot offline';
+  document.getElementById('sync-label').textContent='Offline — data dari cache';
+  showOfflineToast();
+}
+
+let offlineToastTimer = null;
+function showOfflineToast() {
+  const t = document.getElementById('offline-toast');
+  t.classList.add('show');
+  clearTimeout(offlineToastTimer);
+  offlineToastTimer = setTimeout(hideOfflineToast, 5000);
+}
+function hideOfflineToast() {
+  document.getElementById('offline-toast').classList.remove('show');
+}
+
+// =============================================
+// INIT
+// =============================================
+async function init() {
+  // 1. Tampilkan cache dulu — biar langsung kelihatan ada data
+  const hasCached = loadFromCache();
+  if (hasCached) {
+    document.getElementById('loading-sub-text').textContent = 'Memuat data cache...';
+    document.getElementById('loading-screen').classList.add('hidden');
+    renderCalendar();
+    renderIdeas();
+    renderPrompts();
+    renderJurnal();
+  }
+
+  // 2. Sinkron dari Supabase di background
+  try {
+    document.getElementById('sync-dot').className='sync-dot syncing';
+    document.getElementById('sync-label').textContent='Sinkronisasi...';
+
     const [calRes,ideasRes,promptsRes,journalRes] = await Promise.all([
       sb.from('calendar').select('*').order('date',{ascending:true}),
       sb.from('ideas').select('*').order('created_at',{ascending:true}),
       sb.from('prompts').select('*').order('created_at',{ascending:true}),
       sb.from('journal').select('*').order('created_at',{ascending:false}),
     ]);
+
+    // Parse ulang dari Supabase
     naskahData={};
     (calRes.data||[]).forEach(row => {
       if (!naskahData[row.date]) naskahData[row.date]=[];
@@ -747,10 +797,22 @@ async function init() {
     ideasData   = (ideasRes.data  ||[]).map(r=>({id:r.id,title:r.title,desc:r.description||'',platform:r.type||'YouTube',pinned:r.status==='pinned'}));
     promptsData = (promptsRes.data||[]).map(r=>({id:r.id,title:r.name||r.title||'',cat:r.type||'Script',text:r.body||''}));
     jurnalData  = (journalRes.data||[]).map(r=>({id:r.id,title:r.title,date:fmtDate(r.created_at),content:r.content||'',tags:r.tags||[]}));
+
+    // Simpan ke cache dan render ulang
+    saveToCache();
     setSynced();
-  } catch(e) { setOffline(); console.error(e); }
+    renderCalendar();
+    renderIdeas();
+    renderPrompts();
+    renderJurnal();
+
+  } catch(e) {
+    setOffline();
+    console.error('Supabase error:', e);
+  }
+
+  // Sembunyikan loading jika belum disembunyikan
   document.getElementById('loading-screen').classList.add('hidden');
-  renderCalendar();
 }
 
 function fmtDate(iso) {
@@ -808,8 +870,6 @@ function renderCalendar() {
       cell.className='cal-cell';
 
       let html='<div class="day-num'+(isToday?' today':'')+'">'+ day +'</div>';
-
-      // ===== FIX: tampilkan max 2 chip, sisanya jadi badge "+N lagi" =====
       const items = naskahData[key]||[];
       const shown = items.slice(0,2);
       shown.forEach(ev => {
@@ -821,7 +881,6 @@ function renderCalendar() {
       }
 
       cell.innerHTML=html;
-      // Klik sel → selalu buka day modal
       cell.onclick=()=>openDayModal(key);
     }
     cells.appendChild(cell);
@@ -833,14 +892,12 @@ function nextMonth() { curMonth++; if(curMonth>11){curMonth=0;curYear++;} render
 function goToday()   { curMonth=TODAY.getMonth(); curYear=TODAY.getFullYear(); renderCalendar(); }
 
 // =============================================
-// DAY MODAL (BARU)
+// DAY MODAL
 // =============================================
 function openDayModal(key) {
   activeDayKey = key;
   const list = naskahData[key]||[];
-  const dayDate = fmtKey(key);
-
-  document.getElementById('day-modal-date').textContent = '📅 '+dayDate;
+  document.getElementById('day-modal-date').textContent = '📅 '+fmtKey(key);
   document.getElementById('day-modal-count').textContent =
     list.length===0 ? 'Belum ada naskah' : list.length+' naskah';
 
@@ -869,21 +926,15 @@ function openDayModal(key) {
       </div>`).join('');
   }
 
-  // Pasang handler tombol tambah
   document.getElementById('day-add-btn').onclick = () => {
     closeDayModal();
     openNaskahModal(null, key);
   };
-
   show('day-overlay');
 }
 
 function closeDayModal() { hide('day-overlay'); activeDayKey=null; }
-
-function openDetailFromDay(key, id) {
-  closeDayModal();
-  openDetailModal(key, id);
-}
+function openDetailFromDay(key, id) { closeDayModal(); openDetailModal(key, id); }
 
 // =============================================
 // NASKAH CRUD
@@ -940,8 +991,8 @@ async function saveNaskah() {
       const [y,m]=dateVal.split('-');
       curMonth=parseInt(m)-1; curYear=parseInt(y);
     }
+    saveToCache(); // ← SIMPAN KE CACHE
     setSynced(); closeNaskahModal(); closeDetailModal(); renderCalendar();
-    // Kalau day modal masih relevan, refresh-in
     if (activeDayKey) openDayModal(activeDayKey);
   } catch(e) { setOffline(); alert('Gagal menyimpan: '+e.message); }
   btn.disabled=false; btn.textContent='Simpan Naskah';
@@ -976,7 +1027,7 @@ async function cycleStatus(key,id) {
   ev.status=order[(order.indexOf(ev.status)+1)%3];
   setSyncing();
   const {error}=await sb.from('calendar').update({status:ev.status}).eq('id',id);
-  if (error) setOffline(); else setSynced();
+  if (error) setOffline(); else { saveToCache(); setSynced(); } // ← SIMPAN KE CACHE
   renderCalendar(); openDetailModal(key,id);
 }
 function editNaskahFromDetail() { const id=detailId; closeDetailModal(); openNaskahModal(id); }
@@ -990,6 +1041,7 @@ async function deleteNaskah() {
     const idx=naskahData[key].findIndex(n=>n.id===detailId);
     if (idx!==-1){naskahData[key].splice(idx,1);if(!naskahData[key].length)delete naskahData[key];break;}
   }
+  saveToCache(); // ← SIMPAN KE CACHE
   setSynced(); closeDetailModal(); renderCalendar();
 }
 function copyNaskah() {
@@ -1013,6 +1065,7 @@ async function confirmMove() {
   }
   const [y,m]=newDate.split('-');
   curMonth=parseInt(m)-1; curYear=parseInt(y);
+  saveToCache(); // ← SIMPAN KE CACHE
   setSynced(); closeMoveModal(); closeDetailModal(); renderCalendar();
 }
 function statusLabel(s){return s==='Draft'?'📝 Draft':s==='Exported'?'📤 Exported':'✅ Uploaded';}
@@ -1048,7 +1101,8 @@ async function togglePin(id){
   const idea=ideasData.find(i=>i.id===id);if(!idea)return;
   idea.pinned=!idea.pinned;setSyncing();
   const {error}=await sb.from('ideas').update({status:idea.pinned?'pinned':null}).eq('id',id);
-  if(error)setOffline();else setSynced();renderIdeas();
+  if(error) setOffline(); else { saveToCache(); setSynced(); } // ← SIMPAN KE CACHE
+  renderIdeas();
 }
 function openIdeaModal(id=null){
   editIdeaId=id;
@@ -1065,6 +1119,7 @@ async function saveIdea(){
   try{
     if(editIdeaId){const{error}=await sb.from('ideas').update({title,description:desc,type:platform}).eq('id',editIdeaId);if(error)throw error;Object.assign(ideasData.find(i=>i.id===editIdeaId),{title,desc,platform});}
     else{const{data,error}=await sb.from('ideas').insert({title,description:desc,type:platform,status:null}).select().single();if(error)throw error;ideasData.push({id:data.id,title,desc,platform,pinned:false});}
+    saveToCache(); // ← SIMPAN KE CACHE
     setSynced();closeIdeaModal();renderIdeas();
   }catch(e){setOffline();alert('Gagal simpan: '+e.message);}
   btn.disabled=false;btn.textContent='Simpan Ide';
@@ -1073,7 +1128,9 @@ async function deleteIdea(id){
   if(!confirm('Hapus ide ini?'))return;setSyncing();
   const{error}=await sb.from('ideas').delete().eq('id',id);
   if(error){setOffline();alert('Gagal hapus: '+error.message);return;}
-  ideasData=ideasData.filter(i=>i.id!==id);setSynced();renderIdeas();
+  ideasData=ideasData.filter(i=>i.id!==id);
+  saveToCache(); // ← SIMPAN KE CACHE
+  setSynced();renderIdeas();
 }
 
 // =============================================
@@ -1122,6 +1179,7 @@ async function savePrompt(){
   try{
     if(editPromptId){const{error}=await sb.from('prompts').update({name:title,type:cat,body:text}).eq('id',editPromptId);if(error)throw error;Object.assign(promptsData.find(x=>x.id===editPromptId),{title,cat,text});}
     else{const{data,error}=await sb.from('prompts').insert({name:title,type:cat,body:text}).select().single();if(error)throw error;promptsData.push({id:data.id,title,cat,text});}
+    saveToCache(); // ← SIMPAN KE CACHE
     setSynced();closePromptModal();renderPrompts();
   }catch(e){setOffline();alert('Gagal simpan: '+e.message);}
   btn.disabled=false;btn.textContent='Simpan Prompt';
@@ -1130,7 +1188,9 @@ async function deletePrompt(id){
   if(!confirm('Hapus prompt ini?'))return;setSyncing();
   const{error}=await sb.from('prompts').delete().eq('id',id);
   if(error){setOffline();alert('Gagal hapus: '+error.message);return;}
-  promptsData=promptsData.filter(p=>p.id!==id);setSynced();renderPrompts();
+  promptsData=promptsData.filter(p=>p.id!==id);
+  saveToCache(); // ← SIMPAN KE CACHE
+  setSynced();renderPrompts();
 }
 
 // =============================================
@@ -1165,6 +1225,7 @@ async function saveJurnal(){
   try{
     if(editJurnalId){const{error}=await sb.from('journal').update({title,content,tags}).eq('id',editJurnalId);if(error)throw error;Object.assign(jurnalData.find(x=>x.id===editJurnalId),{title,content,tags});}
     else{const{data,error}=await sb.from('journal').insert({title,content,tags}).select().single();if(error)throw error;jurnalData.unshift({id:data.id,title,content,tags,date:fmtDate(data.created_at)});}
+    saveToCache(); // ← SIMPAN KE CACHE
     setSynced();closeJurnalModal();renderJurnal();
   }catch(e){setOffline();alert('Gagal simpan: '+e.message);}
   btn.disabled=false;btn.textContent='Simpan Jurnal';
@@ -1173,7 +1234,9 @@ async function deleteJurnal(id){
   if(!confirm('Hapus entri jurnal ini?'))return;setSyncing();
   const{error}=await sb.from('journal').delete().eq('id',id);
   if(error){setOffline();alert('Gagal hapus: '+error.message);return;}
-  jurnalData=jurnalData.filter(j=>j.id!==id);setSynced();renderJurnal();
+  jurnalData=jurnalData.filter(j=>j.id!==id);
+  saveToCache(); // ← SIMPAN KE CACHE
+  setSynced();renderJurnal();
 }
 
 // UTILS
